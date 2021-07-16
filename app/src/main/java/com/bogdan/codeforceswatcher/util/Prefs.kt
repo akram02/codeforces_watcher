@@ -74,6 +74,28 @@ class Prefs(private val context: Context) : Settings {
         return context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
     }
 
+    override fun readProblemsTags(): List<String> {
+        val defaultPrefs = getDefaultPrefs()
+        return defaultPrefs.getStringSet(KEY_PROBLEMS_TAGS, setOf()).orEmpty().toList()
+    }
+
+    override fun writeProblemsTags(tags: List<String>) {
+        val editor = getDefaultPrefs().edit()
+        editor.putStringSet(KEY_PROBLEMS_TAGS, tags.toSet())
+        editor.apply()
+    }
+
+    override fun readProblemsSelectedTags(): Set<String> {
+        val defaultPrefs = getDefaultPrefs()
+        return defaultPrefs.getStringSet(KEY_PROBLEMS_SELECTED_TAGS, setOf()).orEmpty()
+    }
+
+    override fun writeProblemsSelectedTags(tags: Set<String>) {
+        val editor = getDefaultPrefs().edit()
+        editor.putStringSet(KEY_PROBLEMS_SELECTED_TAGS, tags)
+        editor.apply()
+    }
+
     companion object {
 
         private const val KEY_SPINNER_SORT_POSITION = "key_counter"
@@ -81,6 +103,8 @@ class Prefs(private val context: Context) : Settings {
         private const val KEY_CONTESTS_FILTERS = "key_contests_filters"
         private const val KEY_PINNED_POST = "key_pinned_post"
         private const val KEY_USER_ACCOUNT = "key_user_account"
+        private const val KEY_PROBLEMS_TAGS = "key_problems_tags"
+        private const val KEY_PROBLEMS_SELECTED_TAGS = "key_problems_selected_tags"
 
         @SuppressLint("StaticFieldLeak")
         private val prefs: Prefs = Prefs(CwApp.app)
