@@ -14,6 +14,7 @@ fun problemsReducer(action: Action, state: AppState): ProblemsState {
             newState = newState.copy(
                     problems = action.problems,
                     tags = action.tags,
+                    selectedTags = action.selectedTags,
                     status = ProblemsState.Status.IDLE
             )
         }
@@ -27,6 +28,12 @@ fun problemsReducer(action: Action, state: AppState): ProblemsState {
             newState = newState.copy(problems = newState.problems.map {
                 if (it.id == action.problem.id) action.problem else it
             })
+        }
+        is ProblemsRequests.ChangeTagCheckStatus -> {
+            newState = newState.copy(
+                    selectedTags = if (action.isChecked) newState.selectedTags.plus(action.tag)
+                    else newState.selectedTags.minus(action.tag)
+            )
         }
     }
 
