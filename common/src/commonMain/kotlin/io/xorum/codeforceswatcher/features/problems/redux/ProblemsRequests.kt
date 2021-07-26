@@ -20,7 +20,7 @@ class ProblemsRequests {
                     val problems = mapProblems(response.result.problems)
                     val (toAddDiff, toUpdateDiff) = getDiff(problems)
                     updateDatabaseProblems(toAddDiff, toUpdateDiff)
-                    Success(problems, response.result.tags, getSelectedTags(response.result.tags))
+                    Success(problems, response.result.tags)
                 }
                 is Response.Failure -> Failure(if (isInitiatedByUser) response.error.toMessage() else Message.None)
             }
@@ -40,16 +40,9 @@ class ProblemsRequests {
             DatabaseQueries.Problems.insert(toAddDiff)
         }
 
-        private fun getSelectedTags(tags: List<String>) = with(store.state) {
-            tags.toSet().takeIf {
-                problems.tags.isEmpty()
-            } ?: problems.selectedTags
-        }
-
         data class Success(
                 val problems: List<Problem>,
-                val tags: List<String>,
-                val selectedTags: Set<String>
+                val tags: List<String>
         ) : Action
 
         data class Failure(override val message: Message) : ToastAction
@@ -67,4 +60,6 @@ class ProblemsRequests {
     }
 
     class ChangeTagCheckStatus(val tag: String, val isChecked: Boolean) : Action
+
+    class SetQuery(val query: String) : Action
 }

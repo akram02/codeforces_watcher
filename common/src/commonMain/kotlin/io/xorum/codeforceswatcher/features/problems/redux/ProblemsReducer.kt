@@ -14,7 +14,6 @@ fun problemsReducer(action: Action, state: AppState): ProblemsState {
             newState = newState.copy(
                     problems = action.problems,
                     tags = action.tags,
-                    selectedTags = action.selectedTags,
                     status = ProblemsState.Status.IDLE
             )
         }
@@ -35,7 +34,42 @@ fun problemsReducer(action: Action, state: AppState): ProblemsState {
                     else newState.selectedTags.minus(action.tag)
             )
         }
+        is ProblemsRequests.SetQuery -> {
+            newState = newState.copy(
+                    query = action.query
+            )
+        }
     }
 
-    return newState
+    return newState.copy(filteredProblems = newState.getFilteredProblems())
+}
+
+private fun ProblemsState.getFilteredProblems() = problems.filter { if (isFavourite) it.isFavourite else true }
+        .filter { it.tags.containsAll(selectedTags) }
+        .filter {
+            it.title.toLowerCase().kmpContains(query.toLowerCase())
+                    || it.subtitle.toLowerCase().kmpContains(query.toLowerCase())
+        }
+        .sortedByDescending { it.createdAtMillis }
+
+private fun String.kmpContains(searchString: String): Boolean {
+    val findingStringLength = searchString.length
+    val cmpStr = "$searchString%$this"
+    val prefixArray = IntArray(cmpStr.length)
+    var currentIndexOfBlock = 0
+    prefixArray[0] = 0
+    for (i in 1 until cmpStr.length) {
+        while (currentIndexOfBlock > 0 && cmpStr[currentIndexOfBlock] != cmpStr[i]) {
+            currentIndexOfBlock = prefixArray[currentIndexOfBlock - 1]
+        }
+        if (cmpStr[currentIndexOfBlock] == cmpStr[i]) {
+            currentIndexOfBlock++
+        }
+
+        prefixArray[i] = currentIndexOfBlock
+        if (prefixArray[i] == findingStringLength) {
+            return true
+        }
+    }
+    return false
 }
