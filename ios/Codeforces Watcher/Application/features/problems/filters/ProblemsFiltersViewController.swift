@@ -1,20 +1,10 @@
 import UIKit
+import common
 
-class ProblemsFiltersViewController: ClosableViewController {
+class ProblemsFiltersViewController: ClosableViewController, ReKampStoreSubscriber {
     
     private let tableView = UITableView()
     private let tableAdapter = FiltersTableViewAdapter()
-    
-    private let tags: [String]
-    
-    init(_ tags: [String]) {
-        self.tags = tags
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,9 +37,40 @@ class ProblemsFiltersViewController: ClosableViewController {
         }
 
         tableView.registerForReuse(cellType: FilterTableViewCell.self)
+    }
+    
+    func onNewState(state: Any) {
+        let state = state as! ProblemsState
         
-        tableAdapter.filterItems = tags.map {
-            FilterTableViewCell.UIModel(title: $0, image: nil, isOn: false, onSwitchTap: { _ in })
+        tableAdapter.filterItems = state.tags.map { tag in
+            FilterTableViewCell.UIModel(
+                title: tag,
+                image: nil,
+                isOn: state.selectedTags.contains(tag),
+                onSwitchTap: { isChecked in
+                    store.dispatch(action: ProblemsRequests.ChangeTagCheckStatus(tag: tag, isChecked: isChecked))
+                }
+            )
         }
+        tableView.reloadData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        store.subscribe(subscriber: self) { subscription in
+            subscription.skipRepeats { oldState, newState in
+                return KotlinBoolean(bool:
+                    oldState.problems.tags == newState.problems.tags
+                        && oldState.problems.selectedTags == newState.problems.selectedTags
+                )
+            }.select { state in
+                return state.problems
+            }
+        }
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        store.unsubscribe(subscriber: self)
     }
 }
