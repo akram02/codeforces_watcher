@@ -8,7 +8,7 @@ import io.xorum.codeforceswatcher.features.contests.redux.ContestsRequests
 import io.xorum.codeforceswatcher.redux.store
 import kotlinx.android.synthetic.main.activity_filters.*
 
-class FiltersActivity : AppCompatActivity() {
+class ContestsFiltersActivity : AppCompatActivity() {
 
     private val filtersAdapter: FiltersAdapter = FiltersAdapter(this)
 
