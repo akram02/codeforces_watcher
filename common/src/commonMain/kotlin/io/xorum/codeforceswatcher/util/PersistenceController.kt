@@ -5,7 +5,9 @@ import io.xorum.codeforceswatcher.features.auth.models.getAuthStage
 import io.xorum.codeforceswatcher.features.auth.redux.AuthState
 import io.xorum.codeforceswatcher.features.contests.models.Contest
 import io.xorum.codeforceswatcher.features.contests.redux.ContestsState
+import io.xorum.codeforceswatcher.features.problems.models.Problem
 import io.xorum.codeforceswatcher.features.problems.redux.ProblemsState
+import io.xorum.codeforceswatcher.features.problems.redux.getFilteredProblems
 import io.xorum.codeforceswatcher.features.users.redux.UsersState
 import io.xorum.codeforceswatcher.redux.states.AppState
 import io.xorum.codeforceswatcher.redux.store
@@ -35,14 +37,19 @@ class PersistenceController : StoreSubscriber<AppState> {
                     sortType = UsersState.SortType.getSortType(settings.readSpinnerSortPosition()),
                     userAccount = settings.readUserAccount(),
             ),
-            problems = ProblemsState(
-                    problems = DatabaseQueries.Problems.getAll(),
-                    isFavourite = (settings.readProblemsIsFavourite()),
-                    tags = settings.readProblemsTags(),
-                    selectedTags = settings.readProblemsSelectedTags()
-            ),
+            problems = getProblemsState(),
             auth = AuthState(authStage = settings.readUserAccount().getAuthStage())
     )
+
+    private fun getProblemsState(): ProblemsState {
+        val state = ProblemsState(
+            problems = DatabaseQueries.Problems.getAll(),
+            isFavourite = (settings.readProblemsIsFavourite()),
+            tags = settings.readProblemsTags(),
+            selectedTags = settings.readProblemsSelectedTags()
+        )
+        return state.copy(filteredProblems = state.getFilteredProblems())
+    }
 
     override fun onNewState(state: AppState) {
         settings.writeSpinnerSortPosition(state.users.sortType.position)

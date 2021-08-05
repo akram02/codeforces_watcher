@@ -44,7 +44,7 @@ fun problemsReducer(action: Action, state: AppState): ProblemsState {
     return newState.copy(filteredProblems = newState.getFilteredProblems())
 }
 
-private fun ProblemsState.getFilteredProblems() = problems.filter { if (isFavourite) it.isFavourite else true }
+fun ProblemsState.getFilteredProblems() = problems.filter { if (isFavourite) it.isFavourite else true }
         .filter { it.tags.containsAll(selectedTags) }
         .filter {
             it.title.toLowerCase().kmpContains(query.toLowerCase())
