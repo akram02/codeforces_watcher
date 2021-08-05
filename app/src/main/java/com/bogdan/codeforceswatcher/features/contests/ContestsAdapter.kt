@@ -65,7 +65,7 @@ class ContestsAdapter(
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvContestName: TextView = view.tvContestName
         val tvContestTime: TextView = view.tvContestTime
-        val ivContest: ImageView = view.ivContest
+        val ivContest: ImageView = view.ivIcon
         private val ivAddToCalendar: ImageView = view.ivAddToCalendar
 
         var onAddToCalendarClickListener: (() -> Unit)? = null

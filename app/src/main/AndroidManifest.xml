@@ -25,6 +25,9 @@
     <activity
         android:name=".features.contests.FiltersActivity"
         android:theme="@style/AppTheme.NoActionBar" />
+    <activity
+        android:name=".features.problems.ProblemsFiltersActivity"
+        android:theme="@style/AppTheme.NoActionBar" />
     <activity android:name=".features.users.UserActivity" />
     <activity
         android:name=".components.WebViewActivity"

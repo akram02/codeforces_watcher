@@ -4,8 +4,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Filter
-import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -13,20 +11,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bogdan.codeforceswatcher.R
 import io.xorum.codeforceswatcher.features.problems.models.Problem
 import io.xorum.codeforceswatcher.features.problems.redux.ProblemsRequests
-import kotlinx.android.synthetic.main.view_problem_item.view.*
 import io.xorum.codeforceswatcher.redux.store
-import java.util.*
+import kotlinx.android.synthetic.main.view_problem_item.view.*
 
 class ProblemsAdapter(
         private val context: Context,
         private val itemClickListener: (Problem) -> Unit
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var showingItems: MutableList<Problem> = mutableListOf()
-    private var items: List<Problem> = listOf()
+    private var items: MutableList<Problem> = mutableListOf()
     private var isFavouriteStatus = false
 
-    override fun getItemCount() = showingItems.size + if (showingItems.isEmpty()) 1 else 0
+    override fun getItemCount() = items.size + if (items.isEmpty()) 1 else 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
             when (viewType) {
@@ -46,18 +42,18 @@ class ProblemsAdapter(
 
     override fun getItemViewType(position: Int): Int {
         return when {
-            showingItems.isEmpty() && store.state.problems.isFavourite -> STUB_FAVOURITE_PROBLEMS_VIEW_TYPE
-            showingItems.isEmpty() -> STUB_ALL_PROBLEMS_VIEW_TYPE
+            items.isEmpty() && store.state.problems.isFavourite -> STUB_FAVOURITE_PROBLEMS_VIEW_TYPE
+            items.isEmpty() -> STUB_ALL_PROBLEMS_VIEW_TYPE
             else -> PROBLEM_VIEW_TYPE
         }
     }
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
-        if (showingItems.isEmpty()) return
+        if (items.isEmpty()) return
 
         val problemViewHolder = viewHolder as ProblemViewHolder
         with(problemViewHolder) {
-            with(showingItems[adapterPosition]) {
+            with(items[adapterPosition]) {
                 tvProblemName.text = title
                 tvContestName.text = subtitle
                 ivFavourite.setColorFilter(ContextCompat.getColor(
@@ -81,72 +77,14 @@ class ProblemsAdapter(
     }
 
     private fun removeProblem(problem: Problem) {
-        items.minus(problem)
-        showingItems.remove(problem)
+        items.remove(problem)
     }
 
-    fun setItems(problemsList: List<Problem>, constraint: String, isFavourite: Boolean) {
+    fun setItems(problemsList: List<Problem>, isFavourite: Boolean) {
         this.isFavouriteStatus = isFavourite
-        items = problemsList
-        showingItems = buildFilteredList(constraint)
+        items = problemsList.toMutableList()
         notifyDataSetChanged()
     }
-
-    private val problemFilter: Filter = object : Filter() {
-        override fun performFiltering(constraint: CharSequence?): FilterResults {
-            val filteredList = mutableListOf<Problem>()
-            filteredList.addAll(
-                    if (constraint.isNullOrEmpty()) items else buildFilteredList(constraint.toString())
-            )
-            return FilterResults().apply { values = filteredList }
-        }
-
-        override fun publishResults(constraint: CharSequence, results: FilterResults) {
-            showingItems.clear()
-            showingItems.addAll(results.values as List<Problem>)
-            notifyDataSetChanged()
-        }
-    }
-
-    private fun buildFilteredList(constraint: String): MutableList<Problem> {
-        val lowerCaseConstraint = constraint.lowercase()
-        val filteredList = mutableListOf<Problem>()
-
-        for (problem in items) {
-            if (problem.title.lowercase().kmpContains(lowerCaseConstraint)
-                    || problem.subtitle.lowercase().kmpContains(lowerCaseConstraint)
-            ) {
-                filteredList.add(problem)
-            }
-        }
-        return filteredList
-    }
-
-    private fun String.lowercase() = this.toLowerCase(Locale.getDefault())
-
-    private fun String.kmpContains(searchString: String): Boolean {
-        val findingStringLength = searchString.length
-        val cmpStr = "$searchString%$this"
-        val prefixArray = IntArray(cmpStr.length)
-        var currentIndexOfBlock = 0
-        prefixArray[0] = 0
-        for (i in 1 until cmpStr.length) {
-            while (currentIndexOfBlock > 0 && cmpStr[currentIndexOfBlock] != cmpStr[i]) {
-                currentIndexOfBlock = prefixArray[currentIndexOfBlock - 1]
-            }
-            if (cmpStr[currentIndexOfBlock] == cmpStr[i]) {
-                currentIndexOfBlock++
-            }
-
-            prefixArray[i] = currentIndexOfBlock
-            if (prefixArray[i] == findingStringLength) {
-                return true
-            }
-        }
-        return false
-    }
-
-    override fun getFilter() = problemFilter
 
     class ProblemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 

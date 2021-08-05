@@ -9,23 +9,26 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bogdan.codeforceswatcher.R
-import io.xorum.codeforceswatcher.features.contests.models.Contest
-import io.xorum.codeforceswatcher.features.contests.redux.ContestsRequests
-import io.xorum.codeforceswatcher.redux.store
-import kotlinx.android.synthetic.main.view_contest_item.view.ivContest
+import kotlinx.android.synthetic.main.view_contest_item.view.ivIcon
 import kotlinx.android.synthetic.main.view_filter_item.view.*
 
 data class FilterItem(
-        val imageId: Int,
+        val imageId: Int?,
         val title: String,
-        val platform: Contest.Platform,
-        val isChecked: Boolean
+        val isChecked: Boolean,
+        val onSwitchTap: (Boolean) -> Unit
 )
 
 class FiltersAdapter(
-        private val context: Context,
-        private var items: List<FilterItem> = listOf()
+        private val context: Context
 ) : RecyclerView.Adapter<FiltersAdapter.ViewHolder>() {
+
+    private var items: List<FilterItem> = listOf()
+
+    fun setItems(filters: List<FilterItem>) {
+        items = filters
+        notifyDataSetChanged() // Crash
+    }
 
     override fun getItemCount() = items.size
 
@@ -38,10 +41,14 @@ class FiltersAdapter(
         val filterItem = items[position]
         with(holder) {
             title.text = filterItem.title
-            ivContest.setImageResource(filterItem.imageId)
+            filterItem.imageId?.let {
+                ivIcon.setImageResource(it)
+            } ?: run {
+                ivIcon.visibility = View.GONE
+            }
             checkBox.isChecked = filterItem.isChecked
             onCheckedChangeListener = { isChecked ->
-                store.dispatch(ContestsRequests.ChangeFilterCheckStatus(filterItem.platform, isChecked))
+                filterItem.onSwitchTap(isChecked)
             }
         }
     }
@@ -49,7 +56,7 @@ class FiltersAdapter(
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         val title: TextView = view.tvTitle
-        val ivContest: ImageView = view.ivContest
+        val ivIcon: ImageView = view.ivIcon
         val checkBox: CheckBox = view.checkbox
 
         var onCheckedChangeListener: ((Boolean) -> Unit)? = null

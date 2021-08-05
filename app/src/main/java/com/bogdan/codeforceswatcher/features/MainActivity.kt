@@ -17,6 +17,7 @@ import com.bogdan.codeforceswatcher.components.WebViewActivity
 import com.bogdan.codeforceswatcher.features.contests.ContestsFragment
 import com.bogdan.codeforceswatcher.features.contests.FiltersActivity
 import com.bogdan.codeforceswatcher.features.news.NewsFragment
+import com.bogdan.codeforceswatcher.features.problems.ProblemsFiltersActivity
 import com.bogdan.codeforceswatcher.features.problems.ProblemsFragment
 import com.bogdan.codeforceswatcher.features.users.UsersFragment
 import com.bogdan.codeforceswatcher.util.FeedbackController
@@ -136,7 +137,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun onProblemsTabSelected() {
         llSorting.visibility = View.GONE
-        ivFilter.visibility = View.GONE
+        ivFilter.visibility = View.VISIBLE
         searchViewItem?.isVisible = true
 
         var problemsIsFavourite = store.state.problems.isFavourite
@@ -147,6 +148,10 @@ class MainActivity : AppCompatActivity() {
 
             store.dispatch(ProblemsActions.ChangeTypeProblems(problemsIsFavourite))
             updateProblemsFAB(problemsIsFavourite)
+        }
+
+        ivFilter.setOnClickListener {
+            startActivity(Intent(this, ProblemsFiltersActivity::class.java))
         }
     }
 

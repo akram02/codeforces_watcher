@@ -51,7 +51,7 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState>, SwipeRefres
             override fun onQueryTextSubmit(query: String?) = false
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                problemsAdapter.filter.filter(newText)
+                store.dispatch(ProblemsRequests.SetQuery(newText.orEmpty()))
                 return false
             }
         })
@@ -93,6 +93,7 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState>, SwipeRefres
             state.skipRepeats { oldState, newState ->
                 oldState.problems.status == newState.problems.status
                         && oldState.problems.isFavourite == newState.problems.isFavourite
+                        && oldState.problems.filteredProblems == newState.problems.filteredProblems
             }.select { it.problems }
         }
     }
@@ -104,11 +105,6 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState>, SwipeRefres
 
     override fun onNewState(state: ProblemsState) {
         swipeRefreshLayout.isRefreshing = (state.status == ProblemsState.Status.PENDING)
-        problemsAdapter.setItems(
-                if (state.isFavourite) state.problems.filter { it.isFavourite }.sortedByDescending { it.createdAtMillis }
-                else state.problems.sortedByDescending { it.createdAtMillis },
-                searchView?.query?.toString().orEmpty(),
-                state.isFavourite
-        )
+        problemsAdapter.setItems(state.filteredProblems, state.isFavourite)
     }
 }
