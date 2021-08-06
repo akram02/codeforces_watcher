@@ -29,16 +29,20 @@ class PersistenceController : StoreSubscriber<AppState> {
     }
 
     fun fetchAppState() = AppState(
-            contests = ContestsState(
-                    filters = settings.readContestsFilters().map { Contest.Platform.valueOf(it) }.toMutableSet()
-            ),
-            users = UsersState(
-                    users = DatabaseQueries.Users.getAll(),
-                    sortType = UsersState.SortType.getSortType(settings.readSpinnerSortPosition()),
-                    userAccount = settings.readUserAccount(),
-            ),
-            problems = getProblemsState(),
-            auth = AuthState(authStage = settings.readUserAccount().getAuthStage())
+        contests = getContestsState(),
+        users = getUsersState(),
+        problems = getProblemsState(),
+        auth = getAuthState()
+    )
+
+    private fun getContestsState() = ContestsState(
+        filters = settings.readContestsFilters().map { Contest.Platform.valueOf(it) }.toMutableSet()
+    )
+
+    private fun getUsersState() = UsersState(
+        users = DatabaseQueries.Users.getAll(),
+        sortType = UsersState.SortType.getSortType(settings.readSpinnerSortPosition()),
+        userAccount = settings.readUserAccount(),
     )
 
     private fun getProblemsState(): ProblemsState {
@@ -50,6 +54,8 @@ class PersistenceController : StoreSubscriber<AppState> {
         )
         return state.copy(filteredProblems = state.getFilteredProblems())
     }
+
+    private fun getAuthState() = AuthState(authStage = settings.readUserAccount().getAuthStage())
 
     override fun onNewState(state: AppState) {
         settings.writeSpinnerSortPosition(state.users.sortType.position)
