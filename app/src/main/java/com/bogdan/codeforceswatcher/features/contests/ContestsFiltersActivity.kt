@@ -3,6 +3,8 @@ package com.bogdan.codeforceswatcher.features.contests
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.bogdan.codeforceswatcher.R
+import com.bogdan.codeforceswatcher.features.filters.FiltersEpoxyController
+import com.bogdan.codeforceswatcher.features.filters.models.FilterItem
 import io.xorum.codeforceswatcher.features.contests.models.Contest
 import io.xorum.codeforceswatcher.features.contests.redux.ContestsRequests
 import io.xorum.codeforceswatcher.redux.store
@@ -10,7 +12,7 @@ import kotlinx.android.synthetic.main.activity_filters.*
 
 class ContestsFiltersActivity : AppCompatActivity() {
 
-    private val filtersAdapter: FiltersAdapter = FiltersAdapter(this)
+    private val epoxyController = FiltersEpoxyController()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,8 +21,8 @@ class ContestsFiltersActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        filtersAdapter.setItems(buildFiltersList())
-        recyclerView.adapter = filtersAdapter
+        epoxyController.data = buildFiltersList()
+        recyclerView.adapter = epoxyController.adapter
     }
 
     private fun buildFiltersList(): List<FilterItem> {

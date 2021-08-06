@@ -3,8 +3,8 @@ package com.bogdan.codeforceswatcher.features.problems
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.features.contests.FilterItem
-import com.bogdan.codeforceswatcher.features.contests.FiltersAdapter
+import com.bogdan.codeforceswatcher.features.filters.FiltersEpoxyController
+import com.bogdan.codeforceswatcher.features.filters.models.FilterItem
 import io.xorum.codeforceswatcher.features.problems.redux.ProblemsRequests
 import io.xorum.codeforceswatcher.features.problems.redux.ProblemsState
 import io.xorum.codeforceswatcher.redux.store
@@ -13,7 +13,7 @@ import tw.geothings.rekotlin.StoreSubscriber
 
 class ProblemsFiltersActivity : AppCompatActivity(), StoreSubscriber<ProblemsState> {
 
-    private val filtersAdapter by lazy { FiltersAdapter(this) }
+    private val epoxyController = FiltersEpoxyController()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +22,7 @@ class ProblemsFiltersActivity : AppCompatActivity(), StoreSubscriber<ProblemsSta
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        recyclerView.adapter = filtersAdapter
+        recyclerView.adapter = epoxyController.adapter
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -31,7 +31,7 @@ class ProblemsFiltersActivity : AppCompatActivity(), StoreSubscriber<ProblemsSta
     }
 
     override fun onNewState(state: ProblemsState) {
-        filtersAdapter.setItems(state.tags.toFilterItems(state))
+        epoxyController.data = state.tags.toFilterItems(state)
     }
 
     private fun List<String>.toFilterItems(state: ProblemsState) = map { tag ->
