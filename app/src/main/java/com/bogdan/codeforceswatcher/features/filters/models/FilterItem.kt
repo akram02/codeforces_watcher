@@ -5,4 +5,7 @@ data class FilterItem(
     val title: String,
     val isChecked: Boolean,
     val onSwitchTap: (Boolean) -> Unit
-)
+) {
+
+    override fun toString() = "$imageId$title$onSwitchTap"
+}
