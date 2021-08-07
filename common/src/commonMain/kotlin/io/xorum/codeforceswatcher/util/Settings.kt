@@ -25,4 +25,12 @@ interface Settings {
     fun writeLastPinnedPostLink(pinnedPostLink: String)
 
     fun readLastPinnedPostLink(): String
+
+    fun readProblemsTags(): List<String>
+
+    fun writeProblemsTags(tags: List<String>)
+
+    fun readProblemsSelectedTags(): Set<String>
+
+    fun writeProblemsSelectedTags(tags: Set<String>)
 }

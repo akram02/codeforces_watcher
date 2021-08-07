@@ -23,7 +23,10 @@
         android:name=".features.auth.SignUpActivity"
         android:windowSoftInputMode="adjustPan" />
     <activity
-        android:name=".features.contests.FiltersActivity"
+        android:name=".features.contests.ContestsFiltersActivity"
+        android:theme="@style/AppTheme.NoActionBar" />
+    <activity
+        android:name=".features.problems.ProblemsFiltersActivity"
         android:theme="@style/AppTheme.NoActionBar" />
     <activity android:name=".features.users.UserActivity" />
     <activity

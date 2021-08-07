@@ -40,7 +40,11 @@ class ProblemsRequests {
             DatabaseQueries.Problems.insert(toAddDiff)
         }
 
-        data class Success(val problems: List<Problem>, val tags: List<String>) : Action
+        data class Success(
+                val problems: List<Problem>,
+                val tags: List<String>
+        ) : Action
+
         data class Failure(override val message: Message) : ToastAction
     }
 
@@ -54,4 +58,8 @@ class ProblemsRequests {
 
         data class Success(val problem: Problem) : Action
     }
+
+    class ChangeTagCheckStatus(val tag: String, val isChecked: Boolean) : Action
+
+    class SetQuery(val query: String) : Action
 }

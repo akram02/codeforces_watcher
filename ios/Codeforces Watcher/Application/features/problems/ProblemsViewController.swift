@@ -10,13 +10,12 @@ import UIKit
 import common
 import FirebaseAnalytics
 
-class ProblemsViewController: UIViewControllerWithFab, ReKampStoreSubscriber, UISearchResultsUpdating {
+class ProblemsViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
 
     private let tableView = UITableView()
     private let tableAdapter = ProblemsTableViewAdapter()
     private let refreshControl = UIRefreshControl()
     private let searchController = UISearchController(searchResultsController: nil)
-    private var problems: [Problem] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,7 +57,7 @@ class ProblemsViewController: UIViewControllerWithFab, ReKampStoreSubscriber, UI
     }
     
     @objc private func filterTapped() {
-        presentModal(ProblemsFiltersViewController(["tag 1", "tag 2", "tag 3", "tag 4"]))
+        presentModal(ProblemsFiltersViewController())
     }
 
     private func buildViewTree() {
@@ -109,7 +108,6 @@ class ProblemsViewController: UIViewControllerWithFab, ReKampStoreSubscriber, UI
 
     private func setupSearchView() {
         searchController.run {
-            $0.searchResultsUpdater = self
             $0.obscuresBackgroundDuringPresentation = false
             $0.hidesNavigationBarDuringPresentation = false
 
@@ -127,42 +125,20 @@ class ProblemsViewController: UIViewControllerWithFab, ReKampStoreSubscriber, UI
         tableView.tableHeaderView = searchController.searchBar
     }
 
-    func updateSearchResults(for searchController: UISearchController) {
-        guard let text = searchController.searchBar.text?.lowercased() else { return }
-
-        let filteredProblems = problems.filter {
-            var shouldAdd = false
-
-            [$0.title, $0.subtitle].forEach {
-                if $0.lowercased().contains(text) {
-                    shouldAdd = true
-                }
-            }
-            return shouldAdd
-        }
-
-        tableAdapter.problems = text.isEmpty ? problems : filteredProblems
-
-        tableView.reloadData()
-    }
-
     func onNewState(state: Any) {
         let state = state as! ProblemsState
 
-        problems = state.isFavourite ? state.problems.filter { $0.isFavourite } : state.problems
-
-        if (state.status == ProblemsState.Status.idle) {
+        if (state.status == .idle) {
             refreshControl.endRefreshing()
         }
 
         updateFabButton(state.isFavourite)
 
         tableAdapter.run {
-            $0.problems = problems
+            $0.problems = state.filteredProblems
             $0.noProblemsExplanation = state.isFavourite ? "no_favourite_problems_explanation" : "problems_explanation"
         }
-
-        updateSearchResults(for: searchController)
+        tableView.reloadData()
     }
 
     @objc private func refreshProblems(_ sender: Any) {
@@ -189,10 +165,15 @@ extension ProblemsViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         tableView.refreshControl = refreshControl
         searchController.searchBar.setShowsCancelButton(false, animated: true)
+        store.dispatch(action: ProblemsRequests.SetQuery(query: ""))
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         tableView.refreshControl = refreshControl
         searchController.dismiss(animated: false)
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        store.dispatch(action: ProblemsRequests.SetQuery(query: searchText))
     }
 }

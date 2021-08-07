@@ -9,6 +9,9 @@
 import Foundation
 import common
 
+fileprivate let KEY_PROBLEMS_SELECTED_TAGS = "key_problems_selected_tags"
+fileprivate let KEY_PROBLEMS_TAGS = "key_problems_tags"
+
 class Prefs: Settings {
 
     func readUserAccount() -> UserAccount? {
@@ -73,5 +76,22 @@ class Prefs: Settings {
         let domain = Bundle.main.bundleIdentifier!
         UserDefaults.standard.removePersistentDomain(forName: domain)
         UserDefaults.standard.synchronize()
+    }
+    
+    func readProblemsTags() -> [String] {
+        UserDefaults.standard.value(forKey: KEY_PROBLEMS_TAGS) as? Array<String> ?? Array()
+    }
+    
+    func writeProblemsTags(tags: [String]) {
+        UserDefaults.standard.setValue(tags, forKey: KEY_PROBLEMS_TAGS)
+    }
+    
+    func readProblemsSelectedTags() -> Set<String> {
+        let tags = UserDefaults.standard.value(forKey: KEY_PROBLEMS_SELECTED_TAGS) as? Array<String> ?? Array()
+        return Set(tags)
+    }
+    
+    func writeProblemsSelectedTags(tags: Set<String>) {
+        UserDefaults.standard.setValue(Array(tags), forKey: KEY_PROBLEMS_SELECTED_TAGS)
     }
 }

@@ -15,8 +15,9 @@ import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.AddUserBottomSheet
 import com.bogdan.codeforceswatcher.components.WebViewActivity
 import com.bogdan.codeforceswatcher.features.contests.ContestsFragment
-import com.bogdan.codeforceswatcher.features.contests.FiltersActivity
+import com.bogdan.codeforceswatcher.features.contests.ContestsFiltersActivity
 import com.bogdan.codeforceswatcher.features.news.NewsFragment
+import com.bogdan.codeforceswatcher.features.problems.ProblemsFiltersActivity
 import com.bogdan.codeforceswatcher.features.problems.ProblemsFragment
 import com.bogdan.codeforceswatcher.features.users.UsersFragment
 import com.bogdan.codeforceswatcher.util.FeedbackController
@@ -117,7 +118,7 @@ class MainActivity : AppCompatActivity() {
             )
         }
         ivFilter.setOnClickListener {
-            startActivity(Intent(this, FiltersActivity::class.java))
+            startActivity(Intent(this, ContestsFiltersActivity::class.java))
         }
         fab.setImageDrawable(getDrawable(R.drawable.ic_eye))
     }
@@ -136,7 +137,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun onProblemsTabSelected() {
         llSorting.visibility = View.GONE
-        ivFilter.visibility = View.GONE
+        ivFilter.visibility = View.VISIBLE
         searchViewItem?.isVisible = true
 
         var problemsIsFavourite = store.state.problems.isFavourite
@@ -147,6 +148,10 @@ class MainActivity : AppCompatActivity() {
 
             store.dispatch(ProblemsActions.ChangeTypeProblems(problemsIsFavourite))
             updateProblemsFAB(problemsIsFavourite)
+        }
+
+        ivFilter.setOnClickListener {
+            startActivity(Intent(this, ProblemsFiltersActivity::class.java))
         }
     }
 

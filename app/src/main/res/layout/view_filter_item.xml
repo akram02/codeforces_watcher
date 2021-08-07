@@ -7,11 +7,11 @@
     android:padding="8dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/ivContest"
+        android:id="@+id/ivIcon"
         android:layout_width="42dp"
         android:layout_height="42dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/kickstart"
+        tools:src="@drawable/kickstart"
         app:civ_border_color="@color/blue_green"
         app:civ_border_width="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/ivContest"
+        app:layout_constraintStart_toEndOf="@id/ivIcon"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Codeforces" />
 
