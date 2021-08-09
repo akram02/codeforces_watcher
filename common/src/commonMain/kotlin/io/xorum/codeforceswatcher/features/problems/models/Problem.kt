@@ -3,7 +3,6 @@ package io.xorum.codeforceswatcher.features.problems.models
 import io.xorum.codeforceswatcher.DbProblem
 import kotlinx.serialization.Serializable
 
-@Serializable
 data class Problem(
         val id: String,
         val title: String,
@@ -12,7 +11,7 @@ data class Problem(
         val link: String,
         val createdAtMillis: Long,
         val tags: List<String>,
-        var isFavourite: Boolean = false // TODO: make val
+        var isFavourite: Boolean // TODO: make val
 ) {
 
     enum class Platform {

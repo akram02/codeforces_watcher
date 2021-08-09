@@ -3,6 +3,7 @@ package io.xorum.codeforceswatcher.features.problems.redux
 import io.xorum.codeforceswatcher.db.DatabaseQueries
 import io.xorum.codeforceswatcher.features.problems.ProblemsRepository
 import io.xorum.codeforceswatcher.features.problems.models.Problem
+import io.xorum.codeforceswatcher.features.problems.response.ApiProblem
 import io.xorum.codeforceswatcher.util.Response
 import io.xorum.codeforceswatcher.redux.*
 import io.xorum.codeforceswatcher.util.ProblemsDiff
@@ -28,9 +29,9 @@ class ProblemsRequests {
             store.dispatch(result)
         }
 
-        private fun mapProblems(problems: List<Problem>): List<Problem> {
+        private fun mapProblems(problems: List<ApiProblem>): List<Problem> {
             val problemsMap = store.state.problems.problems.associateBy({ it.id }, { it.isFavourite })
-            return problems.map { it.copy(isFavourite = problemsMap[it.id] ?: false) }
+            return problems.mapNotNull { it.toProblem(isFavourite = problemsMap[it.id] ?: false) }
         }
 
         private fun getDiff(newProblems: List<Problem>) = ProblemsDiff(store.state.problems.problems, newProblems).getDiff()
