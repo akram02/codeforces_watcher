@@ -1,8 +1,5 @@
 package io.xorum.codeforceswatcher.features.contests.models
 
-import kotlinx.serialization.Serializable
-
-@Serializable
 data class Contest(
         val platform: Platform,
         val title: String,
