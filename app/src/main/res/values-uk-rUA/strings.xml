@@ -118,4 +118,5 @@ Codeforces WatchR дає можливiсть:
     <string name="stay_logged_in">Залишитися в системі</string>
     <string name="forgot_password_empty_email">Введіть дійсну електронну пошту і натисніть \ "Забули пароль \"!</string>
     <string name="fields_can_not_be_empty">Поля не можуть бути порожніми</string>
+    <string name="forgot_password_success">Вам надіслано електронний лист з подальшими інструкціями! Будь ласка, перевірте!</string>
 </resources>
