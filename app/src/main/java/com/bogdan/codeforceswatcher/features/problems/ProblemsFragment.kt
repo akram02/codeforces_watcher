@@ -1,5 +1,6 @@
 package com.bogdan.codeforceswatcher.features.problems
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.*
@@ -21,7 +22,7 @@ import tw.geothings.rekotlin.StoreSubscriber
 class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState>, SwipeRefreshLayout.OnRefreshListener {
 
     private lateinit var problemsAdapter: ProblemsAdapter
-    private var searchView: SearchView? = null
+    var searchView: SearchView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +41,7 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState>, SwipeRefres
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater?.inflate(R.menu.menu_search, menu)
+        inflater?.inflate(R.menu.menu_problems, menu)
         val searchItem = menu?.findItem(R.id.action_search)
         searchView = searchItem?.actionView as? SearchView
 
@@ -55,6 +56,19 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState>, SwipeRefres
                 return false
             }
         })
+
+        val query = store.state.problems.query
+        if (query.isNotEmpty()) {
+            searchItem?.expandActionView()
+            searchView?.setQuery(query, false)
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId == R.id.action_filter) {
+            startActivity(Intent(activity, ProblemsFiltersActivity::class.java))
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun adjustSearchViewHint() {

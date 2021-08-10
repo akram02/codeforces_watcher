@@ -6,7 +6,6 @@ import io.xorum.codeforceswatcher.features.problems.models.Problem
 import io.xorum.codeforceswatcher.features.problems.response.ApiProblem
 import io.xorum.codeforceswatcher.util.Response
 import io.xorum.codeforceswatcher.redux.*
-import io.xorum.codeforceswatcher.util.ProblemsDiff
 import tw.geothings.rekotlin.Action
 
 class ProblemsRequests {
@@ -19,8 +18,7 @@ class ProblemsRequests {
             val result = when (val response = problemsRepository.getAll()) {
                 is Response.Success -> {
                     val problems = mapProblems(response.result.problems)
-                    val (toAddDiff, toUpdateDiff) = getDiff(problems)
-                    updateDatabaseProblems(toAddDiff, toUpdateDiff)
+                    updateDatabaseProblems(problems)
                     Success(problems, response.result.tags)
                 }
                 is Response.Failure -> Failure(if (isInitiatedByUser) response.error.toMessage() else Message.None)
@@ -34,11 +32,9 @@ class ProblemsRequests {
             return problems.mapNotNull { it.toProblem(isFavourite = problemsMap[it.id] ?: false) }
         }
 
-        private fun getDiff(newProblems: List<Problem>) = ProblemsDiff(store.state.problems.problems, newProblems).getDiff()
-
-        private fun updateDatabaseProblems(toAddDiff: List<Problem>, toUpdateDiff: List<Problem>) {
-            DatabaseQueries.Problems.update(toUpdateDiff)
-            DatabaseQueries.Problems.insert(toAddDiff)
+        private fun updateDatabaseProblems(problems: List<Problem>) {
+            DatabaseQueries.Problems.deleteAll()
+            DatabaseQueries.Problems.insert(problems)
         }
 
         data class Success(
