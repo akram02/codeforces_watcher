@@ -12,13 +12,9 @@ import com.squareup.sqldelight.android.AndroidSqliteDriver
 import io.xorum.codeforceswatcher.CWDatabase
 import io.xorum.codeforceswatcher.features.FetchOnStartData
 import io.xorum.codeforceswatcher.features.notifications.redux.NotificationsRequests
-import io.xorum.codeforceswatcher.util.BACKEND_PROD_LINK
-import io.xorum.codeforceswatcher.util.BACKEND_STAGING_LINK
-import io.xorum.codeforceswatcher.util.backendLink
 import io.xorum.codeforceswatcher.redux.*
 import io.xorum.codeforceswatcher.redux.middlewares.toastHandlers
-import io.xorum.codeforceswatcher.util.defineLang
-import io.xorum.codeforceswatcher.util.settings
+import io.xorum.codeforceswatcher.util.*
 import java.util.*
 
 class CwApp : Application() {
@@ -33,6 +29,7 @@ class CwApp : Application() {
         initToastHandler()
         initAnalyticsController()
         initFirebaseController()
+        initStrings()
 
         persistenceController.onAppCreated()
 
@@ -63,6 +60,10 @@ class CwApp : Application() {
 
     private fun initFirebaseController() {
         firebaseController = FirebaseController()
+    }
+
+    private fun initStrings() {
+        Strings.context = this
     }
 
     private fun setBackendLink() = if (BuildConfig.DEBUG) {
