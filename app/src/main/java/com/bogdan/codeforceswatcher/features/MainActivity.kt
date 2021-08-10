@@ -48,6 +48,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateFragment() {
+        (currentTabFragment as? ProblemsFragment)?.searchView?.setOnQueryTextListener(null)
+
         val bottomNavSelectedItemId = selectedHomeTab.menuItemId
 
         tvPageTitle.text = getString(selectedHomeTab.titleId)
@@ -137,7 +139,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun onProblemsTabSelected() {
         llSorting.visibility = View.GONE
-        ivFilter.visibility = View.VISIBLE
+        ivFilter.visibility = View.GONE
         searchViewItem?.isVisible = true
 
         var problemsIsFavourite = store.state.problems.isFavourite
@@ -148,10 +150,6 @@ class MainActivity : AppCompatActivity() {
 
             store.dispatch(ProblemsActions.ChangeTypeProblems(problemsIsFavourite))
             updateProblemsFAB(problemsIsFavourite)
-        }
-
-        ivFilter.setOnClickListener {
-            startActivity(Intent(this, ProblemsFiltersActivity::class.java))
         }
     }
 
