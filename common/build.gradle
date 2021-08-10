@@ -3,9 +3,10 @@ apply plugin: 'kotlinx-serialization'
 apply plugin: 'org.jetbrains.kotlin.native.cocoapods'
 apply plugin: 'co.touchlab.kotlinxcodesync'
 apply plugin: 'com.squareup.sqldelight'
+apply plugin: 'com.android.library'
 
 kotlin {
-    jvm()
+    android()
 
     sourceSets {
         commonMain {
@@ -35,7 +36,7 @@ kotlin {
             }
         }
 
-        jvmMain {
+        androidMain {
             dependencies {
                 implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
                 implementation "com.squareup.sqldelight:sqlite-driver:$sqlDelight_version"
@@ -43,7 +44,7 @@ kotlin {
             }
         }
 
-        jvmTest {
+        androidTest {
             dependencies {
                 implementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
                 implementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
@@ -74,6 +75,14 @@ kotlin {
 
 configurations {
     compileClasspath
+}
+
+android {
+    compileSdkVersion 29
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 29
+    }
 }
 
 xcode {
