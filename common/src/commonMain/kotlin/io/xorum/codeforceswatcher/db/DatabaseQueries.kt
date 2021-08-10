@@ -126,5 +126,7 @@ internal object DatabaseQueries {
                     id = id
             )
         }
+
+        fun deleteAll() = database.problemQueries.deleteAll()
     }
 }
