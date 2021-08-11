@@ -51,8 +51,9 @@ open class VideoEnabledWebChromeClient(
      * Indicates if the video is being displayed using a custom view (typically full-screen)
      * @return true it the video is being displayed using a custom view (typically full-screen)
      */
-    private var isVideoFullscreen =
-        false // Indicates if the video is being displayed using a custom view (typically full-screen)
+    // Indicates if the video is being displayed using a custom view (typically full-screen)
+    private var isVideoFullscreen = false
+
     private var videoViewContainer: FrameLayout? = null
     private var videoViewCallback: CustomViewCallback? = null
     private var toggledFullscreenCallback: ToggledFullscreenCallback? = null
@@ -130,12 +131,12 @@ open class VideoEnabledWebChromeClient(
         }
     }
 
+    // Available in API level 14+, deprecated in API level 18+
     override fun onShowCustomView(
         view: View,
         requestedOrientation: Int,
         callback: CustomViewCallback
-    ) // Available in API level 14+, deprecated in API level 18+
-    {
+    ) {
         onShowCustomView(view, callback)
     }
 
@@ -162,8 +163,8 @@ open class VideoEnabledWebChromeClient(
         }
     }
 
-    override fun getVideoLoadingProgressView(): View? // Video will start loading
-    {
+    // Video will start loading
+    override fun getVideoLoadingProgressView(): View? {
         return if (loadingView != null) {
             loadingView?.visibility = View.VISIBLE
             loadingView
@@ -172,22 +173,22 @@ open class VideoEnabledWebChromeClient(
         }
     }
 
-    override fun onPrepared(mp: MediaPlayer) // Video will start playing, only called in the case of android.widget.VideoView (typically API level <11)
-    {
+    // Video will start playing, only called in the case of android.widget.VideoView (typically API level <11)
+    override fun onPrepared(mp: MediaPlayer) {
         loadingView?.visibility = View.GONE
     }
 
-    override fun onCompletion(mp: MediaPlayer) // Video finished playing, only called in the case of android.widget.VideoView (typically API level <11)
-    {
+    // Video finished playing, only called in the case of android.widget.VideoView (typically API level <11)
+    override fun onCompletion(mp: MediaPlayer) {
         onHideCustomView()
     }
 
+    // Error while playing video, only called in the case of android.widget.VideoView (typically API level <11)
     override fun onError(
         mp: MediaPlayer,
         what: Int,
         extra: Int
-    ): Boolean // Error while playing video, only called in the case of android.widget.VideoView (typically API level <11)
-    {
+    ): Boolean {
         return false // By returning false, onCompletion() will be called
     }
 }

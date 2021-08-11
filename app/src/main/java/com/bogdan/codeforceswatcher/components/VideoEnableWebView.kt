@@ -79,10 +79,11 @@ class VideoEnabledWebView : WebView {
     private fun addJavascriptInterface() {
         if (!addedJavascriptInterface) {
             // Add javascript interface to be called when the video ends (must be done before page load)
+            // Must match Javascript interface name of com.bogdan.codeforceswatcher.components.VideoEnabledWebChromeClient
             addJavascriptInterface(
                 JavascriptInterface(),
                 "_VideoEnabledWebView"
-            ) // Must match Javascript interface name of com.bogdan.codeforceswatcher.components.VideoEnabledWebChromeClient
+            )
             addedJavascriptInterface = true
         }
     }
