@@ -56,15 +56,9 @@ kotlin {
                 implementation project(':common')
             }
         }
-
-        androidMain {
-
-        }
     }
 
-    android {
-
-    }
+    android {}
 }
 
 allprojects {

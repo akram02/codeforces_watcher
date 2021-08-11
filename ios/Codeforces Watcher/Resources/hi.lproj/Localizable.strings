@@ -120,3 +120,5 @@
 
 "passwords_do_not_match" = "पासवर्ड डॉन 'टी मैच";
 "ratings_have_been_updated" = "रेटिंग अपडेट हो चुकी है";
+
+"forgot_password_success" = "आगे के निर्देशों के साथ ईमेल आपको भेज दिया गया है! कृपया जांचें!";

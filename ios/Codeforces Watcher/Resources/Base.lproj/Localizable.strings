@@ -121,3 +121,5 @@
 
 "passwords_do_not_match" = "Passwords don't match";
 "ratings_have_been_updated" = "Ratings have been updated";
+
+"forgot_password_success" = "Email with further instructions has been sent to you! Please check!";

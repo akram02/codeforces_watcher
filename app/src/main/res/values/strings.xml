@@ -119,4 +119,5 @@ Download it now on Google Play - https://play.google.com/store/apps/details?id=c
   <string name="stay_logged_in">Stay logged in</string>
   <string name="forgot_password_empty_email">Enter a valid email and click \"Forgot Password\"!</string>
   <string name="fields_can_not_be_empty">Fields can\'t be empty</string>
+  <string name="forgot_password_success">Email with further instructions has been sent to you! Please check!</string>
 </resources>

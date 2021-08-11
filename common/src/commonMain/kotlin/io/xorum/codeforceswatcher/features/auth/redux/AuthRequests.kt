@@ -2,6 +2,7 @@ package io.xorum.codeforceswatcher.features.auth.redux
 
 import io.xorum.codeforceswatcher.features.notifications.NotificationsRepository
 import io.xorum.codeforceswatcher.redux.*
+import io.xorum.codeforceswatcher.util.Strings
 import tw.geothings.rekotlin.Action
 
 class AuthRequests {
@@ -62,8 +63,7 @@ class AuthRequests {
         override suspend fun execute() = firebaseController.sendPasswordReset(email) { exception ->
             exception?.let {
                 store.dispatch(Failure(it.message.toMessage()))
-            } ?: store.dispatch(Success("Email with further instructions has been sent to you! Please check!".toMessage()))
-            // TODO: translate string
+            } ?: store.dispatch(Success(Strings.get("forgot_password_success").toMessage()))
         }
 
         data class Success(override val message: Message) : ToastAction
