@@ -10,8 +10,8 @@ fun newsReducer(action: Action, state: AppState): NewsState {
     when (action) {
         is NewsRequests.FetchNews.Success -> {
             newState = newState.copy(
-                    news = action.news,
-                    status = NewsState.Status.IDLE
+                news = action.news,
+                status = NewsState.Status.IDLE
             )
         }
         is NewsRequests.FetchNews -> {

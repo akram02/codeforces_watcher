@@ -14,11 +14,10 @@ import de.hdodenhof.circleimageview.CircleImageView
 import io.xorum.codeforceswatcher.features.news.redux.NewsRequests
 import io.xorum.codeforceswatcher.redux.store
 import io.xorum.codeforceswatcher.util.AnalyticsEvents
-import java.lang.IllegalStateException
 
 class NewsAdapter(
-        private val context: Context,
-        private val itemClickListener: (link: String, title: String, openEvent: String, shareEvent: String) -> Unit
+    private val context: Context,
+    private val itemClickListener: (link: String, title: String, openEvent: String, shareEvent: String) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var items: List<NewsItem> = listOf()
@@ -28,33 +27,39 @@ class NewsAdapter(
     override fun getItemCount() = items.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-            when (viewType) {
-                STUB_VIEW_TYPE -> {
-                    val layout = LayoutInflater.from(context).inflate(R.layout.view_news_stub, parent, false)
-                    StubViewHolder(layout)
-                }
-                POST_WITH_COMMENT_VIEW_TYPE -> {
-                    val layout = LayoutInflater.from(context).inflate(R.layout.view_post_with_comment_item, parent, false)
-                    PostWithCommentViewHolder(layout)
-                }
-                PINNED_ITEM_VIEW_TYPE -> {
-                    val layout = LayoutInflater.from(context).inflate(R.layout.view_pinned_action, parent, false)
-                    PinnedItemViewHolder(layout)
-                }
-                FEEDBACK_ITEM_VIEW_TYPE -> {
-                    val layout = LayoutInflater.from(context).inflate(R.layout.view_feedback_card_view, parent, false)
-                    FeedbackItemViewHolder(layout)
-                }
-                POST_VIEW_TYPE -> {
-                    val layout = LayoutInflater.from(context).inflate(R.layout.view_post_item, parent, false)
-                    PostViewHolder(layout)
-                }
-                VIDEO_ITEM_VIEW_TYPE -> {
-                    val layout = LayoutInflater.from(context).inflate(R.layout.view_video_item, parent, false)
-                    VideoItemViewHolder(layout)
-                }
-                else -> throw IllegalStateException()
+        when (viewType) {
+            STUB_VIEW_TYPE -> {
+                val layout =
+                    LayoutInflater.from(context).inflate(R.layout.view_news_stub, parent, false)
+                StubViewHolder(layout)
             }
+            POST_WITH_COMMENT_VIEW_TYPE -> {
+                val layout = LayoutInflater.from(context)
+                    .inflate(R.layout.view_post_with_comment_item, parent, false)
+                PostWithCommentViewHolder(layout)
+            }
+            PINNED_ITEM_VIEW_TYPE -> {
+                val layout =
+                    LayoutInflater.from(context).inflate(R.layout.view_pinned_action, parent, false)
+                PinnedItemViewHolder(layout)
+            }
+            FEEDBACK_ITEM_VIEW_TYPE -> {
+                val layout = LayoutInflater.from(context)
+                    .inflate(R.layout.view_feedback_card_view, parent, false)
+                FeedbackItemViewHolder(layout)
+            }
+            POST_VIEW_TYPE -> {
+                val layout =
+                    LayoutInflater.from(context).inflate(R.layout.view_post_item, parent, false)
+                PostViewHolder(layout)
+            }
+            VIDEO_ITEM_VIEW_TYPE -> {
+                val layout =
+                    LayoutInflater.from(context).inflate(R.layout.view_video_item, parent, false)
+                VideoItemViewHolder(layout)
+            }
+            else -> throw IllegalStateException()
+        }
 
     override fun getItemViewType(position: Int): Int {
         return when {
@@ -72,7 +77,10 @@ class NewsAdapter(
         when (val item = items[position]) {
             is NewsItem.Stub -> return
             is NewsItem.PinnedItem -> bindPinnedItem(viewHolder as PinnedItemViewHolder, item)
-            is NewsItem.PostWithCommentItem -> bindPostWithComment(viewHolder as PostWithCommentViewHolder, item)
+            is NewsItem.PostWithCommentItem -> bindPostWithComment(
+                viewHolder as PostWithCommentViewHolder,
+                item
+            )
             is NewsItem.PostItem -> bindPost(viewHolder as PostViewHolder, item)
             is NewsItem.FeedbackItem -> bindFeedbackItem(viewHolder as FeedbackItemViewHolder, item)
             is NewsItem.VideoItem -> bindVideoItem(viewHolder as VideoItemViewHolder, item)
@@ -80,8 +88,8 @@ class NewsAdapter(
     }
 
     private fun bindPostWithComment(
-            viewHolder: PostWithCommentViewHolder,
-            postWithComment: NewsItem.PostWithCommentItem
+        viewHolder: PostWithCommentViewHolder,
+        postWithComment: NewsItem.PostWithCommentItem
     ) = with(postWithComment) {
         with(viewHolder) {
             tvTitle.text = blogTitle
@@ -93,53 +101,75 @@ class NewsAdapter(
             tvCommentContent.text = commentContent
 
             onCommentClickListener = {
-                itemClickListener(commentLink, blogTitle, AnalyticsEvents.POST_OPENED, AnalyticsEvents.NEWS_SHARED)
+                itemClickListener(
+                    commentLink,
+                    blogTitle,
+                    AnalyticsEvents.POST_OPENED,
+                    AnalyticsEvents.NEWS_SHARED
+                )
             }
 
             onPostClickListener = {
-                itemClickListener(postLink, blogTitle, AnalyticsEvents.POST_OPENED, AnalyticsEvents.NEWS_SHARED)
+                itemClickListener(
+                    postLink,
+                    blogTitle,
+                    AnalyticsEvents.POST_OPENED,
+                    AnalyticsEvents.NEWS_SHARED
+                )
             }
 
-            (ivPostAuthorAvatar as CircleImageView).borderColor = ContextCompat.getColor(context, postAuthorRankColor)
-            (ivCommentatorAvatar as CircleImageView).borderColor = ContextCompat.getColor(context, commentatorRankColor)
+            (ivPostAuthorAvatar as CircleImageView).borderColor =
+                ContextCompat.getColor(context, postAuthorRankColor)
+            (ivCommentatorAvatar as CircleImageView).borderColor =
+                ContextCompat.getColor(context, commentatorRankColor)
         }
 
         Picasso.get().load(commentatorAvatar)
-                .placeholder(R.drawable.no_avatar)
-                .into(viewHolder.ivCommentatorAvatar)
+            .placeholder(R.drawable.no_avatar)
+            .into(viewHolder.ivCommentatorAvatar)
 
         Picasso.get().load(postAuthorAvatar)
-                .placeholder(R.drawable.no_avatar)
-                .into(viewHolder.ivPostAuthorAvatar)
+            .placeholder(R.drawable.no_avatar)
+            .into(viewHolder.ivPostAuthorAvatar)
     }
 
     private fun bindPost(
-            viewHolder: PostViewHolder,
-            post: NewsItem.PostItem
+        viewHolder: PostViewHolder,
+        post: NewsItem.PostItem
     ) = with(post) {
         with(viewHolder) {
             tvTitle.text = blogTitle
             tvHandleAndTime.text = agoText
             tvContent.text = content
             onItemClickListener = {
-                itemClickListener(link, blogTitle, AnalyticsEvents.POST_OPENED, AnalyticsEvents.NEWS_SHARED)
+                itemClickListener(
+                    link,
+                    blogTitle,
+                    AnalyticsEvents.POST_OPENED,
+                    AnalyticsEvents.NEWS_SHARED
+                )
             }
             (ivAvatar as CircleImageView).borderColor = ContextCompat.getColor(context, rankColor)
         }
 
         Picasso.get().load(authorAvatar)
-                .placeholder(R.drawable.no_avatar)
-                .into(viewHolder.ivAvatar)
+            .placeholder(R.drawable.no_avatar)
+            .into(viewHolder.ivAvatar)
     }
 
     private fun bindPinnedItem(
-            viewHolder: PinnedItemViewHolder,
-            pinnedItem: NewsItem.PinnedItem
+        viewHolder: PinnedItemViewHolder,
+        pinnedItem: NewsItem.PinnedItem
     ) = with(pinnedItem) {
         with(viewHolder) {
             tvTitle.text = title
             onItemClickListener = {
-                itemClickListener(pinnedItem.link, pinnedItem.title, AnalyticsEvents.PINNED_POST_OPENED, AnalyticsEvents.NEWS_SHARED)
+                itemClickListener(
+                    pinnedItem.link,
+                    pinnedItem.title,
+                    AnalyticsEvents.PINNED_POST_OPENED,
+                    AnalyticsEvents.NEWS_SHARED
+                )
             }
             onCrossClickListener = {
                 store.dispatch(NewsRequests.RemovePinnedPost(pinnedItem.link))
@@ -148,8 +178,8 @@ class NewsAdapter(
     }
 
     private fun bindFeedbackItem(
-            viewHolder: FeedbackItemViewHolder,
-            feedbackItem: NewsItem.FeedbackItem
+        viewHolder: FeedbackItemViewHolder,
+        feedbackItem: NewsItem.FeedbackItem
     ) = with(feedbackItem) {
         with(viewHolder) {
             tvTitle.text = textTitle
@@ -175,8 +205,8 @@ class NewsAdapter(
     }
 
     private fun bindVideoItem(
-            viewHolder: VideoItemViewHolder,
-            videoItem: NewsItem.VideoItem
+        viewHolder: VideoItemViewHolder,
+        videoItem: NewsItem.VideoItem
     ) = with(videoItem) {
         with(viewHolder) {
             tvTitle.text = title
@@ -184,21 +214,29 @@ class NewsAdapter(
             tvHandleAndTime.text = agoText
 
             onItemClickListener = {
-                itemClickListener(link, title, AnalyticsEvents.VIDEO_OPENED, AnalyticsEvents.VIDEO_SHARED)
+                itemClickListener(
+                    link,
+                    title,
+                    AnalyticsEvents.VIDEO_OPENED,
+                    AnalyticsEvents.VIDEO_SHARED
+                )
             }
         }
 
         Picasso.get().load(authorAvatar)
-                .placeholder(R.drawable.no_avatar)
-                .into(viewHolder.ivAvatar)
+            .placeholder(R.drawable.no_avatar)
+            .into(viewHolder.ivAvatar)
 
         Picasso.get().load(thumbnailLink)
-                .placeholder(R.drawable.video_placeholder)
-                .into(viewHolder.ivThumbnail)
+            .placeholder(R.drawable.video_placeholder)
+            .into(viewHolder.ivThumbnail)
     }
 
     fun setItems(actionsList: List<NewsItem>) {
-        items = if (actionsList.isEmpty() || (actionsList.size == 1 && actionsList.first() is NewsItem.FeedbackItem)) listOf(NewsItem.Stub)
+        items =
+            if (actionsList.isEmpty() || (actionsList.size == 1 && actionsList.first() is NewsItem.FeedbackItem)) listOf(
+                NewsItem.Stub
+            )
             else actionsList
         notifyDataSetChanged()
     }

@@ -20,8 +20,8 @@ lateinit var getLang: () -> String
 
 val store by lazy {
     Store(
-            reducer = ::appReducer,
-            state = persistenceController.fetchAppState(),
-            middleware = listOf(appMiddleware, toastMiddleware)
+        reducer = ::appReducer,
+        state = persistenceController.fetchAppState(),
+        middleware = listOf(appMiddleware, toastMiddleware)
     )
 }

@@ -3,8 +3,8 @@ package io.xorum.codeforceswatcher.util
 import io.xorum.codeforceswatcher.features.users.models.User
 
 class UsersDiff(
-        private val allUsers: List<User>,
-        private val newUsers: List<User>
+    private val allUsers: List<User>,
+    private val newUsers: List<User>
 ) {
 
     fun getDiff(): Pair<List<User>, List<User>> {

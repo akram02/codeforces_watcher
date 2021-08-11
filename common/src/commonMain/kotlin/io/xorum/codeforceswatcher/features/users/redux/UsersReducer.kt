@@ -13,9 +13,9 @@ fun usersReducer(action: Action, state: AppState): UsersState {
         }
         is UsersRequests.FetchUserData.Success -> {
             newState = newState.copy(
-                    status = UsersState.Status.IDLE,
-                    users = action.users,
-                    userAccount = action.userAccount
+                status = UsersState.Status.IDLE,
+                users = action.users,
+                userAccount = action.userAccount
             )
         }
         is UsersRequests.FetchUserData.Failure -> {
@@ -23,15 +23,15 @@ fun usersReducer(action: Action, state: AppState): UsersState {
         }
         is UsersRequests.FetchUser -> {
             newState = newState.copy(
-                    status = UsersState.Status.PENDING,
-                    currentUser = (state.users.users + state.users.userAccount?.codeforcesUser).find { it?.handle == action.handle }
+                status = UsersState.Status.PENDING,
+                currentUser = (state.users.users + state.users.userAccount?.codeforcesUser).find { it?.handle == action.handle }
             )
         }
         is UsersRequests.FetchUser.Success -> {
             newState = newState.copy(
-                    status = UsersState.Status.IDLE,
-                    currentUser = action.user,
-                    users = state.users.users.map { if (it.handle == action.user.handle) action.user else it }
+                status = UsersState.Status.IDLE,
+                currentUser = action.user,
+                users = state.users.users.map { if (it.handle == action.user.handle) action.user else it }
             )
         }
         is UsersRequests.DeleteUser -> {
@@ -39,8 +39,8 @@ fun usersReducer(action: Action, state: AppState): UsersState {
         }
         is UsersRequests.DeleteUser.Success -> {
             newState = newState.copy(
-                    users = state.users.users.minus(action.user),
-                    status = UsersState.Status.DONE
+                users = state.users.users.minus(action.user),
+                status = UsersState.Status.DONE
             )
         }
         is UsersRequests.DeleteUser.Failure -> {
@@ -56,7 +56,10 @@ fun usersReducer(action: Action, state: AppState): UsersState {
             newState = newState.copy(addUserStatus = UsersState.Status.IDLE)
         }
         is UsersRequests.AddUser.Success -> {
-            newState = newState.copy(users = newState.users.plus(action.user), addUserStatus = UsersState.Status.DONE)
+            newState = newState.copy(
+                users = newState.users.plus(action.user),
+                addUserStatus = UsersState.Status.DONE
+            )
         }
         is UsersActions.ClearAddUserState -> {
             newState = newState.copy(addUserStatus = UsersState.Status.IDLE)
@@ -66,8 +69,8 @@ fun usersReducer(action: Action, state: AppState): UsersState {
         }
         is UsersRequests.Destroy -> {
             newState = newState.copy(
-                    userAccount = null,
-                    users = listOf()
+                userAccount = null,
+                users = listOf()
             )
         }
     }

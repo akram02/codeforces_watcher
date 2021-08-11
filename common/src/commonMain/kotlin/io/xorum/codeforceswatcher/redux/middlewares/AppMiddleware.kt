@@ -50,8 +50,14 @@ private fun doActionsOnLogOut(action: Action) = scope.launch {
 
 private fun fetchUsersData(action: Action) = scope.launch {
     val request = when (action) {
-        is AuthRequests.SignIn.Success -> UsersRequests.FetchUserData(FetchUserDataType.REFRESH, isInitiatedByUser = false)
-        is AuthRequests.SignUp.Success -> UsersRequests.FetchUserData(FetchUserDataType.PERSIST, isInitiatedByUser = false)
+        is AuthRequests.SignIn.Success -> UsersRequests.FetchUserData(
+            FetchUserDataType.REFRESH,
+            isInitiatedByUser = false
+        )
+        is AuthRequests.SignUp.Success -> UsersRequests.FetchUserData(
+            FetchUserDataType.PERSIST,
+            isInitiatedByUser = false
+        )
         else -> return@launch
     }
     store.dispatch(request)
@@ -77,7 +83,10 @@ private fun sendAnalytics(action: Action) = scope.launch {
         is AuthRequests.LogOut.Success -> Pair(AnalyticsEvents.LOG_OUT, null)
         is AuthRequests.SendPasswordReset.Success -> Pair(AnalyticsEvents.RESTORE_PASSWORD, null)
 
-        is VerificationRequests.VerifyCodeforces.Success -> Pair(AnalyticsEvents.VERIFY_DONE, mapOf("platform" to "codeforces"))
+        is VerificationRequests.VerifyCodeforces.Success -> Pair(
+            AnalyticsEvents.VERIFY_DONE,
+            mapOf("platform" to "codeforces")
+        )
 
         is UsersRequests.FetchUserData.Success -> Pair(AnalyticsEvents.FETCH_USERS_SUCCESS, null)
         is UsersRequests.FetchUserData.Failure -> Pair(AnalyticsEvents.FETCH_USERS_FAILURE, null)
@@ -96,7 +105,12 @@ private fun sendAnalytics(action: Action) = scope.launch {
 
 private fun fetchOnStartData(action: Action) = scope.launch {
     if (action is FetchOnStartData) {
-        store.dispatch(UsersRequests.FetchUserData(FetchUserDataType.REFRESH, isInitiatedByUser = false))
+        store.dispatch(
+            UsersRequests.FetchUserData(
+                FetchUserDataType.REFRESH,
+                isInitiatedByUser = false
+            )
+        )
         store.dispatch(NewsRequests.FetchNews(isInitiatedByUser = false))
         store.dispatch(ContestsRequests.FetchContests(isInitiatedByUser = false))
         store.dispatch(ProblemsRequests.FetchProblems(isInitiatedByUser = false))

@@ -10,7 +10,8 @@ import io.xorum.codeforceswatcher.util.BaseFeedbackController
 import io.xorum.codeforceswatcher.util.FeedUIModel
 
 class FeedbackController(private val context: Context) : BaseFeedbackController() {
-    private val sharedPreferences = context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
+    private val sharedPreferences =
+        context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
     private val editor = sharedPreferences.edit()
 
     override var currentShowingItem: Int
@@ -34,47 +35,48 @@ class FeedbackController(private val context: Context) : BaseFeedbackController(
         set(value) = editor.putBoolean(KEY_IS_LOCKOUT_PERIOD, value).apply()
 
     override fun buildEnjoyingItem(
-            positiveButtonClick: () -> Unit,
-            negativeButtonClick: () -> Unit,
-            neutralButtonClick: () -> Unit
+        positiveButtonClick: () -> Unit,
+        negativeButtonClick: () -> Unit,
+        neutralButtonClick: () -> Unit
     ) = FeedUIModel(
-            textPositiveButton = context.getString(R.string.yes),
-            textNegativeButton = context.getString(R.string.not_really),
-            textTitle = context.getString(R.string.rate_us_first_title),
-            positiveButtonClick = positiveButtonClick,
-            negativeButtonClick = negativeButtonClick,
-            neutralButtonClick = neutralButtonClick
+        textPositiveButton = context.getString(R.string.yes),
+        textNegativeButton = context.getString(R.string.not_really),
+        textTitle = context.getString(R.string.rate_us_first_title),
+        positiveButtonClick = positiveButtonClick,
+        negativeButtonClick = negativeButtonClick,
+        neutralButtonClick = neutralButtonClick
     )
 
     override fun buildEmailItem(
-            positiveButtonClick: () -> Unit,
-            negativeButtonClick: () -> Unit,
-            neutralButtonClick: () -> Unit
+        positiveButtonClick: () -> Unit,
+        negativeButtonClick: () -> Unit,
+        neutralButtonClick: () -> Unit
     ) = FeedUIModel(
-            textPositiveButton = context.getString(R.string.yes),
-            textNegativeButton = context.getString(R.string.no_thanks),
-            textTitle = context.getString(R.string.rate_us_second_title),
-            positiveButtonClick = positiveButtonClick,
-            negativeButtonClick = negativeButtonClick,
-            neutralButtonClick = neutralButtonClick
+        textPositiveButton = context.getString(R.string.yes),
+        textNegativeButton = context.getString(R.string.no_thanks),
+        textTitle = context.getString(R.string.rate_us_second_title),
+        positiveButtonClick = positiveButtonClick,
+        negativeButtonClick = negativeButtonClick,
+        neutralButtonClick = neutralButtonClick
     )
 
     override fun buildRateItem(
-            positiveButtonClick: () -> Unit,
-            negativeButtonClick: () -> Unit,
-            neutralButtonClick: () -> Unit
+        positiveButtonClick: () -> Unit,
+        negativeButtonClick: () -> Unit,
+        neutralButtonClick: () -> Unit
     ) = FeedUIModel(
-            textPositiveButton = context.getString(R.string.yes),
-            textNegativeButton = context.getString(R.string.no_thanks),
-            textTitle = context.getString(R.string.rate_us_third_title),
-            positiveButtonClick = positiveButtonClick,
-            negativeButtonClick = negativeButtonClick,
-            neutralButtonClick = neutralButtonClick
+        textPositiveButton = context.getString(R.string.yes),
+        textNegativeButton = context.getString(R.string.no_thanks),
+        textTitle = context.getString(R.string.rate_us_third_title),
+        positiveButtonClick = positiveButtonClick,
+        negativeButtonClick = negativeButtonClick,
+        neutralButtonClick = neutralButtonClick
     )
 
     override fun showEmailApp() {
         val emailIntent = Intent(Intent.ACTION_SENDTO)
-        emailIntent.data = Uri.parse("mailto:support@xorum.io?subject=Feedback about Codeforces WatchR App")
+        emailIntent.data =
+            Uri.parse("mailto:support@xorum.io?subject=Feedback about Codeforces WatchR App")
 
         try {
             context.startActivity(emailIntent)
@@ -85,10 +87,18 @@ class FeedbackController(private val context: Context) : BaseFeedbackController(
     override fun showAppStore() {
         val appPackageName = context.packageName
         try {
-            context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName")))
+            context.startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("market://details?id=$appPackageName")
+                )
+            )
         } catch (activityNotFoundException: ActivityNotFoundException) {
             context.startActivity(
-                    Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName"))
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")
+                )
             )
         }
     }

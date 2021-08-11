@@ -18,7 +18,7 @@ import android.webkit.WebView
  * @author Cristian Perez (http://cpr.name)
  */
 class VideoEnabledWebView : WebView {
-    
+
     inner class JavascriptInterface
 
     private var videoEnabledWebChromeClient: VideoEnabledWebChromeClient? = null
@@ -32,7 +32,11 @@ class VideoEnabledWebView : WebView {
         addedJavascriptInterface = false
     }
 
-    constructor(context: Context?, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle) {
+    constructor(context: Context?, attrs: AttributeSet?, defStyle: Int) : super(
+        context,
+        attrs,
+        defStyle
+    ) {
         addedJavascriptInterface = false
     }
 
@@ -50,7 +54,13 @@ class VideoEnabledWebView : WebView {
         super.loadData(data, mimeType, encoding)
     }
 
-    override fun loadDataWithBaseURL(baseUrl: String?, data: String, mimeType: String?, encoding: String?, historyUrl: String?) {
+    override fun loadDataWithBaseURL(
+        baseUrl: String?,
+        data: String,
+        mimeType: String?,
+        encoding: String?,
+        historyUrl: String?
+    ) {
         addJavascriptInterface()
         super.loadDataWithBaseURL(baseUrl, data, mimeType, encoding, historyUrl)
     }
@@ -69,7 +79,10 @@ class VideoEnabledWebView : WebView {
     private fun addJavascriptInterface() {
         if (!addedJavascriptInterface) {
             // Add javascript interface to be called when the video ends (must be done before page load)
-            addJavascriptInterface(JavascriptInterface(), "_VideoEnabledWebView") // Must match Javascript interface name of com.bogdan.codeforceswatcher.components.VideoEnabledWebChromeClient
+            addJavascriptInterface(
+                JavascriptInterface(),
+                "_VideoEnabledWebView"
+            ) // Must match Javascript interface name of com.bogdan.codeforceswatcher.components.VideoEnabledWebChromeClient
             addedJavascriptInterface = true
         }
     }

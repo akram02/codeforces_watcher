@@ -5,12 +5,12 @@ import io.xorum.codeforceswatcher.features.users.models.User
 import tw.geothings.rekotlin.StateType
 
 data class UsersState(
-        val status: Status = Status.IDLE,
-        val users: List<User> = listOf(),
-        val sortType: SortType = SortType.DEFAULT,
-        val addUserStatus: Status = Status.IDLE,
-        val userAccount: UserAccount? = null,
-        val currentUser: User? = null
+    val status: Status = Status.IDLE,
+    val users: List<User> = listOf(),
+    val sortType: SortType = SortType.DEFAULT,
+    val addUserStatus: Status = Status.IDLE,
+    val userAccount: UserAccount? = null,
+    val currentUser: User? = null
 ) : StateType {
 
     enum class Status { IDLE, PENDING, DONE }

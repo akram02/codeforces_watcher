@@ -47,36 +47,49 @@ class SignUpActivity : AppCompatActivity(), StoreSubscriber<AuthState> {
 
     private fun initViews() {
         ifEmail.configure(
-                labelTextResId = R.string.email,
-                type = InputField.Type.EMAIL,
-                action = InputField.Action.Next
+            labelTextResId = R.string.email,
+            type = InputField.Type.EMAIL,
+            action = InputField.Action.Next
         )
         ifPassword.configure(
-                labelTextResId = R.string.password,
-                type = InputField.Type.PASSWORD
+            labelTextResId = R.string.password,
+            type = InputField.Type.PASSWORD
         )
         ifConfirmPassword.configure(
-                labelTextResId = R.string.confirm_password,
-                type = InputField.Type.PASSWORD,
-                action = InputField.Action.Go { signUp() }
+            labelTextResId = R.string.confirm_password,
+            type = InputField.Type.PASSWORD,
+            action = InputField.Action.Go { signUp() }
         )
 
         btnSignUp.setOnClickListener { signUp() }
 
         tvSignIn.text = getString(R.string.already_have_an_account).linked(
-                listOf(listOf(ForegroundColorSpan(ContextCompat.getColor(this, R.color.colorPrimary))))
+            listOf(listOf(ForegroundColorSpan(ContextCompat.getColor(this, R.color.colorPrimary))))
         )
-        tvPrivacy.text = getString(R.string.agree_with_the_conditions_and_privacy_policy).linked(listOf(
+        tvPrivacy.text =
+            getString(R.string.agree_with_the_conditions_and_privacy_policy).linked(listOf(
                 listOf<CharacterStyle>(
-                        buildClickableSpan {
-                            startActivity(WebViewActivity.newIntent(this, TERMS_AND_CONDITIONS_LINK, getString(R.string.terms_and_conditions)))
-                        }
+                    buildClickableSpan {
+                        startActivity(
+                            WebViewActivity.newIntent(
+                                this,
+                                TERMS_AND_CONDITIONS_LINK,
+                                getString(R.string.terms_and_conditions)
+                            )
+                        )
+                    }
                 ), listOf<CharacterStyle>(
-                buildClickableSpan {
-                    startActivity(WebViewActivity.newIntent(this, PRIVACY_POLICY_LINK, getString(R.string.privacy_policy)))
-                }
-        )
-        ))
+                    buildClickableSpan {
+                        startActivity(
+                            WebViewActivity.newIntent(
+                                this,
+                                PRIVACY_POLICY_LINK,
+                                getString(R.string.privacy_policy)
+                            )
+                        )
+                    }
+                )
+            ))
         tvPrivacy.movementMethod = LinkMovementMethod.getInstance()
 
         tvSignIn.setOnClickListener { finish() }

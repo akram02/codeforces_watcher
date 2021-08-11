@@ -37,10 +37,10 @@ import android.widget.VideoView
  */
 
 open class VideoEnabledWebChromeClient(
-        private var activityNonVideoView: View?,
-        private var activityVideoView: ViewGroup?,
-        private var loadingView: View?,
-        private var webView: VideoEnabledWebView?
+    private var activityNonVideoView: View?,
+    private var activityVideoView: ViewGroup?,
+    private var loadingView: View?,
+    private var webView: VideoEnabledWebView?
 ) : WebChromeClient(), OnPreparedListener, OnCompletionListener, MediaPlayer.OnErrorListener {
 
     interface ToggledFullscreenCallback {
@@ -51,7 +51,8 @@ open class VideoEnabledWebChromeClient(
      * Indicates if the video is being displayed using a custom view (typically full-screen)
      * @return true it the video is being displayed using a custom view (typically full-screen)
      */
-    private var isVideoFullscreen = false // Indicates if the video is being displayed using a custom view (typically full-screen)
+    private var isVideoFullscreen =
+        false // Indicates if the video is being displayed using a custom view (typically full-screen)
     private var videoViewContainer: FrameLayout? = null
     private var videoViewCallback: CustomViewCallback? = null
     private var toggledFullscreenCallback: ToggledFullscreenCallback? = null
@@ -81,7 +82,13 @@ open class VideoEnabledWebChromeClient(
 
             // Hide the non-video view, add the video view, and show it
             activityNonVideoView?.visibility = View.INVISIBLE
-            activityVideoView?.addView(videoViewContainer, ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
+            activityVideoView?.addView(
+                videoViewContainer,
+                ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT
+                )
+            )
             activityVideoView?.visibility = View.VISIBLE
             if (focusedChild is VideoView) {
                 // android.widget.VideoView (typically API level <11)
@@ -123,7 +130,11 @@ open class VideoEnabledWebChromeClient(
         }
     }
 
-    override fun onShowCustomView(view: View, requestedOrientation: Int, callback: CustomViewCallback) // Available in API level 14+, deprecated in API level 18+
+    override fun onShowCustomView(
+        view: View,
+        requestedOrientation: Int,
+        callback: CustomViewCallback
+    ) // Available in API level 14+, deprecated in API level 18+
     {
         onShowCustomView(view, callback)
     }
@@ -171,7 +182,11 @@ open class VideoEnabledWebChromeClient(
         onHideCustomView()
     }
 
-    override fun onError(mp: MediaPlayer, what: Int, extra: Int): Boolean // Error while playing video, only called in the case of android.widget.VideoView (typically API level <11)
+    override fun onError(
+        mp: MediaPlayer,
+        what: Int,
+        extra: Int
+    ): Boolean // Error while playing video, only called in the case of android.widget.VideoView (typically API level <11)
     {
         return false // By returning false, onCompletion() will be called
     }

@@ -14,9 +14,9 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class ContestsAdapter(
-        private val context: Context,
-        private val addToCalendarClickListener: (Contest) -> Unit,
-        private val itemClickListener: (Contest) -> Unit
+    private val context: Context,
+    private val addToCalendarClickListener: (Contest) -> Unit,
+    private val itemClickListener: (Contest) -> Unit
 ) : RecyclerView.Adapter<ContestsAdapter.ViewHolder>() {
 
     private var items: List<Contest> = listOf()
@@ -33,19 +33,21 @@ class ContestsAdapter(
         with(holder) {
             tvContestName.text = contest.title
             tvContestTime.text = getDateTime(contest.startDateInMillis)
-            ivContest.setImageResource(when (contest.platform) {
-                Contest.Platform.ATCODER -> R.drawable.atcoder
-                Contest.Platform.TOPCODER -> R.drawable.topcoder
-                Contest.Platform.CODEFORCES -> R.drawable.codeforces
-                Contest.Platform.CODECHEF -> R.drawable.codechef
-                Contest.Platform.CODEFORCES_GYM -> R.drawable.codeforces
-                Contest.Platform.LEETCODE -> R.drawable.leetcode
-                Contest.Platform.KICK_START -> R.drawable.kickstart
-                Contest.Platform.HACKEREARTH -> R.drawable.hackerearth
-                Contest.Platform.HACKERRANK -> R.drawable.hackerrank
-                Contest.Platform.CS_ACADEMY -> R.drawable.csacademy
-                Contest.Platform.TOPH -> R.drawable.toph
-            })
+            ivContest.setImageResource(
+                when (contest.platform) {
+                    Contest.Platform.ATCODER -> R.drawable.atcoder
+                    Contest.Platform.TOPCODER -> R.drawable.topcoder
+                    Contest.Platform.CODEFORCES -> R.drawable.codeforces
+                    Contest.Platform.CODECHEF -> R.drawable.codechef
+                    Contest.Platform.CODEFORCES_GYM -> R.drawable.codeforces
+                    Contest.Platform.LEETCODE -> R.drawable.leetcode
+                    Contest.Platform.KICK_START -> R.drawable.kickstart
+                    Contest.Platform.HACKEREARTH -> R.drawable.hackerearth
+                    Contest.Platform.HACKERRANK -> R.drawable.hackerrank
+                    Contest.Platform.CS_ACADEMY -> R.drawable.csacademy
+                    Contest.Platform.TOPH -> R.drawable.toph
+                }
+            )
 
             onAddToCalendarClickListener = { addToCalendarClickListener(contest) }
             onItemClickListener = { itemClickListener(contest) }
@@ -58,7 +60,8 @@ class ContestsAdapter(
     }
 
     private fun getDateTime(seconds: Long): String {
-        val dateFormat = SimpleDateFormat(context.getString(R.string.contest_date_format), Locale.getDefault())
+        val dateFormat =
+            SimpleDateFormat(context.getString(R.string.contest_date_format), Locale.getDefault())
         return dateFormat.format(Date(seconds)).toString()
     }
 

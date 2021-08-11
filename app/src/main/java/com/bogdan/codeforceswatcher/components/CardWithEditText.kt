@@ -1,13 +1,13 @@
 package com.bogdan.codeforceswatcher.components
 
 import android.os.Bundle
-import com.bogdan.codeforceswatcher.R
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.util.showSoftKeyboard
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import io.xorum.codeforceswatcher.features.users.redux.UsersRequests
@@ -24,7 +24,11 @@ class AddUserBottomSheet : BottomSheetDialogFragment(), StoreSubscriber<UsersSta
         setStyle(DialogFragment.STYLE_NORMAL, R.style.DialogStyle)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.card_with_edit_text, container, false)
     }
 
@@ -66,9 +70,9 @@ class AddUserBottomSheet : BottomSheetDialogFragment(), StoreSubscriber<UsersSta
         }
 
         inputField.configure(
-                action = InputField.Action.Go {
-                    addUser(editText.text?.toString() ?: "")
-                }
+            action = InputField.Action.Go {
+                addUser(editText.text?.toString() ?: "")
+            }
         )
     }
 

@@ -14,12 +14,13 @@ import com.bogdan.codeforceswatcher.components.WebViewActivity
 import io.xorum.codeforceswatcher.features.problems.redux.ProblemsRequests
 import io.xorum.codeforceswatcher.features.problems.redux.ProblemsState
 import io.xorum.codeforceswatcher.redux.analyticsController
-import kotlinx.android.synthetic.main.fragment_problems.*
 import io.xorum.codeforceswatcher.redux.store
 import io.xorum.codeforceswatcher.util.AnalyticsEvents
+import kotlinx.android.synthetic.main.fragment_problems.*
 import tw.geothings.rekotlin.StoreSubscriber
 
-class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState>, SwipeRefreshLayout.OnRefreshListener {
+class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState>,
+    SwipeRefreshLayout.OnRefreshListener {
 
     private lateinit var problemsAdapter: ProblemsAdapter
     var searchView: SearchView? = null
@@ -30,9 +31,9 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState>, SwipeRefres
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View = inflater.inflate(R.layout.fragment_problems, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -72,7 +73,8 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState>, SwipeRefres
     }
 
     private fun adjustSearchViewHint() {
-        val textSearch = searchView?.findViewById<View>(androidx.appcompat.R.id.search_src_text) as EditText?
+        val textSearch =
+            searchView?.findViewById<View>(androidx.appcompat.R.id.search_src_text) as EditText?
         textSearch?.apply {
             hint = resources.getString(R.string.search_for_problems)
             setHintTextColor(Color.WHITE)
@@ -84,13 +86,13 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState>, SwipeRefres
         swipeRefreshLayout.setOnRefreshListener(this)
         problemsAdapter = ProblemsAdapter(requireContext()) { problem ->
             startActivity(
-                    WebViewActivity.newIntent(
-                            requireContext(),
-                            problem.link,
-                            problem.title,
-                            AnalyticsEvents.PROBLEM_OPENED,
-                            AnalyticsEvents.PROBLEM_SHARED
-                    )
+                WebViewActivity.newIntent(
+                    requireContext(),
+                    problem.link,
+                    problem.title,
+                    AnalyticsEvents.PROBLEM_OPENED,
+                    AnalyticsEvents.PROBLEM_SHARED
+                )
             )
         }
         recyclerView.adapter = problemsAdapter

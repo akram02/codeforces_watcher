@@ -16,9 +16,9 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.squareup.picasso.Picasso
+import io.xorum.codeforceswatcher.features.auth.models.UserAccount
 import io.xorum.codeforceswatcher.features.auth.redux.AuthRequests
 import io.xorum.codeforceswatcher.features.auth.redux.AuthState
-import io.xorum.codeforceswatcher.features.auth.models.UserAccount
 import io.xorum.codeforceswatcher.features.users.models.User
 import io.xorum.codeforceswatcher.redux.analyticsController
 import io.xorum.codeforceswatcher.redux.store
@@ -30,8 +30,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class ProfileItemEpoxyModel(
-        private val userAccount: UserAccount?,
-        private val authStage: AuthState.Stage
+    private val userAccount: UserAccount?,
+    private val authStage: AuthState.Stage
 ) : BaseEpoxyModel(R.layout.view_profile_item) {
 
     init {
@@ -60,7 +60,13 @@ class ProfileItemEpoxyModel(
                 noUserLayout.visibility = View.GONE
                 showUserData(view)
                 setOnClickListener {
-                    context.startActivity(UserActivity.newIntent(context, userAccount?.codeforcesUser?.handle!!, isUserAccount = true))
+                    context.startActivity(
+                        UserActivity.newIntent(
+                            context,
+                            userAccount?.codeforcesUser?.handle!!,
+                            isUserAccount = true
+                        )
+                    )
                 }
             }
         }
@@ -85,14 +91,18 @@ class ProfileItemEpoxyModel(
         }
     }
 
-    private fun buildLastUpdate(context: Context) = userAccount?.codeforcesUser?.ratingChanges?.lastOrNull()?.let { ratingChange ->
-        context.getString(
+    private fun buildLastUpdate(context: Context) =
+        userAccount?.codeforcesUser?.ratingChanges?.lastOrNull()?.let { ratingChange ->
+            context.getString(
                 R.string.updated_on,
-                SimpleDateFormat(context.getString(R.string.user_date_format), Locale.getDefault()).format(
-                        Date(ratingChange.ratingUpdateTimeSeconds * 1000)
+                SimpleDateFormat(
+                    context.getString(R.string.user_date_format),
+                    Locale.getDefault()
+                ).format(
+                    Date(ratingChange.ratingUpdateTimeSeconds * 1000)
                 )
-        )
-    } ?: context.getString(R.string.never_updated)
+            )
+        } ?: context.getString(R.string.never_updated)
 
     private fun displayChart(view: View) = with(view.chart) {
         setTouchEnabled(false)
@@ -122,10 +132,10 @@ class ProfileItemEpoxyModel(
     }
 
     private fun User.buildRating(context: Context) = SpannableString(
-            context.getString(
-                    R.string.rating_only,
-                    rating?.toString() ?: context.getString(R.string.none)
-            )
+        context.getString(
+            R.string.rating_only,
+            rating?.toString() ?: context.getString(R.string.none)
+        )
     ).apply {
         rating?.let {
             val startIndex = indexOf(it.toString())
@@ -135,10 +145,10 @@ class ProfileItemEpoxyModel(
     }
 
     private fun User.buildMaxRating(context: Context) = SpannableString(
-            context.getString(
-                    R.string.max_rating_only,
-                    maxRating?.toString() ?: context.getString(R.string.none)
-            )
+        context.getString(
+            R.string.max_rating_only,
+            maxRating?.toString() ?: context.getString(R.string.none)
+        )
     ).apply {
         maxRating?.let {
             val startIndex = indexOf(it.toString())
@@ -148,13 +158,17 @@ class ProfileItemEpoxyModel(
     }
 
     private fun showLogout(context: Context) = AlertDialog.Builder(context)
-            .setTitle(context.getString(R.string.log_out))
-            .setMessage(context.getString(R.string.do_you_want_to_log_out))
-            .setCancelable(false)
-            .setPositiveButton(context.getString(R.string.stay_logged_in), null)
-            .setNegativeButton(context.getString(R.string.log_out)) { _, _ -> store.dispatch(AuthRequests.LogOut) }
-            .create()
-            .show()
+        .setTitle(context.getString(R.string.log_out))
+        .setMessage(context.getString(R.string.do_you_want_to_log_out))
+        .setCancelable(false)
+        .setPositiveButton(context.getString(R.string.stay_logged_in), null)
+        .setNegativeButton(context.getString(R.string.log_out)) { _, _ ->
+            store.dispatch(
+                AuthRequests.LogOut
+            )
+        }
+        .create()
+        .show()
 
     private fun showNoUserData(view: View) = with(view) {
         ivProfile.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_alien_head))

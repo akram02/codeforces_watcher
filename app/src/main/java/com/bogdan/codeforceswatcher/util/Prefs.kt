@@ -61,7 +61,10 @@ class Prefs(private val context: Context) : Settings {
 
     override fun readContestsFilters(): Set<String> {
         val defaultPrefs = getDefaultPrefs()
-        return defaultPrefs.getStringSet(KEY_CONTESTS_FILTERS, Contest.Platform.defaultFilterValueToSave).orEmpty()
+        return defaultPrefs.getStringSet(
+            KEY_CONTESTS_FILTERS,
+            Contest.Platform.defaultFilterValueToSave
+        ).orEmpty()
     }
 
     override fun writeContestsFilters(filters: Set<String>) {

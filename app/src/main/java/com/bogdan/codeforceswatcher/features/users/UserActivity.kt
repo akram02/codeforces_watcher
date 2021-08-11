@@ -53,7 +53,8 @@ class UserActivity : AppCompatActivity(), StoreSubscriber<UsersState> {
 
         setupChart()
 
-        menuItemId = if (isUserAccount) R.menu.menu_user_activity_log_out else R.menu.menu_user_activity_delete
+        menuItemId =
+            if (isUserAccount) R.menu.menu_user_activity_log_out else R.menu.menu_user_activity_delete
 
         store.dispatch(UsersRequests.FetchUser(handle))
     }
@@ -68,18 +69,19 @@ class UserActivity : AppCompatActivity(), StoreSubscriber<UsersState> {
         tvUserRating.text = user.buildRating()
         tvUserHandle.text = user.buildHandle()
         tvContribution.text = user.buildContribution()
-        (ivUserAvatar as CircleImageView).borderColor = ContextCompat.getColor(this, getColorByUserRank(user.rank))
+        (ivUserAvatar as CircleImageView).borderColor =
+            ContextCompat.getColor(this, getColorByUserRank(user.rank))
 
         Picasso.get().load(user.avatar).into(ivUserAvatar)
         title = user.buildFullName()
     }
 
     private fun User.buildRating() = SpannableString(
-            getString(
-                    R.string.rating,
-                    rating?.toString() ?: getString(R.string.none),
-                    maxRating?.toString() ?: getString(R.string.none)
-            )
+        getString(
+            R.string.rating,
+            rating?.toString() ?: getString(R.string.none),
+            maxRating?.toString() ?: getString(R.string.none)
+        )
     ).apply {
         rating?.let {
             val startIndex = indexOf(it.toString())
@@ -132,27 +134,27 @@ class UserActivity : AppCompatActivity(), StoreSubscriber<UsersState> {
         when (item.itemId) {
             R.id.action_delete -> {
                 AlertDialog.Builder(this)
-                        .setTitle(getString(R.string.delete_user))
-                        .setMessage(getString(R.string.delete_user_explanation, user.handle))
-                        .setPositiveButton(getString(R.string.ok)) { _, _ ->
-                            deleteUser()
-                        }
-                        .setNegativeButton(getString(R.string.cancel), null)
-                        .create()
-                        .show()
+                    .setTitle(getString(R.string.delete_user))
+                    .setMessage(getString(R.string.delete_user_explanation, user.handle))
+                    .setPositiveButton(getString(R.string.ok)) { _, _ ->
+                        deleteUser()
+                    }
+                    .setNegativeButton(getString(R.string.cancel), null)
+                    .create()
+                    .show()
             }
             R.id.action_log_out -> {
                 AlertDialog.Builder(this)
-                        .setTitle(getString(R.string.log_out))
-                        .setMessage(getString(R.string.do_you_want_to_log_out))
-                        .setCancelable(false)
-                        .setPositiveButton(getString(R.string.stay_logged_in), null)
-                        .setNegativeButton(getString(R.string.log_out)) { _, _ ->
-                            store.dispatch(AuthRequests.LogOut)
-                            finish()
-                        }
-                        .create()
-                        .show()
+                    .setTitle(getString(R.string.log_out))
+                    .setMessage(getString(R.string.do_you_want_to_log_out))
+                    .setCancelable(false)
+                    .setPositiveButton(getString(R.string.stay_logged_in), null)
+                    .setNegativeButton(getString(R.string.log_out)) { _, _ ->
+                        store.dispatch(AuthRequests.LogOut)
+                        finish()
+                    }
+                    .create()
+                    .show()
             }
         }
 
@@ -168,10 +170,11 @@ class UserActivity : AppCompatActivity(), StoreSubscriber<UsersState> {
         private const val HANDLE = "handle"
         private const val IS_USER_ACCOUNT = "is_user_account"
 
-        fun newIntent(context: Context, handle: String, isUserAccount: Boolean) = Intent(context, UserActivity::class.java).apply {
-            putExtra(HANDLE, handle)
-            putExtra(IS_USER_ACCOUNT, isUserAccount)
-        }
+        fun newIntent(context: Context, handle: String, isUserAccount: Boolean) =
+            Intent(context, UserActivity::class.java).apply {
+                putExtra(HANDLE, handle)
+                putExtra(IS_USER_ACCOUNT, isUserAccount)
+            }
     }
 
     override fun onStart() {
@@ -201,12 +204,13 @@ class UserActivity : AppCompatActivity(), StoreSubscriber<UsersState> {
             tvRatingChanges.visibility = View.INVISIBLE
         }
 
-        spinner.visibility = if (state.status == UsersState.Status.PENDING) View.VISIBLE else View.INVISIBLE
+        spinner.visibility =
+            if (state.status == UsersState.Status.PENDING) View.VISIBLE else View.INVISIBLE
     }
 }
 
 fun User.buildRank() = rank?.let { colorTextByUserRank(it.capitalize(), it) }
-        ?: CwApp.app.applicationContext.getString(R.string.none)
+    ?: CwApp.app.applicationContext.getString(R.string.none)
 
 fun User.buildHandle() = colorTextByUserRank(handle, rank)
 
@@ -220,7 +224,7 @@ fun User.buildFullName() = when {
 fun User.buildContribution(): SpannableString {
     val contributionString = if (contribution > 0) "+$contribution" else contribution.toString()
     return SpannableString(
-            CwApp.app.getString(R.string.contribution, contributionString)
+        CwApp.app.getString(R.string.contribution, contributionString)
     ).apply {
         val startIndex = indexOf(contributionString)
         val color = if (contribution >= 0) R.color.bright_green else R.color.red
