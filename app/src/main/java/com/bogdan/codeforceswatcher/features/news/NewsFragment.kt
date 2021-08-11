@@ -10,9 +10,9 @@ import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.WebViewActivity
 import com.bogdan.codeforceswatcher.features.news.models.NewsItem
 import com.bogdan.codeforceswatcher.util.FeedbackController
+import io.xorum.codeforceswatcher.features.news.models.News
 import io.xorum.codeforceswatcher.features.news.redux.NewsRequests
 import io.xorum.codeforceswatcher.features.news.redux.NewsState
-import io.xorum.codeforceswatcher.features.news.models.News
 import io.xorum.codeforceswatcher.redux.analyticsController
 import io.xorum.codeforceswatcher.redux.store
 import io.xorum.codeforceswatcher.util.AnalyticsEvents
@@ -81,9 +81,9 @@ class NewsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, StoreSubs
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View = inflater.inflate(R.layout.fragment_news, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -94,7 +94,15 @@ class NewsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, StoreSubs
     private fun initViews() {
         swipeRefreshLayout.setOnRefreshListener(this)
         newsAdapter = NewsAdapter(requireContext()) { link, title, openEvent, shareEvent ->
-            startActivity(WebViewActivity.newIntent(requireContext(), link, title, openEvent, shareEvent))
+            startActivity(
+                WebViewActivity.newIntent(
+                    requireContext(),
+                    link,
+                    title,
+                    openEvent,
+                    shareEvent
+                )
+            )
         }
         recyclerView.adapter = newsAdapter
     }

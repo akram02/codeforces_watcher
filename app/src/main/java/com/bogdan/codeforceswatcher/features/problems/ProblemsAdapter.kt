@@ -15,8 +15,8 @@ import io.xorum.codeforceswatcher.redux.store
 import kotlinx.android.synthetic.main.view_problem_item.view.*
 
 class ProblemsAdapter(
-        private val context: Context,
-        private val itemClickListener: (Problem) -> Unit
+    private val context: Context,
+    private val itemClickListener: (Problem) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var items: MutableList<Problem> = mutableListOf()
@@ -25,20 +25,23 @@ class ProblemsAdapter(
     override fun getItemCount() = items.size + if (items.isEmpty()) 1 else 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-            when (viewType) {
-                STUB_ALL_PROBLEMS_VIEW_TYPE -> {
-                    val layout = LayoutInflater.from(context).inflate(R.layout.view_all_problems_stub, parent, false)
-                    StubViewHolder(layout)
-                }
-                STUB_FAVOURITE_PROBLEMS_VIEW_TYPE -> {
-                    val layout = LayoutInflater.from(context).inflate(R.layout.view_favourite_problems_stub, parent, false)
-                    StubViewHolder(layout)
-                }
-                else -> {
-                    val layout = LayoutInflater.from(context).inflate(R.layout.view_problem_item, parent, false)
-                    ProblemViewHolder(layout)
-                }
+        when (viewType) {
+            STUB_ALL_PROBLEMS_VIEW_TYPE -> {
+                val layout = LayoutInflater.from(context)
+                    .inflate(R.layout.view_all_problems_stub, parent, false)
+                StubViewHolder(layout)
             }
+            STUB_FAVOURITE_PROBLEMS_VIEW_TYPE -> {
+                val layout = LayoutInflater.from(context)
+                    .inflate(R.layout.view_favourite_problems_stub, parent, false)
+                StubViewHolder(layout)
+            }
+            else -> {
+                val layout =
+                    LayoutInflater.from(context).inflate(R.layout.view_problem_item, parent, false)
+                ProblemViewHolder(layout)
+            }
+        }
 
     override fun getItemViewType(position: Int): Int {
         return when {
@@ -56,8 +59,10 @@ class ProblemsAdapter(
             with(items[adapterPosition]) {
                 tvProblemName.text = title
                 tvContestName.text = subtitle
-                ivFavourite.setColorFilter(ContextCompat.getColor(
-                        context, if (isFavourite) R.color.colorAccent else R.color.dark_gray)
+                ivFavourite.setColorFilter(
+                    ContextCompat.getColor(
+                        context, if (isFavourite) R.color.colorAccent else R.color.dark_gray
+                    )
                 )
 
                 onClickListener = { itemClickListener(this) }

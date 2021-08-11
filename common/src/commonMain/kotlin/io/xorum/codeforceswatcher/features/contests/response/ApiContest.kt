@@ -27,7 +27,7 @@ internal data class ApiContest(
         )
     }
 
-    private fun parsePlatform() = when(platform) {
+    private fun parsePlatform() = when (platform) {
         "CODEFORCES" -> Contest.Platform.CODEFORCES
         "CODEFORCES_GYM" -> Contest.Platform.CODEFORCES_GYM
         "TOPCODER" -> Contest.Platform.TOPCODER
@@ -42,7 +42,7 @@ internal data class ApiContest(
         else -> null
     }
 
-    private fun parsePhase() = when(phase) {
+    private fun parsePhase() = when (phase) {
         "PENDING" -> Contest.Phase.PENDING
         "RUNNING" -> Contest.Phase.RUNNING
         "FINISHED" -> Contest.Phase.FINISHED

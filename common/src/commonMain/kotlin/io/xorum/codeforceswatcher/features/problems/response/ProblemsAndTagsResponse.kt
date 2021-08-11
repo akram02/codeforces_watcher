@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class ProblemsAndTagsResponse(
-        val problems: List<ApiProblem>,
-        val tags: List<String>
+    val problems: List<ApiProblem>,
+    val tags: List<String>
 )

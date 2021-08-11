@@ -7,7 +7,7 @@ import androidx.annotation.LayoutRes
 import com.airbnb.epoxy.EpoxyModel
 
 abstract class BaseEpoxyModel(
-        @LayoutRes private val layoutRes: Int
+    @LayoutRes private val layoutRes: Int
 ) : EpoxyModel<View>() {
 
     protected var boundView: View? = null

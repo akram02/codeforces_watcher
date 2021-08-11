@@ -12,9 +12,9 @@ fun problemsReducer(action: Action, state: AppState): ProblemsState {
         }
         is ProblemsRequests.FetchProblems.Success -> {
             newState = newState.copy(
-                    problems = action.problems,
-                    tags = action.tags,
-                    status = ProblemsState.Status.IDLE
+                problems = action.problems,
+                tags = action.tags,
+                status = ProblemsState.Status.IDLE
             )
             newState = newState.copy(filteredProblems = newState.getFilteredProblems())
         }
@@ -33,8 +33,8 @@ fun problemsReducer(action: Action, state: AppState): ProblemsState {
         }
         is ProblemsRequests.ChangeTagCheckStatus -> {
             newState = newState.copy(
-                    selectedTags = if (action.isChecked) newState.selectedTags.plus(action.tag)
-                    else newState.selectedTags.minus(action.tag)
+                selectedTags = if (action.isChecked) newState.selectedTags.plus(action.tag)
+                else newState.selectedTags.minus(action.tag)
             )
             newState = newState.copy(filteredProblems = newState.getFilteredProblems())
         }
@@ -47,7 +47,8 @@ fun problemsReducer(action: Action, state: AppState): ProblemsState {
     return newState
 }
 
-fun ProblemsState.getFilteredProblems() = problems.filter { if (isFavourite) it.isFavourite else true }
+fun ProblemsState.getFilteredProblems() =
+    problems.filter { if (isFavourite) it.isFavourite else true }
         .filter { it.tags.containsAll(selectedTags) }
         .filter {
             it.title.toLowerCase().kmpContains(query.toLowerCase())

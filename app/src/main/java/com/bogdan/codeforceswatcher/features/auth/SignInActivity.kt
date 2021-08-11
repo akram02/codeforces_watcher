@@ -33,24 +33,28 @@ class SignInActivity : AppCompatActivity(), StoreSubscriber<AuthState> {
         }
 
         ifEmail.configure(
-                labelTextResId = R.string.email,
-                type = InputField.Type.EMAIL,
-                action = InputField.Action.Next
+            labelTextResId = R.string.email,
+            type = InputField.Type.EMAIL,
+            action = InputField.Action.Next
         )
         ifPassword.configure(
-                labelTextResId = R.string.password,
-                type = InputField.Type.PASSWORD,
-                action = InputField.Action.Go {
-                    signInWithEmailAndPassword()
-                }
+            labelTextResId = R.string.password,
+            type = InputField.Type.PASSWORD,
+            action = InputField.Action.Go {
+                signInWithEmailAndPassword()
+            }
         )
 
         btnSignIn.setOnClickListener { signInWithEmailAndPassword() }
         tvForgotPassword.setOnClickListener { forgotPassword() }
 
-        tvSignUp.text = getString(R.string.dont_have_an_account_yet).linked(listOf(listOf(
-                ForegroundColorSpan(ContextCompat.getColor(this, R.color.colorPrimary))
-        )))
+        tvSignUp.text = getString(R.string.dont_have_an_account_yet).linked(
+            listOf(
+                listOf(
+                    ForegroundColorSpan(ContextCompat.getColor(this, R.color.colorPrimary))
+                )
+            )
+        )
         tvSignUp.setOnClickListener {
             startActivity(Intent(this, SignUpActivity::class.java))
             analyticsController.logEvent(AnalyticsEvents.SIGN_UP_OPENED)

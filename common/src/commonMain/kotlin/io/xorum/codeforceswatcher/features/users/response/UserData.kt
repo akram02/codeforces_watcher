@@ -6,6 +6,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class UserData(
-        val users: List<User>,
-        val userAccount: UserAccount?
+    val users: List<User>,
+    val userAccount: UserAccount?
 )

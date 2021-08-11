@@ -4,8 +4,8 @@ import io.xorum.codeforceswatcher.db.DatabaseQueries
 import io.xorum.codeforceswatcher.features.problems.ProblemsRepository
 import io.xorum.codeforceswatcher.features.problems.models.Problem
 import io.xorum.codeforceswatcher.features.problems.response.ApiProblem
-import io.xorum.codeforceswatcher.util.Response
 import io.xorum.codeforceswatcher.redux.*
+import io.xorum.codeforceswatcher.util.Response
 import tw.geothings.rekotlin.Action
 
 class ProblemsRequests {
@@ -28,7 +28,8 @@ class ProblemsRequests {
         }
 
         private fun mapProblems(problems: List<ApiProblem>): List<Problem> {
-            val problemsMap = store.state.problems.problems.associateBy({ it.id }, { it.isFavourite })
+            val problemsMap =
+                store.state.problems.problems.associateBy({ it.id }, { it.isFavourite })
             return problems.mapNotNull { it.toProblem(isFavourite = problemsMap[it.id] ?: false) }
         }
 
@@ -38,8 +39,8 @@ class ProblemsRequests {
         }
 
         data class Success(
-                val problems: List<Problem>,
-                val tags: List<String>
+            val problems: List<Problem>,
+            val tags: List<String>
         ) : Action
 
         data class Failure(override val message: Message) : ToastAction

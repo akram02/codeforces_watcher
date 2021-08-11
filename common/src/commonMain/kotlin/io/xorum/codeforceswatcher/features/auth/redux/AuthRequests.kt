@@ -8,8 +8,8 @@ import tw.geothings.rekotlin.Action
 class AuthRequests {
 
     class SignIn(
-            private val email: String,
-            private val password: String
+        private val email: String,
+        private val password: String
     ) : Request() {
 
         override suspend fun execute() = firebaseController.signIn(email, password) { exception ->
@@ -23,8 +23,8 @@ class AuthRequests {
     }
 
     class SignUp(
-            private val email: String,
-            private val password: String
+        private val email: String,
+        private val password: String
     ) : Request() {
 
         override suspend fun execute() = firebaseController.signUp(email, password) { exception ->

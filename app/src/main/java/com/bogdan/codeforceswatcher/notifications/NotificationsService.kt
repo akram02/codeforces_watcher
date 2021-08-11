@@ -27,33 +27,38 @@ class NotificationsService : FirebaseMessagingService() {
 
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(channelId, getString(R.string.default_channel), NotificationManager.IMPORTANCE_DEFAULT)
+            val channel = NotificationChannel(
+                channelId,
+                getString(R.string.default_channel),
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
             notificationManager.createNotificationChannel(channel)
         }
 
         notificationManager.notify(0, notification)
     }
 
-    private fun getNotification(text: String, notificationType: NotificationType): Notification = when (notificationType) {
-        NotificationType.RATING_UPDATES -> {
-            val showTaskIntent = Intent(applicationContext, MainActivity::class.java).apply {
-                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            }
-            val contentIntent = PendingIntent.getActivity(
+    private fun getNotification(text: String, notificationType: NotificationType): Notification =
+        when (notificationType) {
+            NotificationType.RATING_UPDATES -> {
+                val showTaskIntent = Intent(applicationContext, MainActivity::class.java).apply {
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }
+                val contentIntent = PendingIntent.getActivity(
                     applicationContext,
                     0,
                     showTaskIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT
-            )
-            NotificationCompat.Builder(this, channelId)
+                )
+                NotificationCompat.Builder(this, channelId)
                     .setContentTitle(getString(R.string.ratings_have_been_updated))
                     .setStyle(NotificationCompat.BigTextStyle().bigText(text))
                     .setSmallIcon(R.mipmap.ic_launcher_antivirus)
                     .setAutoCancel(true)
                     .setContentIntent(contentIntent)
                     .build()
+            }
         }
-    }
 
     override fun onNewToken(newToken: String) {}
 }

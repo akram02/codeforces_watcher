@@ -7,8 +7,7 @@ import io.ktor.client.features.json.serializer.*
 import io.ktor.client.features.logging.*
 import io.ktor.client.request.*
 import io.ktor.http.*
-import io.ktor.utils.io.ByteReadChannel
-import io.ktor.utils.io.readUTF8Line
+import io.ktor.utils.io.*
 import io.xorum.codeforceswatcher.redux.firebaseController
 import io.xorum.codeforceswatcher.redux.getLang
 import kotlinx.serialization.Serializable
@@ -35,13 +34,13 @@ internal class HttpClientFactory {
         }
         Json {
             serializer = KotlinxSerializer(
-                    Json(from = Json) {
-                        isLenient = true
-                        ignoreUnknownKeys = true
-                        allowSpecialFloatingPointValues = true
-                        useArrayPolymorphism = true
-                        encodeDefaults = true
-                    }
+                Json(from = Json) {
+                    isLenient = true
+                    ignoreUnknownKeys = true
+                    allowSpecialFloatingPointValues = true
+                    useArrayPolymorphism = true
+                    encodeDefaults = true
+                }
             )
         }
         Logging {
@@ -52,9 +51,9 @@ internal class HttpClientFactory {
 }
 
 internal suspend fun getError(responseContent: ByteReadChannel) =
-        responseContent.readUTF8Line()?.let {
-            Json(from = Json.Default) {}.decodeFromString(Error.serializer(), it)
-        }
+    responseContent.readUTF8Line()?.let {
+        Json(from = Json.Default) {}.decodeFromString(Error.serializer(), it)
+    }
 
 @Serializable
 internal data class Error(val error: String?)
@@ -79,10 +78,10 @@ internal suspend inline fun <T> request(block: (httpClient: HttpClient) -> T) = 
 internal sealed class Response<T> {
 
     data class Success<T>(
-            val result: T
+        val result: T
     ) : Response<T>()
 
     data class Failure<T>(
-            val error: String?
+        val error: String?
     ) : Response<T>()
 }

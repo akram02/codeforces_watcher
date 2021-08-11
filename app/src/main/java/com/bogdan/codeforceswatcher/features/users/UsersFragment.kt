@@ -13,10 +13,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.epoxy.BaseEpoxyController
-import io.xorum.codeforceswatcher.features.auth.redux.AuthState
 import io.xorum.codeforceswatcher.features.auth.models.UserAccount
+import io.xorum.codeforceswatcher.features.auth.redux.AuthState
 import io.xorum.codeforceswatcher.features.users.models.User
-import io.xorum.codeforceswatcher.features.users.redux.*
+import io.xorum.codeforceswatcher.features.users.redux.FetchUserDataType
+import io.xorum.codeforceswatcher.features.users.redux.UsersActions
+import io.xorum.codeforceswatcher.features.users.redux.UsersRequests
+import io.xorum.codeforceswatcher.features.users.redux.UsersState
 import io.xorum.codeforceswatcher.features.users.redux.UsersState.SortType.Companion.getSortType
 import io.xorum.codeforceswatcher.redux.analyticsController
 import io.xorum.codeforceswatcher.redux.states.AppState
@@ -32,7 +35,12 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, StoreSub
     private val epoxyController by lazy { EpoxyController() }
 
     override fun onRefresh() {
-        store.dispatch(UsersRequests.FetchUserData(FetchUserDataType.REFRESH, isInitiatedByUser = true))
+        store.dispatch(
+            UsersRequests.FetchUserData(
+                FetchUserDataType.REFRESH,
+                isInitiatedByUser = true
+            )
+        )
         analyticsController.logEvent(AnalyticsEvents.USERS_REFRESH)
     }
 
@@ -67,13 +75,13 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, StoreSub
     private fun adjustSpinnerSortVisibility(isUsersListEmpty: Boolean) {
         spSort.visibility = if (isUsersListEmpty) View.GONE else View.VISIBLE
         requireActivity().findViewById<TextView>(R.id.tvSortBy).visibility =
-                if (isUsersListEmpty) View.GONE else View.VISIBLE
+            if (isUsersListEmpty) View.GONE else View.VISIBLE
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View = inflater.inflate(R.layout.fragment_users, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -90,8 +98,8 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, StoreSub
         spSort = requireActivity().findViewById(R.id.spSort)
 
         val spinnerAdapter = ArrayAdapter(
-                requireContext(), R.layout.spinner_item,
-                resources.getStringArray(R.array.array_sort)
+            requireContext(), R.layout.spinner_item,
+            resources.getStringArray(R.array.array_sort)
         )
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
@@ -101,10 +109,10 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, StoreSub
         spSort.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
             override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
             ) {
                 store.dispatch(UsersActions.Sort(getSortType(position)))
             }

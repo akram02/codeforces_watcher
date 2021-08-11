@@ -25,23 +25,24 @@ import java.net.URLEncoder
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, StoreSubscriber<ContestsState> {
+class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
+    StoreSubscriber<ContestsState> {
 
     private val contestsAdapter by lazy {
         ContestsAdapter(
-                requireContext(),
-                addToCalendarClickListener = ::addContestToCalendar,
-                itemClickListener = { contest ->
-                    startActivity(
-                            WebViewActivity.newIntent(
-                                    requireContext(),
-                                    contest.link,
-                                    contest.title,
-                                    AnalyticsEvents.CONTEST_OPENED,
-                                    AnalyticsEvents.CONTEST_SHARED
-                            )
+            requireContext(),
+            addToCalendarClickListener = ::addContestToCalendar,
+            itemClickListener = { contest ->
+                startActivity(
+                    WebViewActivity.newIntent(
+                        requireContext(),
+                        contest.link,
+                        contest.title,
+                        AnalyticsEvents.CONTEST_OPENED,
+                        AnalyticsEvents.CONTEST_SHARED
                     )
-                }
+                )
+            }
         )
     }
 
@@ -62,8 +63,8 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, Store
     override fun onNewState(state: ContestsState) {
         swipeRefreshLayout.isRefreshing = (state.status == ContestsState.Status.PENDING)
         val showingContests = state.contests.filter { it.phase == Contest.Phase.PENDING }
-                .sortedBy(Contest::startDateInMillis)
-                .filter { state.filters.contains(it.platform) }
+            .sortedBy(Contest::startDateInMillis)
+            .filter { state.filters.contains(it.platform) }
         contestsAdapter.setItems(showingContests)
         if (showingContests.isEmpty()) {
             tvNoContest.visibility = View.VISIBLE
@@ -78,9 +79,9 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, Store
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View = inflater.inflate(R.layout.fragment_contests, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -100,23 +101,23 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, Store
         val timeEnd = getCalendarTime(contest.startDateInMillis + contest.durationInMillis)
         val encodeName = URLEncoder.encode(contest.title)
         val calendarEventLink =
-                "${CALENDAR_LINK}?action=TEMPLATE&text=$encodeName&dates=$timeStart/$timeEnd&details=${contest.link}"
+            "${CALENDAR_LINK}?action=TEMPLATE&text=$encodeName&dates=$timeStart/$timeEnd&details=${contest.link}"
         val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(calendarEventLink))
         try {
             context?.startActivity(intent)
         } catch (error: ActivityNotFoundException) {
             Toast.makeText(
-                    context,
-                    context?.resources?.getString(R.string.google_calendar_not_found),
-                    Toast.LENGTH_SHORT
+                context,
+                context?.resources?.getString(R.string.google_calendar_not_found),
+                Toast.LENGTH_SHORT
             ).show()
         }
         analyticsController.logEvent(
-                AnalyticsEvents.ADD_CONTEST_TO_CALENDAR,
-                mapOf(
-                        "contest_platform" to contest.platform.toString(),
-                        "contest_name" to contest.title
-                )
+            AnalyticsEvents.ADD_CONTEST_TO_CALENDAR,
+            mapOf(
+                "contest_platform" to contest.platform.toString(),
+                "contest_name" to contest.title
+            )
         )
     }
 

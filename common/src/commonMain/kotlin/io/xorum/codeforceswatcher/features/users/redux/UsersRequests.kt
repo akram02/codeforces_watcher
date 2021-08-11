@@ -5,8 +5,8 @@ import io.xorum.codeforceswatcher.features.auth.models.UserAccount
 import io.xorum.codeforceswatcher.features.auth.redux.AuthState
 import io.xorum.codeforceswatcher.features.users.UsersRepository
 import io.xorum.codeforceswatcher.features.users.models.User
-import io.xorum.codeforceswatcher.util.Response
 import io.xorum.codeforceswatcher.redux.*
+import io.xorum.codeforceswatcher.util.Response
 import io.xorum.codeforceswatcher.util.UsersDiff
 import tw.geothings.rekotlin.Action
 
@@ -17,8 +17,8 @@ enum class FetchUserDataType {
 class UsersRequests {
 
     class FetchUserData(
-            private val fetchUserDataType: FetchUserDataType,
-            private val isInitiatedByUser: Boolean
+        private val fetchUserDataType: FetchUserDataType,
+        private val isInitiatedByUser: Boolean
     ) : Request() {
 
         private val usersRepository = UsersRepository()
@@ -45,7 +45,8 @@ class UsersRequests {
             }
         }
 
-        private fun getHandles(users: List<User>) = users.joinToString(separator = ",") { it.handle }
+        private fun getHandles(users: List<User>) =
+            users.joinToString(separator = ",") { it.handle }
 
         private fun getDiff(newUsers: List<User>): Triple<List<User>, List<User>, List<User>> {
             val allUsers = DatabaseQueries.Users.getAll()
@@ -55,7 +56,11 @@ class UsersRequests {
             return Triple(toAddDiff, toUpdateDiff, toDeleteDiff)
         }
 
-        private fun updateDatabaseUsers(toAddDiff: List<User>, toUpdateDiff: List<User>, toDeleteDiff: List<User>) {
+        private fun updateDatabaseUsers(
+            toAddDiff: List<User>,
+            toUpdateDiff: List<User>,
+            toDeleteDiff: List<User>
+        ) {
             DatabaseQueries.Users.delete(toDeleteDiff)
             DatabaseQueries.Users.update(toUpdateDiff)
             DatabaseQueries.Users.insert(toAddDiff)
@@ -63,12 +68,13 @@ class UsersRequests {
 
         private fun getOrderedUsers(toAddDiff: List<User>, toDeleteDiff: List<User>): List<User> {
             val usersMap = DatabaseQueries.Users.getAll().associateBy { it.handle }
-            return store.state.users.users.map { usersMap[it.handle] ?: it }.minus(toDeleteDiff).plus(toAddDiff)
+            return store.state.users.users.map { usersMap[it.handle] ?: it }.minus(toDeleteDiff)
+                .plus(toAddDiff)
         }
 
         data class Success(
-                val users: List<User>,
-                val userAccount: UserAccount?
+            val users: List<User>,
+            val userAccount: UserAccount?
         ) : Action
 
         data class Failure(override val message: Message) : ToastAction
@@ -123,7 +129,9 @@ class UsersRequests {
         private val usersRepository = UsersRepository()
 
         override suspend fun execute() {
-            if (DatabaseQueries.Users.getAll().find { it.handle.equals(handle, ignoreCase = true) } != null) {
+            if (DatabaseQueries.Users.getAll()
+                    .find { it.handle.equals(handle, ignoreCase = true) } != null
+            ) {
                 store.dispatch(Failure(Message.UserAlreadyAdded))
                 return
             }

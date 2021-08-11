@@ -3,8 +3,8 @@ package io.xorum.codeforceswatcher.features.contests.redux
 import io.xorum.codeforceswatcher.features.contests.ContestsRepository
 import io.xorum.codeforceswatcher.features.contests.models.Contest
 import io.xorum.codeforceswatcher.features.contests.response.ApiContest
-import io.xorum.codeforceswatcher.util.Response
 import io.xorum.codeforceswatcher.redux.*
+import io.xorum.codeforceswatcher.util.Response
 import tw.geothings.rekotlin.Action
 
 class ContestsRequests {

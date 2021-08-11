@@ -14,10 +14,9 @@ import androidx.fragment.app.Fragment
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.AddUserBottomSheet
 import com.bogdan.codeforceswatcher.components.WebViewActivity
-import com.bogdan.codeforceswatcher.features.contests.ContestsFragment
 import com.bogdan.codeforceswatcher.features.contests.ContestsFiltersActivity
+import com.bogdan.codeforceswatcher.features.contests.ContestsFragment
 import com.bogdan.codeforceswatcher.features.news.NewsFragment
-import com.bogdan.codeforceswatcher.features.problems.ProblemsFiltersActivity
 import com.bogdan.codeforceswatcher.features.problems.ProblemsFragment
 import com.bogdan.codeforceswatcher.features.users.UsersFragment
 import com.bogdan.codeforceswatcher.util.FeedbackController
@@ -77,9 +76,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.fragment_container, fragment)
-                .commit()
+            .beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .commit()
     }
 
     private fun onNewTabSelected() = when (selectedHomeTab) {
@@ -112,11 +111,11 @@ class MainActivity : AppCompatActivity() {
 
         fab.setOnClickListener {
             startActivity(
-                    WebViewActivity.newIntent(
-                            this,
-                            CONTESTS_LINK,
-                            getString(R.string.upcoming_contests)
-                    )
+                WebViewActivity.newIntent(
+                    this,
+                    CONTESTS_LINK,
+                    getString(R.string.upcoming_contests)
+                )
             )
         }
         ivFilter.setOnClickListener {
@@ -163,16 +162,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun showShareDialog() {
         AlertDialog.Builder(this)
-                .setTitle(getString(R.string.share_cw))
-                .setMessage(getString(R.string.help_cw_make_more_social))
-                .setCancelable(false)
-                .setPositiveButton(getString(R.string.share)) { _, _ ->
-                    share()
-                    analyticsController.logEvent(AnalyticsEvents.APP_SHARED)
-                }
-                .setNegativeButton(getString(R.string.cancel), null)
-                .create()
-                .show()
+            .setTitle(getString(R.string.share_cw))
+            .setMessage(getString(R.string.help_cw_make_more_social))
+            .setCancelable(false)
+            .setPositiveButton(getString(R.string.share)) { _, _ ->
+                share()
+                analyticsController.logEvent(AnalyticsEvents.APP_SHARED)
+            }
+            .setNegativeButton(getString(R.string.cancel), null)
+            .create()
+            .show()
     }
 
     private fun share() = startActivity(Intent().apply {
@@ -185,8 +184,8 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
         spSort.background.setColorFilter(
-                ContextCompat.getColor(this, R.color.white),
-                PorterDuff.Mode.SRC_ATOP
+            ContextCompat.getColor(this, R.color.white),
+            PorterDuff.Mode.SRC_ATOP
         )
 
         bottomNavigation.setOnNavigationItemSelectedListener { item ->
@@ -224,7 +223,7 @@ class MainActivity : AppCompatActivity() {
         companion object {
 
             fun fromMenuItemId(menuItemId: Int): HomeTab =
-                    enumValues<HomeTab>().find { it.menuItemId == menuItemId } ?: USERS
+                enumValues<HomeTab>().find { it.menuItemId == menuItemId } ?: USERS
         }
     }
 }

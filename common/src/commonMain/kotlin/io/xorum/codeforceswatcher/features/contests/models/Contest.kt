@@ -1,12 +1,12 @@
 package io.xorum.codeforceswatcher.features.contests.models
 
 data class Contest(
-        val platform: Platform,
-        val title: String,
-        val link: String,
-        val startDateInMillis: Long,
-        val durationInMillis: Long,
-        val phase: Phase
+    val platform: Platform,
+    val title: String,
+    val link: String,
+    val startDateInMillis: Long,
+    val durationInMillis: Long,
+    val phase: Phase
 ) {
 
     enum class Platform {

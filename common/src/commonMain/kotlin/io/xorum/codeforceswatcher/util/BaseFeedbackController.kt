@@ -13,30 +13,32 @@ abstract class BaseFeedbackController {
     abstract var currentShowingItem: Int
 
     var feedUIModel: FeedUIModel
-        get() = when(currentShowingItem) {
+        get() = when (currentShowingItem) {
             0 -> buildEnjoyingItem()
-            1 -> { buildEmailItem().also { isNeededAtAll = false } }
+            1 -> {
+                buildEmailItem().also { isNeededAtAll = false }
+            }
             2 -> buildRateItem()
             else -> throw IllegalStateException()
         }
         set(v) {}
 
     abstract fun buildEnjoyingItem(
-            positiveButtonClick: () -> Unit = { currentShowingItem = 2 },
-            negativeButtonClick: () -> Unit = { currentShowingItem = 1 },
-            neutralButtonClick: () -> Unit = { turnOnLockoutPeriod() }
+        positiveButtonClick: () -> Unit = { currentShowingItem = 2 },
+        negativeButtonClick: () -> Unit = { currentShowingItem = 1 },
+        neutralButtonClick: () -> Unit = { turnOnLockoutPeriod() }
     ): FeedUIModel
 
     abstract fun buildEmailItem(
-            positiveButtonClick: () -> Unit = { showEmailApp() },
-            negativeButtonClick: () -> Unit = { turnOnLockoutPeriod() },
-            neutralButtonClick: () -> Unit = { turnOnLockoutPeriod() }
+        positiveButtonClick: () -> Unit = { showEmailApp() },
+        negativeButtonClick: () -> Unit = { turnOnLockoutPeriod() },
+        neutralButtonClick: () -> Unit = { turnOnLockoutPeriod() }
     ): FeedUIModel
 
     abstract fun buildRateItem(
-            positiveButtonClick: () -> Unit = { showAppStore().also { isNeededAtAll = false } },
-            negativeButtonClick: () -> Unit = { turnOnLockoutPeriod() },
-            neutralButtonClick: () -> Unit = { turnOnLockoutPeriod() }
+        positiveButtonClick: () -> Unit = { showAppStore().also { isNeededAtAll = false } },
+        negativeButtonClick: () -> Unit = { turnOnLockoutPeriod() },
+        neutralButtonClick: () -> Unit = { turnOnLockoutPeriod() }
     ): FeedUIModel
 
     abstract fun showEmailApp()
@@ -52,7 +54,9 @@ abstract class BaseFeedbackController {
     }
 
     fun shouldShowFeedbackCell(): Boolean {
-        if (startTimeWhenShown == 0L) { startTimeWhenShown = currentTimeMillis() }
+        if (startTimeWhenShown == 0L) {
+            startTimeWhenShown = currentTimeMillis()
+        }
 
         val timeInHours = calculateTimeInHours(startTimeWhenShown, currentTimeMillis())
         updateLockoutPeriod(timeInHours)
@@ -61,7 +65,9 @@ abstract class BaseFeedbackController {
     }
 
     private fun updateLockoutPeriod(timeInHours: Int) {
-        if (timeInHours >= 168 && isLockoutPeriod) { isLockoutPeriod = false }
+        if (timeInHours >= 168 && isLockoutPeriod) {
+            isLockoutPeriod = false
+        }
     }
 
     private fun calculateTimeInHours(startTimeInMillis: Long, endTimeInMillis: Long): Int {
@@ -92,10 +98,10 @@ abstract class BaseFeedbackController {
 }
 
 data class FeedUIModel(
-        val textPositiveButton: String,
-        val textNegativeButton: String,
-        val textTitle: String,
-        val positiveButtonClick: () -> Unit,
-        val negativeButtonClick: () -> Unit,
-        val neutralButtonClick: () -> Unit
+    val textPositiveButton: String,
+    val textNegativeButton: String,
+    val textTitle: String,
+    val positiveButtonClick: () -> Unit,
+    val negativeButtonClick: () -> Unit,
+    val neutralButtonClick: () -> Unit
 )

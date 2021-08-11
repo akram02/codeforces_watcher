@@ -6,7 +6,8 @@ import com.bogdan.codeforceswatcher.epoxy.BaseEpoxyModel
 import com.bogdan.codeforceswatcher.features.filters.models.FilterItem
 import kotlinx.android.synthetic.main.view_filter_item.view.*
 
-data class FilterEpoxyModel(private val filterItem: FilterItem) : BaseEpoxyModel(R.layout.view_filter_item) {
+data class FilterEpoxyModel(private val filterItem: FilterItem) :
+    BaseEpoxyModel(R.layout.view_filter_item) {
 
     init {
         id("FilterEpoxyModel", filterItem.toString())

@@ -9,10 +9,10 @@ import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.utils.MPPointF
 import io.xorum.codeforceswatcher.features.users.models.ChartItem
 import io.xorum.codeforceswatcher.util.splitStringInHalf
-import kotlinx.android.synthetic.main.chart.view.tvContent
+import kotlinx.android.synthetic.main.chart.view.*
 
 class CustomMarkerView(context: Context, layoutResource: Int) :
-        MarkerView(context, layoutResource) {
+    MarkerView(context, layoutResource) {
 
     override fun getOffset(): MPPointF {
         return MPPointF((-width).toFloat(), (-height).toFloat())
@@ -27,7 +27,14 @@ class CustomMarkerView(context: Context, layoutResource: Int) :
             with(chartItem) {
                 val (contestFirstHalf, contestSecondHalf) = contest.splitStringInHalf()
                 val ratingChange = if (ratingChange[0] == '-') ratingChange else "+$ratingChange"
-                tvContent.text = context.getString(R.string.chart_info, rating, ratingChange, rank, contestFirstHalf, contestSecondHalf)
+                tvContent.text = context.getString(
+                    R.string.chart_info,
+                    rating,
+                    ratingChange,
+                    rank,
+                    contestFirstHalf,
+                    contestSecondHalf
+                )
             }
         }
         super.refreshContent(e, highlight)

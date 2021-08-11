@@ -33,8 +33,8 @@ class VerificationActivity : AppCompatActivity(), StoreSubscriber<VerificationSt
         }
 
         ifHandle.configure(
-                labelTextResId = R.string.codeforces_handle,
-                type = InputField.Type.TEXT
+            labelTextResId = R.string.codeforces_handle,
+            type = InputField.Type.TEXT
         )
 
         store.dispatch(VerificationRequests.FetchVerificationCode())
@@ -57,7 +57,8 @@ class VerificationActivity : AppCompatActivity(), StoreSubscriber<VerificationSt
         return true
     }
 
-    private fun showToast(message: String) = Toast.makeText(CwApp.app, message, Toast.LENGTH_SHORT).show()
+    private fun showToast(message: String) =
+        Toast.makeText(CwApp.app, message, Toast.LENGTH_SHORT).show()
 
     override fun onStart() {
         super.onStart()

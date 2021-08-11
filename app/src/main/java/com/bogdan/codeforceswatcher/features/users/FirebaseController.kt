@@ -2,7 +2,6 @@ package com.bogdan.codeforceswatcher.features.users
 
 import com.google.firebase.auth.FirebaseAuth
 import io.xorum.codeforceswatcher.features.auth.IFirebaseController
-import kotlin.Exception
 
 class FirebaseController : IFirebaseController {
     private val auth = FirebaseAuth.getInstance()

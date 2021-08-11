@@ -12,28 +12,33 @@ internal object DatabaseQueries {
 
         fun getAll() = database.userQueries.getAll().executeAsList().map { User.fromDB(it) }
 
-        fun get(handle: String) = database.userQueries.getByHandle(handle).executeAsList().map { User.fromDB(it) }.first()
+        fun get(handle: String) =
+            database.userQueries.getByHandle(handle).executeAsList().map { User.fromDB(it) }.first()
 
         fun insert(user: User) {
             val serializer = Json(from = Json.Default) { ignoreUnknownKeys = true }
-            val ratingChangesJson = serializer.encodeToString(ListSerializer(RatingChange.serializer()), user.ratingChanges)
+            val ratingChangesJson = serializer.encodeToString(
+                ListSerializer(RatingChange.serializer()),
+                user.ratingChanges
+            )
             database.userQueries.insert(
-                    user.id,
-                    user.avatar,
-                    user.rank,
-                    user.handle,
-                    user.rating?.toLong(),
-                    user.maxRating?.toLong(),
-                    user.firstName,
-                    user.lastName,
-                    ratingChangesJson,
-                    user.maxRank,
-                    user.contribution
+                user.id,
+                user.avatar,
+                user.rank,
+                user.handle,
+                user.rating?.toLong(),
+                user.maxRating?.toLong(),
+                user.firstName,
+                user.lastName,
+                ratingChangesJson,
+                user.maxRank,
+                user.contribution
             )
         }
 
         private fun merge(oldUser: User, newUser: User): User {
-            val ratingChanges = (oldUser.ratingChanges + newUser.ratingChanges).distinct().sortedBy { it.ratingUpdateTimeSeconds }
+            val ratingChanges = (oldUser.ratingChanges + newUser.ratingChanges).distinct()
+                .sortedBy { it.ratingUpdateTimeSeconds }
             return newUser.copy(ratingChanges = ratingChanges)
         }
 
@@ -42,19 +47,22 @@ internal object DatabaseQueries {
             val mergedUser = merge(oldUser, user)
 
             val serializer = Json(from = Json.Default) { ignoreUnknownKeys = true }
-            val ratingChangesJson = serializer.encodeToString(ListSerializer(RatingChange.serializer()), mergedUser.ratingChanges)
+            val ratingChangesJson = serializer.encodeToString(
+                ListSerializer(RatingChange.serializer()),
+                mergedUser.ratingChanges
+            )
 
             database.userQueries.update(
-                    user.avatar,
-                    user.rank,
-                    user.rating?.toLong(),
-                    user.maxRating?.toLong(),
-                    user.firstName,
-                    user.lastName,
-                    ratingChangesJson,
-                    user.maxRank,
-                    user.contribution,
-                    user.handle
+                user.avatar,
+                user.rank,
+                user.rating?.toLong(),
+                user.maxRating?.toLong(),
+                user.firstName,
+                user.lastName,
+                ratingChangesJson,
+                user.maxRank,
+                user.contribution,
+                user.handle
             )
         }
 
@@ -97,14 +105,14 @@ internal object DatabaseQueries {
 
         fun insert(problem: Problem) = with(problem) {
             database.problemQueries.insert(
-                    id = id,
-                    title = title,
-                    subtitle = subtitle,
-                    platform = platform.toString(),
-                    link = link,
-                    createdAtMillis = createdAtMillis,
-                    tags = tags.joinToString(separator = ","),
-                    isFavourite = isFavourite
+                id = id,
+                title = title,
+                subtitle = subtitle,
+                platform = platform.toString(),
+                link = link,
+                createdAtMillis = createdAtMillis,
+                tags = tags.joinToString(separator = ","),
+                isFavourite = isFavourite
             )
         }
 
@@ -116,14 +124,14 @@ internal object DatabaseQueries {
 
         fun update(problem: Problem) = with(problem) {
             database.problemQueries.update(
-                    title = title,
-                    subtitle = subtitle,
-                    platform = platform.toString(),
-                    link = link,
-                    createdAtMillis = createdAtMillis,
-                    tags = tags.joinToString(separator = ","),
-                    isFavourite = isFavourite,
-                    id = id
+                title = title,
+                subtitle = subtitle,
+                platform = platform.toString(),
+                link = link,
+                createdAtMillis = createdAtMillis,
+                tags = tags.joinToString(separator = ","),
+                isFavourite = isFavourite,
+                id = id
             )
         }
 

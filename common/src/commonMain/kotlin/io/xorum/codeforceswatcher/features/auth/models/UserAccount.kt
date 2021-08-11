@@ -7,7 +7,7 @@ import kotlinx.serialization.json.Json
 
 @Serializable
 data class UserAccount(
-        val codeforcesUser: User? = null
+    val codeforcesUser: User? = null
 ) {
 
     fun toJson(): String {

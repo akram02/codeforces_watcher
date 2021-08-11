@@ -28,82 +28,137 @@ class ContestsFiltersActivity : AppCompatActivity() {
     private fun buildFiltersList(): List<FilterItem> {
         val filters = store.state.contests.filters
         return listOf(
-                FilterItem(
-                        R.drawable.codeforces,
-                        "Codeforces",
-                        filters.contains(Contest.Platform.CODEFORCES)
-                ) { isChecked ->
-                    store.dispatch(ContestsRequests.ChangeFilterCheckStatus(Contest.Platform.CODEFORCES, isChecked))
-                },
-                FilterItem(
-                        R.drawable.codeforces,
-                        "Codeforces Gym",
-                        filters.contains(Contest.Platform.CODEFORCES_GYM)
-                ) { isChecked ->
-                    store.dispatch(ContestsRequests.ChangeFilterCheckStatus(Contest.Platform.CODEFORCES_GYM, isChecked))
-                },
-                FilterItem(
-                        R.drawable.atcoder,
-                        "AtCoder",
-                        filters.contains(Contest.Platform.ATCODER)
-                ) { isChecked ->
-                    store.dispatch(ContestsRequests.ChangeFilterCheckStatus(Contest.Platform.ATCODER, isChecked))
-                },
-                FilterItem(
-                        R.drawable.leetcode,
-                        "LeetCode",
-                        filters.contains(Contest.Platform.LEETCODE)
-                ) { isChecked ->
-                    store.dispatch(ContestsRequests.ChangeFilterCheckStatus(Contest.Platform.LEETCODE, isChecked))
-                },
-                FilterItem(
-                        R.drawable.topcoder,
-                        "TopCoder",
-                        filters.contains(Contest.Platform.TOPCODER)
-                ) { isChecked ->
-                    store.dispatch(ContestsRequests.ChangeFilterCheckStatus(Contest.Platform.TOPCODER, isChecked))
-                },
-                FilterItem(
-                        R.drawable.csacademy,
-                        "CS Academy",
-                        filters.contains(Contest.Platform.CS_ACADEMY)
-                ) { isChecked ->
-                    store.dispatch(ContestsRequests.ChangeFilterCheckStatus(Contest.Platform.CS_ACADEMY, isChecked))
-                },
-                FilterItem(
-                        R.drawable.codechef,
-                        "CodeChef",
-                        filters.contains(Contest.Platform.CODECHEF)
-                ) { isChecked ->
-                    store.dispatch(ContestsRequests.ChangeFilterCheckStatus(Contest.Platform.CODECHEF, isChecked))
-                },
-                FilterItem(
-                        R.drawable.hackerrank,
-                        "HackerRank",
-                        filters.contains(Contest.Platform.HACKERRANK)
-                ) { isChecked ->
-                    store.dispatch(ContestsRequests.ChangeFilterCheckStatus(Contest.Platform.HACKERRANK, isChecked))
-                },
-                FilterItem(
-                        R.drawable.hackerearth,
-                        "HackerEarth",
-                        filters.contains(Contest.Platform.HACKEREARTH)
-                ) { isChecked ->
-                    store.dispatch(ContestsRequests.ChangeFilterCheckStatus(Contest.Platform.HACKEREARTH, isChecked))
-                },
-                FilterItem(
-                        R.drawable.kickstart, "Kick Start",
-                        filters.contains(Contest.Platform.KICK_START)
-                ) { isChecked ->
-                    store.dispatch(ContestsRequests.ChangeFilterCheckStatus(Contest.Platform.KICK_START, isChecked))
-                },
-                FilterItem(
-                        R.drawable.toph,
-                        "Toph",
-                        filters.contains(Contest.Platform.TOPH)
-                ) { isChecked ->
-                    store.dispatch(ContestsRequests.ChangeFilterCheckStatus(Contest.Platform.TOPH, isChecked))
-                }
+            FilterItem(
+                R.drawable.codeforces,
+                "Codeforces",
+                filters.contains(Contest.Platform.CODEFORCES)
+            ) { isChecked ->
+                store.dispatch(
+                    ContestsRequests.ChangeFilterCheckStatus(
+                        Contest.Platform.CODEFORCES,
+                        isChecked
+                    )
+                )
+            },
+            FilterItem(
+                R.drawable.codeforces,
+                "Codeforces Gym",
+                filters.contains(Contest.Platform.CODEFORCES_GYM)
+            ) { isChecked ->
+                store.dispatch(
+                    ContestsRequests.ChangeFilterCheckStatus(
+                        Contest.Platform.CODEFORCES_GYM,
+                        isChecked
+                    )
+                )
+            },
+            FilterItem(
+                R.drawable.atcoder,
+                "AtCoder",
+                filters.contains(Contest.Platform.ATCODER)
+            ) { isChecked ->
+                store.dispatch(
+                    ContestsRequests.ChangeFilterCheckStatus(
+                        Contest.Platform.ATCODER,
+                        isChecked
+                    )
+                )
+            },
+            FilterItem(
+                R.drawable.leetcode,
+                "LeetCode",
+                filters.contains(Contest.Platform.LEETCODE)
+            ) { isChecked ->
+                store.dispatch(
+                    ContestsRequests.ChangeFilterCheckStatus(
+                        Contest.Platform.LEETCODE,
+                        isChecked
+                    )
+                )
+            },
+            FilterItem(
+                R.drawable.topcoder,
+                "TopCoder",
+                filters.contains(Contest.Platform.TOPCODER)
+            ) { isChecked ->
+                store.dispatch(
+                    ContestsRequests.ChangeFilterCheckStatus(
+                        Contest.Platform.TOPCODER,
+                        isChecked
+                    )
+                )
+            },
+            FilterItem(
+                R.drawable.csacademy,
+                "CS Academy",
+                filters.contains(Contest.Platform.CS_ACADEMY)
+            ) { isChecked ->
+                store.dispatch(
+                    ContestsRequests.ChangeFilterCheckStatus(
+                        Contest.Platform.CS_ACADEMY,
+                        isChecked
+                    )
+                )
+            },
+            FilterItem(
+                R.drawable.codechef,
+                "CodeChef",
+                filters.contains(Contest.Platform.CODECHEF)
+            ) { isChecked ->
+                store.dispatch(
+                    ContestsRequests.ChangeFilterCheckStatus(
+                        Contest.Platform.CODECHEF,
+                        isChecked
+                    )
+                )
+            },
+            FilterItem(
+                R.drawable.hackerrank,
+                "HackerRank",
+                filters.contains(Contest.Platform.HACKERRANK)
+            ) { isChecked ->
+                store.dispatch(
+                    ContestsRequests.ChangeFilterCheckStatus(
+                        Contest.Platform.HACKERRANK,
+                        isChecked
+                    )
+                )
+            },
+            FilterItem(
+                R.drawable.hackerearth,
+                "HackerEarth",
+                filters.contains(Contest.Platform.HACKEREARTH)
+            ) { isChecked ->
+                store.dispatch(
+                    ContestsRequests.ChangeFilterCheckStatus(
+                        Contest.Platform.HACKEREARTH,
+                        isChecked
+                    )
+                )
+            },
+            FilterItem(
+                R.drawable.kickstart, "Kick Start",
+                filters.contains(Contest.Platform.KICK_START)
+            ) { isChecked ->
+                store.dispatch(
+                    ContestsRequests.ChangeFilterCheckStatus(
+                        Contest.Platform.KICK_START,
+                        isChecked
+                    )
+                )
+            },
+            FilterItem(
+                R.drawable.toph,
+                "Toph",
+                filters.contains(Contest.Platform.TOPH)
+            ) { isChecked ->
+                store.dispatch(
+                    ContestsRequests.ChangeFilterCheckStatus(
+                        Contest.Platform.TOPH,
+                        isChecked
+                    )
+                )
+            }
         )
     }
 

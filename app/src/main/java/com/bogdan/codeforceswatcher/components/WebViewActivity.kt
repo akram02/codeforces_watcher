@@ -82,22 +82,23 @@ class WebViewActivity : AppCompatActivity() {
     private fun setupWebView() = with(webView) {
         loadUrl(link)
 
-        val webChromeClient = object : VideoEnabledWebChromeClient(swipeRefreshLayout, videoLayout, null, webView) {
+        val webChromeClient =
+            object : VideoEnabledWebChromeClient(swipeRefreshLayout, videoLayout, null, webView) {
 
-            override fun onShowFileChooser(
+                override fun onShowFileChooser(
                     webView: WebView?,
                     filePathCallback: ValueCallback<Array<Uri>>?,
                     fileChooserParams: FileChooserParams?
-            ): Boolean {
-                onFileGotCallback = filePathCallback
-                val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
-                    addCategory(Intent.CATEGORY_OPENABLE)
-                    type = "*/*"
+                ): Boolean {
+                    onFileGotCallback = filePathCallback
+                    val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
+                        addCategory(Intent.CATEGORY_OPENABLE)
+                        type = "*/*"
+                    }
+                    startActivityForResult(intent, FILECHOOSER_RESULTCODE)
+                    return true
                 }
-                startActivityForResult(intent, FILECHOOSER_RESULTCODE)
-                return true
             }
-        }
 
         webChromeClient.setOnToggledFullscreen(object : ToggledFullscreenCallback {
             override fun toggledFullscreen(fullscreen: Boolean) {
@@ -114,7 +115,8 @@ class WebViewActivity : AppCompatActivity() {
                 } else {
                     val attrs = window.attributes
                     attrs.flags = attrs.flags and WindowManager.LayoutParams.FLAG_FULLSCREEN.inv()
-                    attrs.flags = attrs.flags and WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON.inv()
+                    attrs.flags =
+                        attrs.flags and WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON.inv()
                     window.attributes = attrs
                     window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
 
@@ -190,11 +192,11 @@ class WebViewActivity : AppCompatActivity() {
         private const val FILECHOOSER_RESULTCODE = 1
 
         fun newIntent(
-                context: Context,
-                link: String,
-                title: String,
-                openEvent: String? = null,
-                shareEvent: String? = null
+            context: Context,
+            link: String,
+            title: String,
+            openEvent: String? = null,
+            shareEvent: String? = null
         ) = Intent(context, WebViewActivity::class.java).apply {
             putExtra(PAGE_TITLE_ID, title)
             putExtra(PAGE_LINK_ID, link)

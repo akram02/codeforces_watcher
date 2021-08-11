@@ -39,13 +39,13 @@ class InputField(context: Context, attrs: AttributeSet) : FrameLayout(context, a
     }
 
     sealed class Action(
-            val imeActionId: Int
+        val imeActionId: Int
     ) {
 
         open val onClick: (() -> Unit)? = null
 
         data class Go(
-                override val onClick: (() -> Unit)
+            override val onClick: (() -> Unit)
         ) : Action(EditorInfo.IME_ACTION_GO)
 
         object Next : Action(EditorInfo.IME_ACTION_NEXT)
@@ -56,14 +56,14 @@ class InputField(context: Context, attrs: AttributeSet) : FrameLayout(context, a
     }
 
     fun configure(
-            labelText: CharSequence? = null,
-            labelTextResId: Int? = null,
-            inputHint: CharSequence? = null,
-            inputHintResId: Int? = null,
-            inputText: CharSequence? = null,
-            type: Type = Type.TEXT,
-            minLines: Int = 1,
-            action: Action? = null
+        labelText: CharSequence? = null,
+        labelTextResId: Int? = null,
+        inputHint: CharSequence? = null,
+        inputHintResId: Int? = null,
+        inputText: CharSequence? = null,
+        type: Type = Type.TEXT,
+        minLines: Int = 1,
+        action: Action? = null
     ) {
         editText.hint = when {
             inputHint != null -> inputHint
