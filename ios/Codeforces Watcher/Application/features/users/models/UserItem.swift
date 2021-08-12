@@ -67,8 +67,8 @@ enum UserItem {
         }
     }
     
-    case loginItem
-    case verifyItem
+    case loginItem(DoActionToIdentifyView.UIModel)
+    case verifyItem(DoActionToIdentifyView.UIModel)
     case userItem(UserItem)
     case userAccount(UserAccountItem)
 }

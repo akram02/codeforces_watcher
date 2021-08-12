@@ -17,9 +17,6 @@ class UsersTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSourc
     var onUserTap: ((String) -> ()) = {_ in }
     var onUserAccountTap: ((String) -> ()) = {_ in }
     
-    var onLoginTap: () -> () = {}
-    
-    var onVerifyTap: () -> () = {}
     var onVerifyCellTap: () -> () = {}
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -39,13 +36,13 @@ class UsersTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSourc
         }
         
         switch(users[indexPath.row]) {
-        case .loginItem:
+        case .loginItem(let uiModel):
             return tableView.dequeueReusableCell(cellType: LoginTableViewCell.self).apply {
-                $0.bind(onClick: onLoginTap)
+                $0.bind(uiModel)
             }
-        case .verifyItem:
+        case .verifyItem(let uiModel):
             return tableView.dequeueReusableCell(cellType: VerifyTableViewCell.self).apply {
-                $0.bind(onClick: onVerifyTap)
+                $0.bind(uiModel)
             }
         case .userItem(let item):
             return tableView.dequeueReusableCell(cellType: UserTableViewCell.self).apply {

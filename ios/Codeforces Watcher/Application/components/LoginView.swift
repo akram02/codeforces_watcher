@@ -1,19 +1,19 @@
 //
-//  VerifyView.swift
+//  LoginView.swift
 //  Codeforces Watcher
 //
-//  Created by Ivan Karavaiev on 2/12/21.
+//  Created by Ivan Karavaiev on 1/28/21.
 //  Copyright © 2021 xorum.io. All rights reserved.
 //
 
 import UIKit
 
-class VerifyView: UIView {
+class LoginView: UIView {
 
     private let contentView = CardView()
 
     private let galacticMasterView = GalacticMasterView()
-    private let verifyToIdentifyView = DoActionToIdentifyView()
+    private let doActionToIdentifyView = DoActionToIdentifyView()
     
     private let dashedLineView = UIView()
     
@@ -35,7 +35,7 @@ class VerifyView: UIView {
     private func buildViewTree() {
         addSubview(contentView)
 
-        [galacticMasterView, dashedLineView, verifyToIdentifyView].forEach(contentView.addSubview)
+        [galacticMasterView, dashedLineView, doActionToIdentifyView].forEach(contentView.addSubview)
     }
 
     private func setConstraints() {
@@ -49,22 +49,15 @@ class VerifyView: UIView {
             $0.verticalToSuperview()
         }
         
-        verifyToIdentifyView.run {
+        doActionToIdentifyView.run {
             $0.width(to: galacticMasterView)
             $0.edgesToSuperview(excluding: .leading)
             $0.leadingToTrailing(of: dashedLineView)
         }
     }
     
-    func bind(onClick: @escaping () -> ()) {
-        verifyToIdentifyView.bind(
-            .init(
-                title: "verify_account".localized,
-                subtitle: "verify_account_prompt".localized,
-                buttonText: "verify_in_42_seconds".localized,
-                onButtonTap: onClick
-            )
-        )
+    func bind(_ uiModel: DoActionToIdentifyView.UIModel) {
+        doActionToIdentifyView.bind(uiModel)
     }
 
     override func layoutSubviews() {

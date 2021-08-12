@@ -10,7 +10,7 @@ import UIKit
 
 class VerifyTableViewCell: UITableViewCell {
 
-    private let verifyView = VerifyView()
+    private let verifyView = LoginView()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -37,7 +37,7 @@ class VerifyTableViewCell: UITableViewCell {
         verifyView.edgesToSuperview(insets: UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 8))
     }
     
-    func bind(onClick: @escaping () -> ()) {
-        verifyView.bind(onClick: onClick)
+    func bind(_ uiModel: DoActionToIdentifyView.UIModel) {
+        verifyView.bind(uiModel)
     }
 }
