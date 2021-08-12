@@ -42,7 +42,7 @@ class UserAccountPerformanceView: UIView {
     struct UIModel {
         let rating: Int?
         let maxRating: Int?
-        let contribution: Int?
+        let contribution: Int64
         let ratingChanges: [RatingChange]
         let rank: String?
         let maxRank: String?
@@ -225,18 +225,14 @@ fileprivate extension UserAccountPerformanceView.UIModel {
     }
     
     var contributionText: NSAttributedString {
-        if let contribution = contribution {
-            let contributionSubstring = (contribution <= 0 ? "\(contribution)" : "+\(contribution)")
-            return colorContribution(text: "Contribution".localizedFormat(args: contributionSubstring), contributionSubstring)
-        } else {
-            return none
-        }
+        let contributionSubstring = (contribution <= 0 ? "\(contribution)" : "+\(contribution)")
+        return colorContribution(text: "Contribution".localizedFormat(args: contributionSubstring), contributionSubstring)
     }
     
     private func colorContribution(text: String, _ contributionSubstring: String) -> NSAttributedString {
         let attributedText = NSMutableAttributedString(string: text)
        
-        if let range = text.firstOccurrence(string: contributionSubstring), let contribution = contribution {
+        if let range = text.firstOccurrence(string: contributionSubstring) {
             let colorOfContribution = (contribution >= 0 ? Palette.brightGreen : Palette.red)
             
             attributedText.colored(with: colorOfContribution, range: range)
