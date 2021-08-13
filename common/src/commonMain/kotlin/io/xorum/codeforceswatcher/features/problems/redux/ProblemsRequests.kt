@@ -21,7 +21,10 @@ class ProblemsRequests {
                     val problems = mapProblems(response.result.problems)
                     val (toAddDiff, toUpdateDiff) = getDiff(problems)
                     updateDatabaseProblems(toAddDiff, toUpdateDiff)
-                    Success(getAllProblems(), getMergedTags(response.result.tags))
+                    Success(
+                        getMergedProblems(toAddDiff, toUpdateDiff),
+                        getMergedTags(response.result.tags)
+                    )
                 }
                 is Response.Failure -> Failure(if (isInitiatedByUser) response.error.toMessage() else Message.None)
             }
@@ -43,7 +46,13 @@ class ProblemsRequests {
             DatabaseQueries.Problems.insert(toAddDiff)
         }
 
-        private fun getAllProblems() = DatabaseQueries.Problems.getAll()
+        private fun getMergedProblems(
+            toAddDiff: List<Problem>,
+            toUpdateDiff: List<Problem>
+        ): List<Problem> {
+            val problemsMap = toUpdateDiff.associateBy { it.id }
+            return store.state.problems.problems.map { problemsMap[it.id] ?: it }.plus(toAddDiff)
+        }
 
         private fun getMergedTags(tags: List<String>) =
             store.state.problems.tags.plus(tags).distinct()
