@@ -15,7 +15,7 @@ fun problemsReducer(action: Action, state: AppState): ProblemsState {
                 problems = action.problems,
                 tags = action.tags,
                 status = ProblemsState.Status.IDLE
-            )
+            ).withOrderedTags()
             newState = newState.copy(filteredProblems = newState.getFilteredProblems())
         }
         is ProblemsRequests.FetchProblems.Failure -> {
@@ -55,6 +55,12 @@ fun ProblemsState.getFilteredProblems() =
                     || it.subtitle.toLowerCase().kmpContains(query.toLowerCase())
         }
         .sortedByDescending { it.createdAtMillis }
+
+fun ProblemsState.withOrderedTags() =
+    copy(tags = tags.sortedWith(compareBy({ it.priority }, { it })))
+
+private val String.priority
+    get() = toIntOrNull() ?: Int.MAX_VALUE
 
 private fun String.kmpContains(searchString: String): Boolean {
     val findingStringLength = searchString.length

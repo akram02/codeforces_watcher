@@ -7,6 +7,7 @@ import io.xorum.codeforceswatcher.features.contests.models.Contest
 import io.xorum.codeforceswatcher.features.contests.redux.ContestsState
 import io.xorum.codeforceswatcher.features.problems.redux.ProblemsState
 import io.xorum.codeforceswatcher.features.problems.redux.getFilteredProblems
+import io.xorum.codeforceswatcher.features.problems.redux.withOrderedTags
 import io.xorum.codeforceswatcher.features.users.redux.UsersState
 import io.xorum.codeforceswatcher.redux.states.AppState
 import io.xorum.codeforceswatcher.redux.store
@@ -51,7 +52,7 @@ class PersistenceController : StoreSubscriber<AppState> {
             tags = settings.readProblemsTags(),
             selectedTags = settings.readProblemsSelectedTags()
         )
-        return state.copy(filteredProblems = state.getFilteredProblems())
+        return state.copy(filteredProblems = state.getFilteredProblems()).withOrderedTags()
     }
 
     private fun getAuthState() = AuthState(authStage = settings.readUserAccount().getAuthStage())

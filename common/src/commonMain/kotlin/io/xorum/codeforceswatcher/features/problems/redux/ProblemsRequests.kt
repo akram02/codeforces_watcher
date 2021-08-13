@@ -46,7 +46,7 @@ class ProblemsRequests {
         private fun getAllProblems() = DatabaseQueries.Problems.getAll()
 
         private fun getMergedTags(tags: List<String>) =
-            store.state.problems.tags.plus(tags).distinct().sorted()
+            store.state.problems.tags.plus(tags).distinct()
 
         data class Success(
             val problems: List<Problem>,
