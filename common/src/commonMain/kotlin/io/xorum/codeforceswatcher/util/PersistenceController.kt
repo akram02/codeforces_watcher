@@ -6,7 +6,7 @@ import io.xorum.codeforceswatcher.features.auth.redux.AuthState
 import io.xorum.codeforceswatcher.features.contests.models.Contest
 import io.xorum.codeforceswatcher.features.contests.redux.ContestsState
 import io.xorum.codeforceswatcher.features.problems.redux.ProblemsState
-import io.xorum.codeforceswatcher.features.problems.redux.getFilteredProblems
+import io.xorum.codeforceswatcher.features.problems.redux.withFilteredProblems
 import io.xorum.codeforceswatcher.features.problems.redux.withOrderedTags
 import io.xorum.codeforceswatcher.features.users.redux.UsersState
 import io.xorum.codeforceswatcher.redux.states.AppState
@@ -45,15 +45,12 @@ class PersistenceController : StoreSubscriber<AppState> {
         userAccount = settings.readUserAccount(),
     )
 
-    private fun getProblemsState(): ProblemsState {
-        val state = ProblemsState(
-            problems = DatabaseQueries.Problems.getAll(),
-            isFavourite = (settings.readProblemsIsFavourite()),
-            tags = settings.readProblemsTags(),
-            selectedTags = settings.readProblemsSelectedTags()
-        )
-        return state.copy(filteredProblems = state.getFilteredProblems()).withOrderedTags()
-    }
+    private fun getProblemsState() = ProblemsState(
+        problems = DatabaseQueries.Problems.getAll(),
+        isFavourite = (settings.readProblemsIsFavourite()),
+        tags = settings.readProblemsTags(),
+        selectedTags = settings.readProblemsSelectedTags()
+    ).withFilteredProblems().withOrderedTags()
 
     private fun getAuthState() = AuthState(authStage = settings.readUserAccount().getAuthStage())
 
