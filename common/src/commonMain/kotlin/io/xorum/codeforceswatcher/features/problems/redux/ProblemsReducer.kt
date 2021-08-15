@@ -15,46 +15,48 @@ fun problemsReducer(action: Action, state: AppState): ProblemsState {
                 problems = action.problems,
                 tags = action.tags,
                 status = ProblemsState.Status.IDLE
-            )
-            newState = newState.copy(filteredProblems = newState.getFilteredProblems())
+            ).withOrderedTags().withFilteredProblems()
         }
         is ProblemsRequests.FetchProblems.Failure -> {
             newState = newState.copy(status = ProblemsState.Status.IDLE)
         }
         is ProblemsActions.ChangeTypeProblems -> {
-            newState = newState.copy(isFavourite = action.isFavourite)
-            newState = newState.copy(filteredProblems = newState.getFilteredProblems())
+            newState = newState.copy(isFavourite = action.isFavourite).withFilteredProblems()
         }
         is ProblemsRequests.ChangeStatusFavourite.Success -> {
             newState = newState.copy(problems = newState.problems.map {
                 if (it.id == action.problem.id) action.problem else it
-            })
-            newState = newState.copy(filteredProblems = newState.getFilteredProblems())
+            }).withFilteredProblems()
         }
         is ProblemsRequests.ChangeTagCheckStatus -> {
             newState = newState.copy(
                 selectedTags = if (action.isChecked) newState.selectedTags.plus(action.tag)
                 else newState.selectedTags.minus(action.tag)
-            )
-            newState = newState.copy(filteredProblems = newState.getFilteredProblems())
+            ).withFilteredProblems()
         }
         is ProblemsRequests.SetQuery -> {
-            newState = newState.copy(query = action.query)
-            newState = newState.copy(filteredProblems = newState.getFilteredProblems())
+            newState = newState.copy(query = action.query).withFilteredProblems()
         }
     }
 
     return newState
 }
 
-fun ProblemsState.getFilteredProblems() =
-    problems.filter { if (isFavourite) it.isFavourite else true }
+fun ProblemsState.withFilteredProblems() = copy(
+    filteredProblems = problems.filter { if (isFavourite) it.isFavourite else true }
         .filter { it.tags.containsAll(selectedTags) }
         .filter {
             it.title.toLowerCase().kmpContains(query.toLowerCase())
                     || it.subtitle.toLowerCase().kmpContains(query.toLowerCase())
         }
         .sortedByDescending { it.createdAtMillis }
+)
+
+fun ProblemsState.withOrderedTags() =
+    copy(tags = tags.sortedWith(compareBy({ it.priority }, { it })))
+
+private val String.priority
+    get() = toIntOrNull() ?: Int.MAX_VALUE
 
 private fun String.kmpContains(searchString: String): Boolean {
     val findingStringLength = searchString.length

@@ -175,14 +175,6 @@ class UsersViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
             $0.onUserAccountTap = { handle in
                 self.presentModal(UserViewController(handle, isUserAccount: true))
             }
-            $0.onLoginTap = {
-                self.presentModal(SignInViewController())
-                analyticsControler.logEvent(eventName: AnalyticsEvents().SIGN_IN_OPENED, params: [:])
-            }
-            $0.onVerifyTap = {
-                self.presentModal(VerifyViewController())
-                analyticsControler.logEvent(eventName: AnalyticsEvents().VERIFY_OPENED, params: [:])
-            }
             $0.onVerifyCellTap = {
                 self.showLogOutAlert()
             }
@@ -297,9 +289,27 @@ class UsersViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
         
         switch (authState.authStage) {
         case .notSignedIn:
-            tableAdapter.users = [.loginItem] + sortedUsers.mapToItems()
+            let uiModel = DoActionToIdentifyView.UIModel(
+                title: "login_to_identify".localized,
+                subtitle: "prompt_to_loginToIdentify".localized,
+                buttonText: "login_in_42_seconds".localized,
+                onButtonTap: {
+                    self.presentModal(SignInViewController())
+                    analyticsControler.logEvent(eventName: AnalyticsEvents().SIGN_IN_OPENED, params: [:])
+                }
+            )
+            tableAdapter.users = [.loginItem(uiModel)] + sortedUsers.mapToItems()
         case .signedIn:
-            tableAdapter.users = [.verifyItem] + sortedUsers.mapToItems()
+            let uiModel = DoActionToIdentifyView.UIModel(
+                title: "verify_account".localized,
+                subtitle: "verify_account_prompt".localized,
+                buttonText: "verify_in_42_seconds".localized,
+                onButtonTap: {
+                    self.presentModal(VerifyViewController())
+                    analyticsControler.logEvent(eventName: AnalyticsEvents().VERIFY_OPENED, params: [:])
+                }
+            )
+            tableAdapter.users = [.verifyItem(uiModel)] + sortedUsers.mapToItems()
         case .verified:
             guard let codeforcesUser = userState.userAccount?.codeforcesUser else { fatalError() }
             tableAdapter.users = [.userAccount(UserItem.UserAccountItem(codeforcesUser))] + sortedUsers.mapToItems()

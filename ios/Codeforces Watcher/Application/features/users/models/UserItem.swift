@@ -22,20 +22,20 @@ enum UserItem {
         let lastName: String?
         let maxRank: String?
         let ratingChanges: [RatingChange]
-        let contribution: Int?
+        let contribution: Int64
         
         init(_ user: User) {
             id = Int(user.id)
             avatar = user.avatar
             rank = user.rank
             handle = user.handle
-            rating = user.rating as? Int
-            maxRating = user.maxRating as? Int
+            rating = user.rating?.intValue
+            maxRating = user.maxRating?.intValue
             firstName = user.firstName
             lastName = user.lastName
             maxRank = user.maxRank
             ratingChanges = user.ratingChanges
-            contribution = user.contribution as? Int
+            contribution = user.contribution
         }
     }
     
@@ -50,25 +50,25 @@ enum UserItem {
         let lastName: String?
         let maxRank: String?
         let ratingChanges: [RatingChange]
-        let contribution: Int?
+        let contribution: Int64
         
         init(_ user: User) {
             id = Int(user.id)
             avatar = user.avatar
             rank = user.rank
             handle = user.handle
-            rating = user.rating as? Int
-            maxRating = user.maxRating as? Int
+            rating = user.rating?.intValue
+            maxRating = user.maxRating?.intValue
             firstName = user.firstName
             lastName = user.lastName
             maxRank = user.maxRank
             ratingChanges = user.ratingChanges
-            contribution = user.contribution as? Int
+            contribution = user.contribution
         }
     }
     
-    case loginItem
-    case verifyItem
+    case loginItem(DoActionToIdentifyView.UIModel)
+    case verifyItem(DoActionToIdentifyView.UIModel)
     case userItem(UserItem)
     case userAccount(UserAccountItem)
 }
