@@ -16,7 +16,7 @@ targets:
   "Codeforces Watcher Release":
     type: application
     platform: iOS
-    deploymentTarget: "11.0"
+    deploymentTarget: "13.0"
     sources:  
       - path: "Codeforces Watcher"
         excludes:
@@ -44,7 +44,7 @@ targets:
   "Codeforces Watcher Debug":
     type: application
     platform: iOS
-    deploymentTarget: "11.0"
+    deploymentTarget: "13.0"
     sources:
       - path: "Codeforces Watcher"
         excludes:
@@ -54,7 +54,7 @@ targets:
       testTargets:
         - "Codeforces Watcher Tests"
         - "Codeforces Watcher UITests"
-      gatherCoverageData: true
+      gatherCoverageData: false
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: "io.xorum.codeforceswatcher.debug"
@@ -72,13 +72,13 @@ targets:
   "Codeforces Watcher Tests":
     type: bundle.unit-test
     platform: iOS
-    deploymentTarget: "11.0"
+    deploymentTarget: "13.0"
     sources:
       - path: "Codeforces Watcher Tests"
     dependencies:
       - target: "Codeforces Watcher Debug"
     scheme:
-      gatherCoverageData: true
+      gatherCoverageData: false
   "Codeforces Watcher UITests":
     type: bundle.ui-testing
     platform: iOS
@@ -87,4 +87,4 @@ targets:
     dependencies:
       - target: "Codeforces Watcher Debug"
     scheme:
-      gatherCoverageData: true
+      gatherCoverageData: false
