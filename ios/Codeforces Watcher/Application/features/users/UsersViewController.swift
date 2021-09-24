@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftUI
 import common
 import FirebaseAnalytics
 import PKHUD
@@ -294,7 +295,8 @@ class UsersViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
                 subtitle: "prompt_to_loginToIdentify".localized,
                 buttonText: "login_in_42_seconds".localized,
                 onButtonTap: {
-                    self.presentModal(SignInViewController())
+                    self.presentModal(SignInViewControllerNew())
+//                    self.navigationController?.pushViewController(SignInViewControllerNew(), animated: true)
                     analyticsControler.logEvent(eventName: AnalyticsEvents().SIGN_IN_OPENED, params: [:])
                 }
             )

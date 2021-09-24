@@ -10,3 +10,9 @@ import Foundation
 import UIKit
 
 let noImage = UIImage(named: "no-image.jpg")
+
+enum TypeOfField {
+    case email
+    case password
+    case text
+}

@@ -86,10 +86,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func initAppStyle() {
         UINavigationBar.appearance().run {
             $0.isTranslucent = false
-            $0.barTintColor = Palette.colorPrimary
-            $0.tintColor = Palette.white
+            $0.barTintColor = Palette.white
+            $0.tintColor = Palette.black
             $0.titleTextAttributes = [
-                NSAttributedString.Key.foregroundColor: Palette.white,
+                NSAttributedString.Key.foregroundColor: Palette.black,
                 NSAttributedString.Key.font: Font.textPageTitle
             ]
         }

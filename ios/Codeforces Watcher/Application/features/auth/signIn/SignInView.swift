@@ -1,19 +1,22 @@
 import SwiftUI
 
-struct SignIn: View {
-    @State var email: String
-    @State var password: String
-    @State var isFocusedEmail = false
+struct SignInView: View {
+    //var dismissAction: (() -> Void)?
+    
+    @State var email = ""
+    @State var password = ""
     
     var body: some View {
         VStack(spacing: 0) {
-            HStack {
-                Button(action: {}, label: {
+            /*HStack {
+                Button(action: {
+                    //dismissAction?()
+                }, label: {
                     Image("back_arrow")
                 })
                 
                 Spacer()
-            }
+            }*/
             
             Spacer()
             
@@ -21,33 +24,24 @@ struct SignIn: View {
                 Text("Sign In")
                     .font(.system(size: 40, design: .monospaced))
                 
-                VStack(spacing: 24) {
-                    VStack(alignment: .leading, spacing: 0) {
-                        Text("Email")
-                            .foregroundColor(.gray)
-                            .font(.system(size: 13, design: .monospaced))
-                        
-                        TextField("Email", text: Binding.constant(email))
-                            .keyboardType(.emailAddress)
-                        
-                        Divider()
-                            .frame(height: 1)
-                            .background(Color.black)
-                    }
+                VStack(alignment: .leading, spacing: 24) {
+                    TextInputLayoutView(
+                        text: $email,
+                        hint: "Email",
+                        placeholder: "Email",
+                        contentType: .email,
+                        tag: 0
+                    )
                     
-                    VStack(alignment: .leading, spacing: 0) {
-                        Text("Password")
-                            .foregroundColor(.gray)
-                            .font(.system(size: 13, design: .monospaced))
-                        
-                        SecureField("Password", text: Binding.constant(password))
-                            .font(.system(size: 16, design: .monospaced))
-                        
-                        Divider()
-                            .frame(height: 1)
-                            .background(Color.black)
-                    }
+                    TextInputLayoutView(
+                        text: $password,
+                        hint: "Password",
+                        placeholder: "Password",
+                        contentType: .password,
+                        tag: 1
+                    )
                 }
+                .frame(maxWidth: .infinity)
             }
             
             Spacer()
@@ -86,13 +80,12 @@ struct SignIn: View {
             .font(.system(size: 14, design: .monospaced))
         }
         .padding()
+        //.navigationBarHidden(true)
     }
 }
 
-struct SignIn_Previews: PreviewProvider {
+struct SignInView_Previews: PreviewProvider {
     static var previews: some View {
-        SignIn(email: "",
-            password: ""
-        )
+        SignInView()
     }
 }
