@@ -1,23 +1,17 @@
 import SwiftUI
 
 struct SignInView: View {
-    //var dismissAction: (() -> Void)?
+    var didSignInClick: ((String, String) -> Void)?
+    var onForgotPasswordTap: ((String) -> Void)?
+    var didSignUpClick: (() -> Void)?
     
     @State var email = ""
+    @State var emailView = ""
     @State var password = ""
+    @State var passwordView = ""
     
     var body: some View {
         VStack(spacing: 0) {
-            /*HStack {
-                Button(action: {
-                    //dismissAction?()
-                }, label: {
-                    Image("back_arrow")
-                })
-                
-                Spacer()
-            }*/
-            
             Spacer()
             
             VStack(alignment: .leading, spacing: 44) {
@@ -26,7 +20,8 @@ struct SignInView: View {
                 
                 VStack(alignment: .leading, spacing: 24) {
                     TextInputLayoutView(
-                        text: $email,
+                        textReal: $email,
+                        textView: $emailView,
                         hint: "Email",
                         placeholder: "Email",
                         contentType: .email,
@@ -34,7 +29,8 @@ struct SignInView: View {
                     )
                     
                     TextInputLayoutView(
-                        text: $password,
+                        textReal: $password,
+                        textView: $passwordView,
                         hint: "Password",
                         placeholder: "Password",
                         contentType: .password,
@@ -47,7 +43,9 @@ struct SignInView: View {
             Spacer()
             
             VStack(spacing: 60) {
-                Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                Button(action: {
+                    self.didSignInClick?(email, password)
+                }, label: {
                     Text("Sign in".uppercased())
                         .font(.system(size: 16, design: .monospaced))
                         .foregroundColor(.white)
@@ -56,7 +54,9 @@ struct SignInView: View {
                         .cornerRadius(30)
                 })
                 
-                Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                Button(action: {
+                    self.onForgotPasswordTap?(email)
+                }, label: {
                     Text("Forgot password?")
                         .font(.system(size: 14, design: .monospaced))
                         .foregroundColor(.black)
@@ -70,7 +70,9 @@ struct SignInView: View {
                 Text("Don't have an account yet?")
                     .foregroundColor(.gray)
                 
-                Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                Button(action: {
+                    self.didSignUpClick?()
+                }, label: {
                     Text("Sign Up")
                         .foregroundColor(.black)
                         .underline()
@@ -80,7 +82,6 @@ struct SignInView: View {
             .font(.system(size: 14, design: .monospaced))
         }
         .padding()
-        //.navigationBarHidden(true)
     }
 }
 

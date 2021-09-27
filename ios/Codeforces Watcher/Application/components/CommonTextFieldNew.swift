@@ -1,12 +1,27 @@
 import SwiftUI
 
 struct CommonTextFieldNew: UIViewRepresentable {
-    @Binding var text: String
+    @Binding var textReal: String
+    @Binding var textView: String
     let placeholder: String
     let isSecureTextField: Bool
     let tag: Int
     
     @State var isFocused = false
+    
+    init(
+        textReal: Binding<String>,
+        textView: Binding<String>,
+        placeholder: String,
+        contentType: TypeOfField,
+        tag: Int
+    ) {
+        _textReal = textReal
+        _textView = textView
+        self.placeholder = placeholder
+        self.isSecureTextField = (contentType == .password)
+        self.tag = tag
+    }
 
     func makeUIView(context: UIViewRepresentableContext<CommonTextFieldNew>) -> UITextField {
         let textField = UITextField().apply {
@@ -37,7 +52,7 @@ struct CommonTextFieldNew: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: UITextField, context: Context) {
-        uiView.text = text
+        uiView.text = textView
     }
 
     func makeCoordinator() -> Coordinator {
@@ -54,11 +69,33 @@ struct CommonTextFieldNew: UIViewRepresentable {
         func textFieldDidChangeSelection(_ textField: UITextField) {
             DispatchQueue.main.async {
                 if self.parent.isSecureTextField {
-                    self.parent.text = String(repeatElement("*", count: textField.text?.count ?? 0))
+                    self.handleSecureField(textField)
                 } else {
-                    self.parent.text = textField.text ?? ""
+                    self.handleDefaultField(textField)
                 }
             }
+        }
+        
+        func handleSecureField(_ textField: UITextField) {
+            let text = textField.text ?? ""
+            let lastCharacter = text.count > 0 ? String(text.last!) : ""
+            
+            if lastCharacter == "*" {
+                self.parent.textReal.removeLast()
+            } else if lastCharacter == "" {
+                self.parent.textReal = ""
+            } else {
+                self.parent.textReal += lastCharacter
+            }
+            
+            self.parent.textView = String(repeatElement("*", count: text.count))
+        }
+        
+        func handleDefaultField(_ textField: UITextField) {
+            let text = textField.text ?? ""
+            
+            self.parent.textReal = text
+            self.parent.textView = text
         }
 
         func textFieldDidBeginEditing(_ textField: UITextField) {
