@@ -23,8 +23,16 @@ class SignInViewControllerNew: UIHostingController<SignInView>, ReKampStoreSubsc
         }
     }
     
-    @objc(onNewStateState:) func onNewState(state: Any) {
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        store.unsubscribe(subscriber: self)
+    }
+    
+    func onNewState(state: Any) {
         let state = state as! AuthState
+        
+        rootView.error = state.error
         
         switch (state.status) {
         case .done:

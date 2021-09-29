@@ -10,6 +10,8 @@ struct SignInView: View {
     @State var password = ""
     @State var passwordView = ""
     
+    var error: String = ""
+    
     var body: some View {
         VStack(spacing: 0) {
             Spacer()
@@ -37,10 +39,12 @@ struct SignInView: View {
                         tag: 1
                     )
                 }
-                .frame(maxWidth: .infinity)
             }
             
-            Spacer()
+            Text(error)
+                .font(.system(size: 16, weight: .semibold, design: .monospaced))
+                .shadow(color: .red, radius: 8, x: 0, y: 0)
+                .frame(height: 80)
             
             VStack(spacing: 60) {
                 Button(action: {

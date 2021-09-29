@@ -14,12 +14,14 @@ fun authReducer(action: Action, state: AppState): AuthState {
         }
         is AuthRequests.SignIn.Success -> {
             newState = newState.copy(
-                status = AuthState.Status.DONE
+                status = AuthState.Status.DONE,
+                error = ""
             )
         }
         is AuthRequests.SignIn.Failure -> {
             newState = newState.copy(
-                status = AuthState.Status.IDLE
+                status = AuthState.Status.IDLE,
+                error = "Wrong credentials!"
             )
         }
         is AuthRequests.SignUp -> {
