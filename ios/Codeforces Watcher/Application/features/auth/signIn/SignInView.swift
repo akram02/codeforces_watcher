@@ -16,29 +16,29 @@ struct SignInView: View {
             Spacer()
             
             VStack(alignment: .leading, spacing: 44) {
-                Text("Sign In")
+                Text("sign_in".localized)
                     .font(.system(size: 40, design: .monospaced))
                 
                 VStack(alignment: .leading, spacing: 24) {
                     TextInputLayoutView(
                         text: $email,
-                        hint: "Email",
-                        placeholder: "Email",
+                        hint: "email".localized,
+                        placeholder: "email".localized,
                         contentType: .email,
                         tag: 0
                     )
                     
                     TextInputLayoutView(
                         text: $password,
-                        hint: "Password",
-                        placeholder: "Password",
+                        hint: "password".localized,
+                        placeholder: "password".localized,
                         contentType: .password,
                         tag: 1
                     )
                 }
             }
             
-            Text(error)
+            Text(error.localized)
                 .font(.system(size: 16, weight: .semibold, design: .monospaced))
                 .shadow(color: .red, radius: 8, x: 0, y: 0)
                 .frame(height: 80)
@@ -47,7 +47,7 @@ struct SignInView: View {
                 Button(action: {
                     self.onSignIn?(email, password)
                 }, label: {
-                    Text("Sign in".uppercased())
+                    Text("sign_in".localized.uppercased())
                         .font(.system(size: 16, design: .monospaced))
                         .foregroundColor(.white)
                         .frame(width: 250, height: 40)
@@ -58,7 +58,7 @@ struct SignInView: View {
                 Button(action: {
                     self.onForgotPassword?(email)
                 }, label: {
-                    Text("Forgot password?")
+                    Text("forgot_password".localized)
                         .font(.system(size: 14, design: .monospaced))
                         .foregroundColor(.black)
                 })
@@ -68,13 +68,13 @@ struct SignInView: View {
             Spacer()
             
             HStack {
-                Text("Don't have an account yet?")
+                Text("sign_up_hint".localized)
                     .foregroundColor(.gray)
                 
                 Button(action: {
                     self.onSignUp?()
                 }, label: {
-                    Text("Sign Up")
+                    Text("sign_up".localized)
                         .foregroundColor(.black)
                         .underline()
                 })
