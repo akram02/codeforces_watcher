@@ -2,23 +2,21 @@ import SwiftUI
 
 struct CommonTextFieldNew: UIViewRepresentable {
     
-    @Binding var textReal: String
-    @Binding var textView: String
+    @Binding var text: String
     let placeholder: String
     let isSecureTextField: Bool
     let tag: Int
     
+    @State var mask = ""
     @State var isFocused = false
     
     init(
-        textReal: Binding<String>,
-        textView: Binding<String>,
+        text: Binding<String>,
         placeholder: String,
-        contentType: TypeOfField,
+        contentType: CommonTextFieldNew.Kind,
         tag: Int
     ) {
-        _textReal = textReal
-        _textView = textView
+        _text = text
         self.placeholder = placeholder
         self.isSecureTextField = (contentType == .password)
         self.tag = tag
@@ -53,7 +51,7 @@ struct CommonTextFieldNew: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: UITextField, context: Context) {
-        uiView.text = textView
+        uiView.text = mask
     }
 
     func makeCoordinator() -> Coordinator {
@@ -81,22 +79,20 @@ struct CommonTextFieldNew: UIViewRepresentable {
             let text = textField.text ?? ""
             let lastCharacter = text.count > 0 ? String(text.last!) : ""
             
-            if lastCharacter == "*" {
-                self.parent.textReal.removeLast()
-            } else if lastCharacter == "" {
-                self.parent.textReal = ""
+            if lastCharacter == "*" || lastCharacter == "" {
+                self.parent.text.removeLast()
             } else {
-                self.parent.textReal += lastCharacter
+                self.parent.text += lastCharacter
             }
             
-            self.parent.textView = String(repeatElement("*", count: text.count))
+            self.parent.mask = String(repeatElement("*", count: text.count))
         }
         
         func handleDefaultField(_ textField: UITextField) {
             let text = textField.text ?? ""
             
-            self.parent.textReal = text
-            self.parent.textView = text
+            self.parent.text = text
+            self.parent.mask = text
         }
 
         func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -120,5 +116,11 @@ struct CommonTextFieldNew: UIViewRepresentable {
 
             return false
         }
+    }
+    
+    enum Kind {
+        case email
+        case password
+        case text
     }
 }

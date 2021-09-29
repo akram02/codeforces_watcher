@@ -7,9 +7,7 @@ struct SignInView: View {
     var onSignUp: (() -> Void)?
     
     @State var email = ""
-    @State var emailView = ""
     @State var password = ""
-    @State var passwordView = ""
     
     var error: String = ""
     
@@ -23,8 +21,7 @@ struct SignInView: View {
                 
                 VStack(alignment: .leading, spacing: 24) {
                     TextInputLayoutView(
-                        textReal: $email,
-                        textView: $emailView,
+                        text: $email,
                         hint: "Email",
                         placeholder: "Email",
                         contentType: .email,
@@ -32,8 +29,7 @@ struct SignInView: View {
                     )
                     
                     TextInputLayoutView(
-                        textReal: $password,
-                        textView: $passwordView,
+                        text: $password,
                         hint: "Password",
                         placeholder: "Password",
                         contentType: .password,
