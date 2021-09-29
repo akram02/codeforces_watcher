@@ -296,7 +296,6 @@ class UsersViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
                 buttonText: "login_in_42_seconds".localized,
                 onButtonTap: {
                     self.presentModal(SignInViewControllerNew())
-//                    self.navigationController?.pushViewController(SignInViewControllerNew(), animated: true)
                     analyticsControler.logEvent(eventName: AnalyticsEvents().SIGN_IN_OPENED, params: [:])
                 }
             )

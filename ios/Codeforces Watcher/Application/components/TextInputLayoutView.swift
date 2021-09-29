@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct TextInputLayoutView: View {
+    
     @Binding var textReal: String
     @Binding var textView: String
     var hint: String

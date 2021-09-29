@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct CommonTextFieldNew: UIViewRepresentable {
+    
     @Binding var textReal: String
     @Binding var textView: String
     let placeholder: String

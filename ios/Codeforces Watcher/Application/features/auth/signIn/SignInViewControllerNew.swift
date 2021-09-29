@@ -3,11 +3,12 @@ import common
 import PKHUD
 
 class SignInViewControllerNew: UIHostingController<SignInView>, ReKampStoreSubscriber {
+    
     init() {
         super.init(rootView: SignInView())
     }
     
-    @objc required dynamic init?(coder aDecoder: NSCoder) {
+    @objc required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -73,15 +74,15 @@ class SignInViewControllerNew: UIHostingController<SignInView>, ReKampStoreSubsc
     }
     
     private func setupInteractions() {
-        rootView.didSignInClick = { email, password in
+        rootView.onSignIn = { email, password in
             store.dispatch(action: AuthRequests.SignIn(email: email, password: password))
         }
         
-        rootView.onForgotPasswordTap = { email in
+        rootView.onForgotPassword = { email in
             store.dispatch(action: AuthRequests.SendPasswordReset(email: email))
         }
         
-        rootView.didSignUpClick = {
+        rootView.onSignUp = {
             self.presentModal(SignUpViewController())
             analyticsControler.logEvent(eventName: AnalyticsEvents().SIGN_UP_OPENED, params: [:])
         }
