@@ -5,6 +5,7 @@
 
 import Foundation
 import UIKit
+import SwiftUI
 
 extension UIColor {
 
@@ -22,6 +23,10 @@ extension UIColor {
             green: (rgb >> 8) & 0xFF,
             blue: rgb & 0xFF
         )
+    }
+    
+    var swiftUIColor: SwiftUI.Color {
+        Color(self)
     }
 }
 

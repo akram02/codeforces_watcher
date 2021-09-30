@@ -17,7 +17,7 @@ struct SignInView: View {
             
             VStack(alignment: .leading, spacing: 44) {
                 Text("sign_in".localized)
-                    .font(.system(size: 40, design: .monospaced))
+                    .font(.textHeading)
                 
                 VStack(alignment: .leading, spacing: 24) {
                     TextInputLayoutView(
@@ -38,9 +38,10 @@ struct SignInView: View {
                 }
             }
             
-            Text(error.localized)
-                .font(.system(size: 16, weight: .semibold, design: .monospaced))
-                .shadow(color: .red, radius: 8, x: 0, y: 0)
+            Text(error)
+                .font(.textBody)
+                .bold()
+                .shadow(color: Palette.red.swiftUIColor, radius: 8, x: 0, y: 0)
                 .frame(height: 80)
             
             VStack(spacing: 60) {
@@ -48,10 +49,10 @@ struct SignInView: View {
                     self.onSignIn?(email, password)
                 }, label: {
                     Text("sign_in".localized.uppercased())
-                        .font(.system(size: 16, design: .monospaced))
+                        .font(.textBody)
                         .foregroundColor(.white)
                         .frame(width: 250, height: 40)
-                        .background(Color.black)
+                        .background(Palette.black.swiftUIColor)
                         .cornerRadius(30)
                 })
                 
@@ -59,8 +60,8 @@ struct SignInView: View {
                     self.onForgotPassword?(email)
                 }, label: {
                     Text("forgot_password".localized)
-                        .font(.system(size: 14, design: .monospaced))
-                        .foregroundColor(.black)
+                        .font(.textBody2)
+                        .foregroundColor(Palette.black.swiftUIColor)
                 })
             }
             
@@ -69,18 +70,18 @@ struct SignInView: View {
             
             HStack {
                 Text("sign_up_hint".localized)
-                    .foregroundColor(.gray)
+                    .foregroundColor(Palette.gray.swiftUIColor)
                 
                 Button(action: {
                     self.onSignUp?()
                 }, label: {
                     Text("sign_up".localized)
-                        .foregroundColor(.black)
+                        .foregroundColor(Palette.black.swiftUIColor)
                         .underline()
                 })
             }
+            .font(.textBody2)
             .lineLimit(1)
-            .font(.system(size: 14, design: .monospaced))
         }
         .padding()
     }

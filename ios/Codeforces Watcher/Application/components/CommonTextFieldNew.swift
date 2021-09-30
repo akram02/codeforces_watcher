@@ -28,7 +28,7 @@ struct CommonTextFieldNew: UIViewRepresentable {
             $0.placeholder = placeholder
             $0.tag = tag
             
-            $0.font = Font.textField
+            $0.font = UIFont.monospacedSystemFont(ofSize: 16, weight: .regular)
             $0.borderStyle = .none
             $0.autocorrectionType = .no
             $0.spellCheckingType = .no
