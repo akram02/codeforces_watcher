@@ -14,6 +14,7 @@ struct SignInView: View {
     var body: some View {
         VStack(spacing: 0) {
             Spacer()
+                .frame(height: 76)
             
             VStack(alignment: .leading, spacing: 44) {
                 Text("sign_in".localized)
@@ -42,7 +43,7 @@ struct SignInView: View {
                 .font(.textBody)
                 .bold()
                 .shadow(color: Palette.red.swiftUIColor, radius: 8, x: 0, y: 0)
-                .frame(height: 80)
+                .frame(height: 72)
             
             VStack(spacing: 60) {
                 Button(action: {
