@@ -3,7 +3,7 @@ import SwiftUI
 struct SignInView: View {
     
     var onSignIn: ((String, String) -> Void)?
-    var onForgotPassword: ((String) -> Void)?
+    var onForgotPassword: (() -> Void)?
     var onSignUp: (() -> Void)?
     
     @State var email = ""
@@ -58,7 +58,7 @@ struct SignInView: View {
                 })
                 
                 Button(action: {
-                    self.onForgotPassword?(email)
+                    self.onForgotPassword?()
                 }, label: {
                     Text("forgot_password".localized)
                         .font(.textBody2)

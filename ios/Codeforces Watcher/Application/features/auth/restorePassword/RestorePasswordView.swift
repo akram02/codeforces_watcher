@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct RestorePassword: View {
+struct RestorePasswordView: View {
     
     @State var email = ""
     
@@ -53,8 +53,8 @@ struct RestorePassword: View {
     }
 }
 
-struct RestorePassword_Previews: PreviewProvider {
+struct RestorePasswordView_Previews: PreviewProvider {
     static var previews: some View {
-        RestorePassword()
+        RestorePasswordView()
     }
 }

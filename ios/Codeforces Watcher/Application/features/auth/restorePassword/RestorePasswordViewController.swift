@@ -2,10 +2,10 @@ import SwiftUI
 import common
 import PKHUD
 
-class SignInViewController: UIHostingController<SignInView>, ReKampStoreSubscriber {
+class RestorePasswordViewController: UIHostingController<RestorePasswordView>, ReKampStoreSubscriber {
     
     init() {
-        super.init(rootView: SignInView())
+        super.init(rootView: RestorePasswordView())
     }
     
     @objc required init?(coder aDecoder: NSCoder) {
@@ -32,8 +32,6 @@ class SignInViewController: UIHostingController<SignInView>, ReKampStoreSubscrib
     
     func onNewState(state: Any) {
         let state = state as! AuthState
-        
-        rootView.error = state.error
         
         switch (state.status) {
         case .done:
@@ -74,19 +72,6 @@ class SignInViewController: UIHostingController<SignInView>, ReKampStoreSubscrib
     }
     
     private func setupInteractions() {
-        rootView.onSignIn = { email, password in
-            store.dispatch(action: AuthRequests.SignIn(email: email, password: password))
-        }
-        
-        rootView.onForgotPassword = {
-            self.presentModal(RestorePasswordViewController())
-            analyticsControler.logEvent(eventName: AnalyticsEvents().SIGN_UP_OPENED, params: [:])
-        }
-        
-        rootView.onSignUp = {
-            self.presentModal(SignUpViewController())
-            analyticsControler.logEvent(eventName: AnalyticsEvents().SIGN_UP_OPENED, params: [:])
-        }
     }
 
     @objc func closeViewController() {
