@@ -10,17 +10,17 @@ struct RestorePasswordView: View {
                 .frame(height: 76)
             
             VStack(alignment: .leading, spacing: 40) {
-                Text("Restore\npassword")
+                Text("restore_password".localized)
                     .font(.textHeading)
                 
                 VStack(alignment: .leading, spacing: 36) {
-                    Text("You will get an email with instructions for account recovery")
+                    Text("restore_password_hint".localized)
                         .font(.textBody2)
                     
                     TextInputLayoutView(
                         text: $email,
-                        hint: "Email",
-                        placeholder: "Email",
+                        hint: "email".localized,
+                        placeholder: "email".localized,
                         contentType: .email,
                         tag: 0
                     )
@@ -31,7 +31,7 @@ struct RestorePasswordView: View {
                 .frame(height: 72)
             
             Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                Text("Restore password")
+                Text("restore_password_button".localized)
                     .font(.textBody)
                     .foregroundColor(.white)
                     .frame(width: 250, height: 40)
@@ -43,7 +43,7 @@ struct RestorePasswordView: View {
             Spacer()
             
             Button(action: {}, label: {
-                Text("Lost access to mail?")
+                Text("lost_access".localized)
                     .font(.textBody2)
                     .underline()
                     .foregroundColor(Palette.gray.swiftUIColor)
