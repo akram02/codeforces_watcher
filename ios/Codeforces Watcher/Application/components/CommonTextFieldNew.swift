@@ -3,12 +3,12 @@ import SwiftUI
 struct CommonTextFieldNew: UIViewRepresentable {
     
     @Binding var text: String
-    let placeholder: String
-    let isSecureTextField: Bool
-    let tag: Int
+    private let placeholder: String
+    private let isSecureTextField: Bool
+    private let tag: Int
     
-    @State var mask = ""
-    @State var isFocused = false
+    @State private var mask = ""
+    @State private var isFocused = false
     
     init(
         text: Binding<String>,
