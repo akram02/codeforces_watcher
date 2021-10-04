@@ -36,11 +36,13 @@ class RestorePasswordViewController: UIHostingController<RestorePasswordView>, R
         switch (state.status) {
         case .done:
             hideLoading()
-            closeViewController()
+            showMessage(state.restorePasswordMessage)
+            self.presentModal(UIHostingController(rootView: RestorePasswordMailSentView()))
         case .pending:
             showLoading()
         case .idle:
             hideLoading()
+            showMessage(state.restorePasswordMessage)
         default:
             return
         }
@@ -72,6 +74,13 @@ class RestorePasswordViewController: UIHostingController<RestorePasswordView>, R
     }
     
     private func setupInteractions() {
+        rootView.onRestorePassword = { email in
+            store.dispatch(action: AuthRequests.SendPasswordReset(email: email))
+        }
+    }
+    
+    func showMessage(_ message: String) {
+        rootView.message = message
     }
 
     @objc func closeViewController() {

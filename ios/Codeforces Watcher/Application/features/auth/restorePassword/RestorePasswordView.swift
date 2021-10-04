@@ -2,7 +2,11 @@ import SwiftUI
 
 struct RestorePasswordView: View {
     
+    var onRestorePassword: ((String) -> Void)?
+    
     @State var email = ""
+    
+    var message = ""
     
     var body: some View {
         VStack(spacing: 0) {
@@ -27,10 +31,15 @@ struct RestorePasswordView: View {
                 }
             }
             
-            Spacer()
+            Text(message)
+                .font(.textBody)
+                .bold()
+                .shadow(color: Palette.red.swiftUIColor, radius: 8, x: 0, y: 0)
                 .frame(height: 72)
             
-            Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+            Button(action: {
+                self.onRestorePassword?(email)
+            }, label: {
                 Text("restore_password_button".localized)
                     .font(.textBody)
                     .foregroundColor(.white)

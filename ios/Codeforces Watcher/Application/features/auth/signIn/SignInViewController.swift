@@ -33,7 +33,7 @@ class SignInViewController: UIHostingController<SignInView>, ReKampStoreSubscrib
     func onNewState(state: Any) {
         let state = state as! AuthState
         
-        rootView.error = state.error
+        rootView.error = state.signInMessage
         
         switch (state.status) {
         case .done:

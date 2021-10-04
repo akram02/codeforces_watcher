@@ -107,6 +107,7 @@
 "restore_password_button" = "Restaurer le mot de passe";
 "restore_password_hint" = "Vous recevrez un e-mail avec des instructions pour la récupération de compte";
 "lost_access" = "Vous avez perdu l'accès à la messagerie?";
+"user_doesn't_exist" = "L'utilisateur n'existe pas ¯\_(ツ)_/¯";
 
 "agreement_terms_and_privacy" = "J'accepte les <terms>Termes et conditions</terms> et la <privacy>Politique de confidentialité</privacy>.";
 
