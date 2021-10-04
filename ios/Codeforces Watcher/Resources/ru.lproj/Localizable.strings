@@ -118,6 +118,7 @@
 "log_out" = "Выйти";
 "log_out_ask" = "Вы хотите выйти?";
 
+"wrong_credentials" = "Неправильные данные!";
 "passwords_do_not_match" = "Пароли не совпадают";
 "ratings_have_been_updated" = "Рейтинги обновлены";
 
