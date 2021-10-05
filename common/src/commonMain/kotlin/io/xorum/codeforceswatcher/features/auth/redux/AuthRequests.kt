@@ -14,12 +14,12 @@ class AuthRequests {
 
         override suspend fun execute() = firebaseController.signIn(email, password) { exception ->
             exception?.let {
-                store.dispatch(Failure(exception.message.toMessage()))
+                store.dispatch(Failure(Strings.get("wrong_credentials")))
             } ?: store.dispatch(Success)
         }
 
         object Success : Action
-        data class Failure(override val message: Message) : ToastAction
+        data class Failure(val message: String) : Action
     }
 
     class SignUp(
