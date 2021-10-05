@@ -90,7 +90,7 @@ class SignInActivity : AppCompatActivity(), StoreSubscriber<AuthState> {
         val email = ifEmail.editText.text.trim().toString()
         val password = ifPassword.editText.text.toString()
         if (email.isEmpty() || password.isEmpty()) {
-            store.dispatch(AuthRequests.SignIn.Failure(getString(R.string.fields_can_not_be_empty).toMessage()))
+            store.dispatch(AuthRequests.SignIn.Failure(getString(R.string.fields_can_not_be_empty)))
         } else {
             store.dispatch(AuthRequests.SignIn(email, password))
         }
