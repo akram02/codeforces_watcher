@@ -3,16 +3,16 @@ import SwiftUI
 struct TextInputLayoutView: View {
     
     @Binding var text: String
-    var hint: String
-    var placeholder: String
-    var contentType: CommonTextFieldNew.Kind
-    var tag: Int
+    let hint: String
+    let placeholder: String
+    let contentType: CommonTextFieldNew.Kind
+    let tag: Int
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             Text(hint)
-                .font(.textHint)
                 .foregroundColor(Palette.darkGray.swiftUIColor)
+                .font(.hint)
             
             CommonTextFieldNew(
                 text: $text,

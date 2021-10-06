@@ -15,11 +15,11 @@ struct RestorePasswordView: View {
             
             VStack(alignment: .leading, spacing: 40) {
                 Text("restore_password".localized)
-                    .font(.textHeading)
+                    .font(.heading)
                 
                 VStack(alignment: .leading, spacing: 36) {
                     Text("restore_password_hint".localized)
-                        .font(.textBody2)
+                        .font(.body2)
                     
                     TextInputLayoutView(
                         text: $email,
@@ -32,7 +32,7 @@ struct RestorePasswordView: View {
             }
             
             Text(message)
-                .font(.textBody)
+                .font(.body)
                 .bold()
                 .shadow(color: Palette.red.swiftUIColor, radius: 8, x: 0, y: 0)
                 .frame(height: 72)
@@ -41,7 +41,7 @@ struct RestorePasswordView: View {
                 self.onRestorePassword?(email)
             }, label: {
                 Text("restore_password_button".localized)
-                    .font(.textBody)
+                    .font(.body)
                     .foregroundColor(.white)
                     .frame(width: 250, height: 40)
                     .background(Palette.black.swiftUIColor)
@@ -53,7 +53,7 @@ struct RestorePasswordView: View {
             
             Button(action: {}, label: {
                 Text("lost_access".localized)
-                    .font(.textBody2)
+                    .font(.body2)
                     .underline()
                     .foregroundColor(Palette.darkGray.swiftUIColor)
             })
