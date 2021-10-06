@@ -71,7 +71,7 @@ struct SignInView: View {
             
             HStack {
                 Text("sign_up_hint".localized)
-                    .foregroundColor(Palette.gray.swiftUIColor)
+                    .foregroundColor(Palette.darkGray.swiftUIColor)
                 
                 Button(action: {
                     self.onSignUp?()

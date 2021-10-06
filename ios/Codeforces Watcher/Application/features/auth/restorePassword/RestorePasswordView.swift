@@ -55,8 +55,9 @@ struct RestorePasswordView: View {
                 Text("lost_access".localized)
                     .font(.textBody2)
                     .underline()
-                    .foregroundColor(Palette.gray.swiftUIColor)
+                    .foregroundColor(Palette.darkGray.swiftUIColor)
             })
+            .hidden()
         }
         .padding()
     }

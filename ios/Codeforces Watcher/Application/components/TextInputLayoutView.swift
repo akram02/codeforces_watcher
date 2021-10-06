@@ -12,7 +12,7 @@ struct TextInputLayoutView: View {
         VStack(alignment: .leading, spacing: 0) {
             Text(hint)
                 .font(.textHint)
-                .foregroundColor(Palette.gray.swiftUIColor)
+                .foregroundColor(Palette.darkGray.swiftUIColor)
             
             CommonTextFieldNew(
                 text: $text,
