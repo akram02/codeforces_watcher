@@ -18,7 +18,7 @@ struct SignInView: View {
             
             VStack(alignment: .leading, spacing: 44) {
                 Text("sign_in".localized)
-                    .font(.heading)
+                    .font(.bigHeader)
                 
                 VStack(alignment: .leading, spacing: 24) {
                     TextInputLayoutView(
@@ -40,7 +40,7 @@ struct SignInView: View {
             }
             
             Text(error)
-                .font(.body)
+                .font(.primarySemibold)
                 .bold()
                 .shadow(color: Palette.red.swiftUIColor, radius: 8, x: 0, y: 0)
                 .frame(height: 72)
@@ -50,7 +50,7 @@ struct SignInView: View {
                     self.onSignIn?(email, password)
                 }, label: {
                     Text("sign_in".localized.uppercased())
-                        .font(.body)
+                        .font(.primarySemibold)
                         .foregroundColor(.white)
                         .frame(width: 250, height: 40)
                         .background(Palette.black.swiftUIColor)
@@ -61,7 +61,8 @@ struct SignInView: View {
                     self.onForgotPassword?()
                 }, label: {
                     Text("forgot_password".localized)
-                        .font(.body2)
+                        .underline()
+                        .font(.hintSemibold)
                         .foregroundColor(Palette.black.swiftUIColor)
                 })
             }
@@ -77,11 +78,11 @@ struct SignInView: View {
                     self.onSignUp?()
                 }, label: {
                     Text("sign_up".localized)
-                        .foregroundColor(Palette.black.swiftUIColor)
                         .underline()
+                        .foregroundColor(Palette.black.swiftUIColor)
                 })
             }
-            .font(.body2)
+            .font(.primary2)
             .lineLimit(1)
         }
         .padding()
