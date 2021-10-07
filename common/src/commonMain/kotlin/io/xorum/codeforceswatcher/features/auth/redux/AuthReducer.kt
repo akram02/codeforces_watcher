@@ -25,6 +25,11 @@ fun authReducer(action: Action, state: AppState): AuthState {
                 signInMessage = action.message
             )
         }
+        is AuthRequests.DestroySignInMessage -> {
+            newState = newState.copy(
+                signInMessage = ""
+            )
+        }
         is AuthRequests.SignUp -> {
             newState = newState.copy(
                 status = AuthState.Status.PENDING
@@ -55,6 +60,11 @@ fun authReducer(action: Action, state: AppState): AuthState {
             newState = newState.copy(
                 status = AuthState.Status.IDLE,
                 restorePasswordMessage = action.message
+            )
+        }
+        is AuthRequests.DestroyRestorePasswordMessage -> {
+            newState = newState.copy(
+                restorePasswordMessage = ""
             )
         }
         is AuthRequests.UpdateAuthStage -> {

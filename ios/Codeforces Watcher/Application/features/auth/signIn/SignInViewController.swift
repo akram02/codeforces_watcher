@@ -25,6 +25,7 @@ class SignInViewController: UIHostingController<SignInView>, ReKampStoreSubscrib
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        destroyMessage()
         super.viewWillDisappear(animated)
         
         store.unsubscribe(subscriber: self)
@@ -33,7 +34,7 @@ class SignInViewController: UIHostingController<SignInView>, ReKampStoreSubscrib
     func onNewState(state: Any) {
         let state = state as! AuthState
         
-        rootView.error = state.signInMessage
+        updateMessage(state.signInMessage)
         
         switch (state.status) {
         case .done:
@@ -87,6 +88,14 @@ class SignInViewController: UIHostingController<SignInView>, ReKampStoreSubscrib
             self.presentModal(SignUpViewController())
             analyticsControler.logEvent(eventName: AnalyticsEvents().SIGN_UP_OPENED, params: [:])
         }
+    }
+    
+    func updateMessage(_ message: String) {
+        rootView.error = message
+    }
+    
+    func destroyMessage() {
+        store.dispatch(action: AuthRequests.DestroySignInMessage())
     }
 
     @objc func closeViewController() {

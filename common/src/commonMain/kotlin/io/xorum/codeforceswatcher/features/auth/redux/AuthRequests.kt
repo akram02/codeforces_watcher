@@ -22,6 +22,8 @@ class AuthRequests {
         data class Failure(val message: String) : Action
     }
 
+    object DestroySignInMessage : Action
+
     class SignUp(
         private val email: String,
         private val password: String
@@ -69,4 +71,6 @@ class AuthRequests {
         data class Success(val message: String) : Action
         data class Failure(val message: String) : Action
     }
+
+    object DestroyRestorePasswordMessage : Action
 }
