@@ -8,10 +8,10 @@ struct RestorePasswordMailSentView: View {
                 .frame(height: 76)
             
             VStack(spacing: 12) {
-                Text("Check your box.")
+                Text("check_your_box".localized)
                     .font(.subHeader)
                 
-                Text("Tap to open your mail app")
+                Text("open_mail_hint".localized)
                     .font(.header)
             }
             
@@ -28,7 +28,7 @@ struct RestorePasswordMailSentView: View {
             
             VStack(spacing: 20) {
                 Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                    Text("Open mail")
+                    Text("open_mail".localized)
                         .font(.primarySemibold)
                         .foregroundColor(Palette.white.swiftUIColor)
                         .frame(width: 250, height: 40)
@@ -37,7 +37,7 @@ struct RestorePasswordMailSentView: View {
                 })
                 
                 Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                    Text("Back to sign in")
+                    Text("back_to_sign_in".localized)
                         .font(.primarySemibold)
                         .foregroundColor(Palette.black.swiftUIColor)
                         .frame(width: 248, height: 38)
@@ -52,11 +52,11 @@ struct RestorePasswordMailSentView: View {
             Spacer()
             Spacer()
             
-            Text("If you haven’t received a message within 5 minutes, check your Spam folder.")
+            Text("check_your_spam_folder".localized)
                 .font(.primary2)
                 .foregroundColor(Palette.darkGray.swiftUIColor)
-                .multilineTextAlignment(.center)
         }
+        .multilineTextAlignment(.center)
         .padding()
     }
 }

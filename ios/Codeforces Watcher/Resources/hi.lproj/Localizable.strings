@@ -109,6 +109,12 @@
 "lost_access" = "क्या आपने ई-मेल तक पहुंच खो दी है?";
 "user_doesn't_exist" = "उपयोगकर्ता मौजूद नहीं है ¯\_(ツ)_/¯";
 
+"check_your_box" = "अपना बॉक्स चेक करें।";
+"open_mail_hint" = "अपना मेल ऐप खोलने के लिए टैप करें";
+"open_mail" = "मेल खोलें";
+"back_to_sign_in" = "साइन इन करने के लिए वापस";
+"check_your_spam_folder" = "अगर आपको 5 मिनट के भीतर कोई संदेश नहीं मिला है, तो अपने स्पैम फ़ोल्डर की जाँच करें।";
+
 "agreement_terms_and_privacy" = "मैं <लिंक> नियम और शर्तें <terms>नियम और शर्तें</terms> और <privacy>गोपनीयता नीति</privacy>.";
 
 "verify_codeforces_account" = "सत्यापित करें Codeforces लेखा";
