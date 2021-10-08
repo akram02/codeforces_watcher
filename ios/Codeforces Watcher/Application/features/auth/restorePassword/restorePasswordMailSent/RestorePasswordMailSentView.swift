@@ -2,6 +2,9 @@ import SwiftUI
 
 struct RestorePasswordMailSentView: View {
     
+    var onOpenMail: (() -> Void)?
+    var onBackSignIn: (() -> Void)?
+    
     var body: some View {
         VStack(spacing: 0) {
             Spacer()
@@ -27,7 +30,9 @@ struct RestorePasswordMailSentView: View {
                 .frame(height: 68)
             
             VStack(spacing: 20) {
-                Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                Button(action: {
+                    self.onOpenMail?()
+                }, label: {
                     Text("open_mail".localized)
                         .font(.primarySemibold)
                         .foregroundColor(Palette.white.swiftUIColor)
@@ -36,7 +41,9 @@ struct RestorePasswordMailSentView: View {
                         .cornerRadius(30)
                 })
                 
-                Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                Button(action: {
+                    self.onBackSignIn?()
+                }, label: {
                     Text("back_to_sign_in".localized)
                         .font(.primarySemibold)
                         .foregroundColor(Palette.black.swiftUIColor)

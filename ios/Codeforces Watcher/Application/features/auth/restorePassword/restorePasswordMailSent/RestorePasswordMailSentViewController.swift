@@ -22,6 +22,7 @@ class RestorePasswordMailSentViewController: UIHostingController<RestorePassword
         super.viewDidLoad()
         
         setupComponents()
+        setupInteractions()
     }
     
     private func setupComponents() {
@@ -31,6 +32,19 @@ class RestorePasswordMailSentViewController: UIHostingController<RestorePassword
             target: self,
             action: #selector(closeViewController)
         )
+    }
+    
+    private func setupInteractions() {
+        rootView.onOpenMail = {
+            guard let mailURL = URL(string: "message://") else { return }
+            if UIApplication.shared.canOpenURL(mailURL) {
+                UIApplication.shared.open(mailURL)
+            }
+        }
+        
+        rootView.onBackSignIn = {
+            self.navigationController?.pushViewController(SignInViewController(), animated: true)
+        }
     }
     
     @objc func closeViewController() {
