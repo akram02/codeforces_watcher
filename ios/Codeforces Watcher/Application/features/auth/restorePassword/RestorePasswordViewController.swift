@@ -39,7 +39,7 @@ class RestorePasswordViewController: UIHostingController<RestorePasswordView>, R
         switch (state.status) {
         case .done:
             hideLoading()
-            self.presentModal(UIHostingController(rootView: RestorePasswordMailSentView()))
+            self.presentModal(RestorePasswordMailSentViewController())
         case .pending:
             showLoading()
         case .idle:

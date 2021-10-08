@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct RestorePasswordMailSentView: View {
+    
     var body: some View {
         VStack(spacing: 0) {
             Spacer()
@@ -39,7 +40,7 @@ struct RestorePasswordMailSentView: View {
                     Text("Back to sign in")
                         .font(.primarySemibold)
                         .foregroundColor(Palette.black.swiftUIColor)
-                        .frame(width: 250, height: 40)
+                        .frame(width: 248, height: 38)
                         .background(Palette.white.swiftUIColor)
                         .overlay(
                             RoundedRectangle(cornerRadius: 30)
