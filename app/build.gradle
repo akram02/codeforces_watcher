@@ -33,6 +33,12 @@ android {
             applicationIdSuffix ".debug"
         }
     }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.0.3"
+    }
     lintOptions {
         checkReleaseBuilds false
         abortOnError false
@@ -99,6 +105,8 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:4.2.1"
     implementation "com.squareup.sqldelight:android-driver:$sqlDelight_version"
     implementation "com.squareup.sqldelight:sqlite-driver:$sqlDelight_version"
+
+    implementation "androidx.compose.compiler:compiler:1.0.3"
 }
 
 apply plugin: 'com.google.gms.google-services'
