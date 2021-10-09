@@ -24,7 +24,7 @@ class AndroidMessageHandler : ToastHandler {
 
     private fun showToast(message: String) {
         val toast = Toast.makeText(CwApp.app, message, Toast.LENGTH_SHORT)
-        val textInToast = toast.view.findViewById<TextView>(android.R.id.message)
+        val textInToast = toast.view?.findViewById<TextView>(android.R.id.message)
         textInToast?.gravity = Gravity.CENTER
         toast.show()
     }
