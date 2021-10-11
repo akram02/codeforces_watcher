@@ -28,6 +28,7 @@ import io.xorum.codeforceswatcher.features.users.redux.UsersState
 import io.xorum.codeforceswatcher.redux.store
 import kotlinx.android.synthetic.main.activity_user.*
 import tw.geothings.rekotlin.StoreSubscriber
+import java.lang.IllegalArgumentException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.properties.Delegates
@@ -35,7 +36,7 @@ import kotlin.properties.Delegates
 class UserActivity : AppCompatActivity(), StoreSubscriber<UsersState> {
 
     private val handle
-        get() = intent.getStringExtra(HANDLE)
+        get() = intent.getStringExtra(HANDLE) ?: throw IllegalArgumentException()
 
     private val isUserAccount
         get() = intent.getBooleanExtra(IS_USER_ACCOUNT, false)
@@ -53,8 +54,11 @@ class UserActivity : AppCompatActivity(), StoreSubscriber<UsersState> {
 
         setupChart()
 
-        menuItemId =
-            if (isUserAccount) R.menu.menu_user_activity_log_out else R.menu.menu_user_activity_delete
+        menuItemId = if (isUserAccount) {
+            R.menu.menu_user_activity_log_out
+        } else {
+            R.menu.menu_user_activity_delete
+        }
 
         store.dispatch(UsersRequests.FetchUser(handle))
     }
