@@ -10,13 +10,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.bogdan.codeforceswatcher.R
-import com.example.algoisme.ui.theme.BackgroundDay
-import com.example.algoisme.ui.theme.MainDay
+import com.bogdan.codeforceswatcher.components.compose.theme.MUHeaderMedium18
 
 @Composable
 fun NavigationBar(title: String = "") {
     TopAppBar(
-        title = { Text(title) },
+        title = { Text(
+            text = title,
+            style = MUHeaderMedium18
+        ) },
         navigationIcon = {
             IconButton(
                 onClick = { /*TODO*/ },
@@ -28,8 +30,8 @@ fun NavigationBar(title: String = "") {
                 )
             }
         },
-        backgroundColor = BackgroundDay,
-        contentColor = MainDay,
+//        backgroundColor = White,
+//        contentColor = Black,
         elevation = 0.dp,
         modifier = Modifier.height(56.dp)
     )

@@ -7,14 +7,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
-import com.example.algoisme.ui.theme.defaultTextStyle
+import com.bogdan.codeforceswatcher.components.compose.theme.MUHintBoldSemiBold13
+import com.bogdan.codeforceswatcher.components.compose.theme.MUHintRegular13
 
 @Composable
 fun AnnotatedClickableText(
     text: String = "",
-    textStyle: TextStyle = defaultTextStyle,
+    textStyle: TextStyle = MUHintRegular13,
     clickableText: String = "",
-    clickableTextStyle: TextStyle = defaultTextStyle,
+    clickableTextStyle: TextStyle = MUHintBoldSemiBold13,
 ) {
     val annotatedText = buildAnnotatedString {
         withStyle(clickableTextStyle.toSpanStyle()) {

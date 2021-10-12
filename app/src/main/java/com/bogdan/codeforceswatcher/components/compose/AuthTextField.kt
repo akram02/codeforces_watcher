@@ -11,12 +11,11 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.example.algoisme.ui.theme.GrayDay
-import com.example.algoisme.ui.theme.MainDay
-import com.example.algoisme.ui.theme.defaultTextStyle
+import com.bogdan.codeforceswatcher.components.compose.theme.MUHintRegular13
+import com.bogdan.codeforceswatcher.components.compose.theme.MUPrimaryRegular16
 
 @Composable
 fun AuthTextField(
@@ -33,22 +32,25 @@ fun AuthTextField(
         Text(
             text = if (value.isNotEmpty()) label else "",
             modifier = modifier.height(17.dp),
-            style = defaultTextStyle,
-            fontSize = 13.sp,
-            color = GrayDay
+            style = MUHintRegular13
+//            style = defaultTextStyle,
+//            fontSize = 13.sp,
+//            color = DoveGray
         )
         BasicTextField(
             value = value,
             onValueChange = { value = it },
-            textStyle = defaultTextStyle,
+            textStyle = MUPrimaryRegular16,
+//            textStyle = defaultTextStyle,
             singleLine = true,
             decorationBox = { innerTextField ->
                 if (value.isEmpty()) {
                     Text(
                         text = label,
+                        style = MUPrimaryRegular16,
                         modifier = modifier.height(19.dp),
-                        style = defaultTextStyle,
-                        color = GrayDay,
+//                        style = defaultTextStyle,
+//                        color = DoveGray,
                     )
                 }
                 innerTextField()
@@ -66,7 +68,7 @@ fun AuthTextField(
             drawLine(
                 start = Offset(x = canvasWidth, y = 0f),
                 end = Offset(x = 0f, y = canvasHeight),
-                color = MainDay,
+                color = Color.Green,
                 strokeWidth = 1f
             )
         }

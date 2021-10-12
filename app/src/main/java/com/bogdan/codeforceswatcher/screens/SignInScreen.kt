@@ -6,17 +6,10 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.bogdan.codeforceswatcher.components.compose.*
-import com.example.algoisme.ui.theme.GrayDay
-import com.example.algoisme.ui.theme.MainDay
-import com.example.algoisme.ui.theme.sfMono
 
 @Composable
 fun SignInScreen() {
@@ -33,23 +26,24 @@ fun SignInScreen() {
             ) {
                 AnnotatedClickableText(
                     text = "Don't have an account yet?",
-                    textStyle = TextStyle(
-                        fontFamily = sfMono,
-                        color = GrayDay,
-                        fontSize = 14.sp,
-                        letterSpacing = (-1).sp
-                    ),
-                    clickableText = "Sign Up",
-                    clickableTextStyle = TextStyle(
-                        fontFamily = sfMono,
-                        color = MainDay,
-                        fontSize = 14.sp,
-                        letterSpacing = (-1).sp,
-                        textDecoration = TextDecoration.Underline
-                    )
+                    clickableText = "Sign Up"
+//                    textStyle = TextStyle(
+//                        fontFamily = sfMono,
+////                        color = MaterialTheme.colors.secondary,
+//                        fontSize = 14.sp,
+//                        letterSpacing = (-1).sp
+//                    ),
+//                    clickableTextStyle = TextStyle(
+//                        fontFamily = sfMono,
+////                        color = MaterialTheme.colors.onBackground,
+//                        fontSize = 14.sp,
+//                        letterSpacing = (-1).sp,
+//                        textDecoration = TextDecoration.Underline
+//                    )
                 )
             }
-        }
+        },
+
     ) {
         Column(
             modifier = Modifier.padding(horizontal = 20.dp),
@@ -76,13 +70,14 @@ fun SignInScreen() {
             AuthButton("SIGN IN")
             Spacer(Modifier.height(72.dp))
             AnnotatedClickableText(
-                clickableText = "Forgot password?",
-                clickableTextStyle = TextStyle(
-                    fontFamily = sfMono,
-                    color = MainDay,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.SemiBold
-                )
+                clickableText = "Forgot password?"
+//                clickableTextStyle = TextStyle(
+//                    fontFamily = sfMono,
+////                    color = MaterialTheme.colors.onBackground,
+//                    fontSize = 14.sp,
+//                    fontWeight = FontWeight.SemiBold,
+//                    textDecoration = TextDecoration.Underline
+//                )
             )
         }
     }
