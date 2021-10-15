@@ -5,35 +5,34 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
-import com.example.algoisme.ui.theme.Shapes
 
 private val DarkColorPalette = darkColors(
-//    primary = MainNight,
-//    primaryVariant = GrayishForAccentsNight,
-//    secondary = GrayNight,
-//    secondaryVariant = ,
-//    background = BackgroundNight,
+    primary = CodGray,
+    primaryVariant = MineShaft,
+    secondary = White,
+    secondaryVariant = SilverChalice,
+    background = CodGray,
 //    surface = ,
 //    error = ,
-//    onPrimary = ,
-//    onSecondary = ,
-//    onBackground = ,
+    onPrimary = White,
+    onSecondary = CodGray,
+    onBackground = White,
 //    onSurface = ,
 //    onError =
 
 )
 
 private val LightColorPalette = lightColors(
-//    primary = White,
-//    primaryVariant = Gallery,
-//    secondary = DoveGray,
-//    secondaryVariant = ,
-//    background = White,
+    primary = White,
+    primaryVariant = Gallery,
+    secondary = Black,
+    secondaryVariant = DoveGray,
+    background = White,
 //    surface = ,
 //    error = ,
-//    onPrimary = Black,
-//    onSecondary = ,
-//    onBackground = Black,
+    onPrimary = Black,
+    onSecondary = White,
+    onBackground = Black,
 //    onSurface = ,
 //    onError =
 )

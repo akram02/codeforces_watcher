@@ -2,20 +2,22 @@ package com.bogdan.codeforceswatcher.components.compose
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
-import com.bogdan.codeforceswatcher.components.compose.theme.MUHintBoldSemiBold13
-import com.bogdan.codeforceswatcher.components.compose.theme.MUHintRegular13
 
 @Composable
 fun AnnotatedClickableText(
     text: String = "",
-    textStyle: TextStyle = MUHintRegular13,
+    textStyle: TextStyle = MaterialTheme.typography.body1,
+    textColor: Color = MaterialTheme.colors.secondaryVariant,
     clickableText: String = "",
-    clickableTextStyle: TextStyle = MUHintBoldSemiBold13,
+    clickableTextStyle: TextStyle = MaterialTheme.typography.body2,
+    clickableTextColor: Color = MaterialTheme.colors.onBackground,
 ) {
     val annotatedText = buildAnnotatedString {
         withStyle(clickableTextStyle.toSpanStyle()) {
@@ -25,7 +27,8 @@ fun AnnotatedClickableText(
     Row {
         Text(
             text = text,
-            style = textStyle
+            style = textStyle,
+            color = textColor
         )
         Text(
             text = if (text.isNotEmpty() and annotatedText.isNotEmpty()) " " else "",
@@ -33,6 +36,9 @@ fun AnnotatedClickableText(
         )
         ClickableText(
             text = annotatedText,
+            style = TextStyle(
+                color = clickableTextColor
+            ),
             onClick = { /*TODO*/ }
         )
     }

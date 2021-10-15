@@ -13,7 +13,6 @@ class SignInComposeActivity: ComponentActivity() {
             AlgoismeTheme {
                 SignInScreen()
             }
-//            SignInScreen()
         }
     }
 }
