@@ -18,6 +18,7 @@ fun AnnotatedClickableText(
     clickableText: String = "",
     clickableTextStyle: TextStyle = MaterialTheme.typography.body2,
     clickableTextColor: Color = MaterialTheme.colors.onBackground,
+    onClick: () -> Unit
 ) {
     val annotatedText = buildAnnotatedString {
         withStyle(clickableTextStyle.toSpanStyle()) {
@@ -39,7 +40,7 @@ fun AnnotatedClickableText(
             style = TextStyle(
                 color = clickableTextColor
             ),
-            onClick = { /*TODO*/ }
+            onClick = { onClick() }
         )
     }
 }

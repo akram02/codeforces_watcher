@@ -11,7 +11,7 @@ class SignInComposeActivity: ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AlgoismeTheme {
-                SignInScreen()
+                SignInScreen(this)
             }
         }
     }

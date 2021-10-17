@@ -1,5 +1,7 @@
 package com.bogdan.codeforceswatcher.screens
 
+import android.app.Activity
+import android.content.Intent
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -9,19 +11,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
-import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bogdan.codeforceswatcher.components.compose.*
+import com.bogdan.codeforceswatcher.features.auth.SignUpActivity
 
 @Composable
-fun SignInScreen() {
+fun SignInScreen(activity: Activity) {
     val localFocusManager = LocalFocusManager.current
 
     Scaffold(
@@ -40,7 +40,9 @@ fun SignInScreen() {
                     textStyle = MaterialTheme.typography.body1.copy(fontSize = 14.sp),
                     clickableText = "Sign Up",
                     clickableTextStyle = MaterialTheme.typography.body2.copy(fontSize = 14.sp)
-                )
+                ) {
+                    activity.startActivity(Intent(activity, SignUpActivity::class.java))
+                }
             }
         },
         backgroundColor = MaterialTheme.colors.background
@@ -78,7 +80,7 @@ fun SignInScreen() {
             Spacer(Modifier.height(72.dp))
             AuthButton("SIGN IN")
             Spacer(Modifier.height(72.dp))
-            AnnotatedClickableText(clickableText = "Forgot password?")
+            AnnotatedClickableText(clickableText = "Forgot password?") { /*TODO*/ }
         }
     }
 }
