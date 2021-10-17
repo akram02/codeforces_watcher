@@ -26,7 +26,11 @@ fun SignInScreen(activity: Activity) {
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        topBar = { NavigationBar() },
+        topBar = {
+            NavigationBar {
+                activity.finish()
+            }
+        },
         bottomBar = {
             Box(
                 modifier = Modifier

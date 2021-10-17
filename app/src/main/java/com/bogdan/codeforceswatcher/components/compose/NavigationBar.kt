@@ -9,7 +9,10 @@ import androidx.compose.ui.unit.dp
 import com.bogdan.codeforceswatcher.R
 
 @Composable
-fun NavigationBar(title: String = "") {
+fun NavigationBar(
+    title: String = "",
+    onClick: () -> Unit
+) {
     TopAppBar(
         title = { Text(
             text = title,
@@ -17,7 +20,7 @@ fun NavigationBar(title: String = "") {
         ) },
         navigationIcon = {
             IconButton(
-                onClick = { /*TODO*/ },
+                onClick = { onClick() },
                 modifier = Modifier
             ) {
                 Icon(
