@@ -48,6 +48,6 @@ class RestorePasswordMailSentViewController: UIHostingController<RestorePassword
     }
     
     @objc func closeViewController() {
-        dismiss(animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
 }

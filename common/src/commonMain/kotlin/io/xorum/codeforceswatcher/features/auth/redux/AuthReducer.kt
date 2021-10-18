@@ -64,6 +64,7 @@ fun authReducer(action: Action, state: AppState): AuthState {
         }
         is AuthRequests.ResetRestorePasswordMessage -> {
             newState = newState.copy(
+                status = AuthState.Status.IDLE,
                 restorePasswordMessage = ""
             )
         }

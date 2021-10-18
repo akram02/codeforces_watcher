@@ -25,8 +25,9 @@ class SignInViewController: UIHostingController<SignInView>, ReKampStoreSubscrib
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        destroyMessage()
         super.viewWillDisappear(animated)
+        
+        resetMessage()
         
         store.unsubscribe(subscriber: self)
     }
@@ -80,7 +81,7 @@ class SignInViewController: UIHostingController<SignInView>, ReKampStoreSubscrib
         }
         
         rootView.onForgotPassword = {
-            self.presentModal(RestorePasswordViewController())
+            self.navigationController?.pushViewController(RestorePasswordViewController(), animated: true)
             analyticsControler.logEvent(eventName: AnalyticsEvents().SIGN_UP_OPENED, params: [:])
         }
         
@@ -94,7 +95,7 @@ class SignInViewController: UIHostingController<SignInView>, ReKampStoreSubscrib
         rootView.error = message
     }
     
-    func destroyMessage() {
+    func resetMessage() {
         store.dispatch(action: AuthRequests.ResetSignInMessage())
     }
 
