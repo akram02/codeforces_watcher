@@ -40,12 +40,7 @@ struct RestorePasswordView: View {
             Button(action: {
                 self.onRestorePassword?(email)
             }, label: {
-                Text("restore_password_button".localized)
-                    .font(.primarySemibold)
-                    .foregroundColor(.white)
-                    .frame(width: 250, height: 40)
-                    .background(Palette.black.swiftUIColor)
-                    .cornerRadius(30)
+                ButtonTextDefault(text: "restore_password_button".localized)
             })
             
             Spacer()

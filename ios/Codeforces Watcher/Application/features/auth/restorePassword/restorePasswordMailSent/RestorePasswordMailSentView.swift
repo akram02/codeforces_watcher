@@ -33,26 +33,13 @@ struct RestorePasswordMailSentView: View {
                 Button(action: {
                     self.onOpenMail?()
                 }, label: {
-                    Text("open_mail".localized)
-                        .font(.primarySemibold)
-                        .foregroundColor(Palette.white.swiftUIColor)
-                        .frame(width: 250, height: 40)
-                        .background(Palette.black.swiftUIColor)
-                        .cornerRadius(30)
+                    ButtonTextDefault(text: "open_mail".localized)
                 })
                 
                 Button(action: {
                     self.onBackSignIn?()
                 }, label: {
-                    Text("back_to_sign_in".localized)
-                        .font(.primarySemibold)
-                        .foregroundColor(Palette.black.swiftUIColor)
-                        .frame(width: 248, height: 38)
-                        .background(Palette.white.swiftUIColor)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 30)
-                                .stroke(Palette.black.swiftUIColor, lineWidth: 2)
-                        )
+                    ButtonTextInverse(text: "back_to_sign_in".localized)
                 })
             }
             

@@ -49,12 +49,7 @@ struct SignInView: View {
                 Button(action: {
                     self.onSignIn?(email, password)
                 }, label: {
-                    Text("sign_in".localized.uppercased())
-                        .font(.primarySemibold)
-                        .foregroundColor(.white)
-                        .frame(width: 250, height: 40)
-                        .background(Palette.black.swiftUIColor)
-                        .cornerRadius(30)
+                    ButtonTextDefault(text: "sign_in".localized.uppercased())
                 })
                 
                 Button(action: {
