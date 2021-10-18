@@ -22,7 +22,8 @@ fun AuthTextField(
     label: String,
     keyboardOptions: KeyboardOptions,
     keyboardActions: KeyboardActions,
-    visualTransformation: VisualTransformation = VisualTransformation.None
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    onValueChange: (String) -> Unit
 ) {
     var value by remember {
         mutableStateOf("")
@@ -38,7 +39,10 @@ fun AuthTextField(
         )
         BasicTextField(
             value = value,
-            onValueChange = { value = it },
+            onValueChange = {
+                value = it
+                onValueChange(it)
+            },
             textStyle = MaterialTheme.typography.subtitle1.copy(color = MaterialTheme.colors.onBackground),
             singleLine = true,
             cursorBrush = SolidColor(MaterialTheme.colors.onBackground),
@@ -55,8 +59,7 @@ fun AuthTextField(
             },
             keyboardOptions = keyboardOptions,
             keyboardActions = keyboardActions,
-            visualTransformation = visualTransformation,
-
+            visualTransformation = visualTransformation
         )
 
         Spacer(Modifier.height(2.dp))

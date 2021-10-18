@@ -11,16 +11,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import io.xorum.codeforceswatcher.features.auth.redux.AuthRequests
+import io.xorum.codeforceswatcher.features.auth.redux.authReducer
+import tw.geothings.rekotlin.Action
+import io.xorum.codeforceswatcher.redux.states.AppState
 
 @Composable
-fun AuthButton(label: String) {
+fun AuthButton(label: String, action: () -> Unit) {
     Button(
         modifier = Modifier
             .width(250.dp)
             .height(40.dp)
             .clip(RoundedCornerShape(100)),
         colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary),
-        onClick = { /*TODO*/ }
+        onClick = { action() }
     ) {
         Text(
             text = label,

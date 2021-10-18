@@ -1,18 +1,161 @@
 package com.bogdan.codeforceswatcher.features.auth
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.lifecycle.MutableLiveData
+import com.bogdan.codeforceswatcher.R
+import com.bogdan.codeforceswatcher.components.compose.*
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
-import com.bogdan.codeforceswatcher.screens.SignInScreen
+import io.xorum.codeforceswatcher.features.auth.redux.AuthRequests
+import io.xorum.codeforceswatcher.features.auth.redux.AuthState
+import io.xorum.codeforceswatcher.redux.store
+import kotlinx.android.synthetic.main.activity_sign_in.*
+import kotlinx.android.synthetic.main.input_field.view.*
+import tw.geothings.rekotlin.StoreSubscriber
 
-class SignInComposeActivity: ComponentActivity() {
+class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             AlgoismeTheme {
-                SignInScreen(this)
+                SignInScreen()
             }
+        }
+    }
+
+    private var email = ""
+    private var password = ""
+
+    private val isPending = MutableLiveData(false)
+
+    @Composable
+    private fun SignInScreen() {
+        val localFocusManager = LocalFocusManager.current
+        val isPending by isPending.observeAsState()
+
+        Box {
+            Scaffold(
+                modifier = Modifier.fillMaxSize(),
+                topBar = {
+                    NavigationBar { finish() }
+                },
+                bottomBar = {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(62.dp)
+                            .padding(horizontal = 20.dp),
+                        contentAlignment = Alignment.TopCenter
+                    ) {
+                        AnnotatedClickableText(
+                            text = "Don't have an account yet?",
+                            textStyle = MaterialTheme.typography.body1.copy(fontSize = 14.sp),
+                            clickableText = "Sign Up",
+                            clickableTextStyle = MaterialTheme.typography.body2.copy(fontSize = 14.sp)
+                        ) {
+                            startActivity(
+                                Intent(
+                                    this@SignInComposeActivity,
+                                    SignUpActivity::class.java
+                                )
+                            )
+                        }
+                    }
+                },
+                backgroundColor = MaterialTheme.colors.background
+            ) {
+                Column(
+                    modifier = Modifier.padding(horizontal = 20.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    Spacer(Modifier.height(56.dp))
+                    Title("Sign In")
+                    Spacer(Modifier.height(44.dp))
+                    AuthTextField(
+                        label = "Email",
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Email,
+                            imeAction = ImeAction.Next
+                        ),
+                        keyboardActions = KeyboardActions(
+                            onNext = { localFocusManager.moveFocus(FocusDirection.Down) }
+                        )
+                    ) { newEmail ->
+                        email = newEmail
+                    }
+                    Spacer(Modifier.height(24.dp))
+                    AuthTextField(
+                        label = "Password",
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Password,
+                            imeAction = ImeAction.Done
+                        ),
+                        keyboardActions = KeyboardActions(
+                            onDone = { localFocusManager.clearFocus() }
+                        ),
+
+                        visualTransformation = PasswordVisualTransformation(mask = '*')
+                    ) { newPassword ->
+                        password = newPassword
+                    }
+                    Spacer(Modifier.height(72.dp))
+                    AuthButton("SIGN IN") {
+                        signInWithEmailAndPassword(email = email, password = password)
+                    }
+                    Spacer(Modifier.height(72.dp))
+                    AnnotatedClickableText(clickableText = "Forgot password?") { /*TODO*/ }
+                }
+            }
+            LoadingView(isPending ?: false)
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        store.subscribe(this) { state ->
+            state.skipRepeats { oldState, newState ->
+                oldState.auth.status == newState.auth.status
+            }.select { it.auth }
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        store.unsubscribe(this)
+    }
+
+    private fun signInWithEmailAndPassword(email: String, password: String) {
+        if (email.isEmpty() || password.isEmpty()) {
+            store.dispatch(AuthRequests.SignIn.Failure(getString(R.string.fields_can_not_be_empty)))
+        } else {
+            store.dispatch(AuthRequests.SignIn(email, password))
+        }
+    }
+
+    override fun onNewState(state: AuthState) {
+        when (state.status) {
+            AuthState.Status.PENDING -> isPending.postValue(true)
+            AuthState.Status.DONE -> finish()
+            AuthState.Status.IDLE -> isPending.postValue(false)
         }
     }
 }
