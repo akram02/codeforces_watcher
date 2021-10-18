@@ -2,10 +2,10 @@ import SwiftUI
 import common
 import PKHUD
 
-class SignInViewController: UIHostingController<SignInView>, ReKampStoreSubscriber {
+class RestorePasswordViewController: UIHostingController<RestorePasswordView>, ReKampStoreSubscriber {
     
     init() {
-        super.init(rootView: SignInView())
+        super.init(rootView: RestorePasswordView())
     }
     
     @objc required init?(coder aDecoder: NSCoder) {
@@ -13,6 +13,7 @@ class SignInViewController: UIHostingController<SignInView>, ReKampStoreSubscrib
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        destroyMessage()
         super.viewWillAppear(animated)
         
         store.subscribe(subscriber: self) { subscription in
@@ -25,7 +26,6 @@ class SignInViewController: UIHostingController<SignInView>, ReKampStoreSubscrib
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        destroyMessage()
         super.viewWillDisappear(animated)
         
         store.unsubscribe(subscriber: self)
@@ -34,12 +34,12 @@ class SignInViewController: UIHostingController<SignInView>, ReKampStoreSubscrib
     func onNewState(state: Any) {
         let state = state as! AuthState
         
-        updateMessage(state.signInMessage)
+        updateMessage(state.restorePasswordMessage)
         
         switch (state.status) {
         case .done:
             hideLoading()
-            closeViewController()
+            self.presentModal(UIHostingController(rootView: RestorePasswordMailSentView()))
         case .pending:
             showLoading()
         case .idle:
@@ -75,27 +75,17 @@ class SignInViewController: UIHostingController<SignInView>, ReKampStoreSubscrib
     }
     
     private func setupInteractions() {
-        rootView.onSignIn = { email, password in
-            store.dispatch(action: AuthRequests.SignIn(email: email, password: password))
-        }
-        
-        rootView.onForgotPassword = {
-            self.presentModal(RestorePasswordViewController())
-            analyticsControler.logEvent(eventName: AnalyticsEvents().SIGN_UP_OPENED, params: [:])
-        }
-        
-        rootView.onSignUp = {
-            self.presentModal(SignUpViewController())
-            analyticsControler.logEvent(eventName: AnalyticsEvents().SIGN_UP_OPENED, params: [:])
+        rootView.onRestorePassword = { email in
+            store.dispatch(action: AuthRequests.SendPasswordReset(email: email))
         }
     }
     
     func updateMessage(_ message: String) {
-        rootView.error = message
+        rootView.message = message
     }
     
     func destroyMessage() {
-        store.dispatch(action: AuthRequests.DestroySignInMessage())
+        store.dispatch(action: AuthRequests.DestroyRestorePasswordMessage())
     }
 
     @objc func closeViewController() {
