@@ -95,7 +95,7 @@ class SignInViewController: UIHostingController<SignInView>, ReKampStoreSubscrib
     }
     
     func destroyMessage() {
-        store.dispatch(action: AuthRequests.DestroySignInMessage())
+        store.dispatch(action: AuthRequests.ResetSignInMessage())
     }
 
     @objc func closeViewController() {

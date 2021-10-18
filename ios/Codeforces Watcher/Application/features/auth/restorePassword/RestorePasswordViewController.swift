@@ -85,7 +85,7 @@ class RestorePasswordViewController: UIHostingController<RestorePasswordView>, R
     }
     
     func destroyMessage() {
-        store.dispatch(action: AuthRequests.DestroyRestorePasswordMessage())
+        store.dispatch(action: AuthRequests.ResetRestorePasswordMessage())
     }
 
     @objc func closeViewController() {
