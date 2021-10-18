@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
@@ -33,6 +34,7 @@ import kotlinx.android.synthetic.main.input_field.view.*
 import tw.geothings.rekotlin.StoreSubscriber
 
 class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
+    @ExperimentalComposeUiApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -47,6 +49,7 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
 
     private val isPending = MutableLiveData(false)
 
+    @ExperimentalComposeUiApi
     @Composable
     private fun SignInScreen() {
         val localFocusManager = LocalFocusManager.current
