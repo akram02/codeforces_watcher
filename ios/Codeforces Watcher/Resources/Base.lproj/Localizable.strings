@@ -110,6 +110,12 @@
 "lost_access" = "Lost access to mail?";
 "user_doesn't_exist" = "User doesn't exist ¯\_(ツ)_/¯";
 
+"check_your_box" = "Check your box.";
+"open_mail_hint" = "Tap to open your mail app";
+"open_mail" = "Open mail";
+"back_to_sign_in" = "Back to sign in";
+"check_your_spam_folder" = "If you haven’t received a message within 5 minutes, check your Spam folder.";
+
 "agreement_terms_and_privacy" = "I agree with the <terms>Terms and Conditions</terms> and the <privacy>Privacy Policy</privacy>.";
 
 "verify_codeforces_account" = "Verify Codeforces Account";

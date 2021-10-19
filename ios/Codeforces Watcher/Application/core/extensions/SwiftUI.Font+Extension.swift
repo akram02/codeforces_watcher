@@ -4,6 +4,10 @@ extension SwiftUI.Font {
     
     public static let bigHeader =
         SwiftUI.Font.system(size: 40, weight: .medium, design: .monospaced)
+    public static let subHeader =
+        SwiftUI.Font.system(size: 36, weight: .medium, design: .monospaced)
+    public static let header =
+        SwiftUI.Font.system(size: 18, weight: .medium, design: .monospaced)
     public static let primaryRegular =
         SwiftUI.Font.system(size: 16, weight: .regular, design: .monospaced)
     public static let primarySemibold =

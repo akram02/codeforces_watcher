@@ -13,7 +13,6 @@ class RestorePasswordViewController: UIHostingController<RestorePasswordView>, R
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        destroyMessage()
         super.viewWillAppear(animated)
         
         store.subscribe(subscriber: self) { subscription in
@@ -28,6 +27,8 @@ class RestorePasswordViewController: UIHostingController<RestorePasswordView>, R
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
+        resetMessage()
+        
         store.unsubscribe(subscriber: self)
     }
     
@@ -39,7 +40,7 @@ class RestorePasswordViewController: UIHostingController<RestorePasswordView>, R
         switch (state.status) {
         case .done:
             hideLoading()
-            self.presentModal(UIHostingController(rootView: RestorePasswordMailSentView()))
+            self.navigationController?.pushViewController(RestorePasswordMailSentViewController(), animated: true)
         case .pending:
             showLoading()
         case .idle:
@@ -84,11 +85,11 @@ class RestorePasswordViewController: UIHostingController<RestorePasswordView>, R
         rootView.message = message
     }
     
-    func destroyMessage() {
-        store.dispatch(action: AuthRequests.DestroyRestorePasswordMessage())
+    func resetMessage() {
+        store.dispatch(action: AuthRequests.ResetRestorePasswordMessage())
     }
 
     @objc func closeViewController() {
-        dismiss(animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
 }
