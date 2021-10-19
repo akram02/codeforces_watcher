@@ -12,10 +12,6 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -33,6 +29,7 @@ import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 import io.xorum.codeforceswatcher.features.auth.redux.AuthRequests
 import io.xorum.codeforceswatcher.features.auth.redux.AuthState
 import io.xorum.codeforceswatcher.redux.store
+import io.xorum.codeforceswatcher.redux.toMessage
 import kotlinx.android.synthetic.main.activity_sign_in.*
 import kotlinx.android.synthetic.main.input_field.view.*
 import tw.geothings.rekotlin.StoreSubscriber
@@ -60,7 +57,6 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
     private fun SignInScreen() {
         val localFocusManager = LocalFocusManager.current
         val isPending by isPending.observeAsState()
-        val wasLoaderShown by wasLoaderShown.observeAsState()
         val isError by isError.observeAsState()
 
 
@@ -149,7 +145,11 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
 
                     Spacer(Modifier.height(72.dp))
 
-                    AnnotatedClickableText(clickableText = "Forgot password?") { /*TODO*/ }
+                    AnnotatedClickableText(clickableText = "Forgot password?") {
+                        forgotPassword(
+                            email
+                        )
+                    }
                 }
             }
             LoadingView(isPending ?: false)
@@ -176,6 +176,11 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
         } else {
             store.dispatch(AuthRequests.SignIn(email, password))
         }
+    }
+
+    private fun forgotPassword(email: String) {
+        if (email.isEmpty()) store.dispatch(AuthRequests.SendPasswordReset.Failure(getString(R.string.forgot_password_empty_email).toMessage()))
+        else store.dispatch(AuthRequests.SendPasswordReset(email))
     }
 
     override fun onNewState(state: AuthState) {
