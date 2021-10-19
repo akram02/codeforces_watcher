@@ -109,12 +109,6 @@
 "lost_access" = "Vous avez perdu l'accès à la messagerie?";
 "user_doesn't_exist" = "L'utilisateur n'existe pas ¯\_(ツ)_/¯";
 
-"check_your_box" = "Cochez votre case.";
-"open_mail_hint" = "Appuyez pour ouvrir votre application de messagerie";
-"open_mail" = "Courrier ouvert";
-"back_to_sign_in" = "Retour pour vous connecter";
-"check_your_spam_folder" = "Si vous n'avez pas reçu de message dans les 5 minutes, vérifiez votre dossier Spam.";
-
 "agreement_terms_and_privacy" = "J'accepte les <terms>Termes et conditions</terms> et la <privacy>Politique de confidentialité</privacy>.";
 
 "verify_codeforces_account" = "Vérifier Codeforces Compte";
