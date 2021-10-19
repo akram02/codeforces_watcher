@@ -45,8 +45,6 @@ class MainActivity : AppCompatActivity() {
         FeedbackController.get().updateCountOpeningScreen()
 
         initViews()
-
-        startActivity(Intent(this, ComposeActivity::class.java))
     }
 
     private fun updateFragment() {
