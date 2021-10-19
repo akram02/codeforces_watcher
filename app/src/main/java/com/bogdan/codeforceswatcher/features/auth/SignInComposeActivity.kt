@@ -146,9 +146,7 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
                     Spacer(Modifier.height(72.dp))
 
                     AnnotatedClickableText(clickableText = "Forgot password?") {
-                        forgotPassword(
-                            email
-                        )
+                        forgotPassword(email = email)
                     }
                 }
             }
