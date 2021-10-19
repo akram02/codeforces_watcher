@@ -43,6 +43,7 @@ fun AuthTextField(
                 value = it
                 onValueChange(it)
             },
+            modifier = modifier,
             textStyle = MaterialTheme.typography.subtitle1.copy(color = MaterialTheme.colors.onBackground),
             singleLine = true,
             cursorBrush = SolidColor(MaterialTheme.colors.onBackground),
