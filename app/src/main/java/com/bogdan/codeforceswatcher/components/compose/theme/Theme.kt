@@ -14,12 +14,12 @@ private val DarkColorPalette = darkColors(
     secondaryVariant = SilverChalice,
     background = CodGray,
 //    surface = ,
-//    error = ,
+    error = MilanoRed,
     onPrimary = White,
     onSecondary = CodGray,
     onBackground = White,
 //    onSurface = ,
-//    onError =
+    onError = White
 
 )
 
@@ -30,12 +30,12 @@ private val LightColorPalette = lightColors(
     secondaryVariant = DoveGray,
     background = White,
 //    surface = ,
-//    error = ,
+    error = MilanoRed,
     onPrimary = Black,
     onSecondary = White,
     onBackground = Black,
 //    onSurface = ,
-//    onError =
+    onError = Black
 )
 
 @Composable

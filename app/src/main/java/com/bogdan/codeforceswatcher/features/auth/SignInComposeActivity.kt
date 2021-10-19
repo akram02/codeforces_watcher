@@ -12,6 +12,10 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -48,12 +52,17 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
     private var password = ""
 
     private val isPending = MutableLiveData(false)
+    private val wasLoaderShown = MutableLiveData(false)
+    private val isError = MutableLiveData(false)
 
     @ExperimentalComposeUiApi
     @Composable
     private fun SignInScreen() {
         val localFocusManager = LocalFocusManager.current
         val isPending by isPending.observeAsState()
+        val wasLoaderShown by wasLoaderShown.observeAsState()
+        val isError by isError.observeAsState()
+
 
         Box {
             Scaffold(
@@ -91,8 +100,11 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Spacer(Modifier.height(56.dp))
+
                     Title("Sign In")
+
                     Spacer(Modifier.height(44.dp))
+
                     AuthTextField(
                         label = "Email",
                         keyboardOptions = KeyboardOptions(
@@ -105,7 +117,9 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
                     ) { newEmail ->
                         email = newEmail
                     }
+
                     Spacer(Modifier.height(24.dp))
+
                     AuthTextField(
                         label = "Password",
                         keyboardOptions = KeyboardOptions(
@@ -120,11 +134,21 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
                     ) { newPassword ->
                         password = newPassword
                     }
-                    Spacer(Modifier.height(72.dp))
+
+                    Spacer(Modifier.height(24.dp))
+
+                    ErrorView(
+                        massage = if (isError == true) "Wrong credentials!" else ""
+                    )
+
+                    Spacer(Modifier.height(30.dp))
+
                     AuthButton("SIGN IN") {
                         signInWithEmailAndPassword(email = email, password = password)
                     }
+
                     Spacer(Modifier.height(72.dp))
+
                     AnnotatedClickableText(clickableText = "Forgot password?") { /*TODO*/ }
                 }
             }
@@ -148,7 +172,7 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
 
     private fun signInWithEmailAndPassword(email: String, password: String) {
         if (email.isEmpty() || password.isEmpty()) {
-            store.dispatch(AuthRequests.SignIn.Failure(getString(R.string.fields_can_not_be_empty)))
+            isError.postValue(true)
         } else {
             store.dispatch(AuthRequests.SignIn(email, password))
         }
@@ -156,9 +180,17 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
 
     override fun onNewState(state: AuthState) {
         when (state.status) {
-            AuthState.Status.PENDING -> isPending.postValue(true)
+            AuthState.Status.PENDING -> {
+                isPending.postValue(true)
+                wasLoaderShown.postValue(true)
+                isError.postValue(false)
+            }
             AuthState.Status.DONE -> finish()
-            AuthState.Status.IDLE -> isPending.postValue(false)
+            AuthState.Status.IDLE -> {
+                isPending.postValue(false)
+                if (wasLoaderShown.value == true)
+                    isError.postValue(true)
+            }
         }
     }
 }
