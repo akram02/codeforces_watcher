@@ -2,8 +2,8 @@ import SwiftUI
 
 struct RestorePasswordMailSentView: View {
     
-    var onOpenMail: (() -> Void)?
-    var onBackSignIn: (() -> Void)?
+    var onOpenMail: () -> Void = {}
+    var onBackSignIn: () -> Void = {}
     
     var body: some View {
         VStack(spacing: 0) {
@@ -31,13 +31,13 @@ struct RestorePasswordMailSentView: View {
             
             VStack(spacing: 20) {
                 Button(action: {
-                    self.onOpenMail?()
+                    self.onOpenMail()
                 }, label: {
                     ButtonTextDefault(text: "open_mail".localized)
                 })
                 
                 Button(action: {
-                    self.onBackSignIn?()
+                    self.onBackSignIn()
                 }, label: {
                     ButtonTextInverse(text: "back_to_sign_in".localized)
                 })

@@ -2,7 +2,7 @@ import SwiftUI
 
 struct RestorePasswordView: View {
     
-    var onRestorePassword: ((String) -> Void)?
+    var onRestorePassword: (String) -> Void = {_ in }
     
     @State var email = ""
     
@@ -38,7 +38,7 @@ struct RestorePasswordView: View {
                 .frame(height: 72)
             
             Button(action: {
-                self.onRestorePassword?(email)
+                self.onRestorePassword(email)
             }, label: {
                 ButtonTextDefault(text: "restore_password_button".localized)
             })

@@ -2,9 +2,9 @@ import SwiftUI
 
 struct SignInView: View {
     
-    var onSignIn: ((String, String) -> Void)?
-    var onForgotPassword: (() -> Void)?
-    var onSignUp: (() -> Void)?
+    var onSignIn: (String, String) -> Void = {_, _ in }
+    var onForgotPassword: () -> Void = {}
+    var onSignUp: () -> Void = {}
     
     @State var email = ""
     @State var password = ""
@@ -47,13 +47,13 @@ struct SignInView: View {
             
             VStack(spacing: 60) {
                 Button(action: {
-                    self.onSignIn?(email, password)
+                    self.onSignIn(email, password)
                 }, label: {
                     ButtonTextDefault(text: "sign_in".localized.uppercased())
                 })
                 
                 Button(action: {
-                    self.onForgotPassword?()
+                    self.onForgotPassword()
                 }, label: {
                     Text("forgot_password".localized)
                         .underline()
@@ -70,7 +70,7 @@ struct SignInView: View {
                     .foregroundColor(Palette.darkGray.swiftUIColor)
                 
                 Button(action: {
-                    self.onSignUp?()
+                    self.onSignUp()
                 }, label: {
                     Text("sign_up".localized)
                         .underline()
