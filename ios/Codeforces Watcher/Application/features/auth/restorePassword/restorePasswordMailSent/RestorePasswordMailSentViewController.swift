@@ -10,22 +10,14 @@ class RestorePasswordMailSentViewController: UIHostingController<RestorePassword
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupComponents()
-        setupInteractions()
+        setNavigationBar()
+        setInteractions()
     }
     
-    private func setupComponents() {
+    private func setNavigationBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: UIImage(named: "back_arrow"),
             style: .plain,
@@ -34,7 +26,7 @@ class RestorePasswordMailSentViewController: UIHostingController<RestorePassword
         )
     }
     
-    private func setupInteractions() {
+    private func setInteractions() {
         rootView.onOpenMail = {
             guard let mailURL = URL(string: "message://") else { return }
             if UIApplication.shared.canOpenURL(mailURL) {
