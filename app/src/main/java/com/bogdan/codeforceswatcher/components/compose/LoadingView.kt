@@ -18,15 +18,26 @@ import androidx.compose.ui.window.DialogProperties
 
 @ExperimentalComposeUiApi
 @Composable
-fun LoadingView(isPending: Boolean) {
+fun LoadingView(onBackPress: () -> Unit) {
+    var isBackPressed by remember {
+        mutableStateOf(false)
+    }
 
-    if (isPending) {
+    if (!isBackPressed) {
         Dialog(
-            onDismissRequest = { /*TODO*/ },
-            properties = DialogProperties(dismissOnBackPress = true, dismissOnClickOutside = false, usePlatformDefaultWidth = false)
-        ){
+            onDismissRequest = {
+                isBackPressed = true
+                onBackPress()
+            },
+            properties = DialogProperties(
+                dismissOnBackPress = true,
+                dismissOnClickOutside = false,
+                usePlatformDefaultWidth = false
+            )
+        ) {
             Box(
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
                     .background(MaterialTheme.colors.onBackground.copy(alpha = 0.5f)),
                 contentAlignment = Alignment.Center
             ) {

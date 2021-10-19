@@ -150,7 +150,7 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
                     }
                 }
             }
-            LoadingView(isPending ?: false)
+            if (isPending == true) LoadingView { /*TODO*/ }
         }
     }
 
