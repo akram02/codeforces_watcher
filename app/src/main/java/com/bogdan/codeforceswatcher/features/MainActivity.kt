@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.AddUserBottomSheet
 import com.bogdan.codeforceswatcher.components.WebViewActivity
+import com.bogdan.codeforceswatcher.features.auth.RestorePasswordComposeActivity
 import com.bogdan.codeforceswatcher.features.auth.SignInComposeActivity
 import com.bogdan.codeforceswatcher.features.contests.ContestsFiltersActivity
 import com.bogdan.codeforceswatcher.features.contests.ContestsFragment
@@ -46,7 +47,7 @@ class MainActivity : AppCompatActivity() {
 
         initViews()
 
-        startActivity(Intent(this, SignInComposeActivity::class.java))
+        startActivity(Intent(this, RestorePasswordComposeActivity::class.java))
     }
 
     private fun updateFragment() {
