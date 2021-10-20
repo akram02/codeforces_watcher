@@ -82,7 +82,7 @@ class SignInActivity : AppCompatActivity(), StoreSubscriber<AuthState> {
 
     private fun forgotPassword() {
         val email = ifEmail.editText.text.trim().toString()
-        if (email.isEmpty()) store.dispatch(AuthRequests.SendPasswordReset.Failure(getString(R.string.forgot_password_empty_email).toMessage()))
+        if (email.isEmpty()) store.dispatch(AuthRequests.SendPasswordReset.Failure(getString(R.string.forgot_password_empty_email)))
         else store.dispatch(AuthRequests.SendPasswordReset(email))
     }
 

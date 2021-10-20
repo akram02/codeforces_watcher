@@ -2,10 +2,10 @@ import SwiftUI
 import common
 import PKHUD
 
-class SignInViewController: UIHostingController<SignInView>, ReKampStoreSubscriber {
+class RestorePasswordViewController: UIHostingController<RestorePasswordView>, ReKampStoreSubscriber {
     
     init() {
-        super.init(rootView: SignInView())
+        super.init(rootView: RestorePasswordView())
     }
     
     @objc required init?(coder aDecoder: NSCoder) {
@@ -35,12 +35,12 @@ class SignInViewController: UIHostingController<SignInView>, ReKampStoreSubscrib
     func onNewState(state: Any) {
         let state = state as! AuthState
         
-        updateMessage(state.signInMessage)
+        updateMessage(state.restorePasswordMessage)
         
         switch (state.status) {
         case .done:
             hideLoading()
-            closeViewController()
+            self.navigationController?.pushViewController(RestorePasswordMailSentViewController(), animated: true)
         case .pending:
             showLoading()
         case .idle:
@@ -76,30 +76,20 @@ class SignInViewController: UIHostingController<SignInView>, ReKampStoreSubscrib
     }
     
     private func setupInteractions() {
-        rootView.onSignIn = { email, password in
-            store.dispatch(action: AuthRequests.SignIn(email: email, password: password))
-        }
-        
-        rootView.onForgotPassword = {
-            self.navigationController?.pushViewController(RestorePasswordViewController(), animated: true)
-            analyticsControler.logEvent(eventName: AnalyticsEvents().SIGN_UP_OPENED, params: [:])
-        }
-        
-        rootView.onSignUp = {
-            self.presentModal(SignUpViewController())
-            analyticsControler.logEvent(eventName: AnalyticsEvents().SIGN_UP_OPENED, params: [:])
+        rootView.onRestorePassword = { email in
+            store.dispatch(action: AuthRequests.SendPasswordReset(email: email))
         }
     }
     
     func updateMessage(_ message: String) {
-        rootView.error = message
+        rootView.message = message
     }
     
     func resetMessage() {
-        store.dispatch(action: AuthRequests.ResetSignInMessage())
+        store.dispatch(action: AuthRequests.ResetRestorePasswordMessage())
     }
 
     @objc func closeViewController() {
-        dismiss(animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
 }

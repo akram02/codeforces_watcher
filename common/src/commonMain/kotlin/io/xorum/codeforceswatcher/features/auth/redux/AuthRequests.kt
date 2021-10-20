@@ -15,12 +15,14 @@ class AuthRequests {
         override suspend fun execute() = firebaseController.signIn(email, password) { exception ->
             exception?.let {
                 store.dispatch(Failure(Strings.get("wrong_credentials")))
-            } ?: store.dispatch(Success)
+            } ?: store.dispatch(Success(""))
         }
 
-        object Success : Action
+        data class Success(val message: String) : Action
         data class Failure(val message: String) : Action
     }
+
+    object ResetSignInMessage : Action
 
     class SignUp(
         private val email: String,
@@ -62,11 +64,13 @@ class AuthRequests {
 
         override suspend fun execute() = firebaseController.sendPasswordReset(email) { exception ->
             exception?.let {
-                store.dispatch(Failure(it.message.toMessage()))
-            } ?: store.dispatch(Success(Strings.get("forgot_password_success").toMessage()))
+                store.dispatch(Failure(Strings.get("user_doesn't_exist")))
+            } ?: store.dispatch(Success(""))
         }
 
-        data class Success(override val message: Message) : ToastAction
-        data class Failure(override val message: Message) : ToastAction
+        data class Success(val message: String) : Action
+        data class Failure(val message: String) : Action
     }
+
+    object ResetRestorePasswordMessage : Action
 }
