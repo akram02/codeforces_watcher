@@ -123,11 +123,18 @@ class RestorePasswordComposeActivity : ComponentActivity(), StoreSubscriber<Auth
 
                     Spacer(Modifier.height(28.dp))
 
-                    AuthButton("Restore Password") { /*TODO*/ }
+                    AuthButton("Restore Password") {
+                        restorePassword(email)
+                    }
                 }
             }
             if (isPending == true) LoadingView { /*TODO*/ }
         }
+    }
+
+    private fun restorePassword(email: String) {
+        if (email.isEmpty()) store.dispatch(AuthRequests.SendPasswordReset.Failure(getString(R.string.forgot_password_empty_email).toMessage()))
+        else store.dispatch(AuthRequests.SendPasswordReset(email))
     }
 
     override fun onStart() {

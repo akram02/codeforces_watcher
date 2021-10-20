@@ -146,7 +146,12 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
                     Spacer(Modifier.height(72.dp))
 
                     AnnotatedClickableText(clickableText = "Forgot password?") {
-                        forgotPassword(email = email)
+                        startActivity(
+                            Intent(
+                                this@SignInComposeActivity,
+                                RestorePasswordComposeActivity::class.java
+                            )
+                        )
                     }
                 }
             }
@@ -174,11 +179,6 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
         } else {
             store.dispatch(AuthRequests.SignIn(email, password))
         }
-    }
-
-    private fun forgotPassword(email: String) {
-        if (email.isEmpty()) store.dispatch(AuthRequests.SendPasswordReset.Failure(getString(R.string.forgot_password_empty_email).toMessage()))
-        else store.dispatch(AuthRequests.SendPasswordReset(email))
     }
 
     override fun onNewState(state: AuthState) {
