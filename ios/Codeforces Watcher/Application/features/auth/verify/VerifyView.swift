@@ -9,7 +9,7 @@ struct VerifyView: View {
             Spacer()
                 .frame(height: 76)
             
-            Text("Verify Codeforces Account")
+            Text("verify_codeforces_account".localized)
                 .font(.bigHeader)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
@@ -19,8 +19,8 @@ struct VerifyView: View {
             VStack(spacing: 0) {
                 TextInputLayoutView(
                     text: $codeforcesHandle,
-                    hint: "Codeforces handle",
-                    placeholder: "Codeforces handle",
+                    hint: "codeforces_handle".localized,
+                    placeholder: "codeforces_handle".localized,
                     contentType: .text,
                     tag: 0
                 )
@@ -29,18 +29,8 @@ struct VerifyView: View {
                     .frame(height: 24)
                 
                 VStack(spacing: 0) {
-                    Group {
-                        Text("To verify that account belongs to you, please, change your English ”Last name” in your")
-                            .foregroundColor(Palette.darkGray.swiftUIColor) +
-                            
-                        Text(" Profile -> Settings -> Social ")
-                            .fontWeight(.semibold) +
-                            
-                        Text("to this value:")
-                            .foregroundColor(Palette.darkGray.swiftUIColor)
-                    }
-                    .font(.primary2)
-                    .frame(maxWidth: .infinity, alignment: .leading )
+                    VerifyInstructionLabelView(text: "verify_instruction".localized.attributed)
+                        .frame(height: 88)
                     
                     Spacer()
                         .frame(height: 12)
@@ -51,7 +41,7 @@ struct VerifyView: View {
                     Spacer()
                         .frame(height: 20)
                     
-                    Text("After successful login you can change it back.")
+                    Text("verify_change_it_back".localized)
                         .font(.primary2)
                         .foregroundColor(Palette.darkGray.swiftUIColor)
                         .multilineTextAlignment(.center)
@@ -62,10 +52,13 @@ struct VerifyView: View {
                 .frame(height: 72)
             
             Button(action: {}, label: {
-                ButtonTextDefault(text: "Verify".uppercased())
+                ButtonTextDefault(text: "verify".localized.uppercased())
             })
+            
+            Spacer()
+                .frame(height: 40)
         }
-        .padding([.horizontal, .bottom])
+        .padding(.horizontal)
     }
 }
 
