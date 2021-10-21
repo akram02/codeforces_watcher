@@ -47,7 +47,7 @@ class VerifyViewControllerNew: UIHostingController<VerifyView>, ReKampStoreSubsc
         
         fetchVerificationCode()
         setNavigationBar()
-        
+        setInteractions()
     }
     
     private func showLoading() {
@@ -66,6 +66,12 @@ class VerifyViewControllerNew: UIHostingController<VerifyView>, ReKampStoreSubsc
             target: self,
             action: #selector(closeViewController)
         )
+    }
+    
+    private func setInteractions() {
+        rootView.onVerify = { handle in
+            store.dispatch(action: VerificationRequests.VerifyCodeforces(handle: handle))
+        }
     }
     
     private func fetchVerificationCode() {

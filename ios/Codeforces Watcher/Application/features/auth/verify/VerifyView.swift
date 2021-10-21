@@ -2,6 +2,8 @@ import SwiftUI
 
 struct VerifyView: View {
     
+    var onVerify: (String) -> Void = { _ in }
+    
     @State var codeforcesHandle = ""
     
     var verificationCode = ""
@@ -53,7 +55,9 @@ struct VerifyView: View {
             Spacer()
                 .frame(height: 72)
             
-            Button(action: {}, label: {
+            Button(action: {
+                self.onVerify(codeforcesHandle)
+            }, label: {
                 ButtonTextDefault(text: "verify".localized.uppercased())
             })
             
