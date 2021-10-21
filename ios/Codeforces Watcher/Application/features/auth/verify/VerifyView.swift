@@ -4,6 +4,8 @@ struct VerifyView: View {
     
     @State var codeforcesHandle = ""
     
+    var verificationCode = ""
+    
     var body: some View {
         ScrollView(showsIndicators: false) {
             Spacer()
@@ -35,7 +37,7 @@ struct VerifyView: View {
                     Spacer()
                         .frame(height: 12)
                     
-                    Text("xV123GH5")
+                    Text(verificationCode)
                         .font(.midHeader)
                     
                     Spacer()
