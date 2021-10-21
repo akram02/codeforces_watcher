@@ -8,9 +8,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shadow
 
 @Composable
-fun ErrorView(massage: String) {
+fun ErrorView(message: String) {
     Text(
-        text = massage,
+        text = message,
         color = MaterialTheme.colors.onError,
         style = MaterialTheme.typography.button.copy(
             shadow = Shadow(

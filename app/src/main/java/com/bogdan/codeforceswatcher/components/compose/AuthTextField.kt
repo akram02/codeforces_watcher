@@ -25,9 +25,7 @@ fun AuthTextField(
     visualTransformation: VisualTransformation = VisualTransformation.None,
     onValueChange: (String) -> Unit
 ) {
-    var value by remember {
-        mutableStateOf("")
-    }
+    var value by remember { mutableStateOf("") }
     val modifier = Modifier.fillMaxWidth()
 
     Column(modifier = modifier) {
