@@ -24,8 +24,17 @@ class VerifyViewControllerNew: UIHostingController<VerifyView>, ReKampStoreSubsc
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        resetMessage()
+    }
+    
     func onNewState(state: Any) {
         let state = state as! VerificationState
+        
+        rootView.verificationCode = state.verificationCode ?? ""
+        updateMessage(message: state.message)
         
         switch (state.status) {
         case .idle:
@@ -38,8 +47,6 @@ class VerifyViewControllerNew: UIHostingController<VerifyView>, ReKampStoreSubsc
         default:
             return
         }
-        
-        rootView.verificationCode = state.verificationCode ?? ""
     }
     
     override func viewDidLoad() {
@@ -76,6 +83,14 @@ class VerifyViewControllerNew: UIHostingController<VerifyView>, ReKampStoreSubsc
     
     private func fetchVerificationCode() {
         store.dispatch(action: VerificationRequests.FetchVerificationCode())
+    }
+    
+    private func updateMessage(message: String) {
+        rootView.message = message
+    }
+    
+    private func resetMessage() {
+        store.dispatch(action: VerificationRequests.ResetVerificationCodeforcesMessage())
     }
     
     @objc func closeViewController() {

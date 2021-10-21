@@ -7,6 +7,7 @@ struct VerifyView: View {
     @State var codeforcesHandle = ""
     
     var verificationCode = ""
+    var message = ""
     
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -52,7 +53,10 @@ struct VerifyView: View {
                 }
             }
             
-            Spacer()
+            Text(message.localized)
+                .font(.primarySemibold)
+                .bold()
+                .shadow(color: Palette.red.swiftUIColor, radius: 8, x: 0, y: 0)
                 .frame(height: 72)
             
             Button(action: {
