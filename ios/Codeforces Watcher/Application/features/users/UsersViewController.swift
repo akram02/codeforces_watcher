@@ -306,7 +306,7 @@ class UsersViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
                 subtitle: "verify_account_prompt".localized,
                 buttonText: "verify_in_42_seconds".localized,
                 onButtonTap: {
-                    self.presentModal(VerifyViewControllerNew())
+                    self.presentModal(VerifyViewController())
                     analyticsControler.logEvent(eventName: AnalyticsEvents().VERIFY_OPENED, params: [:])
                 }
             )
