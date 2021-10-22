@@ -11,6 +11,8 @@ import com.bogdan.codeforceswatcher.R
 @Composable
 fun NavigationBar(
     title: String = "",
+    navigationIcon: Int = R.drawable.ic_path,
+    navigationIconDescription: String? = null,
     onClick: () -> Unit
 ) {
     TopAppBar(
@@ -24,8 +26,8 @@ fun NavigationBar(
                 modifier = Modifier
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_path),
-                    contentDescription = null
+                    painter = painterResource(navigationIcon),
+                    contentDescription = navigationIconDescription
                 )
             }
         },
