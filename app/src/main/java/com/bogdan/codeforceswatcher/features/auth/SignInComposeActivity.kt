@@ -44,9 +44,10 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
         }
     }
 
-    private val isPending = MutableLiveData(false)
-    private val wasLoaderShown = MutableLiveData(false)
-    private val isError = MutableLiveData(false)
+    private val authState = MutableLiveData<AuthState>()
+
+    private val AuthState.shouldShowLoading
+        get() = status == AuthState.Status.PENDING
 
     @ExperimentalComposeUiApi
     @Composable
@@ -56,8 +57,7 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
         var email = ""
         var password = ""
 
-        val isPending by isPending.observeAsState()
-        val isError by isError.observeAsState()
+        val authState by authState.observeAsState()
 
         Box {
             Scaffold(
@@ -80,10 +80,7 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
                             clickableTextStyle = MaterialTheme.typography.body2.copy(fontSize = 14.sp)
                         ) {
                             startActivity(
-                                Intent(
-                                    this@SignInComposeActivity,
-                                    SignUpActivity::class.java
-                                )
+                                Intent(this@SignInComposeActivity, SignUpActivity::class.java)
                             )
                         }
                     }
@@ -131,24 +128,22 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
 
                     Spacer(Modifier.height(24.dp))
 
-                    ErrorView(
-                        message = if (isError == true) "Wrong credentials!" else ""
-                    )
+                    ErrorView(authState?.signInMessage.orEmpty())
 
                     Spacer(Modifier.height(30.dp))
 
                     AuthButton("SIGN IN") {
-                        signInWithEmailAndPassword(email = email, password = password)
+                        signInWithEmailAndPassword(email, password)
                     }
 
                     Spacer(Modifier.height(72.dp))
 
                     AnnotatedClickableText(clickableText = "Forgot password?") {
-                        forgotPassword(email = email)
+                        forgotPassword(email)
                     }
                 }
             }
-            if (isPending == true) LoadingView()
+            if (authState?.shouldShowLoading == true) LoadingView()
         }
     }
 
@@ -167,30 +162,15 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
     }
 
     private fun signInWithEmailAndPassword(email: String, password: String) {
-        if (email.isEmpty() || password.isEmpty()) {
-            isError.postValue(true)
-        } else {
-            store.dispatch(AuthRequests.SignIn(email, password))
-        }
+        store.dispatch(AuthRequests.SignIn(email, password))
     }
 
     private fun forgotPassword(email: String) {
-        if (email.isEmpty()) store.dispatch(AuthRequests.SendPasswordReset.Failure(getString(R.string.forgot_password_empty_email)))
-        else store.dispatch(AuthRequests.SendPasswordReset(email))
+        store.dispatch(AuthRequests.SendPasswordReset(email))
     }
 
     override fun onNewState(state: AuthState) {
-        when (state.status) {
-            AuthState.Status.PENDING -> {
-                isPending.postValue(true)
-                wasLoaderShown.postValue(true)
-                isError.postValue(false)
-            }
-            AuthState.Status.DONE -> finish()
-            AuthState.Status.IDLE -> {
-                isPending.postValue(false)
-                if (wasLoaderShown.value == true) isError.postValue(true)
-            }
-        }
+        if (state.status == AuthState.Status.DONE) finish()
+        authState.postValue(state)
     }
 }
