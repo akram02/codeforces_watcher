@@ -12,14 +12,20 @@ class AuthRequests {
         private val password: String
     ) : Request() {
 
-        override suspend fun execute() = firebaseController.signIn(email, password) { exception ->
-            exception?.let {
+        override suspend fun execute() {
+            if (email.isEmpty() || password.isEmpty()) {
                 store.dispatch(Failure(Strings.get("wrong_credentials")))
-            } ?: store.dispatch(Success(""))
+                return
+            }
+            firebaseController.signIn(email, password) { exception ->
+                exception?.let {
+                    store.dispatch(Failure(Strings.get("wrong_credentials")))
+                } ?: store.dispatch(Success(""))
+            }
         }
 
-        data class Success(val message: String) : Action
-        data class Failure(val message: String) : Action
+        internal data class Success(val message: String) : Action
+        internal data class Failure(val message: String) : Action
     }
 
     object ResetSignInMessage : Action
@@ -62,14 +68,20 @@ class AuthRequests {
 
     class SendPasswordReset(private val email: String) : Request() {
 
-        override suspend fun execute() = firebaseController.sendPasswordReset(email) { exception ->
-            exception?.let {
+        override suspend fun execute() {
+            if (email.isEmpty()) {
                 store.dispatch(Failure(Strings.get("user_doesn't_exist")))
-            } ?: store.dispatch(Success(""))
+                return
+            }
+            firebaseController.sendPasswordReset(email) { exception ->
+                exception?.let {
+                    store.dispatch(Failure(Strings.get("user_doesn't_exist")))
+                } ?: store.dispatch(Success(""))
+            }
         }
 
-        data class Success(val message: String) : Action
-        data class Failure(val message: String) : Action
+        internal data class Success(val message: String) : Action
+        internal data class Failure(val message: String) : Action
     }
 
     object ResetRestorePasswordMessage : Action
