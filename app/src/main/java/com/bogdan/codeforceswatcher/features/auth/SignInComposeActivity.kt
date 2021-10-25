@@ -21,19 +21,23 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.MutableLiveData
+import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.compose.*
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 import com.google.android.material.button.MaterialButton
 import io.xorum.codeforceswatcher.features.auth.redux.AuthRequests
 import io.xorum.codeforceswatcher.features.auth.redux.AuthState
 import io.xorum.codeforceswatcher.redux.store
+import io.xorum.codeforceswatcher.util.Strings
 import kotlinx.android.synthetic.main.activity_sign_in.*
 import kotlinx.android.synthetic.main.input_field.view.*
 import tw.geothings.rekotlin.StoreSubscriber
+import java.util.*
 
 class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
     @ExperimentalComposeUiApi
@@ -73,9 +77,9 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
                     ) {
                         LinkText(
                             linkTextData = listOf(
-                                LinkTextData("Don't have an account yet? "),
+                                LinkTextData(("${getString(R.string.dont_have_an_account_yet)} ")),
                                 LinkTextData(
-                                    text = "Sign Up",
+                                    text = getString(R.string.sign_up),
                                     tag = "sign_up",
                                     annotation = "Redirect_to_sign_up_screen"
                                 ) {
@@ -111,12 +115,12 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
                 ) {
                     Spacer(Modifier.height(56.dp))
 
-                    Title("Sign In")
+                    Title(getString(R.string.sign_in))
 
                     Spacer(Modifier.height(44.dp))
 
                     AuthTextField(
-                        label = "Email",
+                        label = getString(R.string.email),
                         keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.Email,
                             imeAction = ImeAction.Next
@@ -131,7 +135,7 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
                     Spacer(Modifier.height(24.dp))
 
                     AuthTextField(
-                        label = "Password",
+                        label = getString(R.string.password),
                         keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.Password,
                             imeAction = ImeAction.Done
@@ -150,7 +154,7 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
 
                     Spacer(Modifier.height(30.dp))
 
-                    AuthButton("SIGN IN") {
+                    AuthButton(getString(R.string.sign_in).uppercase()) {
                         signInWithEmailAndPassword(email, password)
                     }
 
@@ -159,7 +163,7 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
                     LinkText(
                         linkTextData = listOf(
                             LinkTextData(
-                                text = "Forgot password",
+                                text = getString(R.string.forgot_password),
                                 tag = "forgot_password",
                                 annotation = "Redirect_to_forgot_password_screen"
                             ) {
