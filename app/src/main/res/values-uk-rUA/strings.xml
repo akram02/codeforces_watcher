@@ -98,7 +98,7 @@ Codeforces WatchR дає можливiсть:
     <string name="email">Електронна пошта</string>
     <string name="password">Пароль</string>
     <string name="sign_in">Увійти</string>
-    <string name="dont_have_an_account_yet"><![CDATA[У вас ще немає облікового запису? <link>Зареєструватися</link>]]></string>
+    <string name="dont_have_an_account_yet">У вас ще немає облікового запису?</string>
     <string name="already_have_an_account"><![CDATA[Вже є обліковий запис? <link>Увійти</link>]]></string>
     <string name="sign_up">Зареєструватися</string>
     <string name="confirm_password">Підтвердьте пароль</string>
@@ -119,4 +119,5 @@ Codeforces WatchR дає можливiсть:
     <string name="forgot_password_empty_email">Введіть дійсну електронну пошту і натисніть \ "Забули пароль \"!</string>
     <string name="fields_can_not_be_empty">Поля не можуть бути порожніми</string>
     <string name="forgot_password_success">Вам надіслано електронний лист з подальшими інструкціями! Будь ласка, перевірте!</string>
+    <string name="wrong_credentials"></string>
 </resources>

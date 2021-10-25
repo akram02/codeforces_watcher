@@ -16,6 +16,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun AuthTextField(
@@ -31,7 +32,6 @@ fun AuthTextField(
     Column(modifier = modifier) {
         Text(
             text = if (value.isNotEmpty()) label else "",
-            modifier = modifier.height(17.dp),
             style = MaterialTheme.typography.caption,
             color = MaterialTheme.colors.secondaryVariant
         )
@@ -51,7 +51,6 @@ fun AuthTextField(
                         text = label,
                         style = MaterialTheme.typography.subtitle1,
                         color = MaterialTheme.colors.secondaryVariant,
-                        modifier = modifier.height(19.dp)
                     )
                 }
                 innerTextField()
