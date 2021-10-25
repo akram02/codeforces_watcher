@@ -2,6 +2,7 @@ package com.bogdan.codeforceswatcher.features.auth
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
@@ -20,12 +21,13 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.MutableLiveData
-import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.compose.*
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
+import com.google.android.material.button.MaterialButton
 import io.xorum.codeforceswatcher.features.auth.redux.AuthRequests
 import io.xorum.codeforceswatcher.features.auth.redux.AuthState
 import io.xorum.codeforceswatcher.redux.store
@@ -67,23 +69,39 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
                 },
                 bottomBar = {
                     Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(62.dp)
-                            .padding(horizontal = 20.dp),
-                        contentAlignment = Alignment.TopCenter
+                        modifier = Modifier.fillMaxWidth()
                     ) {
-                        AnnotatedClickableText(
-                            text = "Don't have an account yet?",
-                            textStyle = MaterialTheme.typography.body1.copy(fontSize = 14.sp),
-                            clickableText = "Sign Up",
-                            clickableTextStyle = MaterialTheme.typography.body2.copy(fontSize = 14.sp)
-                        ) {
-                            startActivity(
-                                Intent(this@SignInComposeActivity, SignUpActivity::class.java)
+                        LinkText(
+                            linkTextData = listOf(
+                                LinkTextData("Don't have an account yet? "),
+                                LinkTextData(
+                                    text = "Sign Up",
+                                    tag = "sign_up",
+                                    annotation = "Redirect_to_sign_up_screen"
+                                ) {
+                                    startActivity(
+                                        Intent(
+                                            this@SignInComposeActivity,
+                                            SignUpActivity::class.java
+                                        )
+                                    )
+                                }
+                            ),
+                            modifier = Modifier
+                                .height(62.dp)
+                                .padding(horizontal = 20.dp)
+                                .align(Alignment.TopCenter),
+                            textStyle = MaterialTheme.typography.body1.copy(
+                                fontSize = 14.sp,
+                                color = MaterialTheme.colors.secondaryVariant
+                            ),
+                            clickableTextStyle = MaterialTheme.typography.body2.copy(
+                                fontSize = 14.sp,
+                                color = MaterialTheme.colors.secondary
                             )
-                        }
+                        )
                     }
+
                 },
                 backgroundColor = MaterialTheme.colors.background
             ) {
@@ -138,9 +156,21 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
 
                     Spacer(Modifier.height(72.dp))
 
-                    AnnotatedClickableText(clickableText = "Forgot password?") {
-                        forgotPassword(email)
-                    }
+                    LinkText(
+                        linkTextData = listOf(
+                            LinkTextData(
+                                text = "Forgot password",
+                                tag = "forgot_password",
+                                annotation = "Redirect_to_forgot_password_screen"
+                            ) {
+                                forgotPassword(email)
+                            }
+                        ),
+                        modifier = Modifier
+                            .height(62.dp)
+                            .padding(horizontal = 20.dp),
+                        clickableTextStyle = MaterialTheme.typography.body2
+                    )
                 }
             }
             if (authState?.shouldShowLoading == true) LoadingView()
