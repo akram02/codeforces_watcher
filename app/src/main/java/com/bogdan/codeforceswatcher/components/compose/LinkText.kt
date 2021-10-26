@@ -1,17 +1,17 @@
 package com.bogdan.codeforceswatcher.components.compose
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.*
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 
 data class LinkTextData(
     val text: String,
-    val tag: String? = null,
-    val annotation: String? = null,
+    val tag: String = "",
+    val annotation: String = "",
     val onClick: (() -> Unit)? = null,
 )
 
@@ -20,9 +20,14 @@ fun LinkText(
     linkTextData: List<LinkTextData>,
     modifier: Modifier = Modifier,
     textStyle: TextStyle = MaterialTheme.typography.body1,
-    clickableTextStyle: TextStyle = MaterialTheme.typography.body2
+    clickableTextStyle: TextStyle = MaterialTheme.typography.body2,
+    paragraphStyle: ParagraphStyle = ParagraphStyle(textAlign = TextAlign.Center)
 ) {
-    val annotatedString = createAnnotatedString(linkTextData, clickableTextStyle.toSpanStyle())
+    val annotatedString = createAnnotatedString(
+        data = linkTextData,
+        clickableTextStyle = clickableTextStyle.toSpanStyle(),
+        paragraphStyle = paragraphStyle
+    )
 
     ClickableText(
         text = annotatedString,
@@ -44,21 +49,23 @@ fun LinkText(
 }
 
 @Composable
-private fun createAnnotatedString(data: List<LinkTextData>, style: SpanStyle): AnnotatedString {
-    return buildAnnotatedString {
+private fun createAnnotatedString(
+    data: List<LinkTextData>,
+    clickableTextStyle: SpanStyle,
+    paragraphStyle: ParagraphStyle
+) = buildAnnotatedString {
+    withStyle(paragraphStyle) {
         data.forEach { linkTextData ->
-            if (linkTextData.tag != null && linkTextData.annotation != null) {
+            if (linkTextData.onClick == null) append(linkTextData.text)
+            else {
                 pushStringAnnotation(
                     tag = linkTextData.tag,
                     annotation = linkTextData.annotation
                 )
-                withStyle(
-                    style = style.copy(textDecoration = TextDecoration.Underline)
-                ) {
+                withStyle(clickableTextStyle.copy(textDecoration = TextDecoration.Underline)) {
                     append(linkTextData.text)
                 }
-            } else {
-                append(linkTextData.text)
+                pop()
             }
         }
     }
