@@ -34,7 +34,12 @@ struct VerifyView: View {
                     .frame(height: 24)
                 
                 VStack(spacing: 0) {
-                    VerifyInstructionLabelView(text: "verify_instruction".localized.attributed)
+                    AttributedTextView(
+                        attributedText: "verify_instruction".localized.attributed,
+                        attributeTags: [.bold],
+                        defaultFont: UIFont.monospacedSystemFont(ofSize: 14, weight: .regular),
+                        defaultTextColor: Palette.darkGray
+                    )
                         .frame(height: 88)
                     
                     Spacer()
@@ -55,7 +60,6 @@ struct VerifyView: View {
             
             Text(message.localized)
                 .font(.primarySemibold)
-                .bold()
                 .shadow(color: Palette.red.swiftUIColor, radius: 8, x: 0, y: 0)
                 .frame(height: 72)
             
