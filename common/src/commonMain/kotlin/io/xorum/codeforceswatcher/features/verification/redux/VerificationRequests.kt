@@ -4,6 +4,7 @@ import io.xorum.codeforceswatcher.features.auth.models.UserAccount
 import io.xorum.codeforceswatcher.features.verification.VerificationRepository
 import io.xorum.codeforceswatcher.redux.*
 import io.xorum.codeforceswatcher.util.Response
+import io.xorum.codeforceswatcher.util.Strings
 import tw.geothings.rekotlin.Action
 
 class VerificationRequests {
@@ -15,14 +16,14 @@ class VerificationRequests {
         override suspend fun execute() {
             when (val response = verificationRepository.verifyCodeforcesAccount(handle)) {
                 is Response.Success -> {
-                    store.dispatch(Success(response.result))
+                    store.dispatch(Success(response.result, ""))
                 }
-                is Response.Failure -> store.dispatch(Failure(response.error.toMessage()))
+                is Response.Failure -> store.dispatch(Failure(Strings.get("wrong_credentials")))
             }
         }
 
-        data class Success(val userAccount: UserAccount) : Action
-        data class Failure(override val message: Message) : ToastAction
+        data class Success(val userAccount: UserAccount, val message: String) : Action
+        data class Failure(val message: String) : Action
     }
 
     class FetchVerificationCode : Request() {
@@ -36,4 +37,6 @@ class VerificationRequests {
 
         data class Success(val verificationCode: String) : Action
     }
+
+    object ResetVerificationCodeforcesMessage: Action
 }
