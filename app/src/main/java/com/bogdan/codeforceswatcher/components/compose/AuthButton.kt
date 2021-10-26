@@ -1,5 +1,6 @@
 package com.bogdan.codeforceswatcher.components.compose
 
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -20,8 +21,7 @@ import io.xorum.codeforceswatcher.redux.states.AppState
 fun AuthButton(label: String, action: () -> Unit) {
     Button(
         modifier = Modifier
-            .width(250.dp)
-            .height(40.dp)
+            .defaultMinSize(minWidth = 250.dp, minHeight = 40.dp)
             .clip(RoundedCornerShape(100)),
         colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary),
         onClick = { action() }
