@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_marginStart="16dp"
     android:layout_marginEnd="16dp"
-    tools:context=".features.auth.SignInActivity">
+    tools:context=".features.auth.SignInComposeActivity">
 
     <com.bogdan.codeforceswatcher.components.InputField
         android:id="@+id/ifHandle"

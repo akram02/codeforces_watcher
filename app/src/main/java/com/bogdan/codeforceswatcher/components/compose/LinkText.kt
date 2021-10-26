@@ -5,7 +5,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.*
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 
 data class LinkTextData(
@@ -21,7 +20,7 @@ fun LinkText(
     modifier: Modifier = Modifier,
     textStyle: TextStyle = MaterialTheme.typography.body1,
     clickableTextStyle: TextStyle = MaterialTheme.typography.body2,
-    paragraphStyle: ParagraphStyle = ParagraphStyle(textAlign = TextAlign.Center)
+    paragraphStyle: ParagraphStyle = ParagraphStyle()
 ) {
     val annotatedString = createAnnotatedString(
         data = linkTextData,

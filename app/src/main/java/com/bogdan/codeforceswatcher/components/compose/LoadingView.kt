@@ -14,7 +14,7 @@ import androidx.compose.ui.window.DialogProperties
 
 @ExperimentalComposeUiApi
 @Composable
-fun LoadingView() {
+fun LoadingView(modifier: Modifier = Modifier) {
     Dialog(
         onDismissRequest = { },
         properties = DialogProperties(
@@ -24,7 +24,7 @@ fun LoadingView() {
         )
     ) {
         Box(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colors.onBackground.copy(alpha = 0.5f)),
             contentAlignment = Alignment.Center
