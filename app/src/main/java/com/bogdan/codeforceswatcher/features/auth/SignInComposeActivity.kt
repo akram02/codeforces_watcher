@@ -17,9 +17,11 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.MutableLiveData
@@ -29,10 +31,10 @@ import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 import io.xorum.codeforceswatcher.features.auth.redux.AuthRequests
 import io.xorum.codeforceswatcher.features.auth.redux.AuthState
 import io.xorum.codeforceswatcher.redux.store
-import io.xorum.codeforceswatcher.redux.toMessage
 import kotlinx.android.synthetic.main.activity_sign_in.*
 import kotlinx.android.synthetic.main.input_field.view.*
 import tw.geothings.rekotlin.StoreSubscriber
+import java.util.*
 
 class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
     @ExperimentalComposeUiApi
@@ -45,20 +47,19 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
         }
     }
 
-    private var email = ""
-    private var password = ""
-
-    private val isPending = MutableLiveData(false)
-    private val wasLoaderShown = MutableLiveData(false)
-    private val isError = MutableLiveData(false)
+    private val authState = MutableLiveData<AuthState>()
+    private val AuthState.shouldShowLoading
+        get() = status == AuthState.Status.PENDING
 
     @ExperimentalComposeUiApi
     @Composable
     private fun SignInScreen() {
         val localFocusManager = LocalFocusManager.current
-        val isPending by isPending.observeAsState()
-        val isError by isError.observeAsState()
 
+        var email = ""
+        var password = ""
+
+        val authState by authState.observeAsState()
 
         Box {
             Scaffold(
@@ -67,27 +68,25 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
                     NavigationBar { finish() }
                 },
                 bottomBar = {
-                    Box(
+                    LinkText(
+                        linkTextData = listOf(
+                            LinkTextData(("${getString(R.string.dont_have_an_account_yet)} ")),
+                            LinkTextData(getString(R.string.sign_up)) { startSignUpActivity() }
+                        ),
                         modifier = Modifier
-                            .fillMaxWidth()
                             .height(62.dp)
+                            .fillMaxWidth()
                             .padding(horizontal = 20.dp),
-                        contentAlignment = Alignment.TopCenter
-                    ) {
-                        AnnotatedClickableText(
-                            text = "Don't have an account yet?",
-                            textStyle = MaterialTheme.typography.body1.copy(fontSize = 14.sp),
-                            clickableText = "Sign Up",
-                            clickableTextStyle = MaterialTheme.typography.body2.copy(fontSize = 14.sp)
-                        ) {
-                            startActivity(
-                                Intent(
-                                    this@SignInComposeActivity,
-                                    SignUpActivity::class.java
-                                )
-                            )
-                        }
-                    }
+                        textStyle = MaterialTheme.typography.body1.copy(
+                            fontSize = 14.sp,
+                            color = MaterialTheme.colors.secondaryVariant
+                        ),
+                        clickableTextStyle = MaterialTheme.typography.body2.copy(
+                            fontSize = 14.sp,
+                            color = MaterialTheme.colors.onBackground
+                        ),
+                        paragraphStyle = ParagraphStyle(textAlign = TextAlign.Center)
+                    )
                 },
                 backgroundColor = MaterialTheme.colors.background
             ) {
@@ -97,12 +96,12 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
                 ) {
                     Spacer(Modifier.height(56.dp))
 
-                    Title("Sign In")
+                    Title(getString(R.string.sign_in))
 
                     Spacer(Modifier.height(44.dp))
 
                     AuthTextField(
-                        label = "Email",
+                        label = getString(R.string.email),
                         keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.Email,
                             imeAction = ImeAction.Next
@@ -117,7 +116,7 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
                     Spacer(Modifier.height(24.dp))
 
                     AuthTextField(
-                        label = "Password",
+                        label = getString(R.string.password),
                         keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.Password,
                             imeAction = ImeAction.Done
@@ -125,7 +124,6 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
                         keyboardActions = KeyboardActions(
                             onDone = { localFocusManager.clearFocus() }
                         ),
-
                         visualTransformation = PasswordVisualTransformation(mask = '*')
                     ) { newPassword ->
                         password = newPassword
@@ -133,29 +131,27 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
 
                     Spacer(Modifier.height(24.dp))
 
-                    ErrorView(
-                        massage = if (isError == true) "Wrong credentials!" else ""
-                    )
+                    ErrorView(authState?.signInMessage.orEmpty())
 
                     Spacer(Modifier.height(30.dp))
 
-                    AuthButton("SIGN IN") {
-                        signInWithEmailAndPassword(email = email, password = password)
+                    AuthButton(getString(R.string.sign_in).uppercase()) {
+                        signInWithEmailAndPassword(email, password)
                     }
 
                     Spacer(Modifier.height(72.dp))
 
-                    AnnotatedClickableText(clickableText = "Forgot password?") {
-                        startActivity(
-                            Intent(
-                                this@SignInComposeActivity,
-                                RestorePasswordComposeActivity::class.java
-                            )
+                    LinkText(
+                        linkTextData = listOf(
+                            LinkTextData(getString(R.string.forgot_password)) { forgotPassword(email) }
+                        ),
+                        clickableTextStyle = MaterialTheme.typography.body2.copy(
+                            color = MaterialTheme.colors.onBackground
                         )
-                    }
+                    )
                 }
             }
-            if (isPending == true) LoadingView { /*TODO*/ }
+            if (authState?.shouldShowLoading == true) LoadingView()
         }
     }
 
@@ -170,30 +166,26 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
 
     override fun onStop() {
         super.onStop()
+        store.dispatch(AuthRequests.ResetSignInMessage)
         store.unsubscribe(this)
     }
 
     private fun signInWithEmailAndPassword(email: String, password: String) {
-        if (email.isEmpty() || password.isEmpty()) {
-            isError.postValue(true)
-        } else {
-            store.dispatch(AuthRequests.SignIn(email, password))
-        }
+        store.dispatch(AuthRequests.SignIn(email, password))
+    }
+
+    private fun forgotPassword(email: String) {
+        store.dispatch(AuthRequests.SendPasswordReset(email))
+    }
+
+    private fun startSignUpActivity() {
+        startActivity(
+            Intent(this@SignInComposeActivity, SignUpActivity::class.java)
+        )
     }
 
     override fun onNewState(state: AuthState) {
-        when (state.status) {
-            AuthState.Status.PENDING -> {
-                isPending.postValue(true)
-                wasLoaderShown.postValue(true)
-                isError.postValue(false)
-            }
-            AuthState.Status.DONE -> finish()
-            AuthState.Status.IDLE -> {
-                isPending.postValue(false)
-                if (wasLoaderShown.value == true)
-                    isError.postValue(true)
-            }
-        }
+        if (state.status == AuthState.Status.DONE) finish()
+        authState.postValue(state)
     }
 }

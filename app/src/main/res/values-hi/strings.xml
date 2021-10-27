@@ -94,7 +94,7 @@ Codeforces WatchR के साथ आप:
     <string name="email">ईमेल</string>
     <string name="password">कुंजिका</string>
     <string name="sign_in">दाखिल करना</string>
-    <string name="dont_have_an_account_yet"><![CDATA[अब तक कोई खाता नहीं है? <link>साइन अप करें</link>]]></string>
+    <string name="dont_have_an_account_yet">अब तक कोई खाता नहीं है?</string>
     <string name="already_have_an_account"><![CDATA[क्या आपके पास पहले से एक खाता मौजूद है? <link>दाखिल करना</link>]]></string>
     <string name="sign_up">साइन अप करें</string>
     <string name="confirm_password">पासवर्ड की पुष्टि कीजिये</string>

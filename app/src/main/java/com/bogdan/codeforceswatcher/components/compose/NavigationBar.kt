@@ -1,6 +1,5 @@
 package com.bogdan.codeforceswatcher.components.compose
 
-import androidx.compose.foundation.layout.height
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -10,27 +9,31 @@ import com.bogdan.codeforceswatcher.R
 
 @Composable
 fun NavigationBar(
+    modifier: Modifier = Modifier,
     title: String = "",
+    navigationIcon: Int = R.drawable.ic_path,
+    navigationIconDescription: String? = null,
     onClick: () -> Unit
 ) {
     TopAppBar(
-        title = { Text(
-            text = title,
-            style = MaterialTheme.typography.h6
-        ) },
+        title = {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.h6
+            )
+        },
         navigationIcon = {
             IconButton(
-                onClick = { onClick() },
-                modifier = Modifier
+                onClick = { onClick() }
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_path),
-                    contentDescription = null
+                    painter = painterResource(navigationIcon),
+                    contentDescription = navigationIconDescription
                 )
             }
         },
         backgroundColor = MaterialTheme.colors.primary,
         elevation = 0.dp,
-        modifier = Modifier.height(56.dp)
+        modifier = modifier
     )
 }

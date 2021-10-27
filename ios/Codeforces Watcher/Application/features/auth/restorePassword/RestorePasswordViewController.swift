@@ -2,10 +2,10 @@ import SwiftUI
 import common
 import PKHUD
 
-class VerifyViewController: UIHostingController<VerifyView>, ReKampStoreSubscriber {
+class RestorePasswordViewController: UIHostingController<RestorePasswordView>, ReKampStoreSubscriber {
     
     init() {
-        super.init(rootView: VerifyView())
+        super.init(rootView: RestorePasswordView())
     }
     
     @objc required init?(coder aDecoder: NSCoder) {
@@ -17,9 +17,9 @@ class VerifyViewController: UIHostingController<VerifyView>, ReKampStoreSubscrib
         
         store.subscribe(subscriber: self) { subscription in
             subscription.skipRepeats { oldState, newState in
-                KotlinBoolean(bool: oldState.verification == newState.verification)
+                return KotlinBoolean(bool: oldState.auth == newState.auth)
             }.select { state in
-                state.verification
+                return state.auth
             }
         }
     }
@@ -28,33 +28,26 @@ class VerifyViewController: UIHostingController<VerifyView>, ReKampStoreSubscrib
         super.viewWillDisappear(animated)
         
         resetMessage()
+        
+        store.unsubscribe(subscriber: self)
     }
     
     func onNewState(state: Any) {
-        let state = state as! VerificationState
+        let state = state as! AuthState
         
-        rootView.verificationCode = state.verificationCode ?? ""
-        updateMessage(message: state.message)
+        updateMessage(state.restorePasswordMessage)
         
         switch (state.status) {
-        case .idle:
-            hideLoading()
-        case .pending:
-            showLoading()
         case .done:
             hideLoading()
-            closeViewController()
+            self.navigationController?.pushViewController(RestorePasswordMailSentViewController(), animated: true)
+        case .pending:
+            showLoading()
+        case .idle:
+            hideLoading()
         default:
             return
         }
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        fetchVerificationCode()
-        setNavigationBar()
-        setInteractions()
     }
     
     private func showLoading() {
@@ -66,7 +59,14 @@ class VerifyViewController: UIHostingController<VerifyView>, ReKampStoreSubscrib
         HUD.hide(afterDelay: 0)
     }
     
-    private func setNavigationBar() {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setupComponents()
+        setupInteractions()
+    }
+    
+    private func setupComponents() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: UIImage(named: "back_arrow"),
             style: .plain,
@@ -75,26 +75,21 @@ class VerifyViewController: UIHostingController<VerifyView>, ReKampStoreSubscrib
         )
     }
     
-    private func setInteractions() {
-        rootView.onVerify = { handle in
-            store.dispatch(action: VerificationRequests.VerifyCodeforces(handle: handle))
+    private func setupInteractions() {
+        rootView.onRestorePassword = { email in
+            store.dispatch(action: AuthRequests.SendPasswordReset(email: email))
         }
     }
     
-    private func fetchVerificationCode() {
-        store.dispatch(action: VerificationRequests.FetchVerificationCode())
-    }
-    
-    private func updateMessage(message: String) {
+    func updateMessage(_ message: String) {
         rootView.message = message
     }
     
-    private func resetMessage() {
-        store.dispatch(action: VerificationRequests.ResetVerificationCodeforcesMessage())
+    func resetMessage() {
+        store.dispatch(action: AuthRequests.ResetRestorePasswordMessage())
     }
-    
+
     @objc func closeViewController() {
-        dismiss(animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
 }
-

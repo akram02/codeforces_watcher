@@ -96,7 +96,7 @@ Codeforces WatchR позволяет:
     <string name="email">Эл. адрес</string>
     <string name="password">Пароль</string>
     <string name="sign_in">Войти</string>
-    <string name="dont_have_an_account_yet"><![CDATA[У вас еще нет учетной записи? <link>Зарегистрироваться</link>]]></string>
+    <string name="dont_have_an_account_yet">У вас еще нет учетной записи?</string>
     <string name="already_have_an_account"><![CDATA[Уже есть учетная запись? <link>Войти</link>]]></string>
     <string name="sign_up">Зарегистрироваться</string>
     <string name="confirm_password">Подтвердите пароль</string>

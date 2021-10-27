@@ -12,15 +12,23 @@ class AuthRequests {
         private val password: String
     ) : Request() {
 
-        override suspend fun execute() = firebaseController.signIn(email, password) { exception ->
-            exception?.let {
+        override suspend fun execute() {
+            if (email.isEmpty() || password.isEmpty()) {
                 store.dispatch(Failure(Strings.get("wrong_credentials")))
-            } ?: store.dispatch(Success)
+                return
+            }
+            firebaseController.signIn(email, password) { exception ->
+                exception?.let {
+                    store.dispatch(Failure(Strings.get("wrong_credentials")))
+                } ?: store.dispatch(Success(""))
+            }
         }
 
-        object Success : Action
-        data class Failure(val message: String) : Action
+        internal data class Success(val message: String) : Action
+        internal data class Failure(val message: String) : Action
     }
+
+    object ResetSignInMessage : Action
 
     class SignUp(
         private val email: String,
@@ -72,7 +80,9 @@ class AuthRequests {
             }
         }
 
-        data class Success(override val message: Message) : ToastAction
-        data class Failure(override val message: Message) : ToastAction
+        internal data class Success(val message: String) : Action
+        internal data class Failure(val message: String) : Action
     }
+
+    object ResetRestorePasswordMessage : Action
 }

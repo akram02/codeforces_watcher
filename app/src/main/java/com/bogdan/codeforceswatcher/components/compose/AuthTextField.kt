@@ -20,20 +20,17 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun AuthTextField(
     label: String,
+    modifier: Modifier = Modifier,
     keyboardOptions: KeyboardOptions,
     keyboardActions: KeyboardActions,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     onValueChange: (String) -> Unit
 ) {
-    var value by remember {
-        mutableStateOf("")
-    }
-    val modifier = Modifier.fillMaxWidth()
+    var value by remember { mutableStateOf("") }
 
-    Column(modifier = modifier) {
+    Column {
         Text(
             text = if (value.isNotEmpty()) label else "",
-            modifier = modifier.height(17.dp),
             style = MaterialTheme.typography.caption,
             color = MaterialTheme.colors.secondaryVariant
         )
@@ -43,7 +40,7 @@ fun AuthTextField(
                 value = it
                 onValueChange(it)
             },
-            modifier = modifier,
+            modifier = modifier.fillMaxWidth(),
             textStyle = MaterialTheme.typography.subtitle1.copy(color = MaterialTheme.colors.onBackground),
             singleLine = true,
             cursorBrush = SolidColor(MaterialTheme.colors.onBackground),
@@ -53,7 +50,6 @@ fun AuthTextField(
                         text = label,
                         style = MaterialTheme.typography.subtitle1,
                         color = MaterialTheme.colors.secondaryVariant,
-                        modifier = modifier.height(19.dp)
                     )
                 }
                 innerTextField()
@@ -67,7 +63,7 @@ fun AuthTextField(
 
         val lineColor =
             if (value.isEmpty()) MaterialTheme.colors.secondaryVariant else MaterialTheme.colors.onBackground
-        Canvas(modifier = modifier) {
+        Canvas(modifier.fillMaxWidth()) {
             val canvasWidth = size.width
             val canvasHeight = size.height
 

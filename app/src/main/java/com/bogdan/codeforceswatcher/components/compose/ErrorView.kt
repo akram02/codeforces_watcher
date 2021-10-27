@@ -1,6 +1,5 @@
 package com.bogdan.codeforceswatcher.components.compose
 
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -8,9 +7,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shadow
 
 @Composable
-fun ErrorView(massage: String) {
+fun ErrorView(
+    message: String,
+    modifier: Modifier = Modifier
+) {
     Text(
-        text = massage,
+        text = message,
         color = MaterialTheme.colors.onError,
         style = MaterialTheme.typography.button.copy(
             shadow = Shadow(
@@ -18,6 +20,6 @@ fun ErrorView(massage: String) {
                 blurRadius = 40f
             )
         ),
-        modifier = Modifier.fillMaxWidth()
+        modifier = modifier
     )
 }

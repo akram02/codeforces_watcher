@@ -13,14 +13,11 @@ private val DarkColorPalette = darkColors(
     secondary = White,
     secondaryVariant = SilverChalice,
     background = CodGray,
-//    surface = ,
     error = Red,
     onPrimary = White,
     onSecondary = CodGray,
     onBackground = White,
-//    onSurface = ,
     onError = White
-
 )
 
 private val LightColorPalette = lightColors(
@@ -29,17 +26,15 @@ private val LightColorPalette = lightColors(
     secondary = Black,
     secondaryVariant = DoveGray,
     background = White,
-//    surface = ,
     error = Red,
     onPrimary = Black,
     onSecondary = White,
     onBackground = Black,
-//    onSurface = ,
     onError = Black
 )
 
 @Composable
-fun AlgoismeTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() () -> Unit) {
+fun AlgoismeTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
     val systemUiController = rememberSystemUiController()
     val systemBarColor =
         if (darkTheme) DarkColorPalette.primaryVariant else LightColorPalette.primaryVariant

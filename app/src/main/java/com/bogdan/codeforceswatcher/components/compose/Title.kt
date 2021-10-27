@@ -7,10 +7,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun Title(title: String) {
+fun Title(
+    title: String,
+    modifier: Modifier = Modifier
+) {
     Text(
         text = title,
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         style = MaterialTheme.typography.h3,
         color = MaterialTheme.colors.onBackground
     )

@@ -103,15 +103,12 @@
 "sign_up" = "साइन अप करें";
 "sign_up_hint" = "अब तक कोई खाता नहीं है?";
 
-<<<<<<< Updated upstream
-=======
 "restore_password" = "पासवर्ड\nपुनर्स्थापित करें";
 "restore_password_button" = "पासवर्ड पुनर्स्थापित करें";
 "restore_password_hint" = "आपको खाता पुनर्प्राप्ति के निर्देशों वाला एक ईमेल प्राप्त होगा";
 "lost_access" = "क्या आपने ई-मेल तक पहुंच खो दी है?";
 "user_does_not_exist" = "उपयोगकर्ता मौजूद नहीं है ¯\_(ツ)_/¯";
 
->>>>>>> Stashed changes
 "agreement_terms_and_privacy" = "मैं <लिंक> नियम और शर्तें <terms>नियम और शर्तें</terms> और <privacy>गोपनीयता नीति</privacy>.";
 
 "verify_codeforces_account" = "सत्यापित करें Codeforces लेखा";

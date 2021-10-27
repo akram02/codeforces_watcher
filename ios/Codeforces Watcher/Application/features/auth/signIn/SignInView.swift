@@ -2,9 +2,9 @@ import SwiftUI
 
 struct SignInView: View {
     
-    var onSignIn: ((String, String) -> Void)?
-    var onForgotPassword: ((String) -> Void)?
-    var onSignUp: (() -> Void)?
+    var onSignIn: (String, String) -> Void = {_, _ in }
+    var onForgotPassword: () -> Void = {}
+    var onSignUp: () -> Void = {}
     
     @State var email = ""
     @State var password = ""
@@ -14,10 +14,11 @@ struct SignInView: View {
     var body: some View {
         VStack(spacing: 0) {
             Spacer()
+                .frame(height: 76)
             
             VStack(alignment: .leading, spacing: 44) {
                 Text("sign_in".localized)
-                    .font(.heading)
+                    .font(.bigHeader)
                 
                 VStack(alignment: .leading, spacing: 24) {
                     TextInputLayoutView(
@@ -39,28 +40,24 @@ struct SignInView: View {
             }
             
             Text(error)
-                .font(.body)
+                .font(.primarySemibold)
                 .bold()
                 .shadow(color: Palette.red.swiftUIColor, radius: 8, x: 0, y: 0)
-                .frame(height: 80)
+                .frame(height: 72)
             
             VStack(spacing: 60) {
                 Button(action: {
-                    self.onSignIn?(email, password)
+                    self.onSignIn(email, password)
                 }, label: {
-                    Text("sign_in".localized.uppercased())
-                        .font(.body)
-                        .foregroundColor(.white)
-                        .frame(width: 250, height: 40)
-                        .background(Palette.black.swiftUIColor)
-                        .cornerRadius(30)
+                    ButtonTextDefault(text: "sign_in".localized.uppercased())
                 })
                 
                 Button(action: {
-                    self.onForgotPassword?(email)
+                    self.onForgotPassword()
                 }, label: {
                     Text("forgot_password".localized)
-                        .font(.body2)
+                        .underline()
+                        .font(.hintSemibold)
                         .foregroundColor(Palette.black.swiftUIColor)
                 })
             }
@@ -70,17 +67,17 @@ struct SignInView: View {
             
             HStack {
                 Text("sign_up_hint".localized)
-                    .foregroundColor(Palette.gray.swiftUIColor)
+                    .foregroundColor(Palette.darkGray.swiftUIColor)
                 
                 Button(action: {
-                    self.onSignUp?()
+                    self.onSignUp()
                 }, label: {
                     Text("sign_up".localized)
-                        .foregroundColor(Palette.black.swiftUIColor)
                         .underline()
+                        .foregroundColor(Palette.black.swiftUIColor)
                 })
             }
-            .font(.body2)
+            .font(.primary2)
             .lineLimit(1)
         }
         .padding()

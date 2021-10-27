@@ -27,13 +27,15 @@ class SignInViewController: UIHostingController<SignInView>, ReKampStoreSubscrib
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
+        resetMessage()
+        
         store.unsubscribe(subscriber: self)
     }
     
     func onNewState(state: Any) {
         let state = state as! AuthState
         
-        rootView.error = state.error
+        updateMessage(state.signInMessage)
         
         switch (state.status) {
         case .done:
@@ -78,14 +80,23 @@ class SignInViewController: UIHostingController<SignInView>, ReKampStoreSubscrib
             store.dispatch(action: AuthRequests.SignIn(email: email, password: password))
         }
         
-        rootView.onForgotPassword = { email in
-            store.dispatch(action: AuthRequests.SendPasswordReset(email: email))
+        rootView.onForgotPassword = {
+            self.navigationController?.pushViewController(RestorePasswordViewController(), animated: true)
+            analyticsControler.logEvent(eventName: AnalyticsEvents().SIGN_UP_OPENED, params: [:])
         }
         
         rootView.onSignUp = {
             self.presentModal(SignUpViewController())
             analyticsControler.logEvent(eventName: AnalyticsEvents().SIGN_UP_OPENED, params: [:])
         }
+    }
+    
+    func updateMessage(_ message: String) {
+        rootView.error = message
+    }
+    
+    func resetMessage() {
+        store.dispatch(action: AuthRequests.ResetSignInMessage())
     }
 
     @objc func closeViewController() {
