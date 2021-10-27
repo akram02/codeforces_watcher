@@ -14,16 +14,23 @@ class SignUpViewControllerNew: UIHostingController<SignUpView> {
         super.viewDidLoad()
         
         setNavigationBar()
+        setInteractions()
     }
     
     private func setNavigationBar() {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(
-                image: UIImage(named: "back_arrow"),
-                style: .plain,
-                target: self,
-                action: #selector(closeViewController)
-            )
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            image: UIImage(named: "back_arrow"),
+            style: .plain,
+            target: self,
+            action: #selector(closeViewController)
+        )
+    }
+    
+    private func setInteractions() {
+        rootView.onLink = { link in
+            self.presentModal(WebViewController(link, ""))
         }
+    }
     
     @objc func closeViewController() {
         dismiss(animated: true)

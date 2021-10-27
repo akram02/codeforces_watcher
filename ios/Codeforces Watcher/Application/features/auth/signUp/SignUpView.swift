@@ -7,6 +7,9 @@ struct SignUpView: View {
     @State var confirmPassword = ""
     
     @State var isAgreementChecked = false
+    @State var agreementHeight: CGFloat = 0
+    
+    var onLink: (String) -> Void = { _ in }
     
     var body: some View {
         VStack(spacing: 0) {
@@ -23,24 +26,24 @@ struct SignUpView: View {
             VStack(spacing: 24) {
                 TextInputLayoutView(
                     text: $email,
-                    hint: "Email",
-                    placeholder: "Email",
+                    hint: "email".localized,
+                    placeholder: "email".localized,
                     contentType: .email,
                     tag: 0
                 )
                 
                 TextInputLayoutView(
                     text: $password,
-                    hint: "Password",
-                    placeholder: "Password",
+                    hint: "password".localized,
+                    placeholder: "password".localized,
                     contentType: .password,
                     tag: 1
                 )
                 
                 TextInputLayoutView(
                     text: $confirmPassword,
-                    hint: "Confirm password",
-                    placeholder: "Confirm password",
+                    hint: "confirm_password".localized,
+                    placeholder: "confirm_password".localized,
                     contentType: .password,
                     tag: 2
                 )
@@ -61,16 +64,25 @@ struct SignUpView: View {
                             .frame(width: 18, height: 18)
                     })
                     
-                    Text("I agree with the Terms and Conditions and the Privacy Policy")
-                        .font(.hintRegular)
+                    AttributedTextView(
+                        attributedString: "agreement_terms_and_privacy".localized.attributed,
+                        attributeTags: [.term, .privacy],
+                        font: UIFont.monospacedSystemFont(ofSize: 13, weight: .regular),
+                        foregroundColor: Palette.black,
+                        height: $agreementHeight,
+                        onLink: { link in
+                            self.onLink(link)
+                        }
+                    )
+                    .frame(height: agreementHeight)
                 }
                 .padding(.horizontal)
                 
                 Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
                     if isAgreementChecked {
-                        ButtonTextDefault(text: "SIGN UP")
+                        ButtonTextDefault(text: "sign_up".localized.uppercased())
                     } else {
-                        ButtonTextInverse(text: "SIGN UP")
+                        ButtonTextInverse(text: "sign_up".localized.uppercased())
                     }
                 })
             }
@@ -78,11 +90,12 @@ struct SignUpView: View {
             Spacer()
                 
             HStack {
-                Text("Already have an account?")
+                Text("sign_in_hint".localized)
                     .foregroundColor(Palette.darkGray.swiftUIColor)
 
                 Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                    Text("Sign In")
+                    Text("sign_in".localized)
+                        .font(.primary2)
                         .fontWeight(.semibold)
                         .foregroundColor(Palette.black.swiftUIColor)
                         .underline()

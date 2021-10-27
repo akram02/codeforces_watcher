@@ -6,6 +6,8 @@ struct VerifyView: View {
     
     @State var codeforcesHandle = ""
     
+    @State var verifyInstructionHeight: CGFloat = 0
+    
     var verificationCode = ""
     var message = ""
     
@@ -35,12 +37,13 @@ struct VerifyView: View {
                 
                 VStack(spacing: 0) {
                     AttributedTextView(
-                        attributedText: "verify_instruction".localized.attributed,
+                        attributedString: "verify_instruction".localized.attributed,
                         attributeTags: [.bold],
-                        defaultFont: UIFont.monospacedSystemFont(ofSize: 14, weight: .regular),
-                        defaultTextColor: Palette.darkGray
+                        font: UIFont.monospacedSystemFont(ofSize: 14, weight: .regular),
+                        foregroundColor: Palette.darkGray,
+                        height: $verifyInstructionHeight
                     )
-                        .frame(height: 88)
+                    .frame(height: verifyInstructionHeight)
                     
                     Spacer()
                         .frame(height: 12)
