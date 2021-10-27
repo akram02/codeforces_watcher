@@ -60,10 +60,16 @@ class AuthRequests {
 
     class SendPasswordReset(private val email: String) : Request() {
 
-        override suspend fun execute() = firebaseController.sendPasswordReset(email) { exception ->
-            exception?.let {
-                store.dispatch(Failure(it.message.toMessage()))
-            } ?: store.dispatch(Success(Strings.get("forgot_password_success").toMessage()))
+        override suspend fun execute() {
+            if (email.isEmpty()) {
+                store.dispatch(Failure(Strings.get("user_does_not_exist")))
+                return
+            }
+            firebaseController.sendPasswordReset(email) { exception ->
+                exception?.let {
+                    store.dispatch(Failure(Strings.get("user_does_not_exist")))
+                } ?: store.dispatch(Success(""))
+            }
         }
 
         data class Success(override val message: Message) : ToastAction

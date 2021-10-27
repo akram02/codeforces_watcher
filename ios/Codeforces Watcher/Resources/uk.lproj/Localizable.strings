@@ -103,6 +103,21 @@
 "sign_up" = "Зареєструватися";
 "sign_up_hint" = "У вас ще немає облікового запису?";
 
+<<<<<<< Updated upstream
+=======
+"restore_password" = "Відновлення\nпароля";
+"restore_password_button" = "Відновлення пароля";
+"restore_password_hint" = "Ви отримаєте електронний лист з інструкціями щодо відновлення облікового запису";
+"lost_access" = "Втрачено доступ до пошти?";
+"user_does_not_exist" = "Користувач не існує ¯\_(ツ)_/¯";
+
+"check_your_box" = "Перевірте свою пошту.";
+"open_mail_hint" = "Натисніть, щоб відкрити поштовий додаток";
+"open_mail" = "Відкрити пошту";
+"back_to_sign_in" = "Повернутися до входу";
+"check_your_spam_folder" = "Якщо ви не отримали повідомлення протягом 5 хвилин, перевірте папку Спам.";
+
+>>>>>>> Stashed changes
 "agreement_terms_and_privacy" = "Я погоджуюсь з <terms>Загальними положеннями та умовами</terms> та <privacy>Політикою конфіденційності</privacy>.";
 
 "verify_codeforces_account" = "Підтвердити Codeforces акаунт";

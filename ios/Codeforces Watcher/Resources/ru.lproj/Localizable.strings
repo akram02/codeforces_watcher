@@ -103,6 +103,21 @@
 "sign_up" = "Зарегистрироваться";
 "sign_up_hint" = "У вас еще нет учетной записи?";
 
+<<<<<<< Updated upstream
+=======
+"restore_password" = "Восстановить\nпароль";
+"restore_password_button" = "Восстановить пароль";
+"restore_password_hint" = "Вы получите электронное письмо с инструкциями по восстановлению аккаунта";
+"lost_access" = "Потеряли доступ к почте?";
+"user_does_not_exist" = "Пользователь не существует ¯\_(ツ)_/¯";
+
+"check_your_box" = "Проверьте свою почту.";
+"open_mail_hint" = "Нажмите, чтобы открыть почтовое приложение";
+"open_mail" = "Открыть почту";
+"back_to_sign_in" = "Вернуться ко входу";
+"check_your_spam_folder" = "Если вы не получили сообщение в течение 5 минут, проверьте папку со спамом.";
+
+>>>>>>> Stashed changes
 "agreement_terms_and_privacy" = "Я согласен с <terms>Условиями и положениями</terms> и <privacy>Политикой конфиденциальности</privacy>.";
 
 "verify_codeforces_account" = "Подтвердить аккаунт Codeforces";
