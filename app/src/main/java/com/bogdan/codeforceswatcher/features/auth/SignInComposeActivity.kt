@@ -166,6 +166,7 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
 
     override fun onStop() {
         super.onStop()
+        store.dispatch(AuthRequests.ResetSignInMessage)
         store.unsubscribe(this)
     }
 
