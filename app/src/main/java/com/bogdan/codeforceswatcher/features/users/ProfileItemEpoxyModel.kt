@@ -8,7 +8,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.epoxy.BaseEpoxyModel
-import com.bogdan.codeforceswatcher.features.auth.SignInActivity
+import com.bogdan.codeforceswatcher.features.auth.SignInComposeActivity
 import com.bogdan.codeforceswatcher.features.auth.VerificationActivity
 import com.bogdan.codeforceswatcher.util.colorSubstring
 import com.github.mikephil.charting.components.XAxis
@@ -189,7 +189,7 @@ class ProfileItemEpoxyModel(
         btnAction.text = context.getString(R.string.login_in_42_seconds)
 
         btnAction.setOnClickListener {
-            context.startActivity(Intent(context, SignInActivity::class.java))
+            context.startActivity(Intent(context, SignInComposeActivity::class.java))
             analyticsController.logEvent(AnalyticsEvents.SIGN_IN_OPENED)
         }
     }

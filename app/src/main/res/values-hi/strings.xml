@@ -94,7 +94,7 @@ Codeforces WatchR के साथ आप:
     <string name="email">ईमेल</string>
     <string name="password">कुंजिका</string>
     <string name="sign_in">दाखिल करना</string>
-    <string name="dont_have_an_account_yet"><![CDATA[अब तक कोई खाता नहीं है? <link>साइन अप करें</link>]]></string>
+    <string name="dont_have_an_account_yet">अब तक कोई खाता नहीं है?</string>
     <string name="already_have_an_account"><![CDATA[क्या आपके पास पहले से एक खाता मौजूद है? <link>दाखिल करना</link>]]></string>
     <string name="sign_up">साइन अप करें</string>
     <string name="confirm_password">पासवर्ड की पुष्टि कीजिये</string>
@@ -115,4 +115,5 @@ Codeforces WatchR के साथ आप:
     <string name="forgot_password_empty_email">एक मान्य ईमेल दर्ज करें और \ "पासवर्ड भूल गए" पर क्लिक करें!</string>
     <string name="fields_can_not_be_empty">फ़ील्ड खाली नहीं हो सकते</string>
     <string name="forgot_password_success">आगे के निर्देशों के साथ ईमेल आपको भेज दिया गया है! कृपया जांचें!</string>
+    <string name="wrong_credentials">गलत प्रत्यक्ष पत्र!</string>
 </resources>
