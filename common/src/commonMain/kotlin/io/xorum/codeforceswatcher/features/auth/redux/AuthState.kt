@@ -5,6 +5,7 @@ import tw.geothings.rekotlin.StateType
 data class AuthState(
     val status: Status = Status.IDLE,
     val authStage: Stage = Stage.NOT_SIGNED_IN,
+    val signUpMessage: String = "",
     val signInMessage: String = "",
     val restorePasswordMessage: String = ""
 ) : StateType {

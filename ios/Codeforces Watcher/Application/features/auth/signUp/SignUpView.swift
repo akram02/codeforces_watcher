@@ -2,6 +2,10 @@ import SwiftUI
 
 struct SignUpView: View {
     
+    var onSignUp: (String, String, String) -> Void = { _, _, _ in }
+    var onSignIn: () -> Void = {}
+    var onLink: (String) -> Void = { _ in }
+    
     @State var email = ""
     @State var password = ""
     @State var confirmPassword = ""
@@ -9,14 +13,14 @@ struct SignUpView: View {
     @State var isAgreementChecked = false
     @State var agreementHeight: CGFloat = 0
     
-    var onLink: (String) -> Void = { _ in }
+    var message = ""
     
     var body: some View {
         VStack(spacing: 0) {
             Spacer()
                 .frame(height: 76)
             
-            Text("Sign Up")
+            Text("sign_up".localized)
                 .font(.bigHeader)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
@@ -52,7 +56,7 @@ struct SignUpView: View {
             Spacer()
                 .frame(height: 36)
             
-            VStack(spacing: 60) {
+            VStack(spacing: 0) {
                 HStack(spacing: 12) {
                     Button(action: {
                         self.isAgreementChecked.toggle()
@@ -78,13 +82,21 @@ struct SignUpView: View {
                 }
                 .padding(.horizontal)
                 
-                Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                Text(message)
+                    .font(.primarySemibold)
+                    .shadow(color: Palette.red.swiftUIColor, radius: 8, x: 0, y: 0)
+                    .frame(height: 60)
+                
+                Button(action: {
+                    self.onSignUp(email, password, confirmPassword)
+                }, label: {
                     if isAgreementChecked {
                         ButtonTextDefault(text: "sign_up".localized.uppercased())
                     } else {
                         ButtonTextInverse(text: "sign_up".localized.uppercased())
                     }
                 })
+                .disabled(!isAgreementChecked)
             }
             
             Spacer()
@@ -93,7 +105,9 @@ struct SignUpView: View {
                 Text("sign_in_hint".localized)
                     .foregroundColor(Palette.darkGray.swiftUIColor)
 
-                Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                Button(action: {
+                    self.onSignIn()
+                }, label: {
                     Text("sign_in".localized)
                         .font(.primary2)
                         .fontWeight(.semibold)

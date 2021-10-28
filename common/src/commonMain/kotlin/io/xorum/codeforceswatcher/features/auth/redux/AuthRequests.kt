@@ -26,18 +26,27 @@ class AuthRequests {
 
     class SignUp(
         private val email: String,
-        private val password: String
+        private val password: String,
+        private val confirmPassword: String
     ) : Request() {
 
-        override suspend fun execute() = firebaseController.signUp(email, password) { exception ->
-            exception?.let {
-                store.dispatch(Failure(exception.message.toMessage()))
-            } ?: store.dispatch(Success)
+        override suspend fun execute() {
+            if (password == confirmPassword) {
+                firebaseController.signUp(email, password) { exception ->
+                    exception?.let {
+                        store.dispatch(Failure(Strings.get("wrong_credentials")))
+                    } ?: store.dispatch(Success(""))
+                }
+            } else {
+                store.dispatch(Failure(Strings.get("passwords_do_not_match")))
+            }
         }
 
-        object Success : Action
-        data class Failure(override val message: Message) : ToastAction
+        data class Success(val message: String) : Action
+        data class Failure(val message: String) : Action
     }
+
+    object ResetSignUpMessage : Action
 
     data class UpdateAuthStage(val authStage: AuthState.Stage) : Action
 
