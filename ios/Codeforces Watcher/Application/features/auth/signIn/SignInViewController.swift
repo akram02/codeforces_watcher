@@ -86,7 +86,7 @@ class SignInViewController: UIHostingController<SignInView>, ReKampStoreSubscrib
         }
         
         rootView.onSignUp = {
-            self.presentModal(SignUpViewControllerNew())
+            self.presentModal(SignUpViewController())
             analyticsControler.logEvent(eventName: AnalyticsEvents().SIGN_UP_OPENED, params: [:])
         }
     }

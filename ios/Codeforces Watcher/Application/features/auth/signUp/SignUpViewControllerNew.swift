@@ -2,7 +2,7 @@ import SwiftUI
 import common
 import PKHUD
 
-class SignUpViewControllerNew: UIHostingController<SignUpView>, ReKampStoreSubscriber {
+class SignUpViewController: UIHostingController<SignUpView>, ReKampStoreSubscriber {
     
     init() {
         super.init(rootView: SignUpView())
