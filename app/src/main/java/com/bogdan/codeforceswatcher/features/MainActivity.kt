@@ -47,8 +47,6 @@ class MainActivity : AppCompatActivity() {
         FeedbackController.get().updateCountOpeningScreen()
 
         initViews()
-
-        startActivity(Intent(this, RestorePasswordComposeActivity::class.java))
     }
 
     private fun updateFragment() {

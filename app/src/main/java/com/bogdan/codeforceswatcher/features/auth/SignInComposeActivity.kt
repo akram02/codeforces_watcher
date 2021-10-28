@@ -143,7 +143,7 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
 
                     LinkText(
                         linkTextData = listOf(
-                            LinkTextData(getString(R.string.forgot_password)) { forgotPassword(email) }
+                            LinkTextData(getString(R.string.forgot_password)) { startRestorePasswordActivity() }
                         ),
                         clickableTextStyle = MaterialTheme.typography.body2.copy(
                             color = MaterialTheme.colors.onBackground
@@ -155,6 +155,7 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
         }
     }
 
+    @ExperimentalComposeUiApi
     override fun onStart() {
         super.onStart()
         store.subscribe(this) { state ->
@@ -174,13 +175,15 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
         store.dispatch(AuthRequests.SignIn(email, password))
     }
 
-    private fun forgotPassword(email: String) {
-        store.dispatch(AuthRequests.SendPasswordReset(email))
-    }
-
     private fun startSignUpActivity() {
         startActivity(
             Intent(this@SignInComposeActivity, SignUpActivity::class.java)
+        )
+    }
+
+    private fun startRestorePasswordActivity() {
+        startActivity(
+            Intent(this@SignInComposeActivity, RestorePasswordComposeActivity::class.java)
         )
     }
 

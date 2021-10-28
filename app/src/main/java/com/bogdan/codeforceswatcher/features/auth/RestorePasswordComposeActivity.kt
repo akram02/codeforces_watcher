@@ -140,7 +140,7 @@ class RestorePasswordComposeActivity : ComponentActivity(), StoreSubscriber<Auth
 
     override fun onStop() {
         super.onStop()
-        store.dispatch(AuthRequests.ResetSignInMessage)
+        store.dispatch(AuthRequests.ResetRestorePasswordMessage)
         store.unsubscribe(this)
     }
 
@@ -149,7 +149,6 @@ class RestorePasswordComposeActivity : ComponentActivity(), StoreSubscriber<Auth
     }
 
     override fun onNewState(state: AuthState) {
-        if (state.status == AuthState.Status.DONE) finish()
         authState.postValue(state)
     }
 }
