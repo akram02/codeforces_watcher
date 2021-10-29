@@ -1,5 +1,6 @@
 package com.bogdan.codeforceswatcher.features.auth
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -47,8 +48,6 @@ class RestorePasswordMailSentComposeActivity : ComponentActivity() {
             }
         }
     }
-
-    private val authState = MutableLiveData<AuthState>()
 
     @ExperimentalComposeUiApi
     @Composable
@@ -124,9 +123,17 @@ class RestorePasswordMailSentComposeActivity : ComponentActivity() {
                             shape = RoundedCornerShape(100)
                         ),
                         isInvert = true
-                    ) { }
+                    ) {
+                        startSignInActivity()
+                    }
                 }
             }
         }
+    }
+
+    private fun startSignInActivity() {
+        startActivity(
+            Intent(this, SignInComposeActivity::class.java)
+        )
     }
 }

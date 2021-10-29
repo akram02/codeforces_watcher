@@ -178,13 +178,13 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
 
     private fun startSignUpActivity() {
         startActivity(
-            Intent(this@SignInComposeActivity, SignUpActivity::class.java)
+            Intent(this, SignUpActivity::class.java)
         )
     }
 
     private fun startRestorePasswordActivity() {
         startActivity(
-            Intent(this@SignInComposeActivity, RestorePasswordComposeActivity::class.java)
+            Intent(this, RestorePasswordComposeActivity::class.java)
         )
     }
 

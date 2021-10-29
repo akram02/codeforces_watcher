@@ -1,5 +1,6 @@
 package com.bogdan.codeforceswatcher.features.auth
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -147,7 +148,14 @@ class RestorePasswordComposeActivity : ComponentActivity(), StoreSubscriber<Auth
         store.dispatch(AuthRequests.SendPasswordReset(email))
     }
 
+    private fun startRestorePasswordMailSentActivity() {
+        startActivity(
+            Intent(this, RestorePasswordMailSentComposeActivity::class.java)
+        )
+    }
+
     override fun onNewState(state: AuthState) {
+        if (state.status == AuthState.Status.DONE) startRestorePasswordMailSentActivity()
         authState.postValue(state)
     }
 }
