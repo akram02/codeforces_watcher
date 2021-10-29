@@ -121,4 +121,8 @@ Download it now on Google Play - https://play.google.com/store/apps/details?id=c
   <string name="fields_can_not_be_empty">Fields can\'t be empty</string>
   <string name="forgot_password_success">Email with further instructions has been sent to you! Please check!</string>
   <string name="wrong_credentials">Wrong credentials</string>
+  <string name="lost_access_to_mail">Lost access to mail?</string>
+  <string name="restore_password">Restore password</string>
+  <string name="you_will_get_an_email_with_instructions_for_account_recovery">You will get an email with instructions for account recovery</string>
+  <string name="user_does_not_exist">User doesn’t exist ¯\\_(ツ)_/¯</string>
 </resources>

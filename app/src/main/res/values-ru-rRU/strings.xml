@@ -118,4 +118,8 @@ Codeforces WatchR позволяет:
     <string name="fields_can_not_be_empty">Поля не могут быть пустыми</string>
     <string name="forgot_password_success">Вам отправлено электронное письмо с дальнейшими инструкциями! Пожалуйста, проверьте!</string>
     <string name="wrong_credentials">Неправильные данные!</string>
+    <string name="lost_access_to_mail">Потеряли доступ к почте?</string>
+    <string name="restore_password">Восстановить пароль</string>
+    <string name="you_will_get_an_email_with_instructions_for_account_recovery">Вы получите электронное письмо с инструкциями для восстановления аккаунта</string>
+    <string name="user_does_not_exist">Пользователь не найден ¯\\_(ツ)_/¯</string>
 </resources>

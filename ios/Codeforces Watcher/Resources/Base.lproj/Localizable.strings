@@ -108,7 +108,7 @@
 "restore_password_button" = "Restore password";
 "restore_password_hint" = "You will get an email with instructions for account recovery";
 "lost_access" = "Lost access to mail?";
-"user_doesn't_exist" = "User doesn't exist ¯\_(ツ)_/¯";
+"user_does_not_exist" = "User doesn't exist ¯\_(ツ)_/¯";
 
 "check_your_box" = "Check your box.";
 "open_mail_hint" = "Tap to open your mail app";

@@ -70,12 +70,12 @@ class AuthRequests {
 
         override suspend fun execute() {
             if (email.isEmpty()) {
-                store.dispatch(Failure(Strings.get("user_doesn't_exist")))
+                store.dispatch(Failure(Strings.get("user_does_not_exist")))
                 return
             }
             firebaseController.sendPasswordReset(email) { exception ->
                 exception?.let {
-                    store.dispatch(Failure(Strings.get("user_doesn't_exist")))
+                    store.dispatch(Failure(Strings.get("user_does_not_exist")))
                 } ?: store.dispatch(Success(""))
             }
         }
