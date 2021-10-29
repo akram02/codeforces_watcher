@@ -160,7 +160,8 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
         super.onStart()
         store.subscribe(this) { state ->
             state.skipRepeats { oldState, newState ->
-                oldState.auth.status == newState.auth.status
+                oldState.auth.status == newState.auth.status &&
+                oldState.auth.authStage == newState.auth.authStage
             }.select { it.auth }
         }
     }
@@ -188,7 +189,7 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
     }
 
     override fun onNewState(state: AuthState) {
-        if (state.status == AuthState.Status.DONE) finish()
+        if (state.authStage == AuthState.Stage.SIGNED_IN) finish()
         authState.postValue(state)
     }
 }
