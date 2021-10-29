@@ -3,24 +3,29 @@ import common
 
 struct AttributedTextView: UIViewRepresentable {
     
-    let attributedText: NSMutableAttributedString
-    let attributeTags: [AttributeTagKind]
-    let defaultFont: UIFont
-    let defaultTextColor: UIColor
+    let attributedString: NSMutableAttributedString
+    let attributeTags: [AttributeTag]
+    let font: UIFont
+    let foregroundColor: UIColor
+    
+    @Binding var height: CGFloat
     
     var onLink: (String) -> Void = { _ in }
     
     init(
-        attributedText: NSMutableAttributedString,
-        attributeTags: [AttributeTagKind],
-        defaultFont: UIFont,
-        defaultTextColor: UIColor,
+        attributedString: NSMutableAttributedString,
+        attributeTags: [AttributeTag],
+        font: UIFont,
+        foregroundColor: UIColor,
+        height: Binding<CGFloat>,
         onLink: @escaping (String) -> Void = { _ in }
     ) {
-        self.attributedText = attributedText
+        self.attributedString = attributedString
         self.attributeTags = attributeTags
-        self.defaultFont = defaultFont
-        self.defaultTextColor = defaultTextColor
+        self.font = font
+        self.foregroundColor = foregroundColor
+        
+        self._height = height
         
         self.onLink = onLink
         
@@ -34,18 +39,29 @@ struct AttributedTextView: UIViewRepresentable {
             $0.isScrollEnabled = false
             $0.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
             
-            $0.attributedText = attributedText
+            $0.attributedText = attributedString
             $0.linkTextAttributes = [
                 .foregroundColor: Palette.black,
                 .underlineStyle: 1
             ]
             $0.textAlignment = .left
+            $0.textContainer.lineBreakMode = .byWordWrapping
         }
         
         return textView
     }
     
-    func updateUIView(_ uiView: UITextView, context: Context) {}
+    func updateUIView(_ uiView: UITextView, context: Context) {
+        DispatchQueue.main.async {
+            let newSize = uiView.sizeThatFits(
+                CGSize(
+                    width: uiView.superview?.frame.width ?? 0,
+                    height: .greatestFiniteMagnitude
+                )
+            )
+            height = newSize.height
+        }
+    }
     
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
@@ -69,9 +85,9 @@ struct AttributedTextView: UIViewRepresentable {
     }
     
     private func addAttributes() {
-        attributedText.run {
-            $0.fonted(with: defaultFont)
-            $0.colored(with: defaultTextColor)
+        attributedString.run {
+            $0.fonted(with: font)
+            $0.colored(with: foregroundColor)
         }
         
         for tagId in 0 ..< attributeTags.count {
@@ -92,11 +108,11 @@ struct AttributedTextView: UIViewRepresentable {
         let tag = "terms"
         let link = Constants().TERMS_AND_CONDITIONS_LINK
         
-        let range = attributedText.getRangeAndRemoveTag(tag: tag)
+        let range = attributedString.getRangeAndRemoveTag(tag: tag)
         
-        attributedText.run {
+        attributedString.run {
             $0.addLink(url: link, range: range)
-            $0.fonted(with: UIFont.monospacedSystemFont(ofSize: defaultFont.pointSize, weight: .semibold), range: range)
+            $0.fonted(with: UIFont.monospacedSystemFont(ofSize: font.pointSize, weight: .semibold), range: range)
         }
     }
     
@@ -104,25 +120,25 @@ struct AttributedTextView: UIViewRepresentable {
         let tag = "privacy"
         let link = Constants().PRIVACY_POLICY_LINK
         
-        let range = attributedText.getRangeAndRemoveTag(tag: tag)
+        let range = attributedString.getRangeAndRemoveTag(tag: tag)
         
-        attributedText.run {
+        attributedString.run {
             $0.addLink(url: link, range: range)
-            $0.fonted(with: UIFont.monospacedSystemFont(ofSize: defaultFont.pointSize, weight: .semibold), range: range)
+            $0.fonted(with: UIFont.monospacedSystemFont(ofSize: font.pointSize, weight: .semibold), range: range)
         }
     }
     
     private func addBoldAttribute() {
         let tag = "bold"
-        let range = attributedText.getRangeAndRemoveTag(tag: tag)
+        let range = attributedString.getRangeAndRemoveTag(tag: tag)
 
-        attributedText.run {
+        attributedString.run {
             $0.colored(with: Palette.black, range: range)
-            $0.fonted(with: UIFont.monospacedSystemFont(ofSize: defaultFont.pointSize, weight: .semibold), range: range)
+            $0.fonted(with: UIFont.monospacedSystemFont(ofSize: font.pointSize, weight: .semibold), range: range)
         }
     }
     
-    enum AttributeTagKind {
+    enum AttributeTag {
         case term
         case privacy
         case bold

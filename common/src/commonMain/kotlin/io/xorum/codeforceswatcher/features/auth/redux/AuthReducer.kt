@@ -1,7 +1,6 @@
 package io.xorum.codeforceswatcher.features.auth.redux
 
 import io.xorum.codeforceswatcher.redux.states.AppState
-import io.xorum.codeforceswatcher.util.Strings
 import tw.geothings.rekotlin.Action
 
 fun authReducer(action: Action, state: AppState): AuthState {
@@ -37,12 +36,19 @@ fun authReducer(action: Action, state: AppState): AuthState {
         }
         is AuthRequests.SignUp.Success -> {
             newState = newState.copy(
-                status = AuthState.Status.DONE
+                status = AuthState.Status.DONE,
+                signUpMessage = action.message
             )
         }
         is AuthRequests.SignUp.Failure -> {
             newState = newState.copy(
-                status = AuthState.Status.IDLE
+                status = AuthState.Status.IDLE,
+                signUpMessage = action.message
+            )
+        }
+        is AuthRequests.ResetSignUpMessage -> {
+            newState = newState.copy(
+                signUpMessage = ""
             )
         }
         is AuthRequests.SendPasswordReset -> {

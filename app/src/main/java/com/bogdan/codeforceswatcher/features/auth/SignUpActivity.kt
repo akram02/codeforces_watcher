@@ -123,11 +123,11 @@ class SignUpActivity : AppCompatActivity(), StoreSubscriber<AuthState> {
         val confirmedPassword = ifConfirmPassword.editText.text.toString()
         when {
             password.isEmpty() || email.isEmpty() || confirmedPassword.isEmpty() -> {
-                store.dispatch(AuthRequests.SignUp.Failure(getString(R.string.fields_can_not_be_empty).toMessage()))
+                store.dispatch(AuthRequests.SignUp.Failure(getString(R.string.fields_can_not_be_empty)))
             }
-            password != confirmedPassword -> store.dispatch(AuthRequests.SignUp.Failure(getString(R.string.passwords_do_not_match).toMessage()))
-            !checkbox.isChecked -> store.dispatch(AuthRequests.SignUp.Failure(getString(R.string.agree_to_the_privacy_policy).toMessage()))
-            else -> store.dispatch(AuthRequests.SignUp(email, password))
+            password != confirmedPassword -> store.dispatch(AuthRequests.SignUp.Failure(getString(R.string.passwords_do_not_match)))
+            !checkbox.isChecked -> store.dispatch(AuthRequests.SignUp.Failure(getString(R.string.agree_to_the_privacy_policy)))
+            else -> store.dispatch(AuthRequests.SignUp(email, password, confirmedPassword))
         }
     }
 
