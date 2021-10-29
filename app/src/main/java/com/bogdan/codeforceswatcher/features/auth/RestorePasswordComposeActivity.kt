@@ -33,6 +33,7 @@ import io.xorum.codeforceswatcher.redux.store
 import tw.geothings.rekotlin.StoreSubscriber
 
 class RestorePasswordComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
+
     @ExperimentalComposeUiApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,8 +45,6 @@ class RestorePasswordComposeActivity : ComponentActivity(), StoreSubscriber<Auth
     }
 
     private val authState = MutableLiveData<AuthState>()
-    private val AuthState.shouldShowLoading
-        get() = status == AuthState.Status.PENDING
 
     @ExperimentalComposeUiApi
     @Composable
@@ -124,7 +123,7 @@ class RestorePasswordComposeActivity : ComponentActivity(), StoreSubscriber<Auth
                         forgotPassword(email)
                     }
                 }
-                if (authState?.shouldShowLoading == true) LoadingView()
+                if (authState?.status == AuthState.Status.PENDING) LoadingView()
             }
         }
     }
