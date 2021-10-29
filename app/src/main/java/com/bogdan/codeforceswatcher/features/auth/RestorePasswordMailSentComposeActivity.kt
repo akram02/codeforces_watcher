@@ -62,10 +62,7 @@ class RestorePasswordMailSentComposeActivity : ComponentActivity() {
                 bottomBar = {
                     LinkText(
                         linkTextData = listOf(
-                            LinkTextData(
-                                "If you haven’t received a message within\n" +
-                                        "5 minutes, check your Spam folder."
-                            )
+                            LinkTextData(getString(R.string.check_your_spam_folder))
                         ),
                         modifier = Modifier
                             .height(80.dp)
@@ -87,7 +84,7 @@ class RestorePasswordMailSentComposeActivity : ComponentActivity() {
                     Spacer(Modifier.height(56.dp))
 
                     Title(
-                        title = "Check your box.",
+                        title = getString(R.string.check_your_box),
                         style = MaterialTheme.typography.h3.copy(
                             fontSize = 36.sp,
                             textAlign = TextAlign.Center
@@ -97,7 +94,7 @@ class RestorePasswordMailSentComposeActivity : ComponentActivity() {
                     Spacer(Modifier.height(12.dp))
 
                     Title(
-                        title = "Tap to open your mail app",
+                        title = getString(R.string.open_mail_hint),
                         style = MaterialTheme.typography.h6.copy(textAlign = TextAlign.Center)
                     )
 
@@ -111,12 +108,12 @@ class RestorePasswordMailSentComposeActivity : ComponentActivity() {
 
                     Spacer(Modifier.height(72.dp))
 
-                    AuthButton("Open mail") { }
+                    AuthButton(getString(R.string.open_mail)) { }
 
                     Spacer(Modifier.height(20.dp))
 
                     AuthButton(
-                        label = "Back to sign in",
+                        label = getString(R.string.back_to_sign_in),
                         modifier = Modifier.border(
                             width = 2.dp,
                             color = MaterialTheme.colors.secondary,

@@ -117,9 +117,16 @@ Codeforces WatchR позволяет:
     <string name="forgot_password_empty_email">Введите действующий адрес электронной почты и нажмите \"Забыли пароль\"!</string>
     <string name="fields_can_not_be_empty">Поля не могут быть пустыми</string>
     <string name="forgot_password_success">Вам отправлено электронное письмо с дальнейшими инструкциями! Пожалуйста, проверьте!</string>
+
     <string name="wrong_credentials">Неправильные данные!</string>
     <string name="lost_access_to_mail">Потеряли доступ к почте?</string>
     <string name="restore_password">Восстановить пароль</string>
     <string name="you_will_get_an_email_with_instructions_for_account_recovery">Вы получите электронное письмо с инструкциями для восстановления аккаунта</string>
     <string name="user_does_not_exist">Пользователь не найден ¯\\_(ツ)_/¯</string>
+
+    <string name="check_your_box">Проверьте свою почту.</string>
+    <string name="open_mail_hint">Нажмите, чтобы открыть почтовое приложение</string>
+    <string name="open_mail">Открыть почту</string>
+    <string name="back_to_sign_in">Вернуться ко входу</string>
+    <string name="check_your_spam_folder">Если вы не получили сообщение в течение 5 минут, проверьте папку со спамом.</string>
 </resources>
