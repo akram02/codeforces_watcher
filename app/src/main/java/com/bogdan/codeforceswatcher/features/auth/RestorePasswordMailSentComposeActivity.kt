@@ -147,7 +147,7 @@ class RestorePasswordMailSentComposeActivity : ComponentActivity() {
         try {
             startActivity(Intent.createChooser(intent, "Email"))
         } catch (e: ActivityNotFoundException) {
-            val toast = Toast.makeText(applicationContext, "Mail app not found", Toast.LENGTH_SHORT)
+            val toast = Toast.makeText(applicationContext, getString(R.string.mail_app_not_found), Toast.LENGTH_SHORT)
             toast.show()
         }
     }

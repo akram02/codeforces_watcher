@@ -129,4 +129,5 @@ Codeforces WatchR позволяет:
     <string name="open_mail">Открыть почту</string>
     <string name="back_to_sign_in">Вернуться ко входу</string>
     <string name="check_your_spam_folder">Если вы не получили сообщение в течение 5 минут, проверьте папку со спамом.</string>
+    <string name="mail_app_not_found">Приложение почты не найдено</string>
 </resources>

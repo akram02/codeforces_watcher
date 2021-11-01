@@ -131,4 +131,5 @@ Codeforces WatchR дає можливiсть:
     <string name="open_mail">Відкрити пошту</string>
     <string name="back_to_sign_in">Повернутися до входу</string>
     <string name="check_your_spam_folder">Якщо ви не отримали повідомлення протягом 5 хвилин, перевірте папку Спам.</string>
+    <string name="mail_app_not_found">Додаток пошти не знайдено</string>
 </resources>

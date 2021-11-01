@@ -132,4 +132,5 @@ Download it now on Google Play - https://play.google.com/store/apps/details?id=c
   <string name="open_mail">Open mail</string>
   <string name="back_to_sign_in">Back to sign in</string>
   <string name="check_your_spam_folder">If you haven’t received a message within 5 minutes, check your Spam folder.</string>
+  <string name="mail_app_not_found">Mail app not found</string>
 </resources>
