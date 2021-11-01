@@ -1,8 +1,6 @@
 package com.bogdan.codeforceswatcher.features.auth
 
-import android.app.usage.UsageEvents
 import android.content.ActivityNotFoundException
-import android.content.ClipDescription
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -11,40 +9,23 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.ParagraphStyle
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.MutableLiveData
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.compose.*
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
-import io.xorum.codeforceswatcher.features.auth.redux.AuthRequests
-import io.xorum.codeforceswatcher.features.auth.redux.AuthState
-import io.xorum.codeforceswatcher.redux.ToastAction
-import io.xorum.codeforceswatcher.redux.store
-import tw.geothings.rekotlin.StoreSubscriber
 
 class RestorePasswordMailSentComposeActivity : ComponentActivity() {
 
-    @ExperimentalComposeUiApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -54,7 +35,6 @@ class RestorePasswordMailSentComposeActivity : ComponentActivity() {
         }
     }
 
-    @ExperimentalComposeUiApi
     @Composable
     private fun RestorePasswordMailSentScreen() {
 
@@ -135,12 +115,6 @@ class RestorePasswordMailSentComposeActivity : ComponentActivity() {
         }
     }
 
-    private fun startSignInActivity() {
-        startActivity(
-            Intent(this, SignInComposeActivity::class.java)
-        )
-    }
-
     private fun startMailApp() {
         val intent = Intent(Intent.ACTION_MAIN)
         intent.addCategory(Intent.CATEGORY_APP_EMAIL)
@@ -150,5 +124,11 @@ class RestorePasswordMailSentComposeActivity : ComponentActivity() {
             val toast = Toast.makeText(applicationContext, getString(R.string.mail_app_not_found), Toast.LENGTH_SHORT)
             toast.show()
         }
+    }
+
+    private fun startSignInActivity() {
+        startActivity(
+            Intent(this, SignInComposeActivity::class.java)
+        )
     }
 }
