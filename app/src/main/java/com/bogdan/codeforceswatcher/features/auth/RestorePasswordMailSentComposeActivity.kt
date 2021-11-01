@@ -1,7 +1,11 @@
 package com.bogdan.codeforceswatcher.features.auth
 
+import android.app.usage.UsageEvents
+import android.content.ActivityNotFoundException
+import android.content.ClipDescription
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.border
@@ -34,6 +38,7 @@ import com.bogdan.codeforceswatcher.components.compose.*
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 import io.xorum.codeforceswatcher.features.auth.redux.AuthRequests
 import io.xorum.codeforceswatcher.features.auth.redux.AuthState
+import io.xorum.codeforceswatcher.redux.ToastAction
 import io.xorum.codeforceswatcher.redux.store
 import tw.geothings.rekotlin.StoreSubscriber
 
@@ -108,7 +113,9 @@ class RestorePasswordMailSentComposeActivity : ComponentActivity() {
 
                     Spacer(Modifier.height(72.dp))
 
-                    AuthButton(getString(R.string.open_mail)) { }
+                    AuthButton(getString(R.string.open_mail)) {
+                        startMailApp()
+                    }
 
                     Spacer(Modifier.height(20.dp))
 
@@ -132,5 +139,16 @@ class RestorePasswordMailSentComposeActivity : ComponentActivity() {
         startActivity(
             Intent(this, SignInComposeActivity::class.java)
         )
+    }
+
+    private fun startMailApp() {
+        val intent = Intent(Intent.ACTION_MAIN)
+        intent.addCategory(Intent.CATEGORY_APP_EMAIL)
+        try {
+            startActivity(Intent.createChooser(intent, "Email"))
+        } catch (e: ActivityNotFoundException) {
+            val toast = Toast.makeText(applicationContext, "Mail app not found", Toast.LENGTH_SHORT)
+            toast.show()
+        }
     }
 }
