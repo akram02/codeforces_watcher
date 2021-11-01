@@ -7,7 +7,7 @@ struct ButtonTextDefault: View {
     var body: some View {
         Text(text)
             .font(.primarySemibold)
-            .foregroundColor(.white)
+            .foregroundColor(Palette.white.swiftUIColor)
             .frame(minWidth: 232)
             .frame(height: 18)
             .padding(.horizontal, 8)

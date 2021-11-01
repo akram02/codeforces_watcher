@@ -3,7 +3,7 @@ import SwiftUI
 struct CommonTextFieldNew: UIViewRepresentable {
     
     @Binding var text: String
-    private let placeholder: String
+    private let placeholder: NSMutableAttributedString
     private let isSecureTextField: Bool
     private let tag: Int
     
@@ -17,32 +17,29 @@ struct CommonTextFieldNew: UIViewRepresentable {
         tag: Int
     ) {
         _text = text
-        self.placeholder = placeholder
+        self.placeholder = placeholder.attributed
         self.isSecureTextField = (contentType == .password)
         self.tag = tag
+        
+        self.placeholder.addAttributes(
+            [.foregroundColor : Palette.darkGray],
+            range: NSRange(location: 0, length: self.placeholder.length)
+        )
     }
 
     func makeUIView(context: UIViewRepresentableContext<CommonTextFieldNew>) -> UITextField {
         let textField = UITextField().apply {
             $0.delegate = context.coordinator
-            $0.placeholder = placeholder
+            $0.attributedPlaceholder = placeholder
             $0.tag = tag
             
             $0.font = UIFont.monospacedSystemFont(ofSize: 16, weight: .regular)
+            $0.backgroundColor = Palette.white
             $0.borderStyle = .none
             $0.autocorrectionType = .no
             $0.spellCheckingType = .no
             $0.autocapitalizationType = .none
             $0.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-            
-            $0.layer.run {
-                $0.backgroundColor = Palette.white.cgColor
-                $0.masksToBounds = false
-                $0.shadowColor = Palette.black.cgColor
-                $0.shadowOffset = CGSize(width: 0.0, height: 1.0)
-                $0.shadowOpacity = 1.0
-                $0.shadowRadius = 0.0
-            }
 
             $0.frame.size.height = 20
         }

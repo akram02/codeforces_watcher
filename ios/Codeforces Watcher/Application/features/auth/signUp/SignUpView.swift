@@ -22,6 +22,7 @@ struct SignUpView: View {
             
             Text("sign_up".localized)
                 .font(.bigHeader)
+                .foregroundColor(Palette.black.swiftUIColor)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
             Spacer()
@@ -84,6 +85,7 @@ struct SignUpView: View {
                 
                 Text(message)
                     .font(.primarySemibold)
+                    .foregroundColor(Palette.black.swiftUIColor)
                     .shadow(color: Palette.red.swiftUIColor, radius: 8, x: 0, y: 0)
                     .frame(height: 60)
                 

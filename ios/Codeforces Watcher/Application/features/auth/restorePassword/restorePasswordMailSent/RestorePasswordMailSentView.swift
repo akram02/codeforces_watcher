@@ -13,9 +13,11 @@ struct RestorePasswordMailSentView: View {
             VStack(spacing: 12) {
                 Text("check_your_box".localized)
                     .font(.subHeader)
+                    .foregroundColor(Palette.black.swiftUIColor)
                 
                 Text("open_mail_hint".localized)
                     .font(.header)
+                    .foregroundColor(Palette.black.swiftUIColor)
             }
             
             Spacer()

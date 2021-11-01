@@ -19,6 +19,7 @@ struct SignInView: View {
             VStack(alignment: .leading, spacing: 44) {
                 Text("sign_in".localized)
                     .font(.bigHeader)
+                    .foregroundColor(Palette.black.swiftUIColor)
                 
                 VStack(alignment: .leading, spacing: 24) {
                     TextInputLayoutView(
@@ -41,7 +42,7 @@ struct SignInView: View {
             
             Text(error)
                 .font(.primarySemibold)
-                .bold()
+                .foregroundColor(Palette.black.swiftUIColor)
                 .shadow(color: Palette.red.swiftUIColor, radius: 8, x: 0, y: 0)
                 .frame(height: 72)
             
