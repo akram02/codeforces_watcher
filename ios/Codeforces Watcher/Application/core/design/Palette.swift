@@ -9,8 +9,6 @@
 import Foundation
 import UIKit
 
-//fileprivate let currentMode = UITraitCollection.current.userInterfaceStyle
-
 public class Palette {
     
     public static let colorPrimary = UIColor(rgb: 0x1289CE)
@@ -19,16 +17,25 @@ public class Palette {
     public static let gray = UIColor(rgb: 0x808080)
     public static let green = UIColor(rgb: 0x008000)
     public static let blueGreen = UIColor(rgb: 0x0D98BA)
-    public static var darkGray = UIColor(named: "darkGray") ?? UIColor(rgb: 0x636363)
+    public static let darkGray = UIColor(
+        lightColor: UIColor(rgb: 0x636363),
+        darkColor: UIColor(rgb: 0xAAAAAA)
+    )
     public static let blue = UIColor(rgb: 0x0000FF)
     public static let brightBlue = UIColor(rgb: 0x3333ff)
     public static let purple = UIColor(rgb: 0x9B1EA4)
     public static let orange = UIColor(rgb: 0xFFA500)
     public static let red = UIColor(rgb: 0xFF0000)
     public static let brightGreen = UIColor(rgb: 0x00FF00)
-    public static let white = UIColor(named: "white") ?? UIColor(rgb: 0xFFFFFF)
+    public static let white = UIColor(
+        lightColor: UIColor(rgb: 0xFFFFFF),
+        darkColor: UIColor(rgb: 0x000)
+    )
     public static let brightBlack = UIColor(rgb: 0x212121)
     public static let dividerGray = UIColor(rgb: 0xC2C2C2)
-    public static let black = UIColor(named: "black") ?? UIColor(rgb: 0x000)
+    public static let black = UIColor(
+        lightColor: UIColor(rgb: 0x000),
+        darkColor: UIColor(rgb: 0xFFFFFF)
+    )
     public static let gray6 = UIColor(rgb: 0xF2F2F2)
 }
