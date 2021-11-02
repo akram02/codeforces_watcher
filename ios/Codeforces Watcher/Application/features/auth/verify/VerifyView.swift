@@ -18,6 +18,7 @@ struct VerifyView: View {
             
             Text("verify_codeforces_account".localized)
                 .font(.bigHeader)
+                .foregroundColor(Palette.black.swiftUIColor)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
             Spacer()
@@ -63,6 +64,7 @@ struct VerifyView: View {
             
             Text(message.localized)
                 .font(.primarySemibold)
+                .foregroundColor(Palette.black.swiftUIColor)
                 .shadow(color: Palette.red.swiftUIColor, radius: 8, x: 0, y: 0)
                 .frame(height: 72)
             

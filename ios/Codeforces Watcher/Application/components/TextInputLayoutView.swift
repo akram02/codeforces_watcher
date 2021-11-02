@@ -20,7 +20,11 @@ struct TextInputLayoutView: View {
                 contentType: contentType,
                 tag: tag
             )
-                .fixedSize(horizontal: false, vertical: true)
+            .fixedSize(horizontal: false, vertical: true)
+            
+            Divider()
+                .frame(height: 1)
+                .background(Palette.black.swiftUIColor)
         }
     }
 }
