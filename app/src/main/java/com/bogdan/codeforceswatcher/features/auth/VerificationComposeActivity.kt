@@ -61,6 +61,8 @@ class VerificationComposeActivity : ComponentActivity(), StoreSubscriber<Verific
 
         val verificationState by verificationState.observeAsState()
 
+        store.dispatch(VerificationRequests.FetchVerificationCode())
+
         Box {
             Scaffold(
                 modifier = Modifier.fillMaxSize(),
@@ -121,7 +123,7 @@ class VerificationComposeActivity : ComponentActivity(), StoreSubscriber<Verific
                     Spacer(Modifier.height(12.dp))
 
                     Text(
-                        text = "xV123GH5",
+                        text = verificationState?.verificationCode.orEmpty(),
                         modifier = Modifier.fillMaxWidth(),
                         style = MaterialTheme.typography.body1.copy(
                             fontSize = 24.sp,
@@ -144,7 +146,7 @@ class VerificationComposeActivity : ComponentActivity(), StoreSubscriber<Verific
 
                     Spacer(Modifier.height(24.dp))
 
-                    ErrorView(getString(R.string.wrong_credentials))
+                    ErrorView(verificationState?.message.orEmpty())
 
                     Spacer(Modifier.height(30.dp))
 
@@ -174,6 +176,9 @@ class VerificationComposeActivity : ComponentActivity(), StoreSubscriber<Verific
 
     override fun onNewState(state: VerificationState) {
         verificationState.postValue(state)
+        if (state.status == VerificationState.Status.DONE) finish()
+        if (state.status == VerificationState.Status.IDLE) {
+            store.dispatch(VerificationRequests.ResetVerificationCodeforcesMessage)
+        }
     }
-
 }
