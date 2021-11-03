@@ -37,7 +37,6 @@ class RestorePasswordMailSentComposeActivity : ComponentActivity() {
 
     @Composable
     private fun RestorePasswordMailSentScreen() {
-
         Box {
             Scaffold(
                 modifier = Modifier.fillMaxSize(),
@@ -106,7 +105,7 @@ class RestorePasswordMailSentComposeActivity : ComponentActivity() {
                             color = MaterialTheme.colors.secondary,
                             shape = RoundedCornerShape(100)
                         ),
-                        isInvert = true
+                        isInverted = true
                     ) {
                         startSignInActivity()
                     }
@@ -127,8 +126,6 @@ class RestorePasswordMailSentComposeActivity : ComponentActivity() {
     }
 
     private fun startSignInActivity() {
-        startActivity(
-            Intent(this, SignInComposeActivity::class.java)
-        )
+        startActivity(Intent(this, SignInComposeActivity::class.java))
     }
 }
