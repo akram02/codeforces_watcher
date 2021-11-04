@@ -105,12 +105,6 @@ Codeforces WatchR позволяет:
     <string name="agree_with_the_conditions_and_privacy_policy"><![CDATA[Я согласен с <link>Условиями и положениями</link> и <link>Политикой конфиденциальности</link>]]></string>
     <string name="terms_and_conditions">Условия и положения</string>
     <string name="privacy_policy">Политика конфиденциальности</string>
-    <string name="verify_codeforces_account">Подтвердить аккаунт Codeforces</string>
-    <string name="verify">Подтвердить</string>
-    <string name="to_verify_please_change_your_last_name">Чтобы убедиться, что учетная запись принадлежит вам, измените свою фамилию (на английском) в своем <b> Профиле - Настройки - Социальные </b> на это значение:</string>
-    <string name="after_successful_login_you_can_change_it_back">Сразу после успешного входа в систему вы можете вернуть его обратно.</string>
-    <string name="codeforces_handle">Codeforces хэндл</string>
-    <string name="code_copied_to_clipboard">Код скопирован в буфер обмена</string>
     <string name="log_out">Выйти</string>
     <string name="do_you_want_to_log_out">Вы хотите выйти?</string>
     <string name="stay_logged_in">Остаться в системе</string>
@@ -130,4 +124,14 @@ Codeforces WatchR позволяет:
     <string name="back_to_sign_in">Вернуться ко входу</string>
     <string name="check_your_spam_folder">Если вы не получили сообщение в течение 5 минут, проверьте папку со спамом.</string>
     <string name="mail_app_not_found">Приложение почты не найдено</string>
+
+    <string name="verify_codeforces_account">Подтвердить аккаунт Codeforces</string>
+    <string name="codeforces_handle">Codeforces хэндл</string>
+    <string name="to_verify_please_change_your_last_name">Чтобы убедиться, что учетная запись принадлежит вам, измените свою фамилию (на английском) в своем<b>Профиле - Настройки - Социальные</b> на следующее значение:</string>
+    <string name="to_verify_please_change_your_last_name_start">Чтобы убедиться, что учетная запись принадлежит вам, измените свою фамилию (на английском) в своем\n</string>
+    <string name="to_verify_please_change_your_last_name_path">Профиле - Настройки - Социальные\n</string>
+    <string name="to_verify_please_change_your_last_name_end">на такое значение:</string>
+    <string name="after_successful_login_you_can_change_it_back">Сразу после успешного входа в систему вы можете вернуть его обратно.</string>
+    <string name="verify">Подтвердить</string>
+    <string name="code_copied_to_clipboard">Код скопирован в буфер обмена</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.bogdan.codeforceswatcher.features.auth
 
 import android.os.Bundle
+import android.text.Html
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
@@ -25,6 +26,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.text.HtmlCompat
 import androidx.lifecycle.MutableLiveData
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.compose.*
@@ -61,7 +63,7 @@ class VerificationComposeActivity : ComponentActivity(), StoreSubscriber<Verific
 
         val verificationState by verificationState.observeAsState()
 
-        store.dispatch(VerificationRequests.FetchVerificationCode())
+        fetchVerificationCode()
 
         Box {
             Scaffold(
@@ -77,12 +79,12 @@ class VerificationComposeActivity : ComponentActivity(), StoreSubscriber<Verific
                 ) {
                     Spacer(Modifier.height(56.dp))
 
-                    Title("Verify Codeforces Account")
+                    Title(getString(R.string.verify_codeforces_account))
 
                     Spacer(Modifier.height(40.dp))
 
                     AuthTextField(
-                        label = "Codeforces handle",
+                        label = getString(R.string.codeforces_handle),
                         keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.Ascii,
                             imeAction = ImeAction.Done
@@ -98,10 +100,7 @@ class VerificationComposeActivity : ComponentActivity(), StoreSubscriber<Verific
 
                     Text(
                         text = buildAnnotatedString {
-                            append(
-                                "To verify that account belongs to you, please, " +
-                                        "change your English ”Last name” in your\n"
-                            )
+                            append(getString(R.string.to_verify_please_change_your_last_name_start))
                             withStyle(
                                 SpanStyle(
                                     fontWeight = FontWeight.SemiBold,
@@ -109,9 +108,9 @@ class VerificationComposeActivity : ComponentActivity(), StoreSubscriber<Verific
                                     letterSpacing = (-1).sp
                                 )
                             ) {
-                                append("Profile -> Settings -> Social\n")
+                                append(getString(R.string.to_verify_please_change_your_last_name_path))
                             }
-                            append("to this value:")
+                            append(getString(R.string.to_verify_please_change_your_last_name_end))
                         },
                         modifier = Modifier.fillMaxWidth(),
                         style = MaterialTheme.typography.body1.copy(fontSize = 14.sp),
@@ -136,7 +135,7 @@ class VerificationComposeActivity : ComponentActivity(), StoreSubscriber<Verific
                     Spacer(Modifier.height(20.dp))
 
                     Text(
-                        text = "After successful login you can change it back.",
+                        text = getString(R.string.after_successful_login_you_can_change_it_back),
                         modifier = Modifier.fillMaxWidth(),
                         style = MaterialTheme.typography.body1.copy(fontSize = 14.sp),
                         color = MaterialTheme.colors.secondaryVariant,
@@ -150,7 +149,7 @@ class VerificationComposeActivity : ComponentActivity(), StoreSubscriber<Verific
 
                     Spacer(Modifier.height(30.dp))
 
-                    AuthButton("VERIFY") {
+                    AuthButton(getString(R.string.verify).uppercase()) {
                         store.dispatch(VerificationRequests.VerifyCodeforces(handle))
                     }
                 }
@@ -177,8 +176,14 @@ class VerificationComposeActivity : ComponentActivity(), StoreSubscriber<Verific
     override fun onNewState(state: VerificationState) {
         verificationState.postValue(state)
         if (state.status == VerificationState.Status.DONE) finish()
-        if (state.status == VerificationState.Status.IDLE) {
-            store.dispatch(VerificationRequests.ResetVerificationCodeforcesMessage)
-        }
+        if (state.status == VerificationState.Status.IDLE) resetVerificationCodeforcesMessage()
+    }
+
+    private fun resetVerificationCodeforcesMessage() {
+        store.dispatch(VerificationRequests.ResetVerificationCodeforcesMessage)
+    }
+
+    private fun fetchVerificationCode() {
+        store.dispatch(VerificationRequests.FetchVerificationCode())
     }
 }
