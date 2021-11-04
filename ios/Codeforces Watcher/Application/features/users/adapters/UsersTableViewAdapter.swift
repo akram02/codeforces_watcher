@@ -45,7 +45,7 @@ class UsersTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSourc
                 $0.bind(uiModel)
             }
         case .userItem(let item):
-            return tableView.dequeueReusableCell(cellType: UserTableViewCell.self).apply {
+            return tableView.dequeueReusableCell(cellType: UserTableViewCellNew.self).apply {
                 $0.bind(item)
             }
         case .userAccount(let item):
