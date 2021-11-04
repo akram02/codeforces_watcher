@@ -131,7 +131,7 @@ Codeforces WatchR позволяет:
     <string name="to_verify_please_change_your_last_name_start">Чтобы убедиться, что учетная запись принадлежит вам, измените свою фамилию (на английском) в своем\n</string>
     <string name="to_verify_please_change_your_last_name_path">Профиле - Настройки - Социальные\n</string>
     <string name="to_verify_please_change_your_last_name_end">на такое значение:</string>
-    <string name="after_successful_login_you_can_change_it_back">Сразу после успешного входа в систему вы можете вернуть его обратно.</string>
+    <string name="after_successful_login_you_can_change_it_back">После успешного входа в систему вы можете вернуть его обратно.</string>
     <string name="verify">Подтвердить</string>
     <string name="code_copied_to_clipboard">Код скопирован в буфер обмена</string>
 </resources>

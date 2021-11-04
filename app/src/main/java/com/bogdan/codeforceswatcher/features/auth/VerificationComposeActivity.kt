@@ -1,10 +1,13 @@
 package com.bogdan.codeforceswatcher.features.auth
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.os.Bundle
-import android.text.Html
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.MaterialTheme
@@ -26,18 +29,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.text.HtmlCompat
 import androidx.lifecycle.MutableLiveData
+import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.compose.*
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
-import io.xorum.codeforceswatcher.features.auth.redux.AuthRequests
-import io.xorum.codeforceswatcher.features.auth.redux.AuthState
 import io.xorum.codeforceswatcher.features.verification.redux.VerificationRequests
 import io.xorum.codeforceswatcher.features.verification.redux.VerificationState
 import io.xorum.codeforceswatcher.redux.store
-import kotlinx.android.synthetic.main.activity_verification.*
-import kotlinx.android.synthetic.main.input_field.view.*
 import tw.geothings.rekotlin.StoreSubscriber
 
 class VerificationComposeActivity : ComponentActivity(), StoreSubscriber<VerificationState> {
@@ -121,15 +120,20 @@ class VerificationComposeActivity : ComponentActivity(), StoreSubscriber<Verific
 
                     Spacer(Modifier.height(12.dp))
 
-                    Text(
-                        text = verificationState?.verificationCode.orEmpty(),
-                        modifier = Modifier.fillMaxWidth(),
+                    ClickableText(
+                        text = buildAnnotatedString {
+                            append(verificationState?.verificationCode.orEmpty())
+                        },
                         style = MaterialTheme.typography.body1.copy(
                             fontSize = 24.sp,
-                            fontWeight = FontWeight.SemiBold
+                            fontWeight = FontWeight.SemiBold,
+                            color = MaterialTheme.colors.onBackground,
+                            textAlign = TextAlign.Center
                         ),
-                        color = MaterialTheme.colors.onBackground,
-                        textAlign = TextAlign.Center
+                        onClick = {
+                            copyText(verificationState?.verificationCode.orEmpty())
+                            showToast(getString(R.string.code_copied_to_clipboard))
+                        }
                     )
 
                     Spacer(Modifier.height(20.dp))
@@ -178,6 +182,15 @@ class VerificationComposeActivity : ComponentActivity(), StoreSubscriber<Verific
         if (state.status == VerificationState.Status.DONE) finish()
         if (state.status == VerificationState.Status.IDLE) resetVerificationCodeforcesMessage()
     }
+
+    private fun copyText(text: String) {
+        val clipboard = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText("code", text)
+        clipboard.setPrimaryClip(clip)
+    }
+
+    private fun showToast(message: String) =
+        Toast.makeText(CwApp.app, message, Toast.LENGTH_SHORT).show()
 
     private fun resetVerificationCodeforcesMessage() {
         store.dispatch(VerificationRequests.ResetVerificationCodeforcesMessage)

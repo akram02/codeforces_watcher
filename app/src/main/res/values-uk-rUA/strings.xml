@@ -133,7 +133,7 @@ Codeforces WatchR дає можливiсть:
     <string name="to_verify_please_change_your_last_name_start">Щоб підтвердити, що ваш акаунт належить вам, змініть англійськe "Прізвище" у своєму\n</string>
     <string name="to_verify_please_change_your_last_name_path">Профілі - Налаштування - Соціальні\n</string>
     <string name="to_verify_please_change_your_last_name_end">на таке значення:</string>
-    <string name="after_successful_login_you_can_change_it_back">Відразу після успішного входу ви можете змінити його назад.</string>
+    <string name="after_successful_login_you_can_change_it_back">Після успішного входу ви можете змінити його назад.</string>
     <string name="verify">Підтвердити</string>
     <string name="code_copied_to_clipboard">Код скопійовано в буфер обміну</string>
 </resources>
