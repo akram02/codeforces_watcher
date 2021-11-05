@@ -107,12 +107,6 @@ Codeforces WatchR дає можливiсть:
     <string name="agree_with_the_conditions_and_privacy_policy"><![CDATA[Я погоджуюсь з <link> Загальними положеннями та умовами </link> та <link> Політикою конфіденційності </link>]]></string>
     <string name="terms_and_conditions">Загальні положення та умови</string>
     <string name="privacy_policy">Політика конфіденційності</string>
-    <string name="verify_codeforces_account">Підтвердити Codeforces акаунт</string>
-    <string name="verify">Підтвердити</string>
-    <string name="to_verify_please_change_your_last_name">Щоб підтвердити, що ваш акаунт належить вам, змініть англійськe "Прізвище" у своєму <b> Профілі - Налаштування - Соціальні </b> на таке значення:</string>
-    <string name="after_successful_login_you_can_change_it_back">Відразу після успішного входу ви можете змінити його назад.</string>
-    <string name="codeforces_handle">Codeforces хендл</string>
-    <string name="code_copied_to_clipboard">Код скопійовано в буфер обміну</string>
     <string name="log_out">Вийти</string>
     <string name="do_you_want_to_log_out">Ви хочете вийти?</string>
     <string name="stay_logged_in">Залишитися в системі</string>
@@ -132,4 +126,14 @@ Codeforces WatchR дає можливiсть:
     <string name="back_to_sign_in">Повернутися до входу</string>
     <string name="check_your_spam_folder">Якщо ви не отримали повідомлення протягом 5 хвилин, перевірте папку Спам.</string>
     <string name="mail_app_not_found">Додаток пошти не знайдено</string>
+
+    <string name="verify_codeforces_account">Підтвердити акаунт Codeforces</string>
+    <string name="codeforces_handle">Codeforces хендл</string>
+    <string name="to_verify_please_change_your_last_name">Щоб підтвердити, що ваш акаунт належить вам, змініть англійськe "Прізвище" у своєму <b>Профілі - Налаштування - Соціальні</b> на таке значення:</string>
+    <string name="to_verify_please_change_your_last_name_start">Щоб підтвердити, що ваш акаунт належить вам, змініть англійськe "Прізвище" у своєму\n</string>
+    <string name="to_verify_please_change_your_last_name_path">Профілі - Налаштування - Соціальні\n</string>
+    <string name="to_verify_please_change_your_last_name_end">на таке значення:</string>
+    <string name="after_successful_login_you_can_change_it_back">Після успішного входу ви можете змінити його назад.</string>
+    <string name="verify">Підтвердити</string>
+    <string name="code_copied_to_clipboard">Код скопійовано в буфер обміну</string>
 </resources>

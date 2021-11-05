@@ -14,9 +14,6 @@ import androidx.fragment.app.Fragment
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.AddUserBottomSheet
 import com.bogdan.codeforceswatcher.components.WebViewActivity
-import com.bogdan.codeforceswatcher.features.auth.RestorePasswordComposeActivity
-import com.bogdan.codeforceswatcher.features.auth.SignInComposeActivity
-import com.bogdan.codeforceswatcher.features.auth.SignUpActivity
 import com.bogdan.codeforceswatcher.features.contests.ContestsFiltersActivity
 import com.bogdan.codeforceswatcher.features.contests.ContestsFragment
 import com.bogdan.codeforceswatcher.features.news.NewsFragment

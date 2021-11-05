@@ -9,7 +9,7 @@ import androidx.core.content.ContextCompat
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.epoxy.BaseEpoxyModel
 import com.bogdan.codeforceswatcher.features.auth.SignInComposeActivity
-import com.bogdan.codeforceswatcher.features.auth.VerificationActivity
+import com.bogdan.codeforceswatcher.features.auth.VerificationComposeActivity
 import com.bogdan.codeforceswatcher.util.colorSubstring
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
@@ -201,7 +201,7 @@ class ProfileItemEpoxyModel(
         btnAction.text = context.getString(R.string.verify_in_42_seconds)
 
         btnAction.setOnClickListener {
-            context.startActivity(Intent(context, VerificationActivity::class.java))
+            context.startActivity(Intent(context, VerificationComposeActivity::class.java))
             analyticsController.logEvent(AnalyticsEvents.VERIFY_OPENED)
         }
     }
