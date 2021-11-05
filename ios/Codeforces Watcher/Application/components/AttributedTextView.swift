@@ -46,6 +46,7 @@ struct AttributedTextView: UIViewRepresentable {
             $0.isEditable = false
             $0.isScrollEnabled = false
             $0.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+            $0.backgroundColor = .clear
             
             $0.attributedText = attributedString
             $0.linkTextAttributes = [

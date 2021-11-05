@@ -2,7 +2,7 @@ import SwiftUI
 
 struct UserTableViewCellView: View {
     
-    var userImage: Image = Image("noImage")
+    var userAvatar: String = ""
     var userHandle: NSMutableAttributedString = "".attributed
     var userRating: NSMutableAttributedString = "".attributed
     var dateOfLastRatingUpdate: String = ""
@@ -10,7 +10,7 @@ struct UserTableViewCellView: View {
     
     var body: some View {
         HStack(spacing: 0) {
-            userImage
+            CircleImageViewNew(userAvatar: userAvatar)
             
             Spacer()
                 .frame(width: 8)

@@ -2,12 +2,12 @@ import SwiftUI
 
 class UserTableViewCellNew: UITableViewCell {
 
-    var vc = UIHostingController(rootView: UserTableViewCellView())
+    var cell = UIHostingController(rootView: UserTableViewCellView())
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        vc.run {
+        cell.run {
             contentView.addSubview($0.view)
             
             $0.view.translatesAutoresizingMaskIntoConstraints = false
@@ -26,10 +26,16 @@ class UserTableViewCellNew: UITableViewCell {
     }
     
     func bind(_ user: UserItem.UserItem) {
-        vc.rootView.userHandle = NSMutableAttributedString(attributedString: user.handleText)
-        vc.rootView.userRating = NSMutableAttributedString(attributedString: user.ratingText)
-        vc.rootView.dateOfLastRatingUpdate = user.ratingUpdateDateText
-        vc.rootView.valueOfLastRatingUpdate = NSMutableAttributedString(attributedString: user.ratingUpdateValueText)
+        cell.rootView.userAvatar = user.avatar
+        
+        cell.rootView.userHandle =
+            NSMutableAttributedString(attributedString: user.handleText)
+        cell.rootView.userRating =
+            NSMutableAttributedString(attributedString: user.ratingText)
+        cell.rootView.dateOfLastRatingUpdate =
+            user.ratingUpdateDateText
+        cell.rootView.valueOfLastRatingUpdate =
+            NSMutableAttributedString(attributedString: user.ratingUpdateValueText)
     }
 }
 
