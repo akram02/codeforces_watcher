@@ -7,6 +7,7 @@ struct AttributedTextView: UIViewRepresentable {
     let attributeTags: [AttributeTag]
     let font: UIFont
     let foregroundColor: UIColor
+    let alignment: NSTextAlignment
     
     @Binding var height: CGFloat
     
@@ -14,22 +15,29 @@ struct AttributedTextView: UIViewRepresentable {
     
     init(
         attributedString: NSMutableAttributedString,
-        attributeTags: [AttributeTag],
+        attributeTags: [AttributeTag] = [],
         font: UIFont,
-        foregroundColor: UIColor,
-        height: Binding<CGFloat>,
+        foregroundColor: UIColor = UIColor(),
+        alignment: NSTextAlignment,
+        height: Binding<CGFloat> = .constant(0),
         onLink: @escaping (String) -> Void = { _ in }
     ) {
         self.attributedString = attributedString
         self.attributeTags = attributeTags
         self.font = font
         self.foregroundColor = foregroundColor
-        
+        self.alignment = alignment
+
+        self.onLink = onLink
+
         self._height = height
         
-        self.onLink = onLink
-        
-        addAttributes()
+
+        if attributeTags.isEmpty {
+            addFont()
+        } else {
+            addAttributes()
+        }
     }
     
     func makeUIView(context: UIViewRepresentableContext<AttributedTextView>) -> UITextView {
@@ -44,8 +52,11 @@ struct AttributedTextView: UIViewRepresentable {
                 .foregroundColor: Palette.black,
                 .underlineStyle: 1
             ]
-            $0.textAlignment = .left
+            
+            $0.textAlignment = alignment
             $0.textContainer.lineBreakMode = .byWordWrapping
+            $0.textContainer.lineFragmentPadding = 0
+            $0.textContainerInset = .zero
         }
         
         return textView
@@ -85,11 +96,25 @@ struct AttributedTextView: UIViewRepresentable {
     }
     
     private func addAttributes() {
+        addFont()
+        addForegroundColor()
+        
+        addTags()
+    }
+    
+    private func addFont() {
         attributedString.run {
             $0.fonted(with: font)
+        }
+    }
+    
+    private func addForegroundColor() {
+        attributedString.run {
             $0.colored(with: foregroundColor)
         }
-        
+    }
+    
+    private func addTags() {
         for tagId in 0 ..< attributeTags.count {
             let tag = attributeTags[tagId]
             
