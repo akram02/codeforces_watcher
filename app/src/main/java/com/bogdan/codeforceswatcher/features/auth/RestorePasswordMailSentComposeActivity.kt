@@ -37,78 +37,76 @@ class RestorePasswordMailSentComposeActivity : ComponentActivity() {
 
     @Composable
     private fun RestorePasswordMailSentScreen() {
-        Box {
-            Scaffold(
-                modifier = Modifier.fillMaxSize(),
-                topBar = {
-                    NavigationBar { finish() }
-                },
-                bottomBar = {
-                    LinkText(
-                        linkTextData = listOf(
-                            LinkTextData(getString(R.string.check_your_spam_folder))
-                        ),
-                        modifier = Modifier
-                            .height(80.dp)
-                            .fillMaxWidth()
-                            .padding(horizontal = 20.dp),
-                        textStyle = MaterialTheme.typography.body1.copy(
-                            fontSize = 14.sp,
-                            color = MaterialTheme.colors.secondaryVariant
-                        ),
-                        paragraphStyle = ParagraphStyle(textAlign = TextAlign.Center)
-                    )
-                },
-                backgroundColor = MaterialTheme.colors.background
+        Scaffold(
+            modifier = Modifier.fillMaxSize(),
+            topBar = {
+                NavigationBar { finish() }
+            },
+            bottomBar = {
+                LinkText(
+                    linkTextData = listOf(
+                        LinkTextData(getString(R.string.check_your_spam_folder))
+                    ),
+                    modifier = Modifier
+                        .height(80.dp)
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp),
+                    textStyle = MaterialTheme.typography.body1.copy(
+                        fontSize = 14.sp,
+                        color = MaterialTheme.colors.secondaryVariant
+                    ),
+                    paragraphStyle = ParagraphStyle(textAlign = TextAlign.Center)
+                )
+            },
+            backgroundColor = MaterialTheme.colors.background
+        ) {
+            Column(
+                modifier = Modifier.padding(horizontal = 20.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Column(
-                    modifier = Modifier.padding(horizontal = 20.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
+                Spacer(Modifier.height(56.dp))
+
+                Title(
+                    title = getString(R.string.check_your_box),
+                    style = MaterialTheme.typography.h3.copy(
+                        fontSize = 36.sp,
+                        textAlign = TextAlign.Center
+                    )
+                )
+
+                Spacer(Modifier.height(12.dp))
+
+                Title(
+                    title = getString(R.string.open_mail_hint),
+                    style = MaterialTheme.typography.h6.copy(textAlign = TextAlign.Center)
+                )
+
+                Spacer(Modifier.height(72.dp))
+
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_email),
+                    contentDescription = "Email",
+                    tint = MaterialTheme.colors.onBackground
+                )
+
+                Spacer(Modifier.height(72.dp))
+
+                AuthButton(getString(R.string.open_mail)) {
+                    startMailApp()
+                }
+
+                Spacer(Modifier.height(20.dp))
+
+                AuthButton(
+                    label = getString(R.string.back_to_sign_in),
+                    modifier = Modifier.border(
+                        width = 2.dp,
+                        color = MaterialTheme.colors.secondary,
+                        shape = RoundedCornerShape(100)
+                    ),
+                    isInverted = true
                 ) {
-                    Spacer(Modifier.height(56.dp))
-
-                    Title(
-                        title = getString(R.string.check_your_box),
-                        style = MaterialTheme.typography.h3.copy(
-                            fontSize = 36.sp,
-                            textAlign = TextAlign.Center
-                        )
-                    )
-
-                    Spacer(Modifier.height(12.dp))
-
-                    Title(
-                        title = getString(R.string.open_mail_hint),
-                        style = MaterialTheme.typography.h6.copy(textAlign = TextAlign.Center)
-                    )
-
-                    Spacer(Modifier.height(72.dp))
-
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_email),
-                        contentDescription = "Email",
-                        tint = MaterialTheme.colors.onBackground
-                    )
-
-                    Spacer(Modifier.height(72.dp))
-
-                    AuthButton(getString(R.string.open_mail)) {
-                        startMailApp()
-                    }
-
-                    Spacer(Modifier.height(20.dp))
-
-                    AuthButton(
-                        label = getString(R.string.back_to_sign_in),
-                        modifier = Modifier.border(
-                            width = 2.dp,
-                            color = MaterialTheme.colors.secondary,
-                            shape = RoundedCornerShape(100)
-                        ),
-                        isInverted = true
-                    ) {
-                        startSignInActivity()
-                    }
+                    startSignInActivity()
                 }
             }
         }
@@ -120,7 +118,11 @@ class RestorePasswordMailSentComposeActivity : ComponentActivity() {
         try {
             startActivity(Intent.createChooser(intent, "Email"))
         } catch (e: ActivityNotFoundException) {
-            val toast = Toast.makeText(applicationContext, getString(R.string.mail_app_not_found), Toast.LENGTH_SHORT)
+            val toast = Toast.makeText(
+                applicationContext,
+                getString(R.string.mail_app_not_found),
+                Toast.LENGTH_SHORT
+            )
             toast.show()
         }
     }

@@ -57,108 +57,104 @@ class VerificationComposeActivity : ComponentActivity(), StoreSubscriber<Verific
     @Composable
     private fun RestorePasswordScreen() {
         val localFocusManager = LocalFocusManager.current
-
-        var handle = ""
-
         val verificationState by verificationState.observeAsState()
+        var handle = ""
 
         fetchVerificationCode()
 
-        Box {
-            Scaffold(
-                modifier = Modifier.fillMaxSize(),
-                topBar = {
-                    NavigationBar { finish() }
-                },
-                backgroundColor = MaterialTheme.colors.background
+        Scaffold(
+            modifier = Modifier.fillMaxSize(),
+            topBar = {
+                NavigationBar { finish() }
+            },
+            backgroundColor = MaterialTheme.colors.background
+        ) {
+            Column(
+                modifier = Modifier.padding(horizontal = 20.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Column(
-                    modifier = Modifier.padding(horizontal = 20.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    Spacer(Modifier.height(56.dp))
+                Spacer(Modifier.height(56.dp))
 
-                    Title(getString(R.string.verify_codeforces_account))
+                Title(getString(R.string.verify_codeforces_account))
 
-                    Spacer(Modifier.height(40.dp))
+                Spacer(Modifier.height(40.dp))
 
-                    AuthTextField(
-                        label = getString(R.string.codeforces_handle),
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Ascii,
-                            imeAction = ImeAction.Done
-                        ),
-                        keyboardActions = KeyboardActions(
-                            onDone = { localFocusManager.clearFocus() }
-                        )
-                    ) { newHandle ->
-                        handle = newHandle
-                    }
-
-                    Spacer(Modifier.height(24.dp))
-
-                    Text(
-                        text = buildAnnotatedString {
-                            append(getString(R.string.to_verify_please_change_your_last_name_start))
-                            withStyle(
-                                SpanStyle(
-                                    fontWeight = FontWeight.SemiBold,
-                                    color = MaterialTheme.colors.onBackground,
-                                    letterSpacing = (-1).sp
-                                )
-                            ) {
-                                append(getString(R.string.to_verify_please_change_your_last_name_path))
-                            }
-                            append(getString(R.string.to_verify_please_change_your_last_name_end))
-                        },
-                        modifier = Modifier.fillMaxWidth(),
-                        style = MaterialTheme.typography.body1.copy(fontSize = 14.sp),
-                        color = MaterialTheme.colors.secondaryVariant,
-                        textAlign = TextAlign.Start,
-                        letterSpacing = (-1.5).sp
+                AuthTextField(
+                    label = getString(R.string.codeforces_handle),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Ascii,
+                        imeAction = ImeAction.Done
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onDone = { localFocusManager.clearFocus() }
                     )
-
-                    Spacer(Modifier.height(12.dp))
-
-                    ClickableText(
-                        text = buildAnnotatedString {
-                            append(verificationState?.verificationCode.orEmpty())
-                        },
-                        style = MaterialTheme.typography.body1.copy(
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            color = MaterialTheme.colors.onBackground,
-                            textAlign = TextAlign.Center
-                        ),
-                        onClick = {
-                            copyText(verificationState?.verificationCode.orEmpty())
-                            showToast(getString(R.string.code_copied_to_clipboard))
-                        }
-                    )
-
-                    Spacer(Modifier.height(20.dp))
-
-                    Text(
-                        text = getString(R.string.after_successful_login_you_can_change_it_back),
-                        modifier = Modifier.fillMaxWidth(),
-                        style = MaterialTheme.typography.body1.copy(fontSize = 14.sp),
-                        color = MaterialTheme.colors.secondaryVariant,
-                        textAlign = TextAlign.Start,
-                        letterSpacing = (-1.5).sp
-                    )
-
-                    Spacer(Modifier.height(24.dp))
-
-                    ErrorView(verificationState?.message.orEmpty())
-
-                    Spacer(Modifier.height(30.dp))
-
-                    AuthButton(getString(R.string.verify).uppercase()) {
-                        store.dispatch(VerificationRequests.VerifyCodeforces(handle))
-                    }
+                ) { newHandle ->
+                    handle = newHandle
                 }
-                if (verificationState?.status == VerificationState.Status.PENDING) LoadingView()
+
+                Spacer(Modifier.height(24.dp))
+
+                Text(
+                    text = buildAnnotatedString {
+                        append(getString(R.string.to_verify_please_change_your_last_name_start))
+                        withStyle(
+                            SpanStyle(
+                                fontWeight = FontWeight.SemiBold,
+                                color = MaterialTheme.colors.onBackground,
+                                letterSpacing = (-1).sp
+                            )
+                        ) {
+                            append(getString(R.string.to_verify_please_change_your_last_name_path))
+                        }
+                        append(getString(R.string.to_verify_please_change_your_last_name_end))
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    style = MaterialTheme.typography.body1.copy(fontSize = 14.sp),
+                    color = MaterialTheme.colors.secondaryVariant,
+                    textAlign = TextAlign.Start,
+                    letterSpacing = (-1.5).sp
+                )
+
+                Spacer(Modifier.height(12.dp))
+
+                ClickableText(
+                    text = buildAnnotatedString {
+                        append(verificationState?.verificationCode.orEmpty())
+                    },
+                    style = MaterialTheme.typography.body1.copy(
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = MaterialTheme.colors.onBackground,
+                        textAlign = TextAlign.Center
+                    ),
+                    onClick = {
+                        copyText(verificationState?.verificationCode.orEmpty())
+                        showToast(getString(R.string.code_copied_to_clipboard))
+                    }
+                )
+
+                Spacer(Modifier.height(20.dp))
+
+                Text(
+                    text = getString(R.string.after_successful_login_you_can_change_it_back),
+                    modifier = Modifier.fillMaxWidth(),
+                    style = MaterialTheme.typography.body1.copy(fontSize = 14.sp),
+                    color = MaterialTheme.colors.secondaryVariant,
+                    textAlign = TextAlign.Start,
+                    letterSpacing = (-1.5).sp
+                )
+
+                Spacer(Modifier.height(24.dp))
+
+                ErrorView(verificationState?.message.orEmpty())
+
+                Spacer(Modifier.height(30.dp))
+
+                AuthButton(getString(R.string.verify).uppercase()) {
+                    store.dispatch(VerificationRequests.VerifyCodeforces(handle))
+                }
             }
+            if (verificationState?.status == VerificationState.Status.PENDING) LoadingView()
         }
     }
 
