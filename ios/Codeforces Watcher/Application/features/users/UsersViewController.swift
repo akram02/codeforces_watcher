@@ -181,7 +181,7 @@ class UsersViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
             }
         }
 
-        [LoginTableViewCell.self, VerifyTableViewCell.self, UserTableViewCellNew.self, UserAccountTableViewCell.self, NoItemsTableViewCell.self].forEach(tableView.registerForReuse(cellType:))
+        [LoginTableViewCell.self, VerifyTableViewCell.self, UserTableViewCellNew.self, UserAccountTableViewCell.self, NoItemsTableViewCell.self, TitleSectionTableViewCell.self].forEach(tableView.registerForReuse(cellType:))
 
         refreshControl.run {
             $0.addTarget(self, action: #selector(refreshUsers), for: .valueChanged)
@@ -313,7 +313,9 @@ class UsersViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
             tableAdapter.users = [.verifyItem(uiModel)] + sortedUsers.mapToItems()
         case .verified:
             guard let codeforcesUser = userState.userAccount?.codeforcesUser else { fatalError() }
-            tableAdapter.users = [.userAccount(UserItem.UserAccountItem(codeforcesUser))] + sortedUsers.mapToItems()
+            tableAdapter.users = [.userAccount(UserItem.UserAccountItem(codeforcesUser))] +
+                [.sectionTitle("Users")] +
+                sortedUsers.mapToItems()
         default:
             break
         }

@@ -45,6 +45,7 @@ struct AttributedTextView: UIViewRepresentable {
             $0.delegate = context.coordinator
             $0.isEditable = false
             $0.isScrollEnabled = false
+            $0.isUserInteractionEnabled = true
             $0.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
             $0.backgroundColor = .clear
             

@@ -52,13 +52,17 @@ class UsersTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSourc
             return tableView.dequeueReusableCell(cellType: UserAccountTableViewCell.self).apply {
                 $0.bind(item)
             }
+        case .sectionTitle(let title):
+            return tableView.dequeueReusableCell(cellType: TitleSectionTableViewCell.self).apply {
+                $0.bind(title)
+            }
         }
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard !users.isEmpty else { return }
         switch(users[indexPath.row]) {
-        case .loginItem:
+        case .loginItem, .sectionTitle:
             break
         case .verifyItem:
             onVerifyCellTap()
