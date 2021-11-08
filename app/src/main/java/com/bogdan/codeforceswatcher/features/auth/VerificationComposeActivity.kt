@@ -46,7 +46,7 @@ class VerificationComposeActivity : ComponentActivity(), StoreSubscriber<Verific
         super.onCreate(savedInstanceState)
         setContent {
             AlgoismeTheme {
-                RestorePasswordScreen()
+                VerificationScreen()
             }
         }
     }
@@ -55,7 +55,7 @@ class VerificationComposeActivity : ComponentActivity(), StoreSubscriber<Verific
 
     @ExperimentalComposeUiApi
     @Composable
-    private fun RestorePasswordScreen() {
+    private fun VerificationScreen() {
         val localFocusManager = LocalFocusManager.current
         val verificationState by verificationState.observeAsState()
         var handle = ""
