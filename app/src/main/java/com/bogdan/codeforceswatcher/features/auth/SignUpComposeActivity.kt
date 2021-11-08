@@ -10,20 +10,14 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.ParagraphStyle
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -73,8 +67,8 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
             bottomBar = {
                 LinkText(
                     linkTextData = listOf(
-                        LinkTextData(("Already have an account? ")),
-                        LinkTextData("Sign In") { }
+                        LinkTextData("${getString(R.string.already_have_an_account)} "),
+                        LinkTextData(getString(R.string.sign_in)) { }
                     ),
                     modifier = Modifier
                         .height(62.dp)
@@ -99,12 +93,12 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
             ) {
                 Spacer(Modifier.height(56.dp))
 
-                Title("Sign Up")
+                Title(getString(R.string.sign_up))
 
                 Spacer(Modifier.height(44.dp))
 
                 AuthTextField(
-                    label = "Email",
+                    label = getString(R.string.email),
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Email,
                         imeAction = ImeAction.Next
@@ -119,7 +113,7 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
                 Spacer(Modifier.height(24.dp))
 
                 AuthTextField(
-                    label = "Password",
+                    label = getString(R.string.password),
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Password,
                         imeAction = ImeAction.Next
@@ -135,7 +129,7 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
                 Spacer(Modifier.height(24.dp))
 
                 AuthTextField(
-                    label = "Confirm password",
+                    label = getString(R.string.confirm_password),
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Password,
                         imeAction = ImeAction.Done
@@ -167,7 +161,7 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
                 Spacer(Modifier.height(26.dp))
 
                 AuthButton(
-                    label = "SIGN UP",
+                    label = getString(R.string.sign_up).uppercase(),
                     modifier = Modifier.border(
                         width = 2.dp,
                         color = MaterialTheme.colors.secondary,

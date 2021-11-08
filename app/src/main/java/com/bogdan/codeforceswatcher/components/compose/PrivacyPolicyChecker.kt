@@ -1,5 +1,6 @@
 package com.bogdan.codeforceswatcher.components.compose.theme
 
+import android.provider.Settings.Global.getString
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
@@ -35,17 +37,18 @@ fun PrivacyPolicyChecker(
         Icon(
             painter = painterResource(id = checkboxIcon),
             contentDescription = "Checkbox",
-            modifier = Modifier.clickable { onClick() }
+            modifier = Modifier.clickable { onClick() },
+            tint = if (isAccepted) MaterialTheme.colors.onBackground else MaterialTheme.colors.secondaryVariant
         )
 
         Spacer(Modifier.width(12.dp))
 
         LinkText(
             linkTextData = listOf(
-                LinkTextData("I agree with the "),
-                LinkTextData("Terms and Conditions ") { },
-                LinkTextData("and the "),
-                LinkTextData("Privacy Policy") { },
+                LinkTextData("${stringResource(R.string.agree_with_the_conditions_and_privacy_policy_start)} "),
+                LinkTextData(stringResource(R.string.terms_and_conditions)) { },
+                LinkTextData(" ${stringResource(R.string.agree_with_the_conditions_and_privacy_policy_end)} "),
+                LinkTextData(stringResource(R.string.privacy_policy)) { },
             ),
             textStyle = textStyle,
             clickableTextStyle = clickableTextStyle,

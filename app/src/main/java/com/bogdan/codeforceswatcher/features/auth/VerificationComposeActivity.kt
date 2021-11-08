@@ -96,7 +96,7 @@ class VerificationComposeActivity : ComponentActivity(), StoreSubscriber<Verific
 
                 Text(
                     text = buildAnnotatedString {
-                        append(getString(R.string.to_verify_please_change_your_last_name_start))
+                        append(getString(R.string.to_verify_please_change_your_last_name_start) + "\n")
                         withStyle(
                             SpanStyle(
                                 fontWeight = FontWeight.SemiBold,
@@ -104,7 +104,7 @@ class VerificationComposeActivity : ComponentActivity(), StoreSubscriber<Verific
                                 letterSpacing = (-1).sp
                             )
                         ) {
-                            append(getString(R.string.to_verify_please_change_your_last_name_path))
+                            append(getString(R.string.to_verify_please_change_your_last_name_path) + "\n")
                         }
                         append(getString(R.string.to_verify_please_change_your_last_name_end))
                     },
