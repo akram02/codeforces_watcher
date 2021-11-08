@@ -65,6 +65,7 @@ struct AttributedTextView: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: UITextView, context: Context) {
+        uiView.attributedText = attributedString
         DispatchQueue.main.async {
             let newSize = uiView.sizeThatFits(
                 CGSize(

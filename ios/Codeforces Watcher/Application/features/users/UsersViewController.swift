@@ -20,7 +20,7 @@ class UsersViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
     
     private let sortTextField = UITextField().apply {
         $0.font = Font.textHeading
-        $0.textColor = Palette.white
+        $0.textColor = Palette.black
         $0.tintColor = .clear
         $0.textAlignment = .right
     }
@@ -39,7 +39,7 @@ class UsersViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
         $0.isHidden = true
     }
     
-    private var users: [User] = []
+    private var followedUsers: [User] = []
     
     override var inputAccessoryView: UIView? {
         get {
@@ -110,8 +110,8 @@ class UsersViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
         
         let doneButton = UIBarButtonItem(
             title: "Done".localized, 
-            style: .plain, 
-            target: self, 
+            style: .plain,
+            target: self,
             action: #selector(doneTapped)
         )
         
@@ -122,7 +122,7 @@ class UsersViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
             $0.barTintColor = Palette.white
             $0.tintColor = Palette.colorPrimary
         }
-        
+
         sortTextField.run {
             $0.inputView = pickerView
             $0.inputAccessoryView = toolbar
@@ -247,7 +247,7 @@ class UsersViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
     }
     
     private func sortUsers(_ sortType: UsersState.SortType) -> [User] {
-        var sortedUsers = users
+        var sortedUsers = followedUsers
         
         switch(sortType) {
         case .default_:
@@ -285,7 +285,7 @@ class UsersViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
             refreshControl.endRefreshing()
         }
         
-        users = userState.users
+        followedUsers = userState.followedUsers
         let sortedUsers = sortUsers(userState.sortType)
         
         switch (authState.authStage) {
@@ -314,13 +314,13 @@ class UsersViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
         case .verified:
             guard let codeforcesUser = userState.userAccount?.codeforcesUser else { fatalError() }
             tableAdapter.users = [.userAccount(UserItem.UserAccountItem(codeforcesUser))] +
-                [.sectionTitle("Users")] +
+                [.sectionTitle("followed_users".localized)] +
                 sortedUsers.mapToItems()
         default:
             break
         }
         
-        sortTextField.isHidden = users.isEmpty
+        sortTextField.isHidden = followedUsers.isEmpty
         
         tableView.reloadData()
         

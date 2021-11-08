@@ -40,7 +40,7 @@ class PersistenceController : StoreSubscriber<AppState> {
     )
 
     private fun getUsersState() = UsersState(
-        users = DatabaseQueries.Users.getAll(),
+        followedUsers = DatabaseQueries.Users.getAll(),
         sortType = UsersState.SortType.getSortType(settings.readSpinnerSortPosition()),
         userAccount = settings.readUserAccount(),
     )
