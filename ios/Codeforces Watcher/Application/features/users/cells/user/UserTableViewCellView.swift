@@ -3,6 +3,8 @@ import SwiftUI
 struct UserTableViewCellView: View {
     
     var userAvatar: String = ""
+    var userRank: String? = nil
+    
     var userHandle: NSMutableAttributedString = "".attributed
     var userRating: NSMutableAttributedString = "".attributed
     var dateOfLastRatingUpdate: String = ""
@@ -10,7 +12,10 @@ struct UserTableViewCellView: View {
     
     var body: some View {
         HStack(spacing: 0) {
-            CircleImageViewNew(userAvatar: userAvatar)
+            CircleImageViewNew(
+                userAvatar: userAvatar,
+                borderColor: getColorByUserRank(userRank).swiftUIColor
+            )
             
             Spacer()
                 .frame(width: 8)
