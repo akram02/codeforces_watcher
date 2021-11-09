@@ -11,7 +11,7 @@ struct RestorePasswordView: View {
     var body: some View {
         VStack(spacing: 0) {
             Spacer()
-                .frame(height: 76)
+                .frame(height: 56)
             
             VStack(alignment: .leading, spacing: 40) {
                 Text("restore_password".localized)
@@ -33,11 +33,7 @@ struct RestorePasswordView: View {
                 }
             }
             
-            Text(message)
-                .font(.primarySemibold)
-                .foregroundColor(Palette.black.swiftUIColor)
-                .shadow(color: Palette.red.swiftUIColor, radius: 8, x: 0, y: 0)
-                .frame(height: 72)
+            ErrorMessage(message: message)
             
             Button(action: {
                 self.onRestorePassword(email)
@@ -50,13 +46,13 @@ struct RestorePasswordView: View {
             
             Button(action: {}, label: {
                 Text("lost_access".localized)
-                    .font(.primarySemibold)
                     .underline()
+                    .font(.primarySemibold)
                     .foregroundColor(Palette.darkGray.swiftUIColor)
             })
             .hidden()
         }
-        .padding()
+        .padding([.horizontal, .bottom], 20)
     }
 }
 

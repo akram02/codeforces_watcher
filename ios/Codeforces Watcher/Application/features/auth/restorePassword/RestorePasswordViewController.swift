@@ -62,11 +62,11 @@ class RestorePasswordViewController: UIHostingController<RestorePasswordView>, R
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupComponents()
-        setupInteractions()
+        setComponents()
+        setInteractions()
     }
     
-    private func setupComponents() {
+    private func setComponents() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: UIImage(named: "back_arrow"),
             style: .plain,
@@ -75,14 +75,14 @@ class RestorePasswordViewController: UIHostingController<RestorePasswordView>, R
         )
     }
     
-    private func setupInteractions() {
+    private func setInteractions() {
         rootView.onRestorePassword = { email in
             store.dispatch(action: AuthRequests.SendPasswordReset(email: email))
         }
     }
     
-    func updateMessage(_ message: String) {
-        rootView.message = message
+    func updateMessage(_ message: String?) {
+        rootView.message = message ?? ""
     }
     
     func resetMessage() {

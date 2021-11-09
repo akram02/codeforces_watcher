@@ -79,7 +79,7 @@ struct SignInView: View {
             }
             .lineLimit(1)
         }
-        .padding()
+        .padding([.horizontal, .bottom], 20)
     }
 }
 
