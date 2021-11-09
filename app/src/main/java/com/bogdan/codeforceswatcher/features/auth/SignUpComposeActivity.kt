@@ -1,5 +1,6 @@
 package com.bogdan.codeforceswatcher.features.auth
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -28,7 +29,7 @@ import androidx.lifecycle.MutableLiveData
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.compose.*
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
-import com.bogdan.codeforceswatcher.components.compose.theme.PrivacyPolicyChecker
+import com.bogdan.codeforceswatcher.components.compose.PrivacyPolicyChecker
 import io.xorum.codeforceswatcher.features.auth.redux.AuthRequests
 import io.xorum.codeforceswatcher.features.auth.redux.AuthState
 import io.xorum.codeforceswatcher.redux.store
@@ -47,14 +48,14 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
 
     private val authState = MutableLiveData<AuthState>()
 
+    private var email = ""
+    private var password = ""
+    private var confirmedPassword = ""
+
     @ExperimentalComposeUiApi
     @Composable
     private fun SignUpScreen() {
         val localFocusManager = LocalFocusManager.current
-
-        var email = ""
-        var password = ""
-        var confirmPassword = ""
 
         var isPrivacyPolicyAccepted by remember { mutableStateOf(false) }
         val authState by authState.observeAsState()
@@ -68,7 +69,10 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
                 LinkText(
                     linkTextData = listOf(
                         LinkTextData("${getString(R.string.already_have_an_account)} "),
-                        LinkTextData(getString(R.string.sign_in)) { }
+                        LinkTextData(getString(R.string.sign_in)) {
+                            startSignInActivity()
+                            finish()
+                        }
                     ),
                     modifier = Modifier
                         .height(62.dp)
@@ -138,8 +142,8 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
                         onDone = { localFocusManager.clearFocus() }
                     ),
                     visualTransformation = PasswordVisualTransformation(mask = '*')
-                ) { newPassword ->
-                    password = newPassword
+                ) { newConfirmPassword ->
+                    confirmedPassword = newConfirmPassword
                 }
 
                 Spacer(Modifier.height(36.dp))
@@ -168,30 +172,49 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
                         shape = RoundedCornerShape(100)
                     ),
                     isInverted = !isPrivacyPolicyAccepted
-                ) { }
+                ) {
+                    signUp(email, password, confirmedPassword, isPrivacyPolicyAccepted)
+                }
             }
         }
         if (authState?.status == AuthState.Status.PENDING) LoadingView()
     }
 
-    @ExperimentalComposeUiApi
+    private fun signUp(
+        email: String,
+        password: String,
+        confirmedPassword: String,
+        isPrivacyPolicyAccepted: Boolean
+    ) {
+       store.dispatch(AuthRequests.SignUp(email, password, confirmedPassword, isPrivacyPolicyAccepted))
+    }
+
+    private fun startSignInActivity() {
+        startActivity(
+            Intent(this, SignInComposeActivity::class.java)
+        )
+    }
+
     override fun onStart() {
         super.onStart()
         store.subscribe(this) { state ->
             state.skipRepeats { oldState, newState ->
-                oldState.auth.status == newState.auth.status &&
-                        oldState.auth.authStage == newState.auth.authStage
+                oldState.auth.status == newState.auth.status
             }.select { it.auth }
         }
     }
 
+    private fun resetSignUpMessage() = store.dispatch(AuthRequests.ResetSignUpMessage)
+
     override fun onStop() {
         super.onStop()
-        store.dispatch(AuthRequests.ResetSignUpMessage)
+        resetSignUpMessage()
         store.unsubscribe(this)
     }
 
     override fun onNewState(state: AuthState) {
-
+        authState.postValue(state)
+        if (state.status == AuthState.Status.DONE) finish()
+        if (state.status == AuthState.Status.IDLE) resetSignUpMessage()
     }
 }

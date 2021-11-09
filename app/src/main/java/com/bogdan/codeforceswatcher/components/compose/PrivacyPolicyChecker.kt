@@ -1,5 +1,6 @@
-package com.bogdan.codeforceswatcher.components.compose.theme
+package com.bogdan.codeforceswatcher.components.compose
 
+import android.content.Context
 import android.provider.Settings.Global.getString
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
@@ -16,8 +17,10 @@ import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.bogdan.codeforceswatcher.R
+import com.bogdan.codeforceswatcher.components.WebViewActivity
 import com.bogdan.codeforceswatcher.components.compose.LinkText
 import com.bogdan.codeforceswatcher.components.compose.LinkTextData
+import io.xorum.codeforceswatcher.util.Constants
 
 @Composable
 fun PrivacyPolicyChecker(

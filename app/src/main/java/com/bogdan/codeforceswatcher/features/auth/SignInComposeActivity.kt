@@ -173,7 +173,7 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
 
     private fun startSignUpActivity() {
         startActivity(
-            Intent(this, SignUpActivity::class.java)
+            Intent(this, SignUpComposeActivity::class.java)
         )
     }
 

@@ -33,18 +33,27 @@ class AuthRequests {
     class SignUp(
         private val email: String,
         private val password: String,
-        private val confirmPassword: String
+        private val confirmPassword: String,
+        private val isPrivacyPolicyAccepted: Boolean
     ) : Request() {
 
         override suspend fun execute() {
-            if (password == confirmPassword) {
-                firebaseController.signUp(email, password) { exception ->
-                    exception?.let {
-                        store.dispatch(Failure(Strings.get("wrong_credentials")))
-                    } ?: store.dispatch(Success(""))
-                }
-            } else {
+            if (!isPrivacyPolicyAccepted) {
+                store.dispatch(Failure(Strings.get("agree_to_the_privacy_policy")))
+                return
+            }
+            if (password.isEmpty() || email.isEmpty() || confirmPassword.isEmpty()) {
+                store.dispatch(Failure(Strings.get("fields_can_not_be_empty")))
+                return
+            }
+            if (password != confirmPassword) {
                 store.dispatch(Failure(Strings.get("passwords_do_not_match")))
+                return
+            }
+            firebaseController.signUp(email, password) { exception ->
+                exception?.let {
+                    store.dispatch(Failure(Strings.get("wrong_credentials")))
+                } ?: store.dispatch(Success(""))
             }
         }
 
