@@ -132,6 +132,7 @@
 "log_out_ask" = "Вы хотите выйти?";
 
 "wrong_credentials" = "Неправильные данные!";
+"fields_cannot_be_empty" = "Поля не могут быть пустыми!";
 "passwords_do_not_match" = "Пароли не совпадают";
 "ratings_have_been_updated" = "Рейтинги обновлены";
 

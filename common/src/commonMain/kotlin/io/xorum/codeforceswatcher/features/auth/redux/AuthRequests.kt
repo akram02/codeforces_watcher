@@ -14,18 +14,18 @@ class AuthRequests {
 
         override suspend fun execute() {
             if (email.isEmpty() || password.isEmpty()) {
-                store.dispatch(Failure(Strings.get("wrong_credentials")))
+                store.dispatch(Failure(Strings.get("fields_cannot_be_empty")))
                 return
             }
             firebaseController.signIn(email, password) { exception ->
                 exception?.let {
-                    store.dispatch(Failure(Strings.get("wrong_credentials")))
-                } ?: store.dispatch(Success(""))
+                    store.dispatch(Failure(exception.message.toString()))
+                } ?: store.dispatch(Success)
             }
         }
 
-        internal data class Success(val message: String) : Action
-        internal data class Failure(val message: String) : Action
+        object Success : Action
+        internal data class Failure(val message: String?) : Action
     }
 
     object ResetSignInMessage : Action

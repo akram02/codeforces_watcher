@@ -9,12 +9,12 @@ struct SignInView: View {
     @State var email = ""
     @State var password = ""
     
-    var error: String = ""
+    var message: String = ""
     
     var body: some View {
         VStack(spacing: 0) {
             Spacer()
-                .frame(height: 76)
+                .frame(height: 56)
             
             VStack(alignment: .leading, spacing: 44) {
                 Text("sign_in".localized)
@@ -40,13 +40,9 @@ struct SignInView: View {
                 }
             }
             
-            Text(error)
-                .font(.primarySemibold)
-                .foregroundColor(Palette.black.swiftUIColor)
-                .shadow(color: Palette.red.swiftUIColor, radius: 8, x: 0, y: 0)
-                .frame(height: 72)
+            ErrorMessage(message: message)
             
-            VStack(spacing: 60) {
+            VStack(spacing: 72) {
                 Button(action: {
                     self.onSignIn(email, password)
                 }, label: {
@@ -68,6 +64,7 @@ struct SignInView: View {
             
             HStack {
                 Text("sign_up_hint".localized)
+                    .font(.primary2)
                     .foregroundColor(Palette.darkGray.swiftUIColor)
                 
                 Button(action: {
@@ -75,10 +72,11 @@ struct SignInView: View {
                 }, label: {
                     Text("sign_up".localized)
                         .underline()
+                        .font(.primary2)
+                        .fontWeight(.semibold)
                         .foregroundColor(Palette.black.swiftUIColor)
                 })
             }
-            .font(.primary2)
             .lineLimit(1)
         }
         .padding()

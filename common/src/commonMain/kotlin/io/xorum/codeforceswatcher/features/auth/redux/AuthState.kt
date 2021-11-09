@@ -6,7 +6,7 @@ data class AuthState(
     val status: Status = Status.IDLE,
     val authStage: Stage = Stage.NOT_SIGNED_IN,
     val signUpMessage: String = "",
-    val signInMessage: String = "",
+    val signInMessage: String? = null,
     val restorePasswordMessage: String = ""
 ) : StateType {
 

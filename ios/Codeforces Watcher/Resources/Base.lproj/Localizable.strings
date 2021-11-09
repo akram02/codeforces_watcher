@@ -133,6 +133,7 @@
 "log_out_ask" = "Do you want to log out?";
 
 "wrong_credentials" = "Wrong credentials!";
+"fields_cannot_be_empty" = "Fields cannot be empty!";
 "passwords_do_not_match" = "Passwords don't match";
 "ratings_have_been_updated" = "Ratings have been updated";
 

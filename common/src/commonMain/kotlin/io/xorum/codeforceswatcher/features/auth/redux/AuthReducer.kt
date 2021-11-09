@@ -14,8 +14,7 @@ fun authReducer(action: Action, state: AppState): AuthState {
         }
         is AuthRequests.SignIn.Success -> {
             newState = newState.copy(
-                status = AuthState.Status.DONE,
-                signInMessage = action.message
+                status = AuthState.Status.DONE
             )
         }
         is AuthRequests.SignIn.Failure -> {
@@ -26,7 +25,7 @@ fun authReducer(action: Action, state: AppState): AuthState {
         }
         is AuthRequests.ResetSignInMessage -> {
             newState = newState.copy(
-                signInMessage = ""
+                signInMessage = null
             )
         }
         is AuthRequests.SignUp -> {
