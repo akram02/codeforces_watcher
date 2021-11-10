@@ -2,7 +2,7 @@ import SwiftUI
 
 struct SignUpView: View {
     
-    var onSignUp: (String, String, String) -> Void = { _, _, _ in }
+    var onSignUp: (String, String, String, Bool) -> Void = { _, _, _, _ in }
     var onSignIn: () -> Void = {}
     var onLink: (String) -> Void = { _ in }
     
@@ -90,7 +90,7 @@ struct SignUpView: View {
                     .frame(height: 60)
                 
                 Button(action: {
-                    self.onSignUp(email, password, confirmPassword)
+                    self.onSignUp(email, password, confirmPassword, isAgreementChecked)
                 }, label: {
                     if isAgreementChecked {
                         ButtonTextDefault(text: "sign_up".localized.uppercased())
@@ -98,7 +98,6 @@ struct SignUpView: View {
                         ButtonTextInverse(text: "sign_up".localized.uppercased())
                     }
                 })
-                .disabled(!isAgreementChecked)
             }
             
             Spacer()

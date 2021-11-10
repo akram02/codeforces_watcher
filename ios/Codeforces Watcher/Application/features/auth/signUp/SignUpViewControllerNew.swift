@@ -84,12 +84,13 @@ class SignUpViewController: UIHostingController<SignUpView>, ReKampStoreSubscrib
     }
     
     private func setInteractions() {
-        rootView.onSignUp = { email, password, confirmPassword in
+        rootView.onSignUp = { email, password, confirmPassword, isAgreementChecked in
             store.dispatch(
                 action: AuthRequests.SignUp(
                     email: email,
                     password: password,
-                    confirmPassword: confirmPassword
+                    confirmPassword: confirmPassword,
+                    isPrivacyPolicyAccepted: isAgreementChecked
                 )
             )
         }
