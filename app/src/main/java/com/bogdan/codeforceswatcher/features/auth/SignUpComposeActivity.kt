@@ -5,10 +5,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.*
@@ -18,7 +20,10 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.ParagraphStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -155,9 +160,7 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
                     isAccepted = isPrivacyPolicyAccepted,
                     textStyle = MaterialTheme.typography.body1.copy(
                         color = MaterialTheme.colors.onBackground
-                    ),
-                    onTermsAndConditionsClick = { linkToTermsAndConditions() },
-                    onPrivacyPolicyClick = { linkToPrivacyPolicy() }
+                    )
                 ) {
                     isPrivacyPolicyAccepted = !isPrivacyPolicyAccepted
                 }
@@ -182,6 +185,57 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
             }
         }
         if (authState?.status == AuthState.Status.PENDING) LoadingView()
+    }
+
+    @Composable
+    private fun PrivacyPolicyChecker(
+        modifier: Modifier = Modifier,
+        isAccepted: Boolean = false,
+        textStyle: TextStyle = MaterialTheme.typography.body1,
+        clickableTextStyle: TextStyle = MaterialTheme.typography.body2,
+        paragraphStyle: ParagraphStyle = ParagraphStyle(),
+        onCheckboxClick: () -> Unit
+    ) {
+        Row(
+            modifier = modifier,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            val checkboxIcon =
+                if (isAccepted) R.drawable.ic_checkbox else R.drawable.ic_checkbox_disabled
+
+            Icon(
+                painter = painterResource(id = checkboxIcon),
+                contentDescription = "Checkbox",
+                modifier = Modifier.clickable { onCheckboxClick() },
+                tint = if (isAccepted) MaterialTheme.colors.onBackground else MaterialTheme.colors.secondaryVariant
+            )
+
+            Spacer(Modifier.width(12.dp))
+
+            LinkText(
+                linkTextData = listOf(
+                    LinkTextData("${stringResource(R.string.agree_with_the_conditions_and_privacy_policy_start)} "),
+                    LinkTextData(
+                        text = stringResource(R.string.terms_and_conditions),
+                        tag = "terms_and_conditions",
+                        annotation = TERMS_AND_CONDITIONS_LINK
+                    ) {
+                        linkToTermsAndConditions()
+                    },
+                    LinkTextData(" ${stringResource(R.string.agree_with_the_conditions_and_privacy_policy_end)} "),
+                    LinkTextData(
+                        text = stringResource(R.string.privacy_policy),
+                        tag = "privacy_policy",
+                        annotation = PRIVACY_POLICY_LINK,
+                    ) {
+                        linkToPrivacyPolicy()
+                    },
+                ),
+                textStyle = textStyle,
+                clickableTextStyle = clickableTextStyle,
+                paragraphStyle = paragraphStyle
+            )
+        }
     }
 
     private fun signUp(
