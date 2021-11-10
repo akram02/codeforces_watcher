@@ -99,14 +99,7 @@ Codeforces WatchR дає можливiсть:
     <string name="password">Пароль</string>
     <string name="sign_in">Увійти</string>
     <string name="dont_have_an_account_yet">У вас ще немає облікового запису?</string>
-<!--    <string name="already_have_an_account"><![CDATA[Вже є обліковий запис? <link>Увійти</link>]]></string>-->
-<!--    <string name="sign_up">Зареєструватися</string>-->
-<!--    <string name="confirm_password">Підтвердьте пароль</string>-->
-<!--    <string name="passwords_do_not_match">Паролі не збігаються</string>-->
-<!--    <string name="agree_to_the_privacy_policy">Погодьтеся з політикою конфіденційності</string>-->
-<!--    <string name="agree_with_the_conditions_and_privacy_policy"><![CDATA[Я погоджуюсь з <link> Загальними положеннями та умовами </link> та <link> Політикою конфіденційності </link>]]></string>-->
-<!--    <string name="terms_and_conditions">Загальні положення та умови</string>-->
-<!--    <string name="privacy_policy">Політика конфіденційності</string>-->
+
     <string name="log_out">Вийти</string>
     <string name="do_you_want_to_log_out">Ви хочете вийти?</string>
     <string name="stay_logged_in">Залишитися в системі</string>
