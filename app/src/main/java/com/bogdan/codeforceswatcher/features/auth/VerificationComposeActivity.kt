@@ -53,12 +53,13 @@ class VerificationComposeActivity : ComponentActivity(), StoreSubscriber<Verific
 
     private val verificationState = MutableLiveData<VerificationState>()
 
+    private var handle = ""
+
     @ExperimentalComposeUiApi
     @Composable
     private fun VerificationScreen() {
         val localFocusManager = LocalFocusManager.current
         val verificationState by verificationState.observeAsState()
-        var handle = ""
 
         fetchVerificationCode()
 

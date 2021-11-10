@@ -47,13 +47,12 @@ class RestorePasswordComposeActivity : ComponentActivity(), StoreSubscriber<Auth
 
     private val authState = MutableLiveData<AuthState>()
 
+    private var email = ""
+
     @ExperimentalComposeUiApi
     @Composable
     private fun RestorePasswordScreen() {
         val localFocusManager = LocalFocusManager.current
-
-        var email = ""
-
         val authState by authState.observeAsState()
 
         Scaffold(

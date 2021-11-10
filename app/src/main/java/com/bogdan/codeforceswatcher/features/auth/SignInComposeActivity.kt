@@ -45,17 +45,14 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
     }
 
     private val authState = MutableLiveData<AuthState>()
-    private val AuthState.shouldShowLoading
-        get() = status == AuthState.Status.PENDING
+
+    private var email = ""
+    private var password = ""
 
     @ExperimentalComposeUiApi
     @Composable
     private fun SignInScreen() {
         val localFocusManager = LocalFocusManager.current
-
-        var email = ""
-        var password = ""
-
         val authState by authState.observeAsState()
 
         Scaffold(
@@ -147,7 +144,7 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
                 )
             }
         }
-        if (authState?.shouldShowLoading == true) LoadingView()
+        if (authState?.status == AuthState.Status.PENDING) LoadingView()
     }
 
     @ExperimentalComposeUiApi

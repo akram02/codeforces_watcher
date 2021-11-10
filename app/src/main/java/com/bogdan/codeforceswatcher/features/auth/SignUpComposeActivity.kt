@@ -63,9 +63,8 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
     @Composable
     private fun SignUpScreen() {
         val localFocusManager = LocalFocusManager.current
-
-        var isPrivacyPolicyAccepted by remember { mutableStateOf(false) }
         val authState by authState.observeAsState()
+        var isPrivacyPolicyAccepted by remember { mutableStateOf(false) }
 
         Scaffold(
             modifier = Modifier.fillMaxSize(),
