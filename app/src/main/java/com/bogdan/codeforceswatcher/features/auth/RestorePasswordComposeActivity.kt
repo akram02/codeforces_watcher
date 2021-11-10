@@ -64,7 +64,7 @@ class RestorePasswordComposeActivity : ComponentActivity(), StoreSubscriber<Auth
             bottomBar = {
                 LinkText(
                     linkTextData = listOf(
-                        LinkTextData(getString(R.string.lost_access_to_mail)) { }
+                        LinkTextData(getString(R.string.lost_access_to_mail), "lost_access_to_mail") { }
                     ),
                     modifier = Modifier
                         .height(62.dp)

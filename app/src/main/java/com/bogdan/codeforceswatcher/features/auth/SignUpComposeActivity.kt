@@ -27,12 +27,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.MutableLiveData
 import com.bogdan.codeforceswatcher.R
+import com.bogdan.codeforceswatcher.components.WebViewActivity
 import com.bogdan.codeforceswatcher.components.compose.*
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
-import com.bogdan.codeforceswatcher.components.compose.PrivacyPolicyChecker
 import io.xorum.codeforceswatcher.features.auth.redux.AuthRequests
 import io.xorum.codeforceswatcher.features.auth.redux.AuthState
 import io.xorum.codeforceswatcher.redux.store
+import io.xorum.codeforceswatcher.util.Constants.PRIVACY_POLICY_LINK
+import io.xorum.codeforceswatcher.util.Constants.TERMS_AND_CONDITIONS_LINK
 import tw.geothings.rekotlin.StoreSubscriber
 
 class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
@@ -69,7 +71,7 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
                 LinkText(
                     linkTextData = listOf(
                         LinkTextData("${getString(R.string.already_have_an_account)} "),
-                        LinkTextData(getString(R.string.sign_in)) {
+                        LinkTextData(getString(R.string.sign_in), "sign_in") {
                             startSignInActivity()
                             finish()
                         }
@@ -154,6 +156,8 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
                     textStyle = MaterialTheme.typography.body1.copy(
                         color = MaterialTheme.colors.onBackground
                     ),
+                    onTermsAndConditionsClick = { linkToTermsAndConditions() },
+                    onPrivacyPolicyClick = { linkToPrivacyPolicy() }
                 ) {
                     isPrivacyPolicyAccepted = !isPrivacyPolicyAccepted
                 }
@@ -189,11 +193,33 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
        store.dispatch(AuthRequests.SignUp(email, password, confirmedPassword, isPrivacyPolicyAccepted))
     }
 
+    private fun linkToTermsAndConditions() {
+        startActivity(
+            WebViewActivity.newIntent(
+                this,
+                TERMS_AND_CONDITIONS_LINK,
+                getString(R.string.terms_and_conditions)
+            )
+        )
+    }
+
+    private fun linkToPrivacyPolicy() {
+        startActivity(
+            WebViewActivity.newIntent(
+                this,
+                PRIVACY_POLICY_LINK,
+                getString(R.string.privacy_policy)
+            )
+        )
+    }
+
     private fun startSignInActivity() {
         startActivity(
             Intent(this, SignInComposeActivity::class.java)
         )
     }
+
+    private fun resetSignUpMessage() = store.dispatch(AuthRequests.ResetSignUpMessage)
 
     override fun onStart() {
         super.onStart()
@@ -203,8 +229,6 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
             }.select { it.auth }
         }
     }
-
-    private fun resetSignUpMessage() = store.dispatch(AuthRequests.ResetSignUpMessage)
 
     override fun onStop() {
         super.onStop()

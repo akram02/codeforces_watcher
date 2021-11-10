@@ -67,7 +67,7 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
                 LinkText(
                     linkTextData = listOf(
                         LinkTextData(("${getString(R.string.dont_have_an_account_yet)} ")),
-                        LinkTextData(getString(R.string.sign_up)) { startSignUpActivity() }
+                        LinkTextData(getString(R.string.sign_up),"sign_up") { startSignUpActivity() }
                     ),
                     modifier = Modifier
                         .height(62.dp)
@@ -139,7 +139,7 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
 
                 LinkText(
                     linkTextData = listOf(
-                        LinkTextData(getString(R.string.forgot_password)) { startRestorePasswordActivity() }
+                        LinkTextData(getString(R.string.forgot_password), "forgot_password") { startRestorePasswordActivity() }
                     ),
                     clickableTextStyle = MaterialTheme.typography.body2.copy(
                         color = MaterialTheme.colors.onBackground
