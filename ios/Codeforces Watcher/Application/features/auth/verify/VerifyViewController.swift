@@ -28,13 +28,15 @@ class VerifyViewController: UIHostingController<VerifyView>, ReKampStoreSubscrib
         super.viewWillDisappear(animated)
         
         resetMessage()
+        
+        store.unsubscribe(subscriber: self)
     }
     
     func onNewState(state: Any) {
         let state = state as! VerificationState
         
-        rootView.verificationCode = state.verificationCode ?? ""
-        updateMessage(message: state.message)
+        updateVerificationCode(state.verificationCode)
+        updateMessage(state.message)
         
         switch (state.status) {
         case .idle:
@@ -85,8 +87,13 @@ class VerifyViewController: UIHostingController<VerifyView>, ReKampStoreSubscrib
         store.dispatch(action: VerificationRequests.FetchVerificationCode())
     }
     
-    private func updateMessage(message: String) {
-        rootView.message = message
+    private func updateVerificationCode(_ code: String?) {
+        rootView.verificationCode = code ?? ""
+    }
+    
+    private func updateMessage(_ message: String?) {
+        print(message)
+        rootView.message = message ?? ""
     }
     
     private func resetMessage() {

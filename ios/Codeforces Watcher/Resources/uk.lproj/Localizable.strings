@@ -133,7 +133,7 @@
 
 "wrong_credentials" = "Неправильні дані!";
 "fields_cannot_be_empty" = "Поля не можуть бути порожніми!";
-"passwords_do_not_match" = "Паролі не збігаються";
+"passwords_do_not_match" = "Паролі не збігаються!";
 "ratings_have_been_updated" = "Рейтинги оновлені";
 
 "forgot_password_success" = "Вам надіслано електронний лист з подальшими інструкціями! Будь ласка, перевірте!";

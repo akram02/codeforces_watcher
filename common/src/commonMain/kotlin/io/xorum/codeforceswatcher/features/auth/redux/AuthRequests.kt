@@ -25,7 +25,7 @@ class AuthRequests {
         }
 
         object Success : Action
-        internal data class Failure(val message: String) : Action
+        data class Failure(val message: String) : Action
     }
 
     object ResetSignInMessage : Action

@@ -52,7 +52,7 @@ struct RestorePasswordView: View {
             })
             .hidden()
         }
-        .padding([.horizontal, .bottom], 20)
+        .padding(.horizontal, 20)
     }
 }
 

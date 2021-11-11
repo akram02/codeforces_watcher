@@ -12,9 +12,9 @@ struct VerifyView: View {
     var message = ""
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
+        VStack(spacing: 0) {
             Spacer()
-                .frame(height: 76)
+                .frame(height: 56)
             
             Text("verify_codeforces_account".localized)
                 .font(.bigHeader)
@@ -24,7 +24,7 @@ struct VerifyView: View {
             Spacer()
                 .frame(height: 44)
             
-            VStack(spacing: 0) {
+            VStack(spacing: 24) {
                 TextInputLayoutView(
                     text: $codeforcesHandle,
                     hint: "codeforces_handle".localized,
@@ -32,9 +32,6 @@ struct VerifyView: View {
                     contentType: .text,
                     tag: 0
                 )
-                
-                Spacer()
-                    .frame(height: 24)
                 
                 VStack(spacing: 0) {
                     AttributedTextView(
@@ -51,6 +48,7 @@ struct VerifyView: View {
                     
                     Text(verificationCode)
                         .font(.midHeader)
+                        .foregroundColor(Palette.black.swiftUIColor)
                     
                     Spacer()
                         .frame(height: 20)
@@ -62,11 +60,7 @@ struct VerifyView: View {
                 }
             }
             
-            Text(message.localized)
-                .font(.primarySemibold)
-                .foregroundColor(Palette.black.swiftUIColor)
-                .shadow(color: Palette.red.swiftUIColor, radius: 8, x: 0, y: 0)
-                .frame(height: 72)
+            ErrorMessage(message: message)
             
             Button(action: {
                 self.onVerify(codeforcesHandle)
@@ -75,9 +69,9 @@ struct VerifyView: View {
             })
             
             Spacer()
-                .frame(height: 40)
+            Spacer()
         }
-        .padding(.horizontal)
+        .padding(.horizontal, 20)
     }
 }
 
