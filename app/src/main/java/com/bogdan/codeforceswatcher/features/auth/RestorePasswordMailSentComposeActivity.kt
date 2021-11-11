@@ -128,6 +128,8 @@ class RestorePasswordMailSentComposeActivity : ComponentActivity() {
     }
 
     private fun startSignInActivity() {
-        startActivity(Intent(this, SignInComposeActivity::class.java))
+        val intent = Intent(this, SignInComposeActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent)
     }
 }

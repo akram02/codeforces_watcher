@@ -43,6 +43,7 @@ import io.xorum.codeforceswatcher.util.Constants.TERMS_AND_CONDITIONS_LINK
 import tw.geothings.rekotlin.StoreSubscriber
 
 class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
+
     @ExperimentalComposeUiApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,7 +78,6 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
                         LinkTextData("${getString(R.string.already_have_an_account)} "),
                         LinkTextData(getString(R.string.sign_in), "sign_in") {
                             startSignInActivity()
-                            finish()
                         }
                     ),
                     modifier = Modifier
@@ -243,7 +243,14 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
         confirmedPassword: String,
         isPrivacyPolicyAccepted: Boolean
     ) {
-       store.dispatch(AuthRequests.SignUp(email, password, confirmedPassword, isPrivacyPolicyAccepted))
+        store.dispatch(
+            AuthRequests.SignUp(
+                email,
+                password,
+                confirmedPassword,
+                isPrivacyPolicyAccepted
+            )
+        )
     }
 
     private fun linkToTermsAndConditions() {
@@ -267,9 +274,9 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
     }
 
     private fun startSignInActivity() {
-        startActivity(
-            Intent(this, SignInComposeActivity::class.java)
-        )
+        val intent = Intent(this, SignInComposeActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent)
     }
 
     private fun resetSignUpMessage() = store.dispatch(AuthRequests.ResetSignUpMessage)
