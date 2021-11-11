@@ -8,7 +8,7 @@ struct RestorePasswordMailSentView: View {
     var body: some View {
         VStack(spacing: 0) {
             Spacer()
-                .frame(height: 76)
+                .frame(height: 56)
             
             VStack(spacing: 12) {
                 Text("check_your_box".localized)
@@ -21,15 +21,14 @@ struct RestorePasswordMailSentView: View {
             }
             
             Spacer()
-                .frame(height: 68)
+                .frame(height: 72)
             
             Image("email")
                 .resizable()
                 .frame(width: 108, height: 80)
-                .scaledToFit()
             
             Spacer()
-                .frame(height: 68)
+                .frame(height: 72)
             
             VStack(spacing: 20) {
                 Button(action: {
@@ -53,7 +52,7 @@ struct RestorePasswordMailSentView: View {
                 .foregroundColor(Palette.darkGray.swiftUIColor)
         }
         .multilineTextAlignment(.center)
-        .padding()
+        .padding([.horizontal, .bottom], 20)
     }
 }
 

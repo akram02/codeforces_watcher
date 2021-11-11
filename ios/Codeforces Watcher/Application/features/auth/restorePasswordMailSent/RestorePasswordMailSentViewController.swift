@@ -29,8 +29,12 @@ class RestorePasswordMailSentViewController: UIHostingController<RestorePassword
     private func setInteractions() {
         rootView.onOpenMail = {
             guard let mailURL = URL(string: "message://") else { return }
+            
             if UIApplication.shared.canOpenURL(mailURL) {
                 UIApplication.shared.open(mailURL)
+            } else {
+                let toastHandler = IOSToastHandler()
+                toastHandler.showToast(message: "mail_app_not_found".localized)
             }
         }
         
