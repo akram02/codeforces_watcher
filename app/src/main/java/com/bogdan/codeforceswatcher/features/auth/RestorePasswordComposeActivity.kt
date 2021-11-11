@@ -52,78 +52,100 @@ class RestorePasswordComposeActivity : ComponentActivity(), StoreSubscriber<Auth
     @ExperimentalComposeUiApi
     @Composable
     private fun RestorePasswordScreen() {
+        Scaffold(
+            modifier = Modifier.fillMaxSize(),
+            topBar = { TopBar() },
+            bottomBar = { BottomBar() },
+            backgroundColor = MaterialTheme.colors.background
+        ) {
+            Content()
+        }
+    }
+
+    @Composable
+    private fun TopBar() { NavigationBar { finish() } }
+
+    @Composable
+    private fun BottomBar() {
+        LinkText(
+            linkTextData = listOf(
+                LinkTextData(getString(R.string.lost_access_to_mail), "lost_access_to_mail") { }
+            ),
+            modifier = Modifier
+                .height(62.dp)
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp)
+                .alpha(0f),
+            clickableTextStyle = MaterialTheme.typography.body2.copy(
+                fontSize = 14.sp,
+                color = MaterialTheme.colors.secondaryVariant
+            ),
+            paragraphStyle = ParagraphStyle(textAlign = TextAlign.Center)
+        )
+    }
+
+    @ExperimentalComposeUiApi
+    @Composable
+    private fun Content() {
         val localFocusManager = LocalFocusManager.current
         val authState by authState.observeAsState()
 
-        Scaffold(
-            modifier = Modifier.fillMaxSize(),
-            topBar = {
-                NavigationBar { finish() }
-            },
-            bottomBar = {
-                LinkText(
-                    linkTextData = listOf(
-                        LinkTextData(getString(R.string.lost_access_to_mail), "lost_access_to_mail") { }
-                    ),
-                    modifier = Modifier
-                        .height(62.dp)
-                        .fillMaxWidth()
-                        .padding(horizontal = 20.dp)
-                        .alpha(0f),
-                    clickableTextStyle = MaterialTheme.typography.body2.copy(
-                        fontSize = 14.sp,
-                        color = MaterialTheme.colors.secondaryVariant
-                    ),
-                    paragraphStyle = ParagraphStyle(textAlign = TextAlign.Center)
-                )
-            },
-            backgroundColor = MaterialTheme.colors.background
+        Column(
+            modifier = Modifier.padding(horizontal = 20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Column(
-                modifier = Modifier.padding(horizontal = 20.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                Spacer(Modifier.height(56.dp))
+            Spacer(Modifier.height(56.dp))
 
-                Title(getString(R.string.restore_password))
+            Title(getString(R.string.restore_password))
 
-                Spacer(Modifier.height(40.dp))
+            Spacer(Modifier.height(40.dp))
 
-                Text(
-                    text = getString(R.string.you_will_get_an_email_with_instructions_for_account_recovery),
-                    modifier = Modifier.fillMaxWidth(),
-                    style = MaterialTheme.typography.body1.copy(fontSize = 14.sp),
-                    color = MaterialTheme.colors.onBackground,
-                    textAlign = TextAlign.Start
+            Text(
+                text = getString(R.string.you_will_get_an_email_with_instructions_for_account_recovery),
+                modifier = Modifier.fillMaxWidth(),
+                style = MaterialTheme.typography.body1.copy(fontSize = 14.sp),
+                color = MaterialTheme.colors.onBackground,
+                textAlign = TextAlign.Start
+            )
+
+            Spacer(Modifier.height(36.dp))
+
+            AuthTextField(
+                label = getString(R.string.email),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Email,
+                    imeAction = ImeAction.Done
+                ),
+                keyboardActions = KeyboardActions(
+                    onDone = { localFocusManager.clearFocus() }
                 )
-
-                Spacer(Modifier.height(36.dp))
-
-                AuthTextField(
-                    label = getString(R.string.email),
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Email,
-                        imeAction = ImeAction.Done
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onDone = { localFocusManager.clearFocus() }
-                    )
-                ) { newEmail ->
-                    email = newEmail
-                }
-
-                Spacer(Modifier.height(24.dp))
-
-                ErrorView(authState?.restorePasswordMessage.orEmpty())
-
-                Spacer(Modifier.height(30.dp))
-
-                AuthButton(getString(R.string.restore_password)) {
-                    forgotPassword(email)
-                }
+            ) { newEmail ->
+                email = newEmail
             }
-            if (authState?.status == AuthState.Status.PENDING) LoadingView()
+
+            Spacer(Modifier.height(24.dp))
+
+            ErrorView(authState?.restorePasswordMessage.orEmpty())
+
+            Spacer(Modifier.height(30.dp))
+
+            AuthButton(getString(R.string.restore_password)) {
+                forgotPassword(email)
+            }
         }
+        if (authState?.status == AuthState.Status.PENDING) LoadingView()
+    }
+
+    private fun forgotPassword(email: String) {
+        store.dispatch(AuthRequests.SendPasswordReset(email))
+    }
+
+    private fun startRestorePasswordMailSentActivity() {
+        startActivity(Intent(this, RestorePasswordMailSentComposeActivity::class.java))
+    }
+
+    private fun resetRestorePasswordMessage() {
+        store.dispatch(AuthRequests.ResetRestorePasswordMessage)
     }
 
     override fun onStart() {
@@ -137,21 +159,13 @@ class RestorePasswordComposeActivity : ComponentActivity(), StoreSubscriber<Auth
 
     override fun onStop() {
         super.onStop()
-        store.dispatch(AuthRequests.ResetRestorePasswordMessage)
+        resetRestorePasswordMessage()
         store.unsubscribe(this)
-    }
-
-    private fun forgotPassword(email: String) {
-        store.dispatch(AuthRequests.SendPasswordReset(email))
-    }
-
-    private fun startRestorePasswordMailSentActivity() {
-        startActivity(Intent(this, RestorePasswordMailSentComposeActivity::class.java))
     }
 
     override fun onNewState(state: AuthState) {
         authState.postValue(state)
         if (state.status == AuthState.Status.DONE) startRestorePasswordMailSentActivity()
-        if (state.status == AuthState.Status.IDLE) store.dispatch(AuthRequests.ResetRestorePasswordMessage)
+        if (state.status == AuthState.Status.IDLE) resetRestorePasswordMessage()
     }
 }

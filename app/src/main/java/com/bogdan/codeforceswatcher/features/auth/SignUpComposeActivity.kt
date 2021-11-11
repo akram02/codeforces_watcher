@@ -63,124 +63,134 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
     @ExperimentalComposeUiApi
     @Composable
     private fun SignUpScreen() {
+        Scaffold(
+            modifier = Modifier.fillMaxSize(),
+            topBar = { TopBar() },
+            bottomBar = { BottomBar() },
+            backgroundColor = MaterialTheme.colors.background
+        ) {
+            Content()
+        }
+    }
+
+    @Composable
+    private fun TopBar() { NavigationBar { finish() } }
+
+    @Composable
+    private fun BottomBar() {
+        LinkText(
+            linkTextData = listOf(
+                LinkTextData("${getString(R.string.already_have_an_account)} "),
+                LinkTextData(getString(R.string.sign_in), "sign_in") {
+                    startSignInActivity()
+                }
+            ),
+            modifier = Modifier
+                .height(62.dp)
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp),
+            textStyle = MaterialTheme.typography.body1.copy(
+                fontSize = 14.sp,
+                color = MaterialTheme.colors.secondaryVariant
+            ),
+            clickableTextStyle = MaterialTheme.typography.body2.copy(
+                fontSize = 14.sp,
+                color = MaterialTheme.colors.onBackground
+            ),
+            paragraphStyle = ParagraphStyle(textAlign = TextAlign.Center)
+        )
+    }
+
+    @ExperimentalComposeUiApi
+    @Composable
+    private fun Content() {
         val localFocusManager = LocalFocusManager.current
         val authState by authState.observeAsState()
         var isPrivacyPolicyAccepted by remember { mutableStateOf(false) }
 
-        Scaffold(
-            modifier = Modifier.fillMaxSize(),
-            topBar = {
-                NavigationBar { finish() }
-            },
-            bottomBar = {
-                LinkText(
-                    linkTextData = listOf(
-                        LinkTextData("${getString(R.string.already_have_an_account)} "),
-                        LinkTextData(getString(R.string.sign_in), "sign_in") {
-                            startSignInActivity()
-                        }
-                    ),
-                    modifier = Modifier
-                        .height(62.dp)
-                        .fillMaxWidth()
-                        .padding(horizontal = 20.dp),
-                    textStyle = MaterialTheme.typography.body1.copy(
-                        fontSize = 14.sp,
-                        color = MaterialTheme.colors.secondaryVariant
-                    ),
-                    clickableTextStyle = MaterialTheme.typography.body2.copy(
-                        fontSize = 14.sp,
-                        color = MaterialTheme.colors.onBackground
-                    ),
-                    paragraphStyle = ParagraphStyle(textAlign = TextAlign.Center)
-                )
-            },
-            backgroundColor = MaterialTheme.colors.background
+        Column(
+            modifier = Modifier.padding(horizontal = 20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Column(
-                modifier = Modifier.padding(horizontal = 20.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
+            Spacer(Modifier.height(56.dp))
+
+            Title(getString(R.string.sign_up))
+
+            Spacer(Modifier.height(44.dp))
+
+            AuthTextField(
+                label = getString(R.string.email),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Email,
+                    imeAction = ImeAction.Next
+                ),
+                keyboardActions = KeyboardActions(
+                    onNext = { localFocusManager.moveFocus(FocusDirection.Down) }
+                )
+            ) { newEmail ->
+                email = newEmail
+            }
+
+            Spacer(Modifier.height(24.dp))
+
+            AuthTextField(
+                label = getString(R.string.password),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Password,
+                    imeAction = ImeAction.Next
+                ),
+                keyboardActions = KeyboardActions(
+                    onNext = { localFocusManager.moveFocus(FocusDirection.Down) }
+                ),
+                visualTransformation = PasswordVisualTransformation(mask = '*')
+            ) { newPassword ->
+                password = newPassword
+            }
+
+            Spacer(Modifier.height(24.dp))
+
+            AuthTextField(
+                label = getString(R.string.confirm_password),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Password,
+                    imeAction = ImeAction.Done
+                ),
+                keyboardActions = KeyboardActions(
+                    onDone = { localFocusManager.clearFocus() }
+                ),
+                visualTransformation = PasswordVisualTransformation(mask = '*')
+            ) { newConfirmPassword ->
+                confirmedPassword = newConfirmPassword
+            }
+
+            Spacer(Modifier.height(36.dp))
+
+            PrivacyPolicyChecker(
+                modifier = Modifier.padding(horizontal = 21.dp),
+                isAccepted = isPrivacyPolicyAccepted,
+                textStyle = MaterialTheme.typography.body1.copy(
+                    color = MaterialTheme.colors.onBackground
+                )
             ) {
-                Spacer(Modifier.height(56.dp))
+                isPrivacyPolicyAccepted = !isPrivacyPolicyAccepted
+            }
 
-                Title(getString(R.string.sign_up))
+            Spacer(Modifier.height(20.dp))
 
-                Spacer(Modifier.height(44.dp))
+            ErrorView(authState?.signUpMessage.orEmpty())
 
-                AuthTextField(
-                    label = getString(R.string.email),
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Email,
-                        imeAction = ImeAction.Next
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onNext = { localFocusManager.moveFocus(FocusDirection.Down) }
-                    )
-                ) { newEmail ->
-                    email = newEmail
-                }
+            Spacer(Modifier.height(26.dp))
 
-                Spacer(Modifier.height(24.dp))
-
-                AuthTextField(
-                    label = getString(R.string.password),
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Password,
-                        imeAction = ImeAction.Next
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onNext = { localFocusManager.moveFocus(FocusDirection.Down) }
-                    ),
-                    visualTransformation = PasswordVisualTransformation(mask = '*')
-                ) { newPassword ->
-                    password = newPassword
-                }
-
-                Spacer(Modifier.height(24.dp))
-
-                AuthTextField(
-                    label = getString(R.string.confirm_password),
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Password,
-                        imeAction = ImeAction.Done
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onDone = { localFocusManager.clearFocus() }
-                    ),
-                    visualTransformation = PasswordVisualTransformation(mask = '*')
-                ) { newConfirmPassword ->
-                    confirmedPassword = newConfirmPassword
-                }
-
-                Spacer(Modifier.height(36.dp))
-
-                PrivacyPolicyChecker(
-                    modifier = Modifier.padding(horizontal = 21.dp),
-                    isAccepted = isPrivacyPolicyAccepted,
-                    textStyle = MaterialTheme.typography.body1.copy(
-                        color = MaterialTheme.colors.onBackground
-                    )
-                ) {
-                    isPrivacyPolicyAccepted = !isPrivacyPolicyAccepted
-                }
-
-                Spacer(Modifier.height(20.dp))
-
-                ErrorView(authState?.signUpMessage.orEmpty())
-
-                Spacer(Modifier.height(26.dp))
-
-                AuthButton(
-                    label = getString(R.string.sign_up).uppercase(),
-                    modifier = Modifier.border(
-                        width = 2.dp,
-                        color = MaterialTheme.colors.secondary,
-                        shape = RoundedCornerShape(100)
-                    ),
-                    isInverted = !isPrivacyPolicyAccepted
-                ) {
-                    signUp(email, password, confirmedPassword, isPrivacyPolicyAccepted)
-                }
+            AuthButton(
+                label = getString(R.string.sign_up).uppercase(),
+                modifier = Modifier.border(
+                    width = 2.dp,
+                    color = MaterialTheme.colors.secondary,
+                    shape = RoundedCornerShape(100)
+                ),
+                isInverted = !isPrivacyPolicyAccepted
+            ) {
+                signUp(email, password, confirmedPassword, isPrivacyPolicyAccepted)
             }
         }
         if (authState?.status == AuthState.Status.PENDING) LoadingView()

@@ -53,119 +53,111 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
     @ExperimentalComposeUiApi
     @Composable
     private fun SignInScreen() {
-        val localFocusManager = LocalFocusManager.current
-        val authState by authState.observeAsState()
-
         Scaffold(
             modifier = Modifier.fillMaxSize(),
-            topBar = {
-                NavigationBar { finish() }
-            },
-            bottomBar = {
-                LinkText(
-                    linkTextData = listOf(
-                        LinkTextData(("${getString(R.string.dont_have_an_account_yet)} ")),
-                        LinkTextData(getString(R.string.sign_up), "sign_up") { startSignUpActivity() }
-                    ),
-                    modifier = Modifier
-                        .height(62.dp)
-                        .fillMaxWidth()
-                        .padding(horizontal = 20.dp),
-                    textStyle = MaterialTheme.typography.body1.copy(
-                        fontSize = 14.sp,
-                        color = MaterialTheme.colors.secondaryVariant
-                    ),
-                    clickableTextStyle = MaterialTheme.typography.body2.copy(
-                        fontSize = 14.sp,
-                        color = MaterialTheme.colors.onBackground
-                    ),
-                    paragraphStyle = ParagraphStyle(textAlign = TextAlign.Center)
-                )
-            },
+            topBar = { TopBar() },
+            bottomBar = { BottomBar() },
             backgroundColor = MaterialTheme.colors.background
         ) {
-            Column(
-                modifier = Modifier.padding(horizontal = 20.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                Spacer(Modifier.height(56.dp))
-
-                Title(getString(R.string.sign_in))
-
-                Spacer(Modifier.height(44.dp))
-
-                AuthTextField(
-                    label = getString(R.string.email),
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Email,
-                        imeAction = ImeAction.Next
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onNext = { localFocusManager.moveFocus(FocusDirection.Down) }
-                    )
-                ) { newEmail ->
-                    email = newEmail
-                }
-
-                Spacer(Modifier.height(24.dp))
-
-                AuthTextField(
-                    label = getString(R.string.password),
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Password,
-                        imeAction = ImeAction.Done
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onDone = { localFocusManager.clearFocus() }
-                    ),
-                    visualTransformation = PasswordVisualTransformation(mask = '*')
-                ) { newPassword ->
-                    password = newPassword
-                }
-
-                Spacer(Modifier.height(24.dp))
-
-                ErrorView(authState?.signInMessage.orEmpty())
-
-                Spacer(Modifier.height(30.dp))
-
-                AuthButton(getString(R.string.sign_in).uppercase()) {
-                    signInWithEmailAndPassword(email, password)
-                }
-
-                Spacer(Modifier.height(72.dp))
-
-                LinkText(
-                    linkTextData = listOf(
-                        LinkTextData(
-                            getString(R.string.forgot_password),
-                            "forgot_password"
-                        ) { startRestorePasswordActivity() }
-                    ),
-                    clickableTextStyle = MaterialTheme.typography.body2.copy(
-                        color = MaterialTheme.colors.onBackground
-                    )
-                )
-            }
+            Content()
         }
-        if (authState?.status == AuthState.Status.PENDING) LoadingView()
+    }
+
+    @Composable
+    private fun TopBar() { NavigationBar { finish() } }
+
+    @Composable
+    private fun BottomBar() {
+        LinkText(
+            linkTextData = listOf(
+                LinkTextData(("${getString(R.string.dont_have_an_account_yet)} ")),
+                LinkTextData(getString(R.string.sign_up), "sign_up") { startSignUpActivity() }
+            ),
+            modifier = Modifier
+                .height(62.dp)
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp),
+            textStyle = MaterialTheme.typography.body1.copy(
+                fontSize = 14.sp,
+                color = MaterialTheme.colors.secondaryVariant
+            ),
+            clickableTextStyle = MaterialTheme.typography.body2.copy(
+                fontSize = 14.sp,
+                color = MaterialTheme.colors.onBackground
+            ),
+            paragraphStyle = ParagraphStyle(textAlign = TextAlign.Center)
+        )
     }
 
     @ExperimentalComposeUiApi
-    override fun onStart() {
-        super.onStart()
-        store.subscribe(this) { state ->
-            state.skipRepeats { oldState, newState ->
-                oldState.auth.status == newState.auth.status &&
-                        oldState.auth.authStage == newState.auth.authStage
-            }.select { it.auth }
-        }
-    }
+    @Composable
+    private fun Content() {
+        val localFocusManager = LocalFocusManager.current
+        val authState by authState.observeAsState()
 
-    override fun onStop() {
-        super.onStop()
-        store.dispatch(AuthRequests.ResetSignInMessage)
-        store.unsubscribe(this)
+        Column(
+            modifier = Modifier.padding(horizontal = 20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Spacer(Modifier.height(56.dp))
+
+            Title(getString(R.string.sign_in))
+
+            Spacer(Modifier.height(44.dp))
+
+            AuthTextField(
+                label = getString(R.string.email),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Email,
+                    imeAction = ImeAction.Next
+                ),
+                keyboardActions = KeyboardActions(
+                    onNext = { localFocusManager.moveFocus(FocusDirection.Down) }
+                )
+            ) { newEmail ->
+                email = newEmail
+            }
+
+            Spacer(Modifier.height(24.dp))
+
+            AuthTextField(
+                label = getString(R.string.password),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Password,
+                    imeAction = ImeAction.Done
+                ),
+                keyboardActions = KeyboardActions(
+                    onDone = { localFocusManager.clearFocus() }
+                ),
+                visualTransformation = PasswordVisualTransformation(mask = '*')
+            ) { newPassword ->
+                password = newPassword
+            }
+
+            Spacer(Modifier.height(24.dp))
+
+            ErrorView(authState?.signInMessage.orEmpty())
+
+            Spacer(Modifier.height(30.dp))
+
+            AuthButton(getString(R.string.sign_in).uppercase()) {
+                signInWithEmailAndPassword(email, password)
+            }
+
+            Spacer(Modifier.height(72.dp))
+
+            LinkText(
+                linkTextData = listOf(
+                    LinkTextData(getString(R.string.forgot_password), "forgot_password") {
+                        startRestorePasswordActivity()
+                    }
+                ),
+                clickableTextStyle = MaterialTheme.typography.body2.copy(
+                    color = MaterialTheme.colors.onBackground
+                )
+            )
+        }
+        if (authState?.status == AuthState.Status.PENDING) LoadingView()
     }
 
     private fun signInWithEmailAndPassword(email: String, password: String) {
@@ -180,9 +172,29 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
         startActivity(Intent(this, RestorePasswordComposeActivity::class.java))
     }
 
+    private fun resetSignInMessage() {
+        store.dispatch(AuthRequests.ResetSignInMessage)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        store.subscribe(this) { state ->
+            state.skipRepeats { oldState, newState ->
+                oldState.auth.status == newState.auth.status &&
+                        oldState.auth.authStage == newState.auth.authStage
+            }.select { it.auth }
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        resetSignInMessage()
+        store.unsubscribe(this)
+    }
+
     override fun onNewState(state: AuthState) {
         authState.postValue(state)
         if (state.status == AuthState.Status.DONE) finish()
-        if (state.status == AuthState.Status.IDLE) store.dispatch(AuthRequests.ResetSignInMessage)
+        if (state.status == AuthState.Status.IDLE) resetSignInMessage()
     }
 }
