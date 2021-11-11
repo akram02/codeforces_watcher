@@ -43,6 +43,7 @@ import io.xorum.codeforceswatcher.util.Constants.TERMS_AND_CONDITIONS_LINK
 import tw.geothings.rekotlin.StoreSubscriber
 
 class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
+
     @ExperimentalComposeUiApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -268,9 +269,7 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
     }
 
     private fun startSignInActivity() {
-        startActivity(
-            Intent(this, SignInComposeActivity::class.java)
-        )
+        startActivity(Intent(this, SignInComposeActivity::class.java))
     }
 
     private fun resetSignUpMessage() = store.dispatch(AuthRequests.ResetSignUpMessage)

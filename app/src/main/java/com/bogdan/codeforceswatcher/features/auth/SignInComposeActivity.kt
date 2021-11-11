@@ -34,6 +34,7 @@ import io.xorum.codeforceswatcher.redux.store
 import tw.geothings.rekotlin.StoreSubscriber
 
 class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
+
     @ExperimentalComposeUiApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,7 +68,7 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
                 LinkText(
                     linkTextData = listOf(
                         LinkTextData(("${getString(R.string.dont_have_an_account_yet)} ")),
-                        LinkTextData(getString(R.string.sign_up),"sign_up") { startSignUpActivity() }
+                        LinkTextData(getString(R.string.sign_up), "sign_up") { startSignUpActivity() }
                     ),
                     modifier = Modifier
                         .height(62.dp)
@@ -172,15 +173,11 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
     }
 
     private fun startSignUpActivity() {
-        startActivity(
-            Intent(this, SignUpComposeActivity::class.java)
-        )
+        startActivity(Intent(this, SignUpComposeActivity::class.java))
     }
 
     private fun startRestorePasswordActivity() {
-        startActivity(
-            Intent(this, RestorePasswordComposeActivity::class.java)
-        )
+        startActivity(Intent(this, RestorePasswordComposeActivity::class.java))
     }
 
     override fun onNewState(state: AuthState) {

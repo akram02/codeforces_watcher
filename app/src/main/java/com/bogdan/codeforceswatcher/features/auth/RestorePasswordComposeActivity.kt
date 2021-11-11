@@ -147,9 +147,7 @@ class RestorePasswordComposeActivity : ComponentActivity(), StoreSubscriber<Auth
     }
 
     private fun startRestorePasswordMailSentActivity() {
-        startActivity(
-            Intent(this, RestorePasswordMailSentComposeActivity::class.java)
-        )
+        startActivity(Intent(this, RestorePasswordMailSentComposeActivity::class.java))
     }
 
     override fun onNewState(state: AuthState) {
