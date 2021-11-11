@@ -34,6 +34,7 @@ import androidx.lifecycle.MutableLiveData
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.WebViewActivity
 import com.bogdan.codeforceswatcher.components.compose.*
+import com.bogdan.codeforceswatcher.components.compose.textfields.*
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 import io.xorum.codeforceswatcher.features.auth.redux.AuthRequests
 import io.xorum.codeforceswatcher.features.auth.redux.AuthState
@@ -63,8 +64,6 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
     @ExperimentalComposeUiApi
     @Composable
     private fun SignUpScreen() {
-        val localFocusManager = LocalFocusManager.current
-
         var isPrivacyPolicyAccepted by remember { mutableStateOf(false) }
         val authState by authState.observeAsState()
 
@@ -109,50 +108,15 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
 
                 Spacer(Modifier.height(44.dp))
 
-                AuthTextField(
-                    label = getString(R.string.email),
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Email,
-                        imeAction = ImeAction.Next
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onNext = { localFocusManager.moveFocus(FocusDirection.Down) }
-                    )
-                ) { newEmail ->
-                    email = newEmail
-                }
+                EmailTextField { email = it }
 
                 Spacer(Modifier.height(24.dp))
 
-                AuthTextField(
-                    label = getString(R.string.password),
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Password,
-                        imeAction = ImeAction.Next
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onNext = { localFocusManager.moveFocus(FocusDirection.Down) }
-                    ),
-                    visualTransformation = PasswordVisualTransformation(mask = '*')
-                ) { newPassword ->
-                    password = newPassword
-                }
+                PasswordTextField { password = it }
 
                 Spacer(Modifier.height(24.dp))
 
-                AuthTextField(
-                    label = getString(R.string.confirm_password),
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Password,
-                        imeAction = ImeAction.Done
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onDone = { localFocusManager.clearFocus() }
-                    ),
-                    visualTransformation = PasswordVisualTransformation(mask = '*')
-                ) { newConfirmPassword ->
-                    confirmedPassword = newConfirmPassword
-                }
+                ConfirmPasswordTextField(TextFieldPosition.LAST) { confirmedPassword = it }
 
                 Spacer(Modifier.height(36.dp))
 
