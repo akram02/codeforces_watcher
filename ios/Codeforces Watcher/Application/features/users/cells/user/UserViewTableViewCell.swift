@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct UserTableViewCellView: View {
+struct UserViewTableViewCell: View {
     
     var userAvatar: String = ""
     var userRank: String? = nil
@@ -61,8 +61,8 @@ struct UserTableViewCellView: View {
     }
 }
 
-struct UserTableViewCellView_Previews: PreviewProvider {
+struct UserViewTableViewCell_Previews: PreviewProvider {
     static var previews: some View {
-        UserTableViewCellView()
+        UserViewTableViewCell()
     }
 }

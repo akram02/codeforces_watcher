@@ -2,7 +2,7 @@ import SwiftUI
 
 class UserTableViewCell: UITableViewCell {
 
-    var cell = UIHostingController(rootView: UserTableViewCellView())
+    var cell = UIHostingController(rootView: UserViewTableViewCell())
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -60,9 +60,9 @@ fileprivate extension UserItem.UserItem {
     
     var ratingUpdateDateText: String {
         if let ratingChange = ratingChanges.last {
-            return "last_rating_update".localizedFormat(args: Double(ratingChange.ratingUpdateTimeSeconds).secondsToUserUpdateDateString())
+            return "last_activity".localizedFormat(args: Double(ratingChange.ratingUpdateTimeSeconds).secondsToUserUpdateDateString())
         } else {
-            return "no_rating_update".localized
+            return "no_activity".localized
         }
     }
     
