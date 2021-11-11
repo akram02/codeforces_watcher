@@ -38,10 +38,10 @@ class UsersRequests {
         }
 
         private fun getUsers() = when (fetchUserDataType) {
-            FetchUserDataType.PERSIST -> store.state.users.users
+            FetchUserDataType.PERSIST -> store.state.users.followedUsers
             FetchUserDataType.REFRESH -> {
                 val isSignedIn = store.state.auth.authStage != AuthState.Stage.NOT_SIGNED_IN
-                store.state.users.users.takeUnless { isSignedIn }.orEmpty()
+                store.state.users.followedUsers.takeUnless { isSignedIn }.orEmpty()
             }
         }
 
@@ -68,7 +68,7 @@ class UsersRequests {
 
         private fun getOrderedUsers(toAddDiff: List<User>, toDeleteDiff: List<User>): List<User> {
             val usersMap = DatabaseQueries.Users.getAll().associateBy { it.handle }
-            return store.state.users.users.map { usersMap[it.handle] ?: it }.minus(toDeleteDiff)
+            return store.state.users.followedUsers.map { usersMap[it.handle] ?: it }.minus(toDeleteDiff)
                 .plus(toAddDiff)
         }
 

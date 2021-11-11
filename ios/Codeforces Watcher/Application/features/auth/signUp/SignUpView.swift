@@ -74,6 +74,7 @@ struct SignUpView: View {
                         attributeTags: [.term, .privacy],
                         font: UIFont.monospacedSystemFont(ofSize: 13, weight: .regular),
                         foregroundColor: Palette.black,
+                        alignment: .left,
                         height: $agreementHeight,
                         onLink: { link in
                             self.onLink(link)

@@ -42,6 +42,7 @@ struct VerifyView: View {
                         attributeTags: [.bold],
                         font: UIFont.monospacedSystemFont(ofSize: 14, weight: .regular),
                         foregroundColor: Palette.darkGray,
+                        alignment: .left,
                         height: $verifyInstructionHeight
                     )
                     .frame(height: verifyInstructionHeight)

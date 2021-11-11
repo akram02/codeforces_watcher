@@ -32,13 +32,14 @@
 
 "Click to see details" = "Нажмите, чтобы увидеть детали";
 "Users" = "Пользователи";
+"followed_users" = "Подписки";
 "no_favourite_problems_explanation" = "У Вас еще нет любимых задач.\nДобавьте первую воспользовавшись кнопкой «∞» внизу экрана.";
 "share_cw_message" = "Я использую Codeforces WatchR - бесплатное IOS приложение с открытым исходным кодом,  которое использует Codeforces API чтобы принести больше олимпиадного программирования на ваше IOS устройство. \n Codeforces WatchR позволяет: \n\n 1. Короткий список и регистрация на предстоящие соревнования по спортивному программированию: Codeforces, LeetCode, HackerEarth, AtCoder, TopCoder, CS Academy, CodeChef, Kick Start. \n 2. Следите за недавними событиями на Codeforces. \n 3. Просматривайте и ищите проблемы, добавляйте их в избранное. \n 4. Следите за активностью любого пользователя Codeforces. \n 5. Сортировка пользователей по рейтингу и дате последнего участия. \n\n Загружайте прямо сейчас в App Store - https://apps.apple.com/us/app/codeforces-watchr-contests/id1495591299";
 "no_users_explanation" = "У Вас еще нет пользователей для отслеживания.\nДобавьте первого воспользовавшись кнопкой «+» внизу экрана.";
 
 "Add user" = "Добавить пользователя";
 "Enter user handle" = "Введите хэндл пользователя";
-"no_rating_update" = "Нет обновления рейтинга";
+"no_activity" = "Нет активности";
 "Done" = "Готово";
 "Rating changes" = "Изменения рейтинга";
 
@@ -56,7 +57,7 @@
 "update_up" = "↑обновления";
 "update_down" = "↓обновления";
 
-"last_rating_update" = "Последнее обновление рейтинга: %@";
+"last_activity" = "Последняя активность: %@";
 
 "share_text" = "%@ - %@\n\nОтправлено через Codeforces WatchR. Найдите его в App Store.";
 "upcoming_contests" = "Предстоящие контесты";
