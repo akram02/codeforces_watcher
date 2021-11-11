@@ -86,7 +86,7 @@ class VerificationComposeActivity : ComponentActivity(), StoreSubscriber<Verific
 
             Title(getString(R.string.verify_codeforces_account))
 
-            Spacer(Modifier.height(40.dp))
+            Spacer(Modifier.height(44.dp))
 
             AuthTextField(
                 label = getString(R.string.codeforces_handle),

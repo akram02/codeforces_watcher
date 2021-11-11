@@ -72,9 +72,8 @@ class RestorePasswordComposeActivity : ComponentActivity(), StoreSubscriber<Auth
                 LinkTextData(getString(R.string.lost_access_to_mail), "lost_access_to_mail") { }
             ),
             modifier = Modifier
-                .height(62.dp)
                 .fillMaxWidth()
-                .padding(horizontal = 20.dp)
+                .padding(start = 20.dp, end = 20.dp, bottom = 45.dp)
                 .alpha(0f),
             clickableTextStyle = MaterialTheme.typography.body2.copy(
                 fontSize = 14.sp,
@@ -98,7 +97,7 @@ class RestorePasswordComposeActivity : ComponentActivity(), StoreSubscriber<Auth
 
             Title(getString(R.string.restore_password))
 
-            Spacer(Modifier.height(40.dp))
+            Spacer(Modifier.height(44.dp))
 
             Text(
                 text = getString(R.string.you_will_get_an_email_with_instructions_for_account_recovery),

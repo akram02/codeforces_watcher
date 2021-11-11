@@ -74,9 +74,8 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
                 LinkTextData(getString(R.string.sign_up), "sign_up") { startSignUpActivity() }
             ),
             modifier = Modifier
-                .height(62.dp)
                 .fillMaxWidth()
-                .padding(horizontal = 20.dp),
+                .padding(start = 20.dp, end = 20.dp, bottom = 45.dp),
             textStyle = MaterialTheme.typography.body1.copy(
                 fontSize = 14.sp,
                 color = MaterialTheme.colors.secondaryVariant

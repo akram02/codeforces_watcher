@@ -57,9 +57,8 @@ class RestorePasswordMailSentComposeActivity : ComponentActivity() {
         Text(
             text = getString(R.string.check_your_spam_folder),
             modifier = Modifier
-                .height(80.dp)
                 .fillMaxWidth()
-                .padding(horizontal = 20.dp),
+                .padding(start = 20.dp, end = 20.dp, bottom = 45.dp),
             style = MaterialTheme.typography.body1,
             fontSize = 14.sp,
             color = MaterialTheme.colors.secondaryVariant,
