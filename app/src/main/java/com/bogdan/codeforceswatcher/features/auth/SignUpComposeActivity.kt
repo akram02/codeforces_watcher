@@ -8,8 +8,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
@@ -18,15 +16,10 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusDirection
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -59,7 +52,7 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
 
     private var email = ""
     private var password = ""
-    private var confirmedPassword = ""
+    private var confirmPassword = ""
 
     @ExperimentalComposeUiApi
     @Composable
@@ -116,7 +109,7 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
 
                 Spacer(Modifier.height(24.dp))
 
-                ConfirmPasswordTextField(TextFieldPosition.LAST) { confirmedPassword = it }
+                PasswordTextField(TextFieldPosition.LAST, true) { confirmPassword = it }
 
                 Spacer(Modifier.height(36.dp))
 
@@ -145,7 +138,7 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
                     ),
                     isInverted = !isPrivacyPolicyAccepted
                 ) {
-                    signUp(email, password, confirmedPassword, isPrivacyPolicyAccepted)
+                    signUp(email, password, confirmPassword, isPrivacyPolicyAccepted)
                 }
             }
         }

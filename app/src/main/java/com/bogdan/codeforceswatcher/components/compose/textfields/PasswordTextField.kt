@@ -14,12 +14,14 @@ import com.bogdan.codeforceswatcher.R
 @Composable
 fun PasswordTextField(
     position: TextFieldPosition = TextFieldPosition.NOT_LAST,
+    confirmPassword: Boolean = false,
     onValueChange: (String) -> Unit
 ) {
     val localFocusManager = LocalFocusManager.current
 
     AuthTextField(
-        label = stringResource(R.string.password),
+        label = if (confirmPassword) stringResource(R.string.confirm_password)
+        else stringResource(R.string.password),
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Password,
             imeAction = if (position == TextFieldPosition.LAST) ImeAction.Done else ImeAction.Next
