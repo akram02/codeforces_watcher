@@ -59,6 +59,8 @@ class VerificationComposeActivity : ComponentActivity(), StoreSubscriber<Verific
     @ExperimentalComposeUiApi
     @Composable
     private fun VerificationScreen() {
+        fetchVerificationCode()
+
         Scaffold(
             modifier = Modifier.fillMaxSize(),
             topBar = { TopBar() },
@@ -76,8 +78,6 @@ class VerificationComposeActivity : ComponentActivity(), StoreSubscriber<Verific
     private fun Content() {
         val localFocusManager = LocalFocusManager.current
         val verificationState by verificationState.observeAsState()
-
-        fetchVerificationCode()
 
         Column(
             modifier = Modifier.padding(horizontal = 20.dp),
