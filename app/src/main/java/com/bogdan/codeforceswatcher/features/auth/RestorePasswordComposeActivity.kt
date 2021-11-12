@@ -28,6 +28,8 @@ import androidx.lifecycle.MutableLiveData
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.compose.*
 import com.bogdan.codeforceswatcher.components.compose.textfields.AuthTextField
+import com.bogdan.codeforceswatcher.components.compose.textfields.EmailTextField
+import com.bogdan.codeforceswatcher.components.compose.textfields.TextFieldPosition
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 import io.xorum.codeforceswatcher.features.auth.redux.AuthRequests
 import io.xorum.codeforceswatcher.features.auth.redux.AuthState
@@ -87,7 +89,6 @@ class RestorePasswordComposeActivity : ComponentActivity(), StoreSubscriber<Auth
     @ExperimentalComposeUiApi
     @Composable
     private fun Content() {
-        val localFocusManager = LocalFocusManager.current
         val authState by authState.observeAsState()
 
         Column(
@@ -110,18 +111,7 @@ class RestorePasswordComposeActivity : ComponentActivity(), StoreSubscriber<Auth
 
             Spacer(Modifier.height(36.dp))
 
-            AuthTextField(
-                label = getString(R.string.email),
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Email,
-                    imeAction = ImeAction.Done
-                ),
-                keyboardActions = KeyboardActions(
-                    onDone = { localFocusManager.clearFocus() }
-                )
-            ) { newEmail ->
-                email = newEmail
-            }
+            EmailTextField(TextFieldPosition.LAST) { email = it }
 
             Spacer(Modifier.height(24.dp))
 

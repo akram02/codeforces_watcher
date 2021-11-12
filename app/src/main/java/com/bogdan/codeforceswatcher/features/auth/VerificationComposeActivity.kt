@@ -34,6 +34,7 @@ import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.compose.*
 import com.bogdan.codeforceswatcher.components.compose.textfields.AuthTextField
+import com.bogdan.codeforceswatcher.components.compose.textfields.HandleTextField
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 import io.xorum.codeforceswatcher.features.verification.redux.VerificationRequests
 import io.xorum.codeforceswatcher.features.verification.redux.VerificationState
@@ -89,18 +90,7 @@ class VerificationComposeActivity : ComponentActivity(), StoreSubscriber<Verific
 
             Spacer(Modifier.height(44.dp))
 
-            AuthTextField(
-                label = getString(R.string.codeforces_handle),
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Ascii,
-                    imeAction = ImeAction.Done
-                ),
-                keyboardActions = KeyboardActions(
-                    onDone = { localFocusManager.clearFocus() }
-                )
-            ) { newHandle ->
-                handle = newHandle
-            }
+            HandleTextField { handle = it }
 
             Spacer(Modifier.height(24.dp))
 

@@ -28,6 +28,9 @@ import androidx.lifecycle.MutableLiveData
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.compose.*
 import com.bogdan.codeforceswatcher.components.compose.textfields.AuthTextField
+import com.bogdan.codeforceswatcher.components.compose.textfields.EmailTextField
+import com.bogdan.codeforceswatcher.components.compose.textfields.PasswordTextField
+import com.bogdan.codeforceswatcher.components.compose.textfields.TextFieldPosition
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 import io.xorum.codeforceswatcher.features.auth.redux.AuthRequests
 import io.xorum.codeforceswatcher.features.auth.redux.AuthState
@@ -92,7 +95,6 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
     @ExperimentalComposeUiApi
     @Composable
     private fun Content() {
-        val localFocusManager = LocalFocusManager.current
         val authState by authState.observeAsState()
 
         Column(
@@ -105,34 +107,11 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
 
             Spacer(Modifier.height(44.dp))
 
-            AuthTextField(
-                label = getString(R.string.email),
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Email,
-                    imeAction = ImeAction.Next
-                ),
-                keyboardActions = KeyboardActions(
-                    onNext = { localFocusManager.moveFocus(FocusDirection.Down) }
-                )
-            ) { newEmail ->
-                email = newEmail
-            }
+            EmailTextField { email = it }
 
             Spacer(Modifier.height(24.dp))
 
-            AuthTextField(
-                label = getString(R.string.password),
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Password,
-                    imeAction = ImeAction.Done
-                ),
-                keyboardActions = KeyboardActions(
-                    onDone = { localFocusManager.clearFocus() }
-                ),
-                visualTransformation = PasswordVisualTransformation(mask = '*')
-            ) { newPassword ->
-                password = newPassword
-            }
+            PasswordTextField(position = TextFieldPosition.LAST) { password = it }
 
             Spacer(Modifier.height(24.dp))
 
