@@ -33,13 +33,6 @@
         android:name=".features.auth.SignUpComposeActivity"
         android:screenOrientation="portrait"/>
     <activity
-        android:name=".features.auth.SignInActivity"
-        android:windowSoftInputMode="adjustPan" />
-    <activity android:name=".features.auth.VerificationActivity" />
-    <activity
-        android:name=".features.auth.SignUpActivity"
-        android:windowSoftInputMode="adjustPan" />
-    <activity
         android:name=".features.contests.ContestsFiltersActivity"
         android:theme="@style/AppTheme.NoActionBar" />
     <activity
