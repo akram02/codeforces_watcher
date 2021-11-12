@@ -46,7 +46,10 @@ struct SignInView: View {
                 Button(action: {
                     self.onSignIn(email, password)
                 }, label: {
-                    ButtonTextDefault(text: "sign_in".localized.uppercased())
+                    BigButtonLabel(
+                        label: "sign_in".localized.uppercased(),
+                        isInverted: false
+                    )
                 })
                 
                 Button(action: {

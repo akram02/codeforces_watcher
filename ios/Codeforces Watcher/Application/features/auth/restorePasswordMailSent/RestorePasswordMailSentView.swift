@@ -34,13 +34,19 @@ struct RestorePasswordMailSentView: View {
                 Button(action: {
                     self.onOpenMail()
                 }, label: {
-                    ButtonTextDefault(text: "open_mail".localized)
+                    BigButtonLabel(
+                        label: "open_mail".localized,
+                        isInverted: false
+                    )
                 })
                 
                 Button(action: {
                     self.onBackSignIn()
                 }, label: {
-                    ButtonTextInverse(text: "back_to_sign_in".localized)
+                    BigButtonLabel(
+                        label: "back_to_sign_in".localized,
+                        isInverted: true
+                    )
                 })
             }
             

@@ -65,7 +65,10 @@ struct VerifyView: View {
             Button(action: {
                 self.onVerify(codeforcesHandle)
             }, label: {
-                ButtonTextDefault(text: "verify".localized.uppercased())
+                BigButtonLabel(
+                    label: "verify".localized.uppercased(),
+                    isInverted: false
+                )
             })
             
             Spacer()

@@ -93,9 +93,15 @@ struct SignUpView: View {
                     self.onSignUp(email, password, confirmPassword)
                 }, label: {
                     if isAgreementChecked {
-                        ButtonTextDefault(text: "sign_up".localized.uppercased())
+                        BigButtonLabel(
+                            label: "sign_up".localized.uppercased(),
+                            isInverted: false
+                        )
                     } else {
-                        ButtonTextInverse(text: "sign_up".localized.uppercased())
+                        BigButtonLabel(
+                            label: "sign_up".localized.uppercased(),
+                            isInverted: true
+                        )
                     }
                 })
                 .disabled(!isAgreementChecked)

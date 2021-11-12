@@ -38,7 +38,10 @@ struct RestorePasswordView: View {
             Button(action: {
                 self.onRestorePassword(email)
             }, label: {
-                ButtonTextDefault(text: "restore_password_button".localized)
+                BigButtonLabel(
+                    label: "restore_password_button".localized,
+                    isInverted: false
+                )
             })
             
             Spacer()
