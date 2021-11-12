@@ -127,7 +127,7 @@ class SignUpActivity : AppCompatActivity(), StoreSubscriber<AuthState> {
             }
             password != confirmedPassword -> store.dispatch(AuthRequests.SignUp.Failure(getString(R.string.passwords_do_not_match)))
             !checkbox.isChecked -> store.dispatch(AuthRequests.SignUp.Failure(getString(R.string.agree_to_the_privacy_policy)))
-            else -> store.dispatch(AuthRequests.SignUp(email, password, confirmedPassword))
+            else -> store.dispatch(AuthRequests.SignUp(email, password, confirmedPassword, checkbox.isChecked))
         }
     }
 

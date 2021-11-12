@@ -27,16 +27,15 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.MutableLiveData
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.compose.*
+import com.bogdan.codeforceswatcher.components.compose.textfields.AuthTextField
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 import io.xorum.codeforceswatcher.features.auth.redux.AuthRequests
 import io.xorum.codeforceswatcher.features.auth.redux.AuthState
 import io.xorum.codeforceswatcher.redux.store
-import kotlinx.android.synthetic.main.activity_sign_in.*
-import kotlinx.android.synthetic.main.input_field.view.*
 import tw.geothings.rekotlin.StoreSubscriber
-import java.util.*
 
 class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
+
     @ExperimentalComposeUiApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,7 +69,7 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
                 LinkText(
                     linkTextData = listOf(
                         LinkTextData(("${getString(R.string.dont_have_an_account_yet)} ")),
-                        LinkTextData(getString(R.string.sign_up)) { startSignUpActivity() }
+                        LinkTextData(getString(R.string.sign_up), "sign_up") { startSignUpActivity() }
                     ),
                     modifier = Modifier
                         .height(62.dp)
@@ -142,7 +141,7 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
 
                 LinkText(
                     linkTextData = listOf(
-                        LinkTextData(getString(R.string.forgot_password)) { startRestorePasswordActivity() }
+                        LinkTextData(getString(R.string.forgot_password), "forgot_password") { startRestorePasswordActivity() }
                     ),
                     clickableTextStyle = MaterialTheme.typography.body2.copy(
                         color = MaterialTheme.colors.onBackground
@@ -175,15 +174,11 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
     }
 
     private fun startSignUpActivity() {
-        startActivity(
-            Intent(this, SignUpActivity::class.java)
-        )
+        startActivity(Intent(this, SignUpComposeActivity::class.java))
     }
 
     private fun startRestorePasswordActivity() {
-        startActivity(
-            Intent(this, RestorePasswordComposeActivity::class.java)
-        )
+        startActivity(Intent(this, RestorePasswordComposeActivity::class.java))
     }
 
     override fun onNewState(state: AuthState) {

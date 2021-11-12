@@ -19,6 +19,7 @@
     <activity android:name=".features.auth.RestorePasswordComposeActivity"/>
     <activity android:name=".features.auth.RestorePasswordMailSentComposeActivity"/>
     <activity android:name=".features.auth.VerificationComposeActivity"/>
+    <activity android:name=".features.auth.SignUpComposeActivity"/>
     <activity
         android:name=".features.auth.SignInActivity"
         android:windowSoftInputMode="adjustPan" />

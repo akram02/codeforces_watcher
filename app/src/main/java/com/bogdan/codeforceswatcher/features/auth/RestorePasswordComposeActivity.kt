@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.MutableLiveData
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.compose.*
+import com.bogdan.codeforceswatcher.components.compose.textfields.AuthTextField
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 import io.xorum.codeforceswatcher.features.auth.redux.AuthRequests
 import io.xorum.codeforceswatcher.features.auth.redux.AuthState
@@ -64,7 +65,7 @@ class RestorePasswordComposeActivity : ComponentActivity(), StoreSubscriber<Auth
             bottomBar = {
                 LinkText(
                     linkTextData = listOf(
-                        LinkTextData(getString(R.string.lost_access_to_mail)) { }
+                        LinkTextData(getString(R.string.lost_access_to_mail), "lost_access_to_mail") { }
                     ),
                     modifier = Modifier
                         .height(62.dp)
@@ -147,9 +148,7 @@ class RestorePasswordComposeActivity : ComponentActivity(), StoreSubscriber<Auth
     }
 
     private fun startRestorePasswordMailSentActivity() {
-        startActivity(
-            Intent(this, RestorePasswordMailSentComposeActivity::class.java)
-        )
+        startActivity(Intent(this, RestorePasswordMailSentComposeActivity::class.java))
     }
 
     override fun onNewState(state: AuthState) {

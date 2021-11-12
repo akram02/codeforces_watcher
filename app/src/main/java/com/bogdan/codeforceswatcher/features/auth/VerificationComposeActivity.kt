@@ -33,6 +33,7 @@ import androidx.lifecycle.MutableLiveData
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.compose.*
+import com.bogdan.codeforceswatcher.components.compose.textfields.AuthTextField
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 import io.xorum.codeforceswatcher.features.verification.redux.VerificationRequests
 import io.xorum.codeforceswatcher.features.verification.redux.VerificationState
@@ -46,7 +47,7 @@ class VerificationComposeActivity : ComponentActivity(), StoreSubscriber<Verific
         super.onCreate(savedInstanceState)
         setContent {
             AlgoismeTheme {
-                RestorePasswordScreen()
+                VerificationScreen()
             }
         }
     }
@@ -55,7 +56,7 @@ class VerificationComposeActivity : ComponentActivity(), StoreSubscriber<Verific
 
     @ExperimentalComposeUiApi
     @Composable
-    private fun RestorePasswordScreen() {
+    private fun VerificationScreen() {
         val localFocusManager = LocalFocusManager.current
         val verificationState by verificationState.observeAsState()
         var handle = ""
@@ -96,7 +97,7 @@ class VerificationComposeActivity : ComponentActivity(), StoreSubscriber<Verific
 
                 Text(
                     text = buildAnnotatedString {
-                        append(getString(R.string.to_verify_please_change_your_last_name_start))
+                        append(getString(R.string.to_verify_please_change_your_last_name_start) + "\n")
                         withStyle(
                             SpanStyle(
                                 fontWeight = FontWeight.SemiBold,
@@ -104,7 +105,7 @@ class VerificationComposeActivity : ComponentActivity(), StoreSubscriber<Verific
                                 letterSpacing = (-1).sp
                             )
                         ) {
-                            append(getString(R.string.to_verify_please_change_your_last_name_path))
+                            append(getString(R.string.to_verify_please_change_your_last_name_path) + "\n")
                         }
                         append(getString(R.string.to_verify_please_change_your_last_name_end))
                     },
