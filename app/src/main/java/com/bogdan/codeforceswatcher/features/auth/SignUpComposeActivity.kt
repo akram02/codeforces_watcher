@@ -8,8 +8,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
@@ -18,15 +16,10 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusDirection
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -34,6 +27,7 @@ import androidx.lifecycle.MutableLiveData
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.WebViewActivity
 import com.bogdan.codeforceswatcher.components.compose.*
+import com.bogdan.codeforceswatcher.components.compose.textfields.*
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 import io.xorum.codeforceswatcher.features.auth.redux.AuthRequests
 import io.xorum.codeforceswatcher.features.auth.redux.AuthState
@@ -58,7 +52,7 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
 
     private var email = ""
     private var password = ""
-    private var confirmedPassword = ""
+    private var confirmPassword = ""
 
     @ExperimentalComposeUiApi
     @Composable
@@ -74,16 +68,16 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
     }
 
     @Composable
-    private fun TopBar() { NavigationBar { finish() } }
+    private fun TopBar() {
+        NavigationBar { finish() }
+    }
 
     @Composable
     private fun BottomBar() {
         LinkText(
             linkTextData = listOf(
                 LinkTextData("${getString(R.string.already_have_an_account)} "),
-                LinkTextData(getString(R.string.sign_in), "sign_in") {
-                    startSignInActivity()
-                }
+                LinkTextData(getString(R.string.sign_in), "sign_in") { startSignInActivity() }
             ),
             modifier = Modifier
                 .fillMaxWidth()
@@ -103,7 +97,6 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
     @ExperimentalComposeUiApi
     @Composable
     private fun Content() {
-        val localFocusManager = LocalFocusManager.current
         val authState by authState.observeAsState()
         var isPrivacyPolicyAccepted by remember { mutableStateOf(false) }
 
@@ -117,49 +110,19 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
 
             Spacer(Modifier.height(44.dp))
 
-            AuthTextField(
-                label = getString(R.string.email),
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Email,
-                    imeAction = ImeAction.Next
-                ),
-                keyboardActions = KeyboardActions(
-                    onNext = { localFocusManager.moveFocus(FocusDirection.Down) }
-                )
-            ) { newEmail ->
-                email = newEmail
-            }
+            EmailTextField { email = it }
 
             Spacer(Modifier.height(24.dp))
 
-            AuthTextField(
-                label = getString(R.string.password),
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Password,
-                    imeAction = ImeAction.Next
-                ),
-                keyboardActions = KeyboardActions(
-                    onNext = { localFocusManager.moveFocus(FocusDirection.Down) }
-                ),
-                visualTransformation = PasswordVisualTransformation(mask = '*')
-            ) { newPassword ->
-                password = newPassword
-            }
+            PasswordTextField { password = it }
 
             Spacer(Modifier.height(24.dp))
 
-            AuthTextField(
-                label = getString(R.string.confirm_password),
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Password,
-                    imeAction = ImeAction.Done
-                ),
-                keyboardActions = KeyboardActions(
-                    onDone = { localFocusManager.clearFocus() }
-                ),
-                visualTransformation = PasswordVisualTransformation(mask = '*')
-            ) { newConfirmPassword ->
-                confirmedPassword = newConfirmPassword
+            PasswordTextField(
+                label = stringResource(R.string.confirm_password),
+                position = TextFieldPosition.LAST
+            ) {
+                confirmPassword = it
             }
 
             Spacer(Modifier.height(36.dp))
@@ -189,7 +152,7 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
                 ),
                 isInverted = !isPrivacyPolicyAccepted
             ) {
-                signUp(email, password, confirmedPassword, isPrivacyPolicyAccepted)
+                signUp(email, password, confirmPassword, isPrivacyPolicyAccepted)
             }
         }
         if (authState?.status == AuthState.Status.PENDING) LoadingView()
