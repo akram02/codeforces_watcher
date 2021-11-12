@@ -6,7 +6,7 @@ struct ButtonTextDefault: View {
     
     var body: some View {
         Text(text)
-            .font(.primarySemibold)
+            .font(.bodySemibold)
             .foregroundColor(Palette.white.swiftUIColor)
             .frame(minWidth: 232)
             .frame(height: 18)

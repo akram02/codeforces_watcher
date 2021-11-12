@@ -17,7 +17,7 @@ struct VerifyView: View {
                 .frame(height: 56)
             
             Text("verify_codeforces_account".localized)
-                .font(.bigHeader)
+                .font(.bigHeaderMedium)
                 .foregroundColor(Palette.black.swiftUIColor)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
@@ -37,7 +37,7 @@ struct VerifyView: View {
                     AttributedTextView(
                         attributedString: "verify_instruction".localized.attributed,
                         attributeTags: [.bold],
-                        font: UIFont.monospacedSystemFont(ofSize: 14, weight: .regular),
+                        font: Font.monospacedBodyRegular2,
                         foregroundColor: Palette.darkGray,
                         height: $verifyInstructionHeight
                     )
@@ -47,14 +47,14 @@ struct VerifyView: View {
                         .frame(height: 12)
                     
                     Text(verificationCode)
-                        .font(.midHeader)
+                        .font(.midHeaderSemibold)
                         .foregroundColor(Palette.black.swiftUIColor)
                     
                     Spacer()
                         .frame(height: 20)
                     
                     Text("verify_change_it_back".localized)
-                        .font(.primary2)
+                        .font(.bodyRegular2)
                         .foregroundColor(Palette.darkGray.swiftUIColor)
                         .multilineTextAlignment(.center)
                 }

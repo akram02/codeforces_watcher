@@ -6,7 +6,7 @@ struct ButtonTextInverse: View {
     
     var body: some View {
         Text(text)
-            .font(.primarySemibold)
+            .font(.bodySemibold)
             .foregroundColor(Palette.black.swiftUIColor)
             .frame(minWidth: 232)
             .frame(height: 18)

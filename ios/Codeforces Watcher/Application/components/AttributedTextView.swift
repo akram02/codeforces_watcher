@@ -129,7 +129,7 @@ struct AttributedTextView: UIViewRepresentable {
     }
     
     private func addBoldAttribute() {
-        let tag = "bold"
+        let tag = "semibold"
         let range = attributedString.getRangeAndRemoveTag(tag: tag)
 
         attributedString.run {

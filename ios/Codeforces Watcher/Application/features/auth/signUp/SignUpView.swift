@@ -21,7 +21,7 @@ struct SignUpView: View {
                 .frame(height: 76)
             
             Text("sign_up".localized)
-                .font(.bigHeader)
+                .font(.bigHeaderMedium)
                 .foregroundColor(Palette.black.swiftUIColor)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
@@ -72,7 +72,7 @@ struct SignUpView: View {
                     AttributedTextView(
                         attributedString: "agreement_terms_and_privacy".localized.attributed,
                         attributeTags: [.term, .privacy],
-                        font: UIFont.monospacedSystemFont(ofSize: 13, weight: .regular),
+                        font: Font.monospacedHintRegular,
                         foregroundColor: Palette.black,
                         height: $agreementHeight,
                         onLink: { link in
@@ -84,7 +84,7 @@ struct SignUpView: View {
                 .padding(.horizontal)
                 
                 Text(message)
-                    .font(.primarySemibold)
+                    .font(.bodySemibold)
                     .foregroundColor(Palette.black.swiftUIColor)
                     .shadow(color: Palette.red.swiftUIColor, radius: 8, x: 0, y: 0)
                     .frame(height: 60)
@@ -105,19 +105,18 @@ struct SignUpView: View {
                 
             HStack {
                 Text("sign_in_hint".localized)
+                    .font(.bodyRegular2)
                     .foregroundColor(Palette.darkGray.swiftUIColor)
 
                 Button(action: {
                     self.onSignIn()
                 }, label: {
                     Text("sign_in".localized)
-                        .font(.primary2)
-                        .fontWeight(.semibold)
+                        .font(.bodySemibold2)
                         .foregroundColor(Palette.black.swiftUIColor)
                         .underline()
                 })
             }
-            .font(.primary2)
             .padding(.bottom)
         }
         .padding(.horizontal)

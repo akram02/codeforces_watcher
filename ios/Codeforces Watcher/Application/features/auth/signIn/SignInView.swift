@@ -18,7 +18,7 @@ struct SignInView: View {
             
             VStack(alignment: .leading, spacing: 44) {
                 Text("sign_in".localized)
-                    .font(.bigHeader)
+                    .font(.bigHeaderMedium)
                     .foregroundColor(Palette.black.swiftUIColor)
                 
                 VStack(alignment: .leading, spacing: 24) {
@@ -53,9 +53,9 @@ struct SignInView: View {
                     self.onForgotPassword()
                 }, label: {
                     Text("forgot_password".localized)
-                        .underline()
                         .font(.hintSemibold)
                         .foregroundColor(Palette.black.swiftUIColor)
+                        .underline()
                 })
             }
             
@@ -64,17 +64,16 @@ struct SignInView: View {
             
             HStack {
                 Text("sign_up_hint".localized)
-                    .font(.primary2)
+                    .font(.bodyRegular2)
                     .foregroundColor(Palette.darkGray.swiftUIColor)
                 
                 Button(action: {
                     self.onSignUp()
                 }, label: {
                     Text("sign_up".localized)
-                        .underline()
-                        .font(.primary2)
-                        .fontWeight(.semibold)
+                        .font(.bodySemibold2)
                         .foregroundColor(Palette.black.swiftUIColor)
+                        .underline()
                 })
             }
             .lineLimit(1)

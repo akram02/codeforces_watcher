@@ -6,7 +6,7 @@ struct ErrorMessage: View {
     
     var body: some View {
         Text(message)
-            .font(.primarySemibold)
+            .font(.bodySemibold)
             .foregroundColor(Palette.black.swiftUIColor)
             .multilineTextAlignment(.center)
             .shadow(color: Palette.red.swiftUIColor, radius: 8, x: 0, y: 0)

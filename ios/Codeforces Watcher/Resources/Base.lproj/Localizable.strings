@@ -122,7 +122,7 @@
 "verify_codeforces_account" = "Verify Codeforces Account";
 "codeforces_handle" = "Codeforces handle";
 
-"verify_instruction" = "To verify that account belongs to you, please, change your English\n”Last name” in your <bold>Profile -> Settings -> Social</bold> to this value:";
+"verify_instruction" = "To verify that account belongs to you, please, change your English\n”Last name” in your <semibold>Profile -> Settings -> Social</semibold> to this value:";
 "verify_change_it_back" = "After successful login you can change it back.";
 "verify" = "Verify";
 
