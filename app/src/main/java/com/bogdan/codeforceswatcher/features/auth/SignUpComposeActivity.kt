@@ -109,7 +109,12 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
 
                 Spacer(Modifier.height(24.dp))
 
-                PasswordTextField(TextFieldPosition.LAST, true) { confirmPassword = it }
+                PasswordTextField(
+                    label = stringResource(R.string.confirm_password),
+                    position = TextFieldPosition.LAST
+                ) {
+                    confirmPassword = it
+                }
 
                 Spacer(Modifier.height(36.dp))
 
