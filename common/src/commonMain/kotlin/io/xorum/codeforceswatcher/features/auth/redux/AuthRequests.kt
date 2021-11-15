@@ -43,7 +43,7 @@ class AuthRequests {
                 return
             }
             if (password.isEmpty() || email.isEmpty() || confirmPassword.isEmpty()) {
-                store.dispatch(Failure(Strings.get("fields_can_not_be_empty")))
+                store.dispatch(Failure(Strings.get("fields_cannot_be_empty")))
                 return
             }
             if (password != confirmPassword) {
@@ -52,13 +52,13 @@ class AuthRequests {
             }
             firebaseController.signUp(email, password) { exception ->
                 exception?.let {
-                    store.dispatch(Failure(Strings.get("wrong_credentials")))
-                } ?: store.dispatch(Success(""))
+                    store.dispatch(Failure(exception.message.toString()))
+                } ?: store.dispatch(Success)
             }
         }
 
-        data class Success(val message: String) : Action
-        data class Failure(val message: String) : Action
+        object Success : Action
+        data class Failure(val message: String?) : Action
     }
 
     object ResetSignUpMessage : Action

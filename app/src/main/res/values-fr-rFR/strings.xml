@@ -114,6 +114,6 @@ Téléchargez-la sur Google Play - https://play.google.com/store/apps/details?id
     <string name="do_you_want_to_log_out">Voulez-vous vous déconnecter?</string>
     <string name="stay_logged_in">Rester connecté</string>
     <string name="forgot_password_empty_email">Entrez un e-mail valide et cliquez sur \"Mot de passe oublié?\"!</string>
-    <string name="fields_can_not_be_empty">Les champs ne peuvent pas être vides</string>
+    <string name="fields_cannot_be_empty">Les champs ne peuvent pas être vides</string>
     <string name="forgot_password_success">Un e-mail contenant des instructions additionnels vous a été envoyé ! Vérifiez s\'il vous plaît!</string>
 </resources>

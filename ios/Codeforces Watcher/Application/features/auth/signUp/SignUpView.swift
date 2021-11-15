@@ -18,7 +18,7 @@ struct SignUpView: View {
     var body: some View {
         VStack(spacing: 0) {
             Spacer()
-                .frame(height: 76)
+                .frame(height: 56)
             
             Text("sign_up".localized)
                 .font(.bigHeaderMedium)
@@ -65,8 +65,6 @@ struct SignUpView: View {
                         let imageName = isAgreementChecked ? "ic_checkbox_checked" : "ic_checkbox_unchecked"
                         
                         Image(imageName)
-                            .resizable()
-                            .frame(width: 18, height: 18)
                     })
                     
                     AttributedTextView(
@@ -82,13 +80,9 @@ struct SignUpView: View {
                     )
                     .frame(height: agreementHeight)
                 }
-                .padding(.horizontal)
+                .padding(.horizontal, 20)
                 
-                Text(message)
-                    .font(.bodySemibold)
-                    .foregroundColor(Palette.black.swiftUIColor)
-                    .shadow(color: Palette.red.swiftUIColor, radius: 8, x: 0, y: 0)
-                    .frame(height: 60)
+                ErrorMessageView(message: message)
                 
                 Button(action: {
                     self.onSignUp(email, password, confirmPassword, isAgreementChecked)
@@ -123,9 +117,8 @@ struct SignUpView: View {
                         .underline()
                 })
             }
-            .padding(.bottom)
         }
-        .padding(.horizontal)
+        .padding([.horizontal, .bottom], 20)
     }
 }
 

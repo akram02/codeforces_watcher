@@ -104,6 +104,7 @@
 
 "sign_up" = "Sign Up";
 "sign_up_hint" = "Don't have an account yet?";
+"agree_to_the_privacy_policy" = "Agree to the privacy policy";
 
 "restore_password" = "Restore\npassword";
 "restore_password_button" = "Restore password";

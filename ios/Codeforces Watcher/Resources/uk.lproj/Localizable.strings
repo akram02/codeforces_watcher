@@ -103,6 +103,7 @@
 
 "sign_up" = "Зареєструватися";
 "sign_up_hint" = "У вас ще немає облікового запису?";
+"agree_to_the_privacy_policy" = "Погодьтеся з політикою конфіденційності";
 
 "restore_password" = "Відновлення\nпароля";
 "restore_password_button" = "Відновлення пароля";
