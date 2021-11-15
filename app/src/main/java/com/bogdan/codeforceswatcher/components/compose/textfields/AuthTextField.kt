@@ -1,4 +1,4 @@
-package com.bogdan.codeforceswatcher.components.compose
+package com.bogdan.codeforceswatcher.components.compose.textfields
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Column

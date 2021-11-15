@@ -9,68 +9,86 @@ fun usersReducer(action: Action, state: AppState): UsersState {
 
     when (action) {
         is UsersRequests.FetchUserData -> {
-            newState = newState.copy(status = UsersState.Status.PENDING)
+            newState = newState.copy(
+                status = UsersState.Status.PENDING
+            )
         }
         is UsersRequests.FetchUserData.Success -> {
             newState = newState.copy(
                 status = UsersState.Status.IDLE,
-                users = action.users,
+                followedUsers = action.users,
                 userAccount = action.userAccount
             )
         }
         is UsersRequests.FetchUserData.Failure -> {
-            newState = newState.copy(status = UsersState.Status.IDLE)
+            newState = newState.copy(
+                status = UsersState.Status.IDLE
+            )
         }
         is UsersRequests.FetchUser -> {
             newState = newState.copy(
                 status = UsersState.Status.PENDING,
-                currentUser = (state.users.users + state.users.userAccount?.codeforcesUser).find { it?.handle == action.handle }
+                currentUser = (state.users.followedUsers + state.users.userAccount?.codeforcesUser).find { it?.handle == action.handle }
             )
         }
         is UsersRequests.FetchUser.Success -> {
             newState = newState.copy(
                 status = UsersState.Status.IDLE,
                 currentUser = action.user,
-                users = state.users.users.map { if (it.handle == action.user.handle) action.user else it }
+                followedUsers = state.users.followedUsers.map { if (it.handle == action.user.handle) action.user else it }
             )
         }
         is UsersRequests.DeleteUser -> {
-            newState = newState.copy(status = UsersState.Status.PENDING)
+            newState = newState.copy(
+                status = UsersState.Status.PENDING
+            )
         }
         is UsersRequests.DeleteUser.Success -> {
             newState = newState.copy(
-                users = state.users.users.minus(action.user),
+                followedUsers = state.users.followedUsers.minus(action.user),
                 status = UsersState.Status.DONE
             )
         }
         is UsersRequests.DeleteUser.Failure -> {
-            newState = newState.copy(status = UsersState.Status.IDLE)
+            newState = newState.copy(
+                status = UsersState.Status.IDLE
+            )
         }
         is UsersActions.Sort -> {
-            newState = newState.copy(sortType = action.sortType)
+            newState = newState.copy(
+                sortType = action.sortType
+            )
         }
         is UsersRequests.AddUser -> {
-            newState = newState.copy(addUserStatus = UsersState.Status.PENDING)
+            newState = newState.copy(
+                addUserStatus = UsersState.Status.PENDING
+            )
         }
         is UsersRequests.AddUser.Failure -> {
-            newState = newState.copy(addUserStatus = UsersState.Status.IDLE)
+            newState = newState.copy(
+                addUserStatus = UsersState.Status.IDLE
+            )
         }
         is UsersRequests.AddUser.Success -> {
             newState = newState.copy(
-                users = newState.users.plus(action.user),
+                followedUsers = newState.followedUsers.plus(action.user),
                 addUserStatus = UsersState.Status.DONE
             )
         }
         is UsersActions.ClearAddUserState -> {
-            newState = newState.copy(addUserStatus = UsersState.Status.IDLE)
+            newState = newState.copy(
+                addUserStatus = UsersState.Status.IDLE
+            )
         }
         is VerificationRequests.VerifyCodeforces.Success -> {
-            newState = newState.copy(userAccount = action.userAccount)
+            newState = newState.copy(
+                userAccount = action.userAccount
+            )
         }
         is UsersRequests.Destroy -> {
             newState = newState.copy(
                 userAccount = null,
-                users = listOf()
+                followedUsers = listOf()
             )
         }
     }

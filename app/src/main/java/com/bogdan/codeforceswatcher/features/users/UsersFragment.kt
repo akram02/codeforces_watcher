@@ -63,9 +63,9 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, StoreSub
 
         epoxyController.userAccount = state.users.userAccount
         epoxyController.authStage = state.auth.authStage
-        epoxyController.data = state.users.users.sort(state.users.sortType).map { UserItem(it) }
+        epoxyController.data = state.users.followedUsers.sort(state.users.sortType).map { UserItem(it) }
 
-        adjustSpinnerSortVisibility(state.users.users.isEmpty())
+        adjustSpinnerSortVisibility(state.users.followedUsers.isEmpty())
 
         if (state.users.addUserStatus == UsersState.Status.DONE) {
             store.dispatch(UsersActions.ClearAddUserState())

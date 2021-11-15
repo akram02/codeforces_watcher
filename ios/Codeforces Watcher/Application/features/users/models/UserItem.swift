@@ -71,4 +71,5 @@ enum UserItem {
     case verifyItem(DoActionToIdentifyView.UIModel)
     case userItem(UserItem)
     case userAccount(UserAccountItem)
+    case sectionTitle(String)
 }
