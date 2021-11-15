@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct ErrorMessage: View {
+struct ErrorMessageView: View {
     
     var message: String
     
@@ -15,8 +15,8 @@ struct ErrorMessage: View {
     }
 }
 
-struct ErrorMessage_Previews: PreviewProvider {
+struct ErrorMessageView_Previews: PreviewProvider {
     static var previews: some View {
-        ErrorMessage(message: "Error!")
+        ErrorMessageView(message: "Error!")
     }
 }

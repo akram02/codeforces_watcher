@@ -4,6 +4,7 @@ import io.xorum.codeforceswatcher.features.auth.models.UserAccount
 import io.xorum.codeforceswatcher.features.verification.VerificationRepository
 import io.xorum.codeforceswatcher.redux.*
 import io.xorum.codeforceswatcher.util.Response
+import io.xorum.codeforceswatcher.util.Strings
 import tw.geothings.rekotlin.Action
 
 class VerificationRequests {
@@ -13,6 +14,10 @@ class VerificationRequests {
         private val verificationRepository = VerificationRepository()
 
         override suspend fun execute() {
+            if (handle.isEmpty()) {
+                store.dispatch(Failure(Strings.get("fields_cannot_be_empty")))
+                return
+            }
             when (val response = verificationRepository.verifyCodeforcesAccount(handle)) {
                 is Response.Success -> {
                     store.dispatch(Success(response.result))

@@ -60,7 +60,7 @@ struct VerifyView: View {
                 }
             }
             
-            ErrorMessage(message: message)
+            ErrorMessageView(message: message)
             
             Button(action: {
                 self.onVerify(codeforcesHandle)

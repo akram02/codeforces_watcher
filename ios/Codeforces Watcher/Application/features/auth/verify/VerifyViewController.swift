@@ -92,7 +92,6 @@ class VerifyViewController: UIHostingController<VerifyView>, ReKampStoreSubscrib
     }
     
     private func updateMessage(_ message: String?) {
-        print(message)
         rootView.message = message ?? ""
     }
     

@@ -40,7 +40,7 @@ struct SignInView: View {
                 }
             }
             
-            ErrorMessage(message: message)
+            ErrorMessageView(message: message)
             
             VStack(spacing: 72) {
                 Button(action: {

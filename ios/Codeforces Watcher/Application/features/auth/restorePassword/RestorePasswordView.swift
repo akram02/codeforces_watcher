@@ -33,7 +33,7 @@ struct RestorePasswordView: View {
                 }
             }
             
-            ErrorMessage(message: message)
+            ErrorMessageView(message: message)
             
             Button(action: {
                 self.onRestorePassword(email)
