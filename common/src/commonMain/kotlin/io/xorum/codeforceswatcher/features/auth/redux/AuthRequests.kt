@@ -19,13 +19,13 @@ class AuthRequests {
             }
             firebaseController.signIn(email, password) { exception ->
                 exception?.let {
-                    store.dispatch(Failure(exception.message.toString()))
+                    store.dispatch(Failure(exception.message.toMessage().handle()))
                 } ?: store.dispatch(Success)
             }
         }
 
         object Success : Action
-        data class Failure(val message: String) : Action
+        data class Failure(val message: String?) : Action
     }
 
     object ResetSignInMessage : Action
@@ -52,7 +52,7 @@ class AuthRequests {
             }
             firebaseController.signUp(email, password) { exception ->
                 exception?.let {
-                    store.dispatch(Failure(exception.message.toString()))
+                    store.dispatch(Failure(exception.message.toMessage().handle()))
                 } ?: store.dispatch(Success)
             }
         }
@@ -93,13 +93,13 @@ class AuthRequests {
             }
             firebaseController.sendPasswordReset(email) { exception ->
                 exception?.let {
-                    store.dispatch(Failure(exception.message.toString()))
+                    store.dispatch(Failure(exception.message.toMessage().handle()))
                 } ?: store.dispatch(Success)
             }
         }
 
         object Success : Action
-        data class Failure(val message: String) : Action
+        data class Failure(val message: String?) : Action
     }
 
     object ResetRestorePasswordMessage : Action

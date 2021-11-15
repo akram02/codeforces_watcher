@@ -37,6 +37,7 @@ fun verificationReducer(action: Action, state: AppState): VerificationState {
         }
         is VerificationRequests.ResetVerificationCodeforcesMessage -> {
             newState = newState.copy(
+                status = VerificationState.Status.IDLE,
                 message = null
             )
         }

@@ -25,6 +25,7 @@ fun authReducer(action: Action, state: AppState): AuthState {
         }
         is AuthRequests.ResetSignInMessage -> {
             newState = newState.copy(
+                status = AuthState.Status.IDLE,
                 signInMessage = null
             )
         }
@@ -46,6 +47,7 @@ fun authReducer(action: Action, state: AppState): AuthState {
         }
         is AuthRequests.ResetSignUpMessage -> {
             newState = newState.copy(
+                status = AuthState.Status.IDLE,
                 signUpMessage = null
             )
         }
@@ -67,6 +69,7 @@ fun authReducer(action: Action, state: AppState): AuthState {
         }
         is AuthRequests.ResetRestorePasswordMessage -> {
             newState = newState.copy(
+                status = AuthState.Status.IDLE,
                 restorePasswordMessage = null
             )
         }
