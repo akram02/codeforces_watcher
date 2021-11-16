@@ -49,7 +49,7 @@ class UsersTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSourc
                 $0.bind(item)
             }
         case .userAccount(let item):
-            return tableView.dequeueReusableCell(cellType: UserAccountTableViewCell.self).apply {
+            return tableView.dequeueReusableCell(cellType: UserAccountTableViewCellNew.self).apply {
                 $0.bind(item)
             }
         case .sectionTitle(let title):
