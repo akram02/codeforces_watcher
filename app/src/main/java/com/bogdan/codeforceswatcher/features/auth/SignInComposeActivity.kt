@@ -173,7 +173,10 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
 
     override fun onNewState(state: AuthState) {
         authState.postValue(state)
-        if (state.status == AuthState.Status.DONE) finish()
-        if (state.status == AuthState.Status.IDLE) resetSignInMessage()
+        when (state.status) {
+            AuthState.Status.DONE -> finish()
+            AuthState.Status.IDLE -> resetSignInMessage()
+            else -> return
+        }
     }
 }
