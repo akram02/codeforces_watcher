@@ -44,14 +44,13 @@ struct SignInView: View {
             ErrorMessageView(message: message)
             
             VStack(spacing: 72) {
-                Button(action: {
-                    self.onSignIn(email, password)
-                }, label: {
-                    BigButtonLabel(
-                        label: "sign_in".localized.uppercased(),
-                        isInverted: false
-                    )
-                })
+                CommonBigButton(
+                    label: "sign_in".localized.uppercased(),
+                    action: {
+                        self.onSignIn(email, password)
+                    },
+                    isInverted: false
+                )
                 
                 Button(action: {
                     self.onForgotPassword()

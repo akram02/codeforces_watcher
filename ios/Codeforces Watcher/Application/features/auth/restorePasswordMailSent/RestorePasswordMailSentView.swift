@@ -33,23 +33,19 @@ struct RestorePasswordMailSentView: View {
                 .frame(height: 72)
             
             VStack(spacing: 20) {
-                Button(action: {
-                    self.onOpenMail()
-                }, label: {
-                    BigButtonLabel(
-                        label: "open_mail".localized,
-                        isInverted: false
-                    )
-                })
+                CommonBigButton(
+                    label: "open_mail".localized,
+                    action: {
+                        self.onOpenMail()
+                    }, isInverted: false
+                )
                 
-                Button(action: {
-                    self.onBackSignIn()
-                }, label: {
-                    BigButtonLabel(
-                        label: "back_to_sign_in".localized,
-                        isInverted: true
-                    )
-                })
+                CommonBigButton(
+                    label: "back_to_sign_in".localized,
+                    action: {
+                        self.onBackSignIn()
+                    }, isInverted: true
+                )
             }
             
             Spacer()

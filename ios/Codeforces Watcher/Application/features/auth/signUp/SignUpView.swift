@@ -85,21 +85,12 @@ struct SignUpView: View {
                 
                 ErrorMessageView(message: message)
                 
-                Button(action: {
-                    self.onSignUp(email, password, confirmPassword, isAgreementChecked)
-                }, label: {
-                    if isAgreementChecked {
-                        BigButtonLabel(
-                            label: "sign_up".localized.uppercased(),
-                            isInverted: false
-                        )
-                    } else {
-                        BigButtonLabel(
-                            label: "sign_up".localized.uppercased(),
-                            isInverted: true
-                        )
-                    }
-                })
+                CommonBigButton(
+                    label: "sign_up".localized.uppercased(),
+                    action: {
+                        self.onSignUp(email, password, confirmPassword, isAgreementChecked)
+                    }, isInverted: !isAgreementChecked
+                )
             }
             
             Spacer()

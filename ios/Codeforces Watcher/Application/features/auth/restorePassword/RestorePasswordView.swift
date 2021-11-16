@@ -37,14 +37,12 @@ struct RestorePasswordView: View {
             
             ErrorMessageView(message: message)
             
-            Button(action: {
-                self.onRestorePassword(email)
-            }, label: {
-                BigButtonLabel(
-                    label: "restore_password_button".localized,
-                    isInverted: false
-                )
-            })
+            CommonBigButton(
+                label: "restore_password_button".localized,
+                action: {
+                    self.onRestorePassword(email)
+                }, isInverted: false
+            )
             
             Spacer()
             Spacer()

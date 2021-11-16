@@ -66,14 +66,12 @@ struct VerifyView: View {
             
             ErrorMessageView(message: message)
             
-            Button(action: {
-                self.onVerify(codeforcesHandle)
-            }, label: {
-                BigButtonLabel(
-                    label: "verify".localized.uppercased(),
-                    isInverted: false
-                )
-            })
+            CommonBigButton(
+                label: "verify".localized.uppercased(),
+                action: {
+                    self.onVerify(codeforcesHandle)
+                }, isInverted: false
+            )
             
             Spacer()
             Spacer()
