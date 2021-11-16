@@ -43,6 +43,7 @@ struct UserViewTableViewCell: View {
                     Text(dateOfLastRatingUpdate)
                         .font(.hintRegular)
                         .foregroundColor(Palette.darkGray.swiftUIColor)
+                        .kerning(-1)
                         .lineLimit(1)
 
                     Spacer()

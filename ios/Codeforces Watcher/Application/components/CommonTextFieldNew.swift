@@ -21,7 +21,10 @@ struct CommonTextFieldNew: UIViewRepresentable {
         self.tag = tag
         
         self.placeholder.addAttributes(
-            [.foregroundColor : Palette.darkGray],
+            [
+                NSAttributedString.Key.foregroundColor : Palette.darkGray,
+                NSAttributedString.Key.kern: -1
+            ],
             range: NSRange(location: 0, length: self.placeholder.length)
         )
     }
@@ -29,16 +32,18 @@ struct CommonTextFieldNew: UIViewRepresentable {
     func makeUIView(context: UIViewRepresentableContext<CommonTextFieldNew>) -> UITextField {
         let textField = UITextField().apply {
             $0.delegate = context.coordinator
-            $0.attributedPlaceholder = placeholder
-            $0.tag = tag
-            
-            $0.font = Font.monospacedBodyRegular
-            $0.backgroundColor = Palette.white
             $0.borderStyle = .none
             $0.autocorrectionType = .no
             $0.spellCheckingType = .no
             $0.autocapitalizationType = .none
             $0.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+            
+            $0.attributedPlaceholder = placeholder
+            $0.tag = tag
+            
+            $0.font = Font.monospacedBodyRegular
+            $0.backgroundColor = Palette.white
+            $0.defaultTextAttributes.updateValue(-1, forKey: NSAttributedString.Key.kern)
 
             $0.frame.size.height = 20
             

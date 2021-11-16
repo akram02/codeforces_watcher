@@ -8,6 +8,7 @@ struct ErrorMessageView: View {
         Text(message)
             .font(.bodySemibold)
             .foregroundColor(Palette.black.swiftUIColor)
+            .kerning(-1)
             .multilineTextAlignment(.center)
             .shadow(color: Palette.red.swiftUIColor, radius: 8, x: 0, y: 0)
             .frame(minHeight: 40)

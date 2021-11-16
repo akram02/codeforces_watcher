@@ -25,6 +25,7 @@ struct BigButtonLabel: View {
         Text(label)
             .font(.bodySemibold)
             .foregroundColor(foregroundColor)
+            .kerning(-1)
             .frame(minWidth: 234)
             .frame(height: 20)
             .padding(.horizontal, 8)

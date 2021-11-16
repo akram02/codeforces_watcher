@@ -20,6 +20,7 @@ struct SignInView: View {
                 Text("sign_in".localized)
                     .font(.bigHeaderMedium)
                     .foregroundColor(Palette.black.swiftUIColor)
+                    .kerning(-1)
                 
                 VStack(alignment: .leading, spacing: 24) {
                     TextInputLayoutView(
@@ -58,6 +59,7 @@ struct SignInView: View {
                     Text("forgot_password".localized)
                         .font(.hintSemibold)
                         .foregroundColor(Palette.black.swiftUIColor)
+                        .kerning(-1)
                         .underline()
                 })
             }
@@ -69,6 +71,7 @@ struct SignInView: View {
                 Text("sign_up_hint".localized)
                     .font(.bodyRegular2)
                     .foregroundColor(Palette.darkGray.swiftUIColor)
+                    .kerning(-1)
                 
                 Button(action: {
                     self.onSignUp()
@@ -76,6 +79,7 @@ struct SignInView: View {
                     Text("sign_up".localized)
                         .font(.bodySemibold2)
                         .foregroundColor(Palette.black.swiftUIColor)
+                        .kerning(-1)
                         .underline()
                 })
             }

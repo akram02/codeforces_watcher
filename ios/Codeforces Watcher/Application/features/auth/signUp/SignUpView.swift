@@ -23,6 +23,7 @@ struct SignUpView: View {
             Text("sign_up".localized)
                 .font(.bigHeaderMedium)
                 .foregroundColor(Palette.black.swiftUIColor)
+                .kerning(-1)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
             Spacer()
@@ -107,6 +108,7 @@ struct SignUpView: View {
                 Text("sign_in_hint".localized)
                     .font(.bodyRegular2)
                     .foregroundColor(Palette.darkGray.swiftUIColor)
+                    .kerning(-1)
 
                 Button(action: {
                     self.onSignIn()
@@ -114,6 +116,7 @@ struct SignUpView: View {
                     Text("sign_in".localized)
                         .font(.bodySemibold2)
                         .foregroundColor(Palette.black.swiftUIColor)
+                        .kerning(-1)
                         .underline()
                 })
             }
