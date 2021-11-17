@@ -73,23 +73,14 @@ struct UserAccountViewCell: View {
                     
                     Spacer()
                     
-                    Button(action: {}, label: {
-                        Text("View profile")
-                            .font(.hintSemibold)
-                            .foregroundColor(Palette.black.swiftUIColor)
-                            .frame(minWidth: 104)
-                            .frame(height: 16)
-                            .padding(8)
-                            .background(Color.clear)
-                            .clipShape(
-                                 RoundedRectangle(cornerRadius: 30)
-                             )
-                             .overlay(
-                                 RoundedRectangle(cornerRadius: 30)
-                                    .strokeBorder(Palette.black.swiftUIColor, lineWidth: 1.6)
-                             )
-                             .lineLimit(1)
-                    })
+                    SmallCommonButton(
+                        label: "View profile",
+                        action: {},
+                        foregroundColor: Palette.black.swiftUIColor,
+                        backgroundColor: Color.clear,
+                        borderColor: Palette.black.swiftUIColor,
+                        borderWidth: 1.6
+                    )
                 }
             }
             .padding(12)
