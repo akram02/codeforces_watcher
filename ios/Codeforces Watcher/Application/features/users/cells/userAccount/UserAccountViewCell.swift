@@ -12,35 +12,33 @@ struct UserAccountViewCell: View {
                     Spacer()
                         .frame(width: 18)
                     
-                    VStack(alignment: .leading, spacing: 4) {
-                        HStack(spacing: 4) {
-                            Image("ratingIcon")
-                                .resizable()
-                                .renderingMode(.template)
-                                .foregroundColor(Palette.black.swiftUIColor)
-                                .frame(width: 14, height: 12)
+                    HStack(spacing: 6) {
+                        VStack(spacing: 0) {
+                            Image("ratingIconNew")
                             
-                            Text("Rating: 1658")
-                                .kerning(-1)
+                            Spacer()
+                                .frame(height: 10)
+                            
+                            Image("maxRatingIconNew")
+                            
+                            Spacer()
+                                .frame(height: 8)
+                            
+                            Image("starIconNew")
                         }
                         
-                        HStack(spacing: 4) {
-                            Image("maxRatingIcon")
-                                .resizable()
-                                .renderingMode(.template)
-                                .foregroundColor(Palette.black.swiftUIColor)
-                                .frame(width: 14, height: 12)
+                        VStack(alignment: .leading, spacing: 0) {
+                            Text("Rating: 1658")
+                                .kerning(-1)
+                            
+                            Spacer()
+                                .frame(height: 4)
                             
                             Text("Max rating: 1820")
                                 .kerning(-1)
-                        }
-                        
-                        HStack(spacing: 4) {
-                            Image("starIcon")
-                                .resizable()
-                                .renderingMode(.template)
-                                .foregroundColor(Palette.black.swiftUIColor)
-                                .frame(width: 14, height: 12)
+                            
+                            Spacer()
+                                .frame(height: 5)
                             
                             Text("Contribution: +13")
                                 .kerning(-1)
