@@ -22,11 +22,3 @@ sealed class Message {
 fun String?.toMessage() =
     if (this.isNullOrEmpty()) Message.NoConnection
     else Message.Custom(this)
-
-fun Message.handle() =
-    when (this) {
-        is Message.NoConnection -> Strings.get("check_connection_or_try_again_later")
-        is Message.UserAlreadyAdded -> Strings.get("user_already_added")
-        is Message.None -> null
-        is Message.Custom -> this.message
-    }

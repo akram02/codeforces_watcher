@@ -22,7 +22,7 @@ class VerificationRequests {
                 is Response.Success -> {
                     store.dispatch(Success(response.result))
                 }
-                is Response.Failure -> store.dispatch(Failure(response.error.toMessage().handle()))
+                is Response.Failure -> store.dispatch(Failure(response.error))
             }
         }
 

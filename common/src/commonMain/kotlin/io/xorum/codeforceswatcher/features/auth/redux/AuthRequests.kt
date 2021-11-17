@@ -19,7 +19,7 @@ class AuthRequests {
             }
             firebaseController.signIn(email, password) { exception ->
                 exception?.let {
-                    store.dispatch(Failure(exception.message.toMessage().handle()))
+                    store.dispatch(Failure(exception.message))
                 } ?: store.dispatch(Success)
             }
         }
@@ -52,7 +52,7 @@ class AuthRequests {
             }
             firebaseController.signUp(email, password) { exception ->
                 exception?.let {
-                    store.dispatch(Failure(exception.message.toMessage().handle()))
+                    store.dispatch(Failure(exception.message))
                 } ?: store.dispatch(Success)
             }
         }
@@ -93,7 +93,7 @@ class AuthRequests {
             }
             firebaseController.sendPasswordReset(email) { exception ->
                 exception?.let {
-                    store.dispatch(Failure(exception.message.toMessage().handle()))
+                    store.dispatch(Failure(exception.message))
                 } ?: store.dispatch(Success)
             }
         }
