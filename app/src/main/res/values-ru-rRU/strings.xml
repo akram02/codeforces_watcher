@@ -92,11 +92,6 @@ Codeforces WatchR позволяет:
     <string name="pass_quick_verification">Пройдите быструю и простую проверку, чтобы увидеть здесь свой профиль</string>
     <string name="verify_in_42_seconds">Подтвердить за 42 секунды</string>
     <string name="get_instant_notifications">И получайте мгновенные push-уведомления об обновлениях рейтингов</string>
-    <string name="forgot_password">Забыли пароль?</string>
-    <string name="email">Эл. адрес</string>
-    <string name="password">Пароль</string>
-    <string name="sign_in">Войти</string>
-    <string name="dont_have_an_account_yet">У вас еще нет учетной записи?</string>
 
     <string name="log_out">Выйти</string>
     <string name="do_you_want_to_log_out">Вы хотите выйти?</string>
@@ -105,7 +100,13 @@ Codeforces WatchR позволяет:
     <string name="fields_can_not_be_empty">Поля не могут быть пустыми</string>
     <string name="forgot_password_success">Вам отправлено электронное письмо с дальнейшими инструкциями! Пожалуйста, проверьте!</string>
 
+    <string name="forgot_password">Забыли пароль?</string>
+    <string name="email">Эл. адрес</string>
+    <string name="password">Пароль</string>
+    <string name="sign_in">Войти</string>
+    <string name="dont_have_an_account_yet">У вас еще нет учетной записи?</string>
     <string name="wrong_credentials">Неправильные данные!</string>
+
     <string name="lost_access_to_mail">Потеряли доступ к почте?</string>
     <string name="restore_password">Восстановить пароль</string>
     <string name="you_will_get_an_email_with_instructions_for_account_recovery">Вы получите электронное письмо с инструкциями для восстановления аккаунта</string>
@@ -120,7 +121,6 @@ Codeforces WatchR позволяет:
 
     <string name="verify_codeforces_account">Подтвердить аккаунт Codeforces</string>
     <string name="codeforces_handle">Codeforces хэндл</string>
-    <string name="to_verify_please_change_your_last_name">Чтобы убедиться, что учетная запись принадлежит вам, измените свою фамилию (на английском) в своем<b>Профиле - Настройки - Социальные</b> на следующее значение:</string>
     <string name="to_verify_please_change_your_last_name_start">Чтобы убедиться, что учетная запись принадлежит вам, измените свою фамилию (на английском) в своем</string>
     <string name="to_verify_please_change_your_last_name_path">Профиле - Настройки - Социальные</string>
     <string name="to_verify_please_change_your_last_name_end">на такое значение:</string>
@@ -133,7 +133,6 @@ Codeforces WatchR позволяет:
     <string name="confirm_password">Подтвердите пароль</string>
     <string name="passwords_do_not_match">Пароли не совпадают</string>
     <string name="agree_to_the_privacy_policy">Согласитесь с политикой конфиденциальности</string>
-    <string name="agree_with_the_conditions_and_privacy_policy"><![CDATA[Я согласен с <link>Условиями и положениями</link> и <link>Политикой конфиденциальности</link>]]></string>
     <string name="agree_with_the_conditions_and_privacy_policy_start">Я соглашаюсь с</string>
     <string name="agree_with_the_conditions_and_privacy_policy_end">и</string>
     <string name="terms_and_conditions">Условиями и положениями</string>
