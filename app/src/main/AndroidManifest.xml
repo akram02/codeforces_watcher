@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="LockedOrientationActivity"
     package="com.bogdan.codeforceswatcher">
 
   <uses-permission android:name="android.permission.INTERNET" />
@@ -15,18 +17,21 @@
       android:roundIcon="@mipmap/ic_launcher_antivirus_round"
       android:supportsRtl="true"
       android:theme="@style/AppTheme">
-    <activity android:name=".features.auth.SignInComposeActivity"/>
-    <activity android:name=".features.auth.RestorePasswordComposeActivity"/>
-    <activity android:name=".features.auth.RestorePasswordMailSentComposeActivity"/>
-    <activity android:name=".features.auth.VerificationComposeActivity"/>
-    <activity android:name=".features.auth.SignUpComposeActivity"/>
     <activity
-        android:name=".features.auth.SignInActivity"
-        android:windowSoftInputMode="adjustPan" />
-    <activity android:name=".features.auth.VerificationActivity" />
+        android:name=".features.auth.SignInComposeActivity"
+        android:screenOrientation="portrait"/>
     <activity
-        android:name=".features.auth.SignUpActivity"
-        android:windowSoftInputMode="adjustPan" />
+        android:name=".features.auth.RestorePasswordComposeActivity"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name=".features.auth.RestorePasswordMailSentComposeActivity"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name=".features.auth.VerificationComposeActivity"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name=".features.auth.SignUpComposeActivity"
+        android:screenOrientation="portrait"/>
     <activity
         android:name=".features.contests.ContestsFiltersActivity"
         android:theme="@style/AppTheme.NoActionBar" />
