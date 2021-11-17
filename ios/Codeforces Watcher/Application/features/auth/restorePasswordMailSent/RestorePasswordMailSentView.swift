@@ -11,15 +11,13 @@ struct RestorePasswordMailSentView: View {
                 .frame(height: 56)
             
             VStack(spacing: 12) {
-                Text("check_your_box".localized)
+                CommonText("check_your_box".localized)
                     .font(.subHeaderMedium)
                     .foregroundColor(Palette.black.swiftUIColor)
-                    .kerning(-1)
                 
-                Text("open_mail_hint".localized)
+                CommonText("open_mail_hint".localized)
                     .font(.headerMedium)
                     .foregroundColor(Palette.black.swiftUIColor)
-                    .kerning(-1)
             }
             
             Spacer()
@@ -51,10 +49,9 @@ struct RestorePasswordMailSentView: View {
             Spacer()
             Spacer()
             
-            Text("check_your_spam_folder".localized)
+            CommonText("check_your_spam_folder".localized)
                 .font(.bodyRegular2)
                 .foregroundColor(Palette.darkGray.swiftUIColor)
-                .kerning(-1)
         }
         .multilineTextAlignment(.center)
         .padding([.horizontal, .bottom], 20)

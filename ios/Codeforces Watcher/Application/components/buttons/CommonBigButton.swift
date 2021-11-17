@@ -28,10 +28,9 @@ struct CommonBigButton: View {
         Button(action: {
             self.action()
         }, label: {
-            Text(label)
+            CommonText(label)
                 .font(.bodySemibold)
                 .foregroundColor(foregroundColor)
-                .kerning(-1)
                 .frame(minWidth: 234)
                 .frame(height: 20)
                 .padding(.horizontal, 8)

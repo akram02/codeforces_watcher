@@ -20,10 +20,9 @@ struct SignUpView: View {
             Spacer()
                 .frame(height: 56)
             
-            Text("sign_up".localized)
+            CommonText("sign_up".localized)
                 .font(.bigHeaderMedium)
                 .foregroundColor(Palette.black.swiftUIColor)
-                .kerning(-1)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
             Spacer()
@@ -96,19 +95,16 @@ struct SignUpView: View {
             Spacer()
                 
             HStack {
-                Text("sign_in_hint".localized)
+                CommonText("sign_in_hint".localized)
                     .font(.bodyRegular2)
                     .foregroundColor(Palette.darkGray.swiftUIColor)
-                    .kerning(-1)
 
                 Button(action: {
                     self.onSignIn()
                 }, label: {
-                    Text("sign_in".localized)
+                    CommonText("sign_in".localized, underlined: true)
                         .font(.bodySemibold2)
                         .foregroundColor(Palette.black.swiftUIColor)
-                        .kerning(-1)
-                        .underline()
                 })
             }
         }

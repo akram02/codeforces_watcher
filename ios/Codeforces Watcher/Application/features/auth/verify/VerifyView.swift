@@ -16,10 +16,9 @@ struct VerifyView: View {
             Spacer()
                 .frame(height: 56)
             
-            Text("verify_codeforces_account".localized)
+            CommonText("verify_codeforces_account".localized)
                 .font(.bigHeaderMedium)
                 .foregroundColor(Palette.black.swiftUIColor)
-                .kerning(-1)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
             Spacer()
@@ -48,18 +47,16 @@ struct VerifyView: View {
                     Spacer()
                         .frame(height: 12)
                     
-                    Text(verificationCode)
+                    CommonText(verificationCode)
                         .font(.midHeaderSemibold)
-                        .kerning(-1)
                         .foregroundColor(Palette.black.swiftUIColor)
                     
                     Spacer()
                         .frame(height: 20)
                     
-                    Text("verify_change_it_back".localized)
+                    CommonText("verify_change_it_back".localized)
                         .font(.bodyRegular2)
                         .foregroundColor(Palette.darkGray.swiftUIColor)
-                        .kerning(-1)
                         .multilineTextAlignment(.center)
                 }
             }
