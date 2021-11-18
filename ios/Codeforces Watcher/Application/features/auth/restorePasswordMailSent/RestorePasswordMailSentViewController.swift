@@ -2,7 +2,11 @@ import SwiftUI
 
 class RestorePasswordMailSentViewController: UIHostingController<RestorePasswordMailSentView> {
     
-    init() {
+    let dismissCallback: () -> Void
+    
+    init(dismissCallback: @escaping () -> Void) {
+        self.dismissCallback = dismissCallback
+        
         super.init(rootView: RestorePasswordMailSentView())
     }
     
@@ -39,11 +43,11 @@ class RestorePasswordMailSentViewController: UIHostingController<RestorePassword
         }
         
         rootView.onBackSignIn = {
-            self.navigationController?.pushViewController(SignInViewController(), animated: true)
+            self.dismissCallback()
         }
     }
     
     @objc func closeViewController() {
-        self.navigationController?.popViewController(animated: true)
+        dismiss(animated: true)
     }
 }

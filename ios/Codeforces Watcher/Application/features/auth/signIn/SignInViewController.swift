@@ -81,7 +81,7 @@ class SignInViewController: UIHostingController<SignInView>, ReKampStoreSubscrib
         }
         
         rootView.onForgotPassword = {
-            self.navigationController?.pushViewController(RestorePasswordViewController(), animated: true)
+            self.presentModal(RestorePasswordViewController(dismissCallback: { self.dismiss(animated: true) }))
             analyticsControler.logEvent(eventName: AnalyticsEvents().SIGN_UP_OPENED, params: [:])
         }
         
