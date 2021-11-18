@@ -9,7 +9,7 @@ struct RestorePasswordView: View {
     var message = ""
     
     var body: some View {
-        VStack(spacing: 0) {
+        ScrollView(showsIndicators: false) {
             Spacer()
                 .frame(height: 56)
             
@@ -41,16 +41,6 @@ struct RestorePasswordView: View {
                     self.onRestorePassword(email)
                 }, isInverted: false
             )
-            
-            Spacer()
-            Spacer()
-            
-            Button(action: {}, label: {
-                CommonText("lost_access".localized, underlined: true)
-                    .font(.bodySemibold)
-                    .foregroundColor(Palette.darkGray.swiftUIColor)
-            })
-            .hidden()
         }
         .padding(.horizontal, 20)
     }

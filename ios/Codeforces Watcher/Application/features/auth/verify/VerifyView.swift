@@ -12,7 +12,7 @@ struct VerifyView: View {
     var message = ""
     
     var body: some View {
-        VStack(spacing: 0) {
+        ScrollView(showsIndicators: false) {
             Spacer()
                 .frame(height: 56)
             
@@ -69,9 +69,6 @@ struct VerifyView: View {
                     self.onVerify(codeforcesHandle)
                 }, isInverted: false
             )
-            
-            Spacer()
-            Spacer()
         }
         .padding(.horizontal, 20)
     }
