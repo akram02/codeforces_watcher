@@ -50,7 +50,7 @@ class UsersTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSourc
             }
         case .userAccount(let item):
             return tableView.dequeueReusableCell(cellType: UserAccountTableViewCellNew.self).apply {
-                $0.bind(item)
+                $0.bind(item, onUserAccountTap: onUserAccountTap)
             }
         case .sectionTitle(let title):
             return tableView.dequeueReusableCell(cellType: TitleSectionTableViewCell.self).apply {
@@ -62,14 +62,12 @@ class UsersTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard !users.isEmpty else { return }
         switch(users[indexPath.row]) {
-        case .loginItem, .sectionTitle:
+        case .loginItem, .sectionTitle, .userAccount:
             break
         case .verifyItem:
             onVerifyCellTap()
         case .userItem(let item):
             onUserTap(item.handle)
-        case .userAccount(let item):
-            onUserAccountTap(item.handle)
         }
     }
 

@@ -12,6 +12,8 @@ struct UserAccountViewCell: View {
     var contribution: NSMutableAttributedString = "".attributed
     var dateOfLastRatingUpdate: String = "".localized
     
+    var onViewProfile: (String) -> Void = { _ in }
+    
     var rankColor: UIColor {
         getColorByUserRank(rank.string.lowercased())
     }
@@ -108,7 +110,9 @@ struct UserAccountViewCell: View {
                         
                         SmallCommonButton(
                             label: "View profile",
-                            action: {},
+                            action: {
+                                self.onViewProfile(handle)
+                            },
                             foregroundColor: Palette.black.swiftUIColor,
                             backgroundColor: Color.clear,
                             borderColor: Palette.black.swiftUIColor,

@@ -6,6 +6,8 @@ class UserAccountTableViewCellNew: UITableViewCell {
     
     private var user: UserItem.UserAccountItem?
     
+    var onViewProfile: (String) -> Void = { _ in }
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -21,6 +23,8 @@ class UserAccountTableViewCellNew: UITableViewCell {
 
             selectionStyle = .none
         }
+        
+        setInteractions()
     }
     
     required init?(coder: NSCoder) {
@@ -40,7 +44,7 @@ class UserAccountTableViewCellNew: UITableViewCell {
         let lastUpdate: Int64?
     }
     
-    func bind(_ user: UserItem.UserAccountItem) {
+    func bind(_ user: UserItem.UserAccountItem, onUserAccountTap: @escaping (String) -> Void) {
         let uiModel = UserAccountTableViewCellNew.UIModel(
             avatar: user.avatar,
             handle: user.handle,
@@ -62,6 +66,14 @@ class UserAccountTableViewCellNew: UITableViewCell {
         cell.rootView.rank = uiModel.rankText
         cell.rootView.contribution = uiModel.contributionText
         cell.rootView.dateOfLastRatingUpdate = uiModel.lastUpdateText
+        
+        self.onViewProfile = onUserAccountTap
+    }
+    
+    private func setInteractions() {
+        cell.rootView.onViewProfile = { handle in
+            self.onViewProfile(handle)
+        }
     }
 }
 
