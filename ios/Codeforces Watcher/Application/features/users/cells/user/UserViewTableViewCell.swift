@@ -14,7 +14,8 @@ struct UserViewTableViewCell: View {
         HStack(spacing: 0) {
             CircleImageViewNew(
                 userAvatar: userAvatar,
-                borderColor: getColorByUserRank(userRank).swiftUIColor
+                borderColor: getColorByUserRank(userRank).swiftUIColor,
+                size: (36, 36)
             )
             
             Spacer()
