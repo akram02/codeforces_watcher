@@ -12,6 +12,10 @@ struct UserAccountViewCell: View {
     var contribution: NSMutableAttributedString = "".attributed
     var dateOfLastRatingUpdate: String = "".localized
     
+    var rankColor: UIColor {
+        getColorByUserRank(rank.string.lowercased())
+    }
+    
     var body: some View {
         VStack(alignment: .center, spacing: 6) {
             ZStack {
@@ -97,7 +101,9 @@ struct UserAccountViewCell: View {
                             alignment: .left
                         )
                         .fixedSize()
-
+                        .shadow(color: rankColor.lighter(by: 0.2, alpha: 0.5)?.swiftUIColor ?? Color.clear, radius: 8, x: 0, y: 0)
+                        .shadow(color: rankColor.lighter(by: 0.1)?.swiftUIColor ?? Color.clear, radius: 12, x: 0, y: 0)
+                        
                         Spacer()
                         
                         SmallCommonButton(

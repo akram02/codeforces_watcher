@@ -123,7 +123,7 @@ fileprivate extension UserAccountTableViewCellNew.UIModel {
         let attributedText = NSMutableAttributedString(string: text)
        
         if let range = text.firstOccurrence(string: contributionSubstring) {
-            let colorOfContribution = (contribution >= 0 ? Palette.brightGreen : Palette.red)
+            let colorOfContribution = (contribution >= 0 ? Palette.green : Palette.red)
             
             attributedText.colored(with: colorOfContribution, range: range)
         }
