@@ -59,6 +59,14 @@ val MUPrimaryRegular16 = TextStyle(
     fontSize = 16.sp,
     letterSpacing = (-1).sp
 )
+
+val MUPrimarySemiBold16 = TextStyle(
+    fontWeight = FontWeight(600),
+    fontStyle = FontStyle.Normal,
+    fontSize = 16.sp,
+    letterSpacing = (-1).sp
+)
+
 val MUButtonSemiBold16 = TextStyle(
     fontWeight = FontWeight(600),
     fontStyle = FontStyle.Normal,
@@ -73,6 +81,7 @@ val Typography = Typography(
     h6 = MUHeaderMedium18,
     caption = MUHintRegular13,
     subtitle1 = MUPrimaryRegular16,
+    subtitle2 = MUPrimarySemiBold16,
     button = MUButtonSemiBold16,
     body1 = MUHintRegular13,
     body2 = MUHintBoldSemiBold13,
