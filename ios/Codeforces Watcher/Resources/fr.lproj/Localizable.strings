@@ -84,9 +84,8 @@
 "unknown" = "Inconnu";
 "never_updated" = "Jamais mis à jour";
 
-"login_to_identify" = "Connectez-vous pour vous identifier";
-"prompt_to_loginToIdentify" = "Et recevez des notifications push instantanées sur les mises à jour des notes";
-"login_in_42_seconds" = "Connectez-vous en 42 secondes";
+"login_to_identify" = "Connectez-vous pour vous identifier et recevez des notifications push instantanées sur les mises à jour des notes";
+"login" = "Connectez-vous";
 
 "verify_account" = "Vérifier le compte";
 "verify_account_prompt" = "Passez la vérification rapide et simple pour voir votre profil ici";

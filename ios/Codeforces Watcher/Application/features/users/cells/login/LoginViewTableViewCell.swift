@@ -8,13 +8,13 @@ struct LoginViewTableViewCell: View {
         VStack(alignment: .leading, spacing: 2) {
             Image("avatar")
             
-            CommonText("Who are you?")
+            CommonText("who_are_you".localized)
                 .font(.subHeaderMedium2)
                 .foregroundColor(Palette.black.swiftUIColor)
             
             
             HStack(alignment: .bottom, spacing: 0) {
-                CommonText("Login to identify and get instant push notifications about rating updates")
+                CommonText("login_to_identify".localized)
                     .font(.hintRegular)
                     .foregroundColor(Palette.darkGray.swiftUIColor)
                 
@@ -22,7 +22,7 @@ struct LoginViewTableViewCell: View {
                     .frame(width: 48)
                 
                 SmallCommonButton(
-                    label: "login".uppercased(),
+                    label: "login".localized.uppercased(),
                     action: {
                         self.onLogin()
                     },
@@ -34,6 +34,7 @@ struct LoginViewTableViewCell: View {
             }
         }
         .padding(12)
+        .frame(maxWidth: .infinity)
         .background(Palette.accentGrayish.swiftUIColor)
         .cornerRadius(20)
         .padding(20)
