@@ -6,7 +6,7 @@ struct TitleSectionViewTableViewCell: View {
     
     var body: some View {
         CommonText(title)
-            .font(.bodyRegular)
+            .font(.bodySemibold)
             .foregroundColor(Palette.black.swiftUIColor)
             .padding(.horizontal, 20)
             .padding(.top, 15)
