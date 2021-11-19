@@ -49,7 +49,7 @@ struct UserAccountViewCell: View {
                         VStack(alignment: .leading, spacing: 0) {
                             AttributedTextView(
                                 attributedString: rating,
-                                font: UIFont.monospacedSystemFont(ofSize: 13, weight: .regular),
+                                font: Font.monospacedHintRegular,
                                 alignment: .left
                             )
                             .fixedSize()
@@ -59,7 +59,7 @@ struct UserAccountViewCell: View {
                             
                             AttributedTextView(
                                 attributedString: maxRating,
-                                font: UIFont.monospacedSystemFont(ofSize: 13, weight: .regular),
+                                font: Font.monospacedHintRegular,
                                 alignment: .left
                             )
                             .fixedSize()
@@ -69,7 +69,7 @@ struct UserAccountViewCell: View {
                             
                             AttributedTextView(
                                 attributedString: contribution,
-                                font: UIFont.monospacedSystemFont(ofSize: 13, weight: .regular),
+                                font: Font.monospacedHintRegular,
                                 alignment: .left
                             )
                             .fixedSize()
@@ -82,7 +82,7 @@ struct UserAccountViewCell: View {
                 
                 VStack(alignment: .leading, spacing: 2) {
                     CommonText(handle)
-                        .font(SwiftUI.Font.system(size: 28, weight: .medium, design: .monospaced))
+                        .font(.subHeaderMedium2)
                         .foregroundColor(Palette.black.swiftUIColor)
                     
                     CommonText(name)
@@ -96,7 +96,7 @@ struct UserAccountViewCell: View {
                 HStack {
                     AttributedTextView(
                         attributedString: rank,
-                        font: UIFont.monospacedSystemFont(ofSize: 18, weight: .medium),
+                        font: Font.monospacedHeaderMedium,
                         alignment: .left
                     )
                     .fixedSize()

@@ -25,7 +25,7 @@ struct UserViewTableViewCell: View {
                 HStack(spacing: 0) {
                     AttributedTextView(
                         attributedString: userHandle,
-                        font: UIFont.monospacedSystemFont(ofSize: 16, weight: .semibold),
+                        font: Font.monospacedBodySemibold,
                         alignment: .center
                     )
                     .fixedSize()
@@ -34,7 +34,7 @@ struct UserViewTableViewCell: View {
 
                     AttributedTextView(
                         attributedString: userRating,
-                        font: UIFont.monospacedSystemFont(ofSize: 16, weight: .semibold),
+                        font: Font.monospacedBodySemibold,
                         alignment: .center
                     )
                     .fixedSize()
@@ -50,7 +50,7 @@ struct UserViewTableViewCell: View {
 
                     AttributedTextView(
                         attributedString: valueOfLastRatingUpdate,
-                        font: UIFont.monospacedSystemFont(ofSize: 13, weight: .regular),
+                        font: Font.monospacedHintRegular,
                         alignment: .center
                     )
                     .fixedSize()
