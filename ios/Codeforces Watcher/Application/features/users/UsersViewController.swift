@@ -181,7 +181,7 @@ class UsersViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
             }
         }
 
-        [LoginTableViewCellNew.self, VerifyTableViewCell.self, UserTableViewCell.self, UserAccountTableViewCell.self, NoItemsTableViewCell.self, TitleSectionTableViewCell.self].forEach(tableView.registerForReuse(cellType:))
+        [LoginTableViewCellNew.self, VerifyTableViewCellNew.self, UserTableViewCell.self, UserAccountTableViewCell.self, NoItemsTableViewCell.self, TitleSectionTableViewCell.self].forEach(tableView.registerForReuse(cellType:))
 
         refreshControl.run {
             $0.addTarget(self, action: #selector(refreshUsers), for: .valueChanged)
