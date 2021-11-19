@@ -61,10 +61,10 @@ class UserAccountTableViewCell: UITableViewCell {
         cell.rootView.avatar = user.avatar
         cell.rootView.handle = uiModel.handle
         cell.rootView.name = uiModel.nameText
-        cell.rootView.rating = uiModel.ratingText
-        cell.rootView.maxRating = uiModel.maxRatingText
-        cell.rootView.rank = uiModel.rankText
-        cell.rootView.contribution = uiModel.contributionText
+        cell.rootView.rating = uiModel.ratingText as! NSMutableAttributedString
+        cell.rootView.maxRating = uiModel.maxRatingText as! NSMutableAttributedString
+        cell.rootView.rank = uiModel.rankText as! NSMutableAttributedString
+        cell.rootView.contribution = uiModel.contributionText as! NSMutableAttributedString
         cell.rootView.dateOfLastRatingUpdate = uiModel.lastUpdateText
         
         self.onViewProfile = onUserAccountTap
@@ -79,15 +79,15 @@ class UserAccountTableViewCell: UITableViewCell {
 
 fileprivate extension UserAccountTableViewCell.UIModel {
     
-    private var none: NSMutableAttributedString {
-        return NSMutableAttributedString(string: "None".localized)
+    private var none: NSAttributedString {
+        return NSAttributedString(string: "None".localized)
     }
     
     var handleText: NSMutableAttributedString {
         return colorTextByUserRank(text: handle, rank: rank)
     }
     
-    var rankText: NSMutableAttributedString {
+    var rankText: NSAttributedString {
         if let rank = rank {
             return colorTextByUserRank(text: rank.capitalized, rank: rank)
         } else {
@@ -95,7 +95,7 @@ fileprivate extension UserAccountTableViewCell.UIModel {
         }
     }
     
-    var ratingText: NSMutableAttributedString {
+    var ratingText: NSAttributedString {
         if let rating = rating {
             return colorRating(text: "rating".localizedFormat(args: "\(rating)"), rating: rating, rank: rank)
         } else {
@@ -103,7 +103,7 @@ fileprivate extension UserAccountTableViewCell.UIModel {
         }
     }
     
-    var maxRatingText: NSMutableAttributedString {
+    var maxRatingText: NSAttributedString {
         if let rating = maxRating {
             return colorRating(text: "max_rating".localizedFormat(args: "\(rating)"), rating: maxRating, rank: maxRank)
         } else {
@@ -111,7 +111,7 @@ fileprivate extension UserAccountTableViewCell.UIModel {
         }
     }
     
-    private func colorRating(text: String, rating: Int?, rank: String?) -> NSMutableAttributedString {
+    private func colorRating(text: String, rating: Int?, rank: String?) -> NSAttributedString {
         let attributedText = NSMutableAttributedString(string: text)
 
         let color = getColorByUserRank(rank)
@@ -126,12 +126,12 @@ fileprivate extension UserAccountTableViewCell.UIModel {
         return attributedText
     }
     
-    var contributionText: NSMutableAttributedString {
+    var contributionText: NSAttributedString {
         let contributionSubstring = (contribution <= 0 ? "\(contribution)" : "+\(contribution)")
         return colorContribution(text: "Contribution".localizedFormat(args: contributionSubstring), contributionSubstring)
     }
     
-    private func colorContribution(text: String, _ contributionSubstring: String) -> NSMutableAttributedString {
+    private func colorContribution(text: String, _ contributionSubstring: String) -> NSAttributedString {
         let attributedText = NSMutableAttributedString(string: text)
        
         if let range = text.firstOccurrence(string: contributionSubstring) {

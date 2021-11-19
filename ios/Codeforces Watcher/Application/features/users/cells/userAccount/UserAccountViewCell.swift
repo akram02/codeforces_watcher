@@ -3,12 +3,12 @@ import SwiftUI
 struct UserAccountViewCell: View {
     
     var avatar: String = ""
-    var rank: NSMutableAttributedString = "".attributed
     
     var handle: String = ""
     var name: String = ""
     var rating: NSMutableAttributedString = "".attributed
     var maxRating: NSMutableAttributedString = "".attributed
+    var rank: NSMutableAttributedString = "".attributed
     var contribution: NSMutableAttributedString = "".attributed
     var dateOfLastRatingUpdate: String = "".localized
     
