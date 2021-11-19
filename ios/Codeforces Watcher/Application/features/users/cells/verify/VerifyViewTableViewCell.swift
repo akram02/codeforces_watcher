@@ -1,6 +1,9 @@
 import SwiftUI
 
 struct VerifyViewTableViewCell: View {
+    
+    var onVerify: () -> Void = {}
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
             Image("avatar")
@@ -20,7 +23,9 @@ struct VerifyViewTableViewCell: View {
                 
                 SmallCommonButton(
                     label: "verify".localized.uppercased(),
-                    action: {},
+                    action: {
+                        self.onVerify()
+                    },
                     foregroundColor: Palette.black.swiftUIColor,
                     backgroundColor: Color.clear,
                     borderColor: Palette.black.swiftUIColor,

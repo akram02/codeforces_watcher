@@ -40,8 +40,10 @@ class UsersTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSourc
             return tableView.dequeueReusableCell(cellType: LoginTableViewCellNew.self).apply {
                 $0.bind(onLogin: onLogin)
             }
-        case .verifyItem:
-            return tableView.dequeueReusableCell(cellType: VerifyTableViewCellNew.self)
+        case .verifyItem(let onVerify):
+            return tableView.dequeueReusableCell(cellType: VerifyTableViewCellNew.self).apply {
+                $0.bind(onVerify: onVerify)
+            }
         case .userItem(let item):
             return tableView.dequeueReusableCell(cellType: UserTableViewCell.self).apply {
                 $0.bind(item)
@@ -60,10 +62,8 @@ class UsersTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard !users.isEmpty else { return }
         switch(users[indexPath.row]) {
-        case .loginItem, .sectionTitle, .userAccount:
+        case .loginItem, .sectionTitle, .userAccount, .verifyItem:
             break
-        case .verifyItem:
-            onVerifyCellTap()
         case .userItem(let item):
             onUserTap(item.handle)
         }

@@ -4,7 +4,7 @@ class VerifyTableViewCellNew: UITableViewCell {
 
     var cell = UIHostingController(rootView: VerifyViewTableViewCell())
     
-    var onLogin: () -> Void = {}
+    var onVerify: () -> Void = {}
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -21,9 +21,21 @@ class VerifyTableViewCellNew: UITableViewCell {
 
             selectionStyle = .none
         }
+        
+        setInteractions()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func bind(onVerify: @escaping () -> Void) {
+        self.onVerify = onVerify
+    }
+    
+    private func setInteractions() {
+        cell.rootView.onVerify = {
+            self.onVerify()
+        }
     }
 }
