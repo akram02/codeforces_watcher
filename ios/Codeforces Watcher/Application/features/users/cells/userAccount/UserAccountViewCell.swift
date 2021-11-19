@@ -119,6 +119,7 @@ struct UserAccountViewCell: View {
             }
             .padding(12)
             .background(Palette.accentGrayish.swiftUIColor)
+            .frame(maxWidth: .infinity)
             .cornerRadius(20)
             .padding([.horizontal, .top], 20)
             
