@@ -16,7 +16,7 @@ struct SmallCommonButton: View {
             Text(label)
                 .font(.hintSemibold)
                 .foregroundColor(foregroundColor)
-                .frame(minWidth: 104)
+                .frame(minWidth: 60)
                 .frame(height: 16)
                 .padding(8)
                 .background(backgroundColor)
