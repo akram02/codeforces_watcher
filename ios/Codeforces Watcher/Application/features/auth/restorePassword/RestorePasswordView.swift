@@ -9,18 +9,18 @@ struct RestorePasswordView: View {
     var message = ""
     
     var body: some View {
-        VStack(spacing: 0) {
+        ScrollView(showsIndicators: false) {
             Spacer()
-                .frame(height: 76)
+                .frame(height: 56)
             
             VStack(alignment: .leading, spacing: 40) {
-                Text("restore_password".localized)
-                    .font(.bigHeader)
+                CommonText("restore_password".localized)
+                    .font(.bigHeaderMedium)
                     .foregroundColor(Palette.black.swiftUIColor)
                 
                 VStack(alignment: .leading, spacing: 36) {
-                    Text("restore_password_hint".localized)
-                        .font(.primary2)
+                    CommonText("restore_password_hint".localized)
+                        .font(.bodyRegular2)
                         .foregroundColor(Palette.black.swiftUIColor)
                     
                     TextInputLayoutView(
@@ -33,30 +33,16 @@ struct RestorePasswordView: View {
                 }
             }
             
-            Text(message)
-                .font(.primarySemibold)
-                .foregroundColor(Palette.black.swiftUIColor)
-                .shadow(color: Palette.red.swiftUIColor, radius: 8, x: 0, y: 0)
-                .frame(height: 72)
+            ErrorMessageView(message: message)
             
-            Button(action: {
-                self.onRestorePassword(email)
-            }, label: {
-                ButtonTextDefault(text: "restore_password_button".localized)
-            })
-            
-            Spacer()
-            Spacer()
-            
-            Button(action: {}, label: {
-                Text("lost_access".localized)
-                    .font(.primarySemibold)
-                    .underline()
-                    .foregroundColor(Palette.darkGray.swiftUIColor)
-            })
-            .hidden()
+            CommonBigButton(
+                label: "restore_password_button".localized,
+                action: {
+                    self.onRestorePassword(email)
+                }, isInverted: false
+            )
         }
-        .padding()
+        .padding(.horizontal, 20)
     }
 }
 

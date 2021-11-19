@@ -2,7 +2,11 @@ import SwiftUI
 
 class RestorePasswordMailSentViewController: UIHostingController<RestorePasswordMailSentView> {
     
-    init() {
+    let dismissCallback: () -> Void
+    
+    init(dismissCallback: @escaping () -> Void) {
+        self.dismissCallback = dismissCallback
+        
         super.init(rootView: RestorePasswordMailSentView())
     }
     
@@ -29,17 +33,21 @@ class RestorePasswordMailSentViewController: UIHostingController<RestorePassword
     private func setInteractions() {
         rootView.onOpenMail = {
             guard let mailURL = URL(string: "message://") else { return }
+            
             if UIApplication.shared.canOpenURL(mailURL) {
                 UIApplication.shared.open(mailURL)
+            } else {
+                let toastHandler = IOSToastHandler()
+                toastHandler.showToast(message: "mail_app_not_found".localized)
             }
         }
         
         rootView.onBackSignIn = {
-            self.navigationController?.pushViewController(SignInViewController(), animated: true)
+            self.dismissCallback()
         }
     }
     
     @objc func closeViewController() {
-        self.navigationController?.popViewController(animated: true)
+        dismiss(animated: true)
     }
 }

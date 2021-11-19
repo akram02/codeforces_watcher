@@ -104,6 +104,7 @@
 
 "sign_up" = "Sign Up";
 "sign_up_hint" = "Don't have an account yet?";
+"agree_to_the_privacy_policy" = "Agree to the privacy policy";
 
 "restore_password" = "Restore\npassword";
 "restore_password_button" = "Restore password";
@@ -114,6 +115,7 @@
 "check_your_box" = "Check your box.";
 "open_mail_hint" = "Tap to open your mail app";
 "open_mail" = "Open mail";
+"mail_app_not_found" = "Mail app not found";
 "back_to_sign_in" = "Back to sign in";
 "check_your_spam_folder" = "If you haven’t received a message within 5 minutes, check your Spam folder.";
 
@@ -122,7 +124,7 @@
 "verify_codeforces_account" = "Verify Codeforces Account";
 "codeforces_handle" = "Codeforces handle";
 
-"verify_instruction" = "To verify that account belongs to you, please, change your English\n”Last name” in your <bold>Profile -> Settings -> Social</bold> to this value:";
+"verify_instruction" = "To verify that account belongs to you, please, change your English\n”Last name” in your <semibold>Profile -> Settings -> Social</semibold> to this value:";
 "verify_change_it_back" = "After successful login you can change it back.";
 "verify" = "Verify";
 
@@ -134,7 +136,8 @@
 "log_out_ask" = "Do you want to log out?";
 
 "wrong_credentials" = "Wrong credentials!";
-"passwords_do_not_match" = "Passwords don't match";
+"fields_cannot_be_empty" = "Fields cannot be empty!";
+"passwords_do_not_match" = "Passwords don't match!";
 "ratings_have_been_updated" = "Ratings have been updated";
 
 "forgot_password_success" = "Email with further instructions has been sent to you! Please check!";

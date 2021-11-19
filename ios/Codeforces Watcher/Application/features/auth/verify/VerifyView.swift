@@ -14,17 +14,17 @@ struct VerifyView: View {
     var body: some View {
         ScrollView(showsIndicators: false) {
             Spacer()
-                .frame(height: 76)
+                .frame(height: 56)
             
-            Text("verify_codeforces_account".localized)
-                .font(.bigHeader)
+            CommonText("verify_codeforces_account".localized)
+                .font(.bigHeaderMedium)
                 .foregroundColor(Palette.black.swiftUIColor)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
             Spacer()
                 .frame(height: 44)
             
-            VStack(spacing: 0) {
+            VStack(spacing: 24) {
                 TextInputLayoutView(
                     text: $codeforcesHandle,
                     hint: "codeforces_handle".localized,
@@ -33,14 +33,11 @@ struct VerifyView: View {
                     tag: 0
                 )
                 
-                Spacer()
-                    .frame(height: 24)
-                
                 VStack(spacing: 0) {
                     AttributedTextView(
                         attributedString: "verify_instruction".localized.attributed,
                         attributeTags: [.bold],
-                        font: UIFont.monospacedSystemFont(ofSize: 14, weight: .regular),
+                        font: Font.monospacedBodyRegular2,
                         foregroundColor: Palette.darkGray,
                         alignment: .left,
                         height: $verifyInstructionHeight
@@ -50,35 +47,30 @@ struct VerifyView: View {
                     Spacer()
                         .frame(height: 12)
                     
-                    Text(verificationCode)
-                        .font(.midHeader)
+                    CommonText(verificationCode)
+                        .font(.midHeaderSemibold)
+                        .foregroundColor(Palette.black.swiftUIColor)
                     
                     Spacer()
                         .frame(height: 20)
                     
-                    Text("verify_change_it_back".localized)
-                        .font(.primary2)
+                    CommonText("verify_change_it_back".localized)
+                        .font(.bodyRegular2)
                         .foregroundColor(Palette.darkGray.swiftUIColor)
                         .multilineTextAlignment(.center)
                 }
             }
             
-            Text(message.localized)
-                .font(.primarySemibold)
-                .foregroundColor(Palette.black.swiftUIColor)
-                .shadow(color: Palette.red.swiftUIColor, radius: 8, x: 0, y: 0)
-                .frame(height: 72)
+            ErrorMessageView(message: message)
             
-            Button(action: {
-                self.onVerify(codeforcesHandle)
-            }, label: {
-                ButtonTextDefault(text: "verify".localized.uppercased())
-            })
-            
-            Spacer()
-                .frame(height: 40)
+            CommonBigButton(
+                label: "verify".localized.uppercased(),
+                action: {
+                    self.onVerify(codeforcesHandle)
+                }, isInverted: false
+            )
         }
-        .padding(.horizontal)
+        .padding(.horizontal, 20)
     }
 }
 

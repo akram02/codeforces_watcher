@@ -27,4 +27,11 @@ public class Font {
         UIFont(name: "Roboto-Regular", size: 11) ?? UIFont.systemFont(ofSize: 11)
     public static let textHintBold =
         UIFont(name: "Roboto-Medium", size: 11) ?? UIFont.systemFont(ofSize: 11)
+    
+    public static let monospacedBodyRegular =
+        UIFont.monospacedSystemFont(ofSize: 16, weight: .regular)
+    public static let monospacedHintRegular =
+        UIFont.monospacedSystemFont(ofSize: 13, weight: .regular)
+    public static let monospacedBodyRegular2 =
+        UIFont.monospacedSystemFont(ofSize: 14, weight: .regular)
 }

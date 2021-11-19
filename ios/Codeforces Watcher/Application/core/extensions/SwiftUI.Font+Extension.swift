@@ -2,22 +2,22 @@ import SwiftUI
 
 extension SwiftUI.Font {
     
-    public static let bigHeader =
+    public static let bigHeaderMedium =
         SwiftUI.Font.system(size: 40, weight: .medium, design: .monospaced)
-    public static let subHeader =
+    public static let subHeaderMedium =
         SwiftUI.Font.system(size: 36, weight: .medium, design: .monospaced)
-    public static let midHeader =
+    public static let midHeaderSemibold =
         SwiftUI.Font.system(size: 24, weight: .semibold, design: .monospaced)
-    public static let smallHeader =
-        SwiftUI.Font.system(size: 20, weight: .semibold, design: .monospaced)
-    public static let header =
+    public static let headerMedium =
         SwiftUI.Font.system(size: 18, weight: .medium, design: .monospaced)
-    public static let primaryRegular =
+    public static let bodyRegular =
         SwiftUI.Font.system(size: 16, weight: .regular, design: .monospaced)
-    public static let primarySemibold =
+    public static let bodySemibold =
         SwiftUI.Font.system(size: 16, weight: .semibold, design: .monospaced)
-    public static let primary2 =
+    public static let bodyRegular2 =
         SwiftUI.Font.system(size: 14, weight: .regular, design: .monospaced)
+    public static let bodySemibold2 =
+        SwiftUI.Font.system(size: 14, weight: .semibold, design: .monospaced)
     public static let hintRegular =
         SwiftUI.Font.system(size: 13, weight: .regular, design: .monospaced)
     public static let hintSemibold =

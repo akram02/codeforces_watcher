@@ -14,8 +14,7 @@ fun authReducer(action: Action, state: AppState): AuthState {
         }
         is AuthRequests.SignIn.Success -> {
             newState = newState.copy(
-                status = AuthState.Status.DONE,
-                signInMessage = action.message
+                status = AuthState.Status.DONE
             )
         }
         is AuthRequests.SignIn.Failure -> {
@@ -26,7 +25,8 @@ fun authReducer(action: Action, state: AppState): AuthState {
         }
         is AuthRequests.ResetSignInMessage -> {
             newState = newState.copy(
-                signInMessage = ""
+                status = AuthState.Status.IDLE,
+                signInMessage = null
             )
         }
         is AuthRequests.SignUp -> {
@@ -36,8 +36,7 @@ fun authReducer(action: Action, state: AppState): AuthState {
         }
         is AuthRequests.SignUp.Success -> {
             newState = newState.copy(
-                status = AuthState.Status.DONE,
-                signUpMessage = action.message
+                status = AuthState.Status.DONE
             )
         }
         is AuthRequests.SignUp.Failure -> {
@@ -48,7 +47,8 @@ fun authReducer(action: Action, state: AppState): AuthState {
         }
         is AuthRequests.ResetSignUpMessage -> {
             newState = newState.copy(
-                signUpMessage = ""
+                status = AuthState.Status.IDLE,
+                signUpMessage = null
             )
         }
         is AuthRequests.SendPasswordReset -> {
@@ -58,8 +58,7 @@ fun authReducer(action: Action, state: AppState): AuthState {
         }
         is AuthRequests.SendPasswordReset.Success -> {
             newState = newState.copy(
-                status = AuthState.Status.DONE,
-                restorePasswordMessage = action.message
+                status = AuthState.Status.DONE
             )
         }
         is AuthRequests.SendPasswordReset.Failure -> {
@@ -71,11 +70,13 @@ fun authReducer(action: Action, state: AppState): AuthState {
         is AuthRequests.ResetRestorePasswordMessage -> {
             newState = newState.copy(
                 status = AuthState.Status.IDLE,
-                restorePasswordMessage = ""
+                restorePasswordMessage = null
             )
         }
         is AuthRequests.UpdateAuthStage -> {
-            newState = newState.copy(authStage = action.authStage)
+            newState = newState.copy(
+                authStage = action.authStage
+            )
         }
         is AuthRequests.LogOut.Success -> {
             newState = AuthState()

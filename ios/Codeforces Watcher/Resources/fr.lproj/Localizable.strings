@@ -114,7 +114,7 @@
 "verify_codeforces_account" = "Vérifier Codeforces Compte";
 "codeforces_handle" = "Codeforces handle";
 
-"verify_instruction" = "Pour vérifier que ce compte vous appartient, veuillez modifier votre \"Nom de famille\" en anglais dans votre <bold> Profil - Paramètres - Réseaux sociaux </bold> en lui attribuant cette valeur:";
+"verify_instruction" = "Pour vérifier que ce compte vous appartient, veuillez modifier votre \"Nom de famille\" en anglais dans votre <semibold> Profil - Paramètres - Réseaux sociaux </semibold> en lui attribuant cette valeur:";
 "verify_change_it_back" = "Juste après une connexion réussie, vous pouvez le modifier.";
 
 "rating_updated_on" = "Mis à jour le %@";

@@ -57,8 +57,8 @@ class SignUpViewController: UIHostingController<SignUpView>, ReKampStoreSubscrib
         }
     }
     
-    private func updateMessage(_ message: String) {
-        rootView.message = message
+    private func updateMessage(_ message: String?) {
+        rootView.message = message ?? ""
     }
     
     private func resetMessage() {
