@@ -3,22 +3,22 @@ import SwiftUI
 struct CommonText: View {
     
     let text: String
-    let underlined: Bool
+    let isUnderlined: Bool
     
     let kerning = CGFloat(-1)
     
     init(
         _ text: String,
-        underlined: Bool = false
+        isUnderlined: Bool = false
     ) {
         self.text = text
-        self.underlined = underlined
+        self.isUnderlined = isUnderlined
     }
     
     var body: some View {
         Text(text)
             .kerning(kerning)
-            .underline(underlined)
+            .underline(isUnderlined)
     }
 }
 

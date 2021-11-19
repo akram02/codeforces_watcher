@@ -103,7 +103,7 @@ struct SignUpView: View {
                     Button(action: {
                         self.onSignIn()
                     }, label: {
-                        CommonText("sign_in".localized, underlined: true)
+                        CommonText("sign_in".localized, isUnderlined: true)
                             .font(.bodySemibold2)
                             .foregroundColor(Palette.black.swiftUIColor)
                     })

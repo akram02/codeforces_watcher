@@ -56,7 +56,7 @@ struct SignInView: View {
                         Button(action: {
                             self.onForgotPassword()
                         }, label: {
-                            CommonText("forgot_password".localized, underlined: true)
+                            CommonText("forgot_password".localized, isUnderlined: true)
                                 .font(.hintSemibold)
                                 .foregroundColor(Palette.black.swiftUIColor)
                         })
@@ -71,7 +71,7 @@ struct SignInView: View {
                     Button(action: {
                         self.onSignUp()
                     }, label: {
-                        CommonText("sign_up".localized, underlined: true)
+                        CommonText("sign_up".localized, isUnderlined: true)
                             .font(.bodySemibold2)
                             .foregroundColor(Palette.black.swiftUIColor)
                     })
