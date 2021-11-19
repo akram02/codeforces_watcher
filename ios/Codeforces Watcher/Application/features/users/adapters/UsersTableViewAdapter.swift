@@ -41,7 +41,7 @@ class UsersTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSourc
                 $0.bind(onLogin: onLogin)
             }
         case .verifyItem(let onVerify):
-            return tableView.dequeueReusableCell(cellType: VerifyTableViewCellNew.self).apply {
+            return tableView.dequeueReusableCell(cellType: VerifyTableViewCell.self).apply {
                 $0.bind(onVerify: onVerify)
             }
         case .userItem(let item):
