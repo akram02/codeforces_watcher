@@ -308,10 +308,14 @@ class UsersViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
                     analyticsControler.logEvent(eventName: AnalyticsEvents().VERIFY_OPENED, params: [:])
                 }
             )
-            tableAdapter.users = [.verifyItem(uiModel)] + sortedUsers.mapToItems()
+            tableAdapter.users =
+                [.verifyItem(uiModel)] +
+                [.sectionTitle("followed_users".localized)] +
+                sortedUsers.mapToItems()
         case .verified:
             guard let codeforcesUser = userState.userAccount?.codeforcesUser else { fatalError() }
-            tableAdapter.users = [.userAccount(UserItem.UserAccountItem(codeforcesUser))] +
+            tableAdapter.users =
+                [.userAccount(UserItem.UserAccountItem(codeforcesUser))] +
                 [.sectionTitle("followed_users".localized)] +
                 sortedUsers.mapToItems()
         default:
