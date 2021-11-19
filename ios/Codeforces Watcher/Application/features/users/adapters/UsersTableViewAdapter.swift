@@ -37,7 +37,7 @@ class UsersTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSourc
         
         switch(users[indexPath.row]) {
         case .loginItem(let onLogin):
-            return tableView.dequeueReusableCell(cellType: LoginTableViewCellNew.self).apply {
+            return tableView.dequeueReusableCell(cellType: LoginTableViewCell.self).apply {
                 $0.bind(onLogin: onLogin)
             }
         case .verifyItem(let uiModel):

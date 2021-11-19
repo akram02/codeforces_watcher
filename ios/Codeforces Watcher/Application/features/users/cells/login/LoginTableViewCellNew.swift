@@ -1,6 +1,6 @@
 import SwiftUI
 
-class LoginTableViewCellNew: UITableViewCell {
+class LoginTableViewCell: UITableViewCell {
 
     var cell = UIHostingController(rootView: LoginViewTableViewCell())
     
