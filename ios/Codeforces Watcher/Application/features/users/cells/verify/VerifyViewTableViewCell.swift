@@ -5,13 +5,13 @@ struct VerifyViewTableViewCell: View {
         VStack(alignment: .leading, spacing: 2) {
             Image("avatar")
             
-            CommonText("Verify Account")
+            CommonText("verify_account".localized)
                 .font(.subHeaderMedium2)
                 .foregroundColor(Palette.black.swiftUIColor)
             
             
             HStack(alignment: .bottom, spacing: 0) {
-                CommonText("Pass the quick and simple verification to see your profile here")
+                CommonText("verify_account_prompt".localized)
                     .font(.hintRegular)
                     .foregroundColor(Palette.darkGray.swiftUIColor)
                 
@@ -19,7 +19,7 @@ struct VerifyViewTableViewCell: View {
                     .frame(width: 48)
                 
                 SmallCommonButton(
-                    label: "Verify".uppercased(),
+                    label: "verify".localized.uppercased(),
                     action: {},
                     foregroundColor: Palette.black.swiftUIColor,
                     backgroundColor: Color.clear,
