@@ -62,11 +62,11 @@ class SignInViewController: UIHostingController<SignInView>, ReKampStoreSubscrib
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupComponents()
-        setupInteractions()
+        setComponents()
+        setInteractions()
     }
     
-    private func setupComponents() {
+    private func setComponents() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: UIImage(named: "back_arrow"),
             style: .plain,
@@ -75,13 +75,13 @@ class SignInViewController: UIHostingController<SignInView>, ReKampStoreSubscrib
         )
     }
     
-    private func setupInteractions() {
+    private func setInteractions() {
         rootView.onSignIn = { email, password in
             store.dispatch(action: AuthRequests.SignIn(email: email, password: password))
         }
         
         rootView.onForgotPassword = {
-            self.navigationController?.pushViewController(RestorePasswordViewController(), animated: true)
+            self.presentModal(RestorePasswordViewController(dismissCallback: { self.dismiss(animated: true) }))
             analyticsControler.logEvent(eventName: AnalyticsEvents().SIGN_UP_OPENED, params: [:])
         }
         
@@ -91,8 +91,8 @@ class SignInViewController: UIHostingController<SignInView>, ReKampStoreSubscrib
         }
     }
     
-    func updateMessage(_ message: String) {
-        rootView.error = message
+    func updateMessage(_ message: String?) {
+        rootView.message = message ?? ""
     }
     
     func resetMessage() {

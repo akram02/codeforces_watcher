@@ -1,5 +1,6 @@
 package io.xorum.codeforceswatcher.redux
 
+import io.xorum.codeforceswatcher.util.Strings
 import tw.geothings.rekotlin.Action
 
 interface ToastAction : Action {

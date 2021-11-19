@@ -8,7 +8,6 @@ struct CommonTextFieldNew: UIViewRepresentable {
     private let tag: Int
     
     @State private var mask = ""
-    @State private var isFocused = false
     
     init(
         text: Binding<String>,
@@ -22,7 +21,10 @@ struct CommonTextFieldNew: UIViewRepresentable {
         self.tag = tag
         
         self.placeholder.addAttributes(
-            [.foregroundColor : Palette.darkGray],
+            [
+                NSAttributedString.Key.foregroundColor : Palette.darkGray,
+                NSAttributedString.Key.kern: -1
+            ],
             range: NSRange(location: 0, length: self.placeholder.length)
         )
     }
@@ -30,18 +32,22 @@ struct CommonTextFieldNew: UIViewRepresentable {
     func makeUIView(context: UIViewRepresentableContext<CommonTextFieldNew>) -> UITextField {
         let textField = UITextField().apply {
             $0.delegate = context.coordinator
-            $0.attributedPlaceholder = placeholder
-            $0.tag = tag
-            
-            $0.font = UIFont.monospacedSystemFont(ofSize: 16, weight: .regular)
-            $0.backgroundColor = Palette.white
             $0.borderStyle = .none
             $0.autocorrectionType = .no
             $0.spellCheckingType = .no
             $0.autocapitalizationType = .none
             $0.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+            
+            $0.attributedPlaceholder = placeholder
+            $0.tag = tag
+            
+            $0.font = Font.monospacedBodyRegular
+            $0.backgroundColor = Palette.white
+            $0.defaultTextAttributes.updateValue(-1, forKey: NSAttributedString.Key.kern)
 
             $0.frame.size.height = 20
+            
+            $0.setupKeyboard()
         }
         
         return textField
@@ -61,47 +67,21 @@ struct CommonTextFieldNew: UIViewRepresentable {
         init(_ customTextField: CommonTextFieldNew) {
             parent = customTextField
         }
-
-        func textFieldDidChangeSelection(_ textField: UITextField) {
-            DispatchQueue.main.async {
-                if self.parent.isSecureTextField {
-                    self.handleSecureField(textField)
-                } else {
-                    self.handleDefaultField(textField)
-                }
-            }
-        }
         
-        func handleSecureField(_ textField: UITextField) {
-            let text = textField.text ?? ""
-            let lastCharacter = text.count > 0 ? String(text.last!) : ""
-            
-            if lastCharacter == "*" || lastCharacter == "" {
-                self.parent.text.removeLast()
-            } else {
-                self.parent.text += lastCharacter
+        func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+            if let textRange = Range(range, in: self.parent.text) {
+                let cursorLocation = textField.position(
+                    from: textField.beginningOfDocument,
+                    offset: (range.location + string.count)
+                )
+                
+                self.parent.text = self.parent.text.replacingCharacters(in: textRange, with: string)
+                self.parent.mask = self.parent.isSecureTextField ? self.secureFieldMask() : self.textFieldMask()
+                
+                moveCursor(textField, location: cursorLocation)
             }
             
-            self.parent.mask = String(repeatElement("*", count: text.count))
-        }
-        
-        func handleDefaultField(_ textField: UITextField) {
-            let text = textField.text ?? ""
-            
-            self.parent.text = text
-            self.parent.mask = text
-        }
-
-        func textFieldDidBeginEditing(_ textField: UITextField) {
-            DispatchQueue.main.async {
-                self.parent.isFocused = true
-            }
-        }
-
-        func textFieldDidEndEditing(_ textField: UITextField) {
-            DispatchQueue.main.async {
-                self.parent.isFocused = false
-            }
+            return false
         }
 
         func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -112,6 +92,22 @@ struct CommonTextFieldNew: UIViewRepresentable {
             }
 
             return false
+        }
+        
+        private func moveCursor(_ textField: UITextField, location: UITextPosition?) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.001) {
+                if let location = location {
+                    textField.selectedTextRange = textField.textRange(from: location, to: location)
+                }
+            }
+        }
+        
+        private func secureFieldMask() -> String {
+            String(repeatElement("*", count: self.parent.text.count))
+        }
+
+        private func textFieldMask() -> String {
+            self.parent.text
         }
     }
     

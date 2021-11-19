@@ -6,8 +6,10 @@ import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
 import io.ktor.client.features.logging.*
 import io.ktor.client.request.*
+import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.utils.io.*
+import io.ktor.utils.io.charsets.*
 import io.xorum.codeforceswatcher.redux.firebaseController
 import io.xorum.codeforceswatcher.redux.getLang
 import kotlinx.serialization.Serializable
@@ -50,13 +52,11 @@ internal class HttpClientFactory {
     }
 }
 
-internal suspend fun getError(responseContent: ByteReadChannel) =
-    responseContent.readUTF8Line()?.let {
-        Json(from = Json.Default) {}.decodeFromString(Error.serializer(), it)
-    }
+internal fun getError(jsonString: String) =
+    Json.decodeFromString(Error.serializer(), jsonString)
 
 @Serializable
-internal data class Error(val error: String?)
+internal data class Error(val error: String? = null)
 
 internal suspend inline fun <T> request(block: (httpClient: HttpClient) -> T) = try {
     val (token, exception) = suspendCoroutine<Pair<String?, Exception?>> { continuation ->
@@ -69,7 +69,7 @@ internal suspend inline fun <T> request(block: (httpClient: HttpClient) -> T) = 
     Response.Success(block(httpClient))
 } catch (clientRequestException: ClientRequestException) {
     println(clientRequestException)
-    Response.Failure(getError(clientRequestException.response.content)?.error)
+    Response.Failure(getError(clientRequestException.response.readText(Charsets.UTF_8)).error)
 } catch (t: Throwable) {
     println(t)
     Response.Failure(null)

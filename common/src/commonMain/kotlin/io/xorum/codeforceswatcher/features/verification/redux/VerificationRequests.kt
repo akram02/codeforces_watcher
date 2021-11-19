@@ -14,16 +14,20 @@ class VerificationRequests {
         private val verificationRepository = VerificationRepository()
 
         override suspend fun execute() {
+            if (handle.isEmpty()) {
+                store.dispatch(Failure(Strings.get("fields_cannot_be_empty")))
+                return
+            }
             when (val response = verificationRepository.verifyCodeforcesAccount(handle)) {
                 is Response.Success -> {
-                    store.dispatch(Success(response.result, ""))
+                    store.dispatch(Success(response.result))
                 }
-                is Response.Failure -> store.dispatch(Failure(Strings.get("wrong_credentials")))
+                is Response.Failure -> store.dispatch(Failure(response.error))
             }
         }
 
-        data class Success(val userAccount: UserAccount, val message: String) : Action
-        data class Failure(val message: String) : Action
+        data class Success(val userAccount: UserAccount) : Action
+        data class Failure(val message: String?) : Action
     }
 
     class FetchVerificationCode : Request() {

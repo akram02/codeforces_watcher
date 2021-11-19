@@ -5,8 +5,8 @@ struct TitleSectionViewTableViewCell: View {
     var title = "".localized
     
     var body: some View {
-        Text(title)
-            .font(.smallHeader)
+        CommonText(title)
+            .font(.bodyRegular)
             .foregroundColor(Palette.black.swiftUIColor)
             .padding(.horizontal, 20)
             .padding(.top, 15)

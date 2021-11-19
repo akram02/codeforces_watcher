@@ -26,8 +26,7 @@ fun verificationReducer(action: Action, state: AppState): VerificationState {
         }
         is VerificationRequests.VerifyCodeforces.Success -> {
             newState = newState.copy(
-                status = VerificationState.Status.DONE,
-                message = action.message
+                status = VerificationState.Status.DONE
             )
         }
         is VerificationRequests.VerifyCodeforces.Failure -> {
@@ -39,7 +38,7 @@ fun verificationReducer(action: Action, state: AppState): VerificationState {
         is VerificationRequests.ResetVerificationCodeforcesMessage -> {
             newState = newState.copy(
                 status = VerificationState.Status.IDLE,
-                message = ""
+                message = null
             )
         }
     }

@@ -28,6 +28,9 @@ import androidx.lifecycle.MutableLiveData
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.compose.*
 import com.bogdan.codeforceswatcher.components.compose.textfields.AuthTextField
+import com.bogdan.codeforceswatcher.components.compose.textfields.EmailTextField
+import com.bogdan.codeforceswatcher.components.compose.textfields.PasswordTextField
+import com.bogdan.codeforceswatcher.components.compose.textfields.TextFieldPosition
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 import io.xorum.codeforceswatcher.features.auth.redux.AuthRequests
 import io.xorum.codeforceswatcher.features.auth.redux.AuthState
@@ -47,126 +50,93 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
     }
 
     private val authState = MutableLiveData<AuthState>()
-    private val AuthState.shouldShowLoading
-        get() = status == AuthState.Status.PENDING
+
+    private var email = ""
+    private var password = ""
 
     @ExperimentalComposeUiApi
     @Composable
     private fun SignInScreen() {
-        val localFocusManager = LocalFocusManager.current
-
-        var email = ""
-        var password = ""
-
-        val authState by authState.observeAsState()
-
         Scaffold(
             modifier = Modifier.fillMaxSize(),
-            topBar = {
-                NavigationBar { finish() }
-            },
-            bottomBar = {
-                LinkText(
-                    linkTextData = listOf(
-                        LinkTextData(("${getString(R.string.dont_have_an_account_yet)} ")),
-                        LinkTextData(getString(R.string.sign_up), "sign_up") { startSignUpActivity() }
-                    ),
-                    modifier = Modifier
-                        .height(62.dp)
-                        .fillMaxWidth()
-                        .padding(horizontal = 20.dp),
-                    textStyle = MaterialTheme.typography.body1.copy(
-                        fontSize = 14.sp,
-                        color = MaterialTheme.colors.secondaryVariant
-                    ),
-                    clickableTextStyle = MaterialTheme.typography.body2.copy(
-                        fontSize = 14.sp,
-                        color = MaterialTheme.colors.onBackground
-                    ),
-                    paragraphStyle = ParagraphStyle(textAlign = TextAlign.Center)
-                )
-            },
+            topBar = { TopBar() },
+            bottomBar = { BottomBar() },
             backgroundColor = MaterialTheme.colors.background
         ) {
-            Column(
-                modifier = Modifier.padding(horizontal = 20.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                Spacer(Modifier.height(56.dp))
-
-                Title(getString(R.string.sign_in))
-
-                Spacer(Modifier.height(44.dp))
-
-                AuthTextField(
-                    label = getString(R.string.email),
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Email,
-                        imeAction = ImeAction.Next
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onNext = { localFocusManager.moveFocus(FocusDirection.Down) }
-                    )
-                ) { newEmail ->
-                    email = newEmail
-                }
-
-                Spacer(Modifier.height(24.dp))
-
-                AuthTextField(
-                    label = getString(R.string.password),
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Password,
-                        imeAction = ImeAction.Done
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onDone = { localFocusManager.clearFocus() }
-                    ),
-                    visualTransformation = PasswordVisualTransformation(mask = '*')
-                ) { newPassword ->
-                    password = newPassword
-                }
-
-                Spacer(Modifier.height(24.dp))
-
-                ErrorView(authState?.signInMessage.orEmpty())
-
-                Spacer(Modifier.height(30.dp))
-
-                AuthButton(getString(R.string.sign_in).uppercase()) {
-                    signInWithEmailAndPassword(email, password)
-                }
-
-                Spacer(Modifier.height(72.dp))
-
-                LinkText(
-                    linkTextData = listOf(
-                        LinkTextData(getString(R.string.forgot_password), "forgot_password") { startRestorePasswordActivity() }
-                    ),
-                    clickableTextStyle = MaterialTheme.typography.body2.copy(
-                        color = MaterialTheme.colors.onBackground
-                    )
-                )
-            }
+            Content()
         }
-        if (authState?.shouldShowLoading == true) LoadingView()
+    }
+
+    @Composable
+    private fun TopBar() { NavigationBar { finish() } }
+
+    @Composable
+    private fun BottomBar() {
+        LinkText(
+            linkTextData = listOf(
+                LinkTextData(("${getString(R.string.dont_have_an_account_yet)} ")),
+                LinkTextData(getString(R.string.sign_up), "sign_up") { startSignUpActivity() }
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 20.dp, end = 20.dp, bottom = 45.dp),
+            textStyle = MaterialTheme.typography.body1.copy(
+                fontSize = 14.sp,
+                color = MaterialTheme.colors.secondaryVariant
+            ),
+            clickableTextStyle = MaterialTheme.typography.body2.copy(
+                fontSize = 14.sp,
+                color = MaterialTheme.colors.onBackground
+            ),
+            paragraphStyle = ParagraphStyle(textAlign = TextAlign.Center)
+        )
     }
 
     @ExperimentalComposeUiApi
-    override fun onStart() {
-        super.onStart()
-        store.subscribe(this) { state ->
-            state.skipRepeats { oldState, newState ->
-                oldState.auth.status == newState.auth.status &&
-                        oldState.auth.authStage == newState.auth.authStage
-            }.select { it.auth }
-        }
-    }
+    @Composable
+    private fun Content() {
+        val authState by authState.observeAsState()
 
-    override fun onStop() {
-        super.onStop()
-        store.dispatch(AuthRequests.ResetSignInMessage)
-        store.unsubscribe(this)
+        Column(
+            modifier = Modifier.padding(horizontal = 20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Spacer(Modifier.height(56.dp))
+
+            Title(getString(R.string.sign_in))
+
+            Spacer(Modifier.height(44.dp))
+
+            EmailTextField { email = it }
+
+            Spacer(Modifier.height(24.dp))
+
+            PasswordTextField(position = TextFieldPosition.LAST) { password = it }
+
+            Spacer(Modifier.height(24.dp))
+
+            ErrorView(authState?.signInMessage.orEmpty())
+
+            Spacer(Modifier.height(30.dp))
+
+            AuthButton(getString(R.string.sign_in).uppercase()) {
+                signInWithEmailAndPassword(email, password)
+            }
+
+            Spacer(Modifier.height(72.dp))
+
+            LinkText(
+                linkTextData = listOf(
+                    LinkTextData(getString(R.string.forgot_password), "forgot_password") {
+                        startRestorePasswordActivity()
+                    }
+                ),
+                clickableTextStyle = MaterialTheme.typography.body2.copy(
+                    color = MaterialTheme.colors.onBackground
+                )
+            )
+        }
+        if (authState?.status == AuthState.Status.PENDING) LoadingView()
     }
 
     private fun signInWithEmailAndPassword(email: String, password: String) {
@@ -181,8 +151,32 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
         startActivity(Intent(this, RestorePasswordComposeActivity::class.java))
     }
 
+    private fun resetSignInMessage() {
+        store.dispatch(AuthRequests.ResetSignInMessage)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        store.subscribe(this) { state ->
+            state.skipRepeats { oldState, newState ->
+                oldState.auth.status == newState.auth.status &&
+                        oldState.auth.authStage == newState.auth.authStage
+            }.select { it.auth }
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        resetSignInMessage()
+        store.unsubscribe(this)
+    }
+
     override fun onNewState(state: AuthState) {
-        if (state.authStage == AuthState.Stage.SIGNED_IN) finish()
         authState.postValue(state)
+        when (state.status) {
+            AuthState.Status.DONE -> finish()
+            AuthState.Status.IDLE -> resetSignInMessage()
+            else -> return
+        }
     }
 }

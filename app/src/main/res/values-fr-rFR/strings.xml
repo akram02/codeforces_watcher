@@ -101,12 +101,10 @@ Téléchargez-la sur Google Play - https://play.google.com/store/apps/details?id
     <string name="confirm_password">Confirmez le mot de passe</string>
     <string name="passwords_do_not_match">Les mots de passe ne correspondent pas</string>
     <string name="agree_to_the_privacy_policy">Acceptez la politique de confidentialité</string>
-    <string name="agree_with_the_conditions_and_privacy_policy"><![CDATA[J\'accepte les <link> Termes et conditions </link> et la <link> Politique de confidentialité </link>]]></string>
     <string name="terms_and_conditions">Termes et conditions</string>
     <string name="privacy_policy">Politique de confidentialité</string>
     <string name="verify_codeforces_account">Vérifier Codeforces Compte</string>
     <string name="verify">Vérifier</string>
-    <string name="to_verify_please_change_your_last_name">Pour vérifier que ce compte vous appartient, veuillez modifier votre "Nom de famille" en anglais dans votre <b> Profil - Paramètres - Réseaux sociaux </b> en lui attribuant cette valeur:</string>
     <string name="after_successful_login_you_can_change_it_back">Juste après une connexion réussie, vous pouvez le modifier.</string>
     <string name="codeforces_handle">Codeforces handle</string>
     <string name="code_copied_to_clipboard">Code copié dans le presse-papiers</string>
@@ -114,6 +112,6 @@ Téléchargez-la sur Google Play - https://play.google.com/store/apps/details?id
     <string name="do_you_want_to_log_out">Voulez-vous vous déconnecter?</string>
     <string name="stay_logged_in">Rester connecté</string>
     <string name="forgot_password_empty_email">Entrez un e-mail valide et cliquez sur \"Mot de passe oublié?\"!</string>
-    <string name="fields_can_not_be_empty">Les champs ne peuvent pas être vides</string>
+    <string name="fields_cannot_be_empty">Les champs ne peuvent pas être vides</string>
     <string name="forgot_password_success">Un e-mail contenant des instructions additionnels vous a été envoyé ! Vérifiez s\'il vous plaît!</string>
 </resources>
