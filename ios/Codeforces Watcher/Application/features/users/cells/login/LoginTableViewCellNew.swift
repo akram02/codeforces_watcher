@@ -4,6 +4,8 @@ class LoginTableViewCellNew: UITableViewCell {
 
     var cell = UIHostingController(rootView: LoginViewTableViewCell())
     
+    var onLogin: () -> Void = {}
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -19,9 +21,21 @@ class LoginTableViewCellNew: UITableViewCell {
 
             selectionStyle = .none
         }
+        
+        setInteractions()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func bind(onLogin: @escaping () -> Void) {
+        self.onLogin = onLogin
+    }
+    
+    private func setInteractions() {
+        cell.rootView.onLogin = {
+            self.onLogin()
+        }
     }
 }

@@ -290,16 +290,14 @@ class UsersViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
         
         switch (authState.authStage) {
         case .notSignedIn:
-            let uiModel = DoActionToIdentifyView.UIModel(
-                title: "login_to_identify".localized,
-                subtitle: "prompt_to_loginToIdentify".localized,
-                buttonText: "login_in_42_seconds".localized,
-                onButtonTap: {
-                    self.presentModal(SignInViewController())
-                    analyticsControler.logEvent(eventName: AnalyticsEvents().SIGN_IN_OPENED, params: [:])
-                }
-            )
-            tableAdapter.users = [.loginItem(uiModel)] + sortedUsers.mapToItems()
+            let onLogin = {
+                self.presentModal(SignInViewController())
+                analyticsControler.logEvent(eventName: AnalyticsEvents().SIGN_IN_OPENED, params: [:])
+            }
+            tableAdapter.users =
+                [.loginItem(onLogin)] +
+                [.sectionTitle("followed_users".localized)] +
+                sortedUsers.mapToItems()
         case .signedIn:
             let uiModel = DoActionToIdentifyView.UIModel(
                 title: "verify_account".localized,
