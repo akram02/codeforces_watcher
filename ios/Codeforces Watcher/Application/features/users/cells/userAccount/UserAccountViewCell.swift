@@ -14,94 +14,27 @@ struct UserAccountViewCell: View {
     
     var onViewProfile: (String) -> Void = { _ in }
     
-    var rankColor: UIColor {
-        getColorByUserRank(rank.string.lowercased())
-    }
-    
     var body: some View {
         VStack(alignment: .center, spacing: 6) {
             VStack(alignment: .leading, spacing: 0) {
-                HStack(spacing: 0) {
-                    CircleImageViewNew(
-                        userAvatar: avatar,
-                        borderColor: getColorByUserRank(rank.string).swiftUIColor,
-                        size: (80, 80)
-                    )
-                    
-                    Spacer()
-                        .frame(width: 18)
-                    
-                    HStack(spacing: 6) {
-                        VStack(spacing: 0) {
-                            Image("ratingIconNew")
-                            
-                            Spacer()
-                                .frame(height: 10)
-                            
-                            Image("maxRatingIconNew")
-                            
-                            Spacer()
-                                .frame(height: 8)
-                            
-                            Image("starIconNew")
-                        }
-                        
-                        VStack(alignment: .leading, spacing: 0) {
-                            AttributedTextView(
-                                attributedString: rating,
-                                font: Font.monospacedHintRegular,
-                                alignment: .left
-                            )
-                            .fixedSize()
-                            
-                            Spacer()
-                                .frame(height: 4)
-                            
-                            AttributedTextView(
-                                attributedString: maxRating,
-                                font: Font.monospacedHintRegular,
-                                alignment: .left
-                            )
-                            .fixedSize()
-                            
-                            Spacer()
-                                .frame(height: 5)
-                            
-                            AttributedTextView(
-                                attributedString: contribution,
-                                font: Font.monospacedHintRegular,
-                                alignment: .left
-                            )
-                            .fixedSize()
-                        }
-                    }
-                }
+                UserCommonInfo(
+                    avatar: avatar,
+                    rank: rank.string,
+                    rating: rating,
+                    maxRating: maxRating,
+                    contribution: contribution
+                )
                 
                 Spacer()
                     .frame(height: 2)
                 
-                VStack(alignment: .leading, spacing: 2) {
-                    CommonText(handle)
-                        .font(.subHeaderMedium2)
-                        .foregroundColor(Palette.black.swiftUIColor)
-                    
-                    CommonText(name)
-                        .font(.hintSemibold)
-                        .foregroundColor(Palette.darkGray.swiftUIColor)
-                }
+                UserInfo(handle: handle, name: name)
                 
                 Spacer()
                     .frame(height: 12)
                 
                 HStack {
-                    AttributedTextView(
-                        attributedString: rank,
-                        font: Font.monospacedHeaderMedium,
-                        alignment: .left
-                    )
-                    .fixedSize()
-                    .shadow(color: rankColor.lighter(by: 0.2, alpha: 0.5)?.swiftUIColor ?? Color.clear, radius: 8, x: 0, y: 0)
-                    .shadow(color: rankColor.lighter(by: 0.1)?.swiftUIColor ?? Color.clear, radius: 12, x: 0, y: 0)
+                    UserRank(rank: rank)
                     
                     Spacer()
                     
@@ -127,6 +60,72 @@ struct UserAccountViewCell: View {
                 .font(.hintRegular)
                 .foregroundColor(Palette.darkGray.swiftUIColor)
         }
+    }
+    
+    private func UserCommonInfo(
+        avatar: String,
+        rank: String,
+        rating: NSMutableAttributedString,
+        maxRating: NSMutableAttributedString,
+        contribution: NSMutableAttributedString
+    ) -> some View {
+        HStack(spacing: 0) {
+            CircleImageViewNew(
+                userAvatar: avatar,
+                borderColor: getColorByUserRank(rank).swiftUIColor,
+                size: (80, 80)
+            )
+            
+            Spacer()
+                .frame(width: 18)
+            
+            VStack(alignment: .leading, spacing: 4) {
+                PropertyData(imageName: "ratingIconNew", attributedText: rating)
+                
+                PropertyData(imageName: "maxRatingIconNew", attributedText: maxRating)
+                
+                PropertyData(imageName: "starIconNew", attributedText: contribution)
+            }
+        }
+    }
+    
+    private func PropertyData(imageName: String, attributedText: NSMutableAttributedString) -> some View {
+        HStack(spacing: 4) {
+            Image(imageName)
+                .frame(width: 14, alignment: .center)
+            
+            AttributedTextView(
+                attributedString: attributedText,
+                font: Font.monospacedHintRegular,
+                alignment: .left
+            )
+            .fixedSize()
+        }
+    }
+    
+    private func UserInfo(handle: String, name: String) -> some View {
+        VStack(alignment: .leading, spacing: 2) {
+            CommonText(handle)
+                .font(.subHeaderMedium2)
+                .foregroundColor(Palette.black.swiftUIColor)
+            
+            CommonText(name)
+                .font(.hintSemibold)
+                .foregroundColor(Palette.darkGray.swiftUIColor)
+        }
+    }
+
+    private func UserRank(rank: NSMutableAttributedString) -> some View {
+        let rankColor = getColorByUserRank(rank.string.lowercased())
+        
+        return AttributedTextView(
+            attributedString: rank,
+            font: Font.monospacedHeaderMedium,
+            alignment: .left
+        )
+        .fixedSize()
+        .shadow(color: rankColor.lighter(by: 0.2, alpha: 0.5)?.swiftUIColor ?? Color.clear, radius: 8, x: 0, y: 0)
+        .shadow(color: rankColor.lighter(by: 0.1)?.swiftUIColor ?? Color.clear, radius: 12, x: 0, y: 0)
     }
 }
 
