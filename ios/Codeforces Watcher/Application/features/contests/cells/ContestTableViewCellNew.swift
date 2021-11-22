@@ -26,5 +26,9 @@ class ContestTableViewCellNew: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func bind(_ contest: Contest, completion: @escaping (() -> ())) {}
+    func bind(_ contest: Contest, completion: @escaping (() -> ())) {
+        cell.rootView.name = contest.title
+        cell.rootView.date = Double(contest.startDateInMillis / 1000).secondsToContestDateString()
+        cell.rootView.logoName = Contest.Platform.getImageNameByPlatform(contest.platform)
+    }
 }

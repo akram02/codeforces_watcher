@@ -1,21 +1,26 @@
 import SwiftUI
 
 struct ContestViewTableViewCell: View {
+    
+    var name: String = ""
+    var date: String = ""
+    var logoName: String = ""
+    
     var body: some View {
         VStack {
             HStack(spacing: 8) {
-                Image("Codeforces")
+                Image(logoName)
                     .resizable()
                     .frame(width: 36, height: 36)
                     .clipShape(Circle())
                 
                 VStack(spacing: 4) {
-                    CommonText("Codeforces Round #745 (Div. 1)")
+                    CommonText(name)
                         .font(.bodySemibold)
                         .foregroundColor(Palette.black.swiftUIColor)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     
-                    CommonText("13:05 Sep 30, Thursday")
+                    CommonText(date)
                         .font(.hintRegular)
                         .foregroundColor(Palette.darkGray.swiftUIColor)
                         .frame(maxWidth: .infinity, alignment: .leading)
