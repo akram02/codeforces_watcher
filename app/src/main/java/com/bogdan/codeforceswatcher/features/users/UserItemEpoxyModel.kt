@@ -1,34 +1,29 @@
 package com.bogdan.codeforceswatcher.features.users
 
 import android.view.View
+import androidx.compose.ui.platform.ComposeView
 import androidx.core.content.ContextCompat
 import com.bogdan.codeforceswatcher.R
+import com.bogdan.codeforceswatcher.components.compose.UserItemView
+import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 import com.bogdan.codeforceswatcher.epoxy.BaseEpoxyModel
-import com.squareup.picasso.Picasso
-import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.view_user_item.view.*
 
 data class UserItemEpoxyModel(
     private val userItem: UserItem
-) : BaseEpoxyModel(R.layout.view_user_item) {
+) : BaseEpoxyModel(R.layout.view_user_item_compose) {
 
     init {
         id("UserItemEpoxyModel", userItem.toString())
     }
 
     override fun bind(view: View): Unit = with(view) {
+        view.findViewById<ComposeView>(R.id.compose_view).setContent {
+            AlgoismeTheme {
+                UserItemView(userItem = userItem)
+            }
+        }
         super.bind(view)
-        Picasso.get().load(userItem.avatarLink)
-            .placeholder(R.drawable.no_avatar)
-            .into(ivAvatar)
-
-        (ivAvatar as CircleImageView).borderColor =
-            ContextCompat.getColor(context, userItem.rankColor)
-        tvUserHandle.text = userItem.handle
-        tvRating.text = userItem.rating
-        tvDateLastRatingUpdate.text = userItem.dateOfLastRatingUpdate
-        tvLastRatingUpdate.text = userItem.lastRatingUpdate
-        showLastRatingUpdate(userItem.update, this)
 
         setOnClickListener {
             context.startActivity(

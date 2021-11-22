@@ -8,13 +8,10 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatSpinner
-import androidx.compose.material.Text
-import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 import com.bogdan.codeforceswatcher.epoxy.BaseEpoxyController
 import io.xorum.codeforceswatcher.features.auth.models.UserAccount
 import io.xorum.codeforceswatcher.features.auth.redux.AuthState
@@ -23,6 +20,7 @@ import io.xorum.codeforceswatcher.features.users.redux.FetchUserDataType
 import io.xorum.codeforceswatcher.features.users.redux.UsersActions
 import io.xorum.codeforceswatcher.features.users.redux.UsersRequests
 import io.xorum.codeforceswatcher.features.users.redux.UsersState
+import io.xorum.codeforceswatcher.features.users.redux.UsersState.SortType.Companion.getSortType
 import io.xorum.codeforceswatcher.redux.analyticsController
 import io.xorum.codeforceswatcher.redux.states.AppState
 import io.xorum.codeforceswatcher.redux.store
@@ -30,7 +28,7 @@ import io.xorum.codeforceswatcher.util.AnalyticsEvents
 import kotlinx.android.synthetic.main.fragment_users.*
 import tw.geothings.rekotlin.StoreSubscriber
 
-class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, StoreSubscriber<AppState> {
+class UsersFragmentCompose : Fragment(), SwipeRefreshLayout.OnRefreshListener, StoreSubscriber<AppState> {
 
     private lateinit var spSort: AppCompatSpinner
 
@@ -81,15 +79,10 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, StoreSub
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = ComposeView(requireContext()).apply {
-        setContent {
-            AlgoismeTheme {
-                Text("Hello Compose!")
-            }
-        }
-    }
+    ): View = inflater.inflate(R.layout.fragment_users, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -121,7 +114,7 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, StoreSub
                 position: Int,
                 id: Long
             ) {
-                store.dispatch(UsersActions.Sort(UsersState.SortType.getSortType(position)))
+                store.dispatch(UsersActions.Sort(getSortType(position)))
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
