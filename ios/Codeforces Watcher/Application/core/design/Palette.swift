@@ -25,10 +25,7 @@ public class Palette {
         lightColor: UIColor(rgb: 0x636363),
         darkColor: UIColor(rgb: 0xAAAAAA)
     )
-    public static let blue = UIColor(
-        lightColor: UIColor(rgb: 0x0000FF),
-        darkColor: UIColor(rgb: 0xFFFFFF)
-    )
+    public static let blue = UIColor(rgb: 0x0000FF)
     public static let brightBlue = UIColor(rgb: 0x3333ff)
     public static let purple = UIColor(rgb: 0x9B1EA4)
     public static let orange = UIColor(rgb: 0xFFA500)
