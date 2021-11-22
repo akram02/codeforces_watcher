@@ -20,7 +20,7 @@ data class UserItemEpoxyModel(
     override fun bind(view: View): Unit = with(view) {
         view.findViewById<ComposeView>(R.id.compose_view).setContent {
             AlgoismeTheme {
-                UserItemView(userItem = userItem)
+                UserItemView(userItem)
             }
         }
         super.bind(view)
