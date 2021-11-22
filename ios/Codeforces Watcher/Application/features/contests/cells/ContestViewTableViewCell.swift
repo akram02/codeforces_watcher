@@ -6,6 +6,8 @@ struct ContestViewTableViewCell: View {
     var date: String = ""
     var logoName: String = ""
     
+    var onCalendar: () -> Void = {}
+    
     var body: some View {
         VStack {
             HStack(spacing: 8) {
@@ -28,8 +30,12 @@ struct ContestViewTableViewCell: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .lineLimit(1)
                 
-                Image("contestsIcon")
-                    .frame(width: 18, height: 20)
+                Button(action: {
+                    self.onCalendar()
+                }, label: {
+                    Image("contestsIcon")
+                        .frame(width: 18, height: 20)
+                })
             }
         }
         .padding(.horizontal, 20)

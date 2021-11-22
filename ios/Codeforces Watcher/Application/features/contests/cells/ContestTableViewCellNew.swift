@@ -5,6 +5,8 @@ class ContestTableViewCellNew: UITableViewCell {
 
     var cell = UIHostingController(rootView: ContestViewTableViewCell())
     
+    var onCalendar: () -> Void = {}
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -19,6 +21,8 @@ class ContestTableViewCellNew: UITableViewCell {
             $0.view.backgroundColor = .clear
 
             selectionStyle = .default
+            
+            setInteractions()
         }
     }
     
@@ -26,9 +30,17 @@ class ContestTableViewCellNew: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func setInteractions() {
+        cell.rootView.onCalendar = {
+            self.onCalendar()
+        }
+    }
+    
     func bind(_ contest: Contest, completion: @escaping (() -> ())) {
         cell.rootView.name = contest.title
         cell.rootView.date = Double(contest.startDateInMillis / 1000).secondsToContestDateString()
         cell.rootView.logoName = Contest.Platform.getImageNameByPlatform(contest.platform)
+
+        onCalendar = completion
     }
 }
