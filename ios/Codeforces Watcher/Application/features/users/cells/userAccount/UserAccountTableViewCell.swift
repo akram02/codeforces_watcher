@@ -112,7 +112,7 @@ fileprivate extension UserAccountTableViewCell.UIModel {
     }
     
     private func colorRating(text: String, rating: Int?, rank: String?) -> NSAttributedString {
-        let attributedText = NSMutableAttributedString(string: text)
+        var attributedText = NSMutableAttributedString(string: text)
 
         let color = getColorByUserRank(rank)
         
@@ -121,6 +121,8 @@ fileprivate extension UserAccountTableViewCell.UIModel {
             if let range = text.firstOccurrence(string: tag) {
                 attributedText.colored(with: color, range: range)
             }
+            
+            attributedText = colorPropertyName(attributedText)
         }
         
         return attributedText
@@ -132,14 +134,27 @@ fileprivate extension UserAccountTableViewCell.UIModel {
     }
     
     private func colorContribution(text: String, _ contributionSubstring: String) -> NSAttributedString {
-        let attributedText = NSMutableAttributedString(string: text)
+        var attributedText = NSMutableAttributedString(string: text)
        
         if let range = text.firstOccurrence(string: contributionSubstring) {
             let colorOfContribution = (contribution >= 0 ? Palette.green : Palette.red)
             
             attributedText.colored(with: colorOfContribution, range: range)
         }
+        
+        attributedText = colorPropertyName(attributedText)
 
+        return attributedText
+    }
+    
+    private func colorPropertyName(_ attributedText: NSMutableAttributedString) -> NSMutableAttributedString {
+        let text = attributedText.string
+        
+        if let index = text.firstIndex(of: ":") {
+            let range = NSMakeRange(0, text.distance(from: text.startIndex, to: index) + 1)
+            attributedText.colored(with: Palette.black, range: range)
+        }
+        
         return attributedText
     }
     
