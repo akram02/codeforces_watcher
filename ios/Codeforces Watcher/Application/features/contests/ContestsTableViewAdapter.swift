@@ -36,7 +36,7 @@ class ContestsTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSo
             }
         }
 
-        return tableView.dequeueReusableCell(cellType: ContestTableViewCell.self).apply {
+        return tableView.dequeueReusableCell(cellType: ContestTableViewCellNew.self).apply {
             $0.bind(contests[indexPath.row]) {
                 self.onCalendarTap?(self.contests[indexPath.row])
             }
