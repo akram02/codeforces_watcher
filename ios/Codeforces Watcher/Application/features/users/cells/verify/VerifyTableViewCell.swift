@@ -1,43 +1,41 @@
-//
-//  VerifyTableViewCell.swift
-//  Codeforces Watcher
-//
-//  Created by Ivan Karavaiev on 2/12/21.
-//  Copyright © 2021 xorum.io. All rights reserved.
-//
-
-import UIKit
+import SwiftUI
 
 class VerifyTableViewCell: UITableViewCell {
 
-    private let verifyView = LoginView()
+    var cell = UIHostingController(rootView: VerifyViewTableViewCell())
+    
+    var onVerify: () -> Void = {}
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupView()
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setupView()
-    }
-
-    private func setupView() {
-        selectionStyle = .none
         
-        buildViewTree()
-        setConstraints()
-    }
+        cell.run {
+            contentView.addSubview($0.view)
+            
+            $0.view.translatesAutoresizingMaskIntoConstraints = false
+            $0.view.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+            $0.view.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
+            $0.view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+            $0.view.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
+            $0.view.backgroundColor = .clear
 
-    private func buildViewTree() {
-        contentView.addSubview(verifyView)
-    }
-
-    private func setConstraints() {
-        verifyView.edgesToSuperview(insets: UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 8))
+            selectionStyle = .none
+        }
+        
+        setInteractions()
     }
     
-    func bind(_ uiModel: DoActionToIdentifyView.UIModel) {
-        verifyView.bind(uiModel)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func bind(onVerify: @escaping () -> Void) {
+        self.onVerify = onVerify
+    }
+    
+    private func setInteractions() {
+        cell.rootView.onVerify = {
+            self.onVerify()
+        }
     }
 }

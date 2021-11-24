@@ -299,17 +299,12 @@ class UsersViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
                 [.sectionTitle("followed_users".localized)] +
                 sortedUsers.mapToItems()
         case .signedIn:
-            let uiModel = DoActionToIdentifyView.UIModel(
-                title: "verify_account".localized,
-                subtitle: "verify_account_prompt".localized,
-                buttonText: "verify_in_42_seconds".localized,
-                onButtonTap: {
-                    self.presentModal(VerifyViewController())
-                    analyticsControler.logEvent(eventName: AnalyticsEvents().VERIFY_OPENED, params: [:])
-                }
-            )
+            let onVerify = {
+                self.presentModal(VerifyViewController())
+                analyticsControler.logEvent(eventName: AnalyticsEvents().VERIFY_OPENED, params: [:])
+            }
             tableAdapter.users =
-                [.verifyItem(uiModel)] +
+                [.verifyItem(onVerify)] +
                 [.sectionTitle("followed_users".localized)] +
                 sortedUsers.mapToItems()
         case .verified:

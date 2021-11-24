@@ -92,7 +92,7 @@
 
 "verify_account" = "Verify account";
 "verify_account_prompt" = "Pass the quick and simple verification to see your profile here";
-"verify_in_42_seconds" = "Verify in 42 seconds";
+"verify" = "Verify";
 
 "email" = "Email";
 "password" = "Password";

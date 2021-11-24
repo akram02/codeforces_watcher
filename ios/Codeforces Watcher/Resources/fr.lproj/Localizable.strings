@@ -89,7 +89,7 @@
 
 "verify_account" = "Vérifier le compte";
 "verify_account_prompt" = "Passez la vérification rapide et simple pour voir votre profil ici";
-"verify_in_42_seconds" = "Vérifiez en 42 secondes";
+"verify" = "Vérifiez";
 
 "email" = "E-mail";
 "password" = "Mot de passe";
