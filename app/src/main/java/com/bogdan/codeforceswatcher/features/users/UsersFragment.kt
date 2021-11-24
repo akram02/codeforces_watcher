@@ -28,7 +28,7 @@ import io.xorum.codeforceswatcher.util.AnalyticsEvents
 import kotlinx.android.synthetic.main.fragment_users.*
 import tw.geothings.rekotlin.StoreSubscriber
 
-class UsersFragmentCompose : Fragment(), SwipeRefreshLayout.OnRefreshListener, StoreSubscriber<AppState> {
+class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, StoreSubscriber<AppState> {
 
     private lateinit var spSort: AppCompatSpinner
 

@@ -9,22 +9,17 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 import coil.transform.CircleCropTransformation
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 import com.bogdan.codeforceswatcher.components.compose.theme.Black
 import com.bogdan.codeforceswatcher.components.compose.theme.Green
 import com.bogdan.codeforceswatcher.components.compose.theme.Red
@@ -112,73 +107,6 @@ fun UserItemView(
 }
 
 @Composable
-fun UserItemView(
-    modifier: Modifier = Modifier
-) {
-    Row(
-        modifier = modifier.height(40.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Image(
-            painter = painterResource(R.drawable.ic_default_avatar),
-            contentDescription = "avatar",
-            modifier = Modifier
-                .size(36.dp)
-                .clip(CircleShape)
-        )
-
-        Spacer(Modifier.width(8.dp))
-
-        Box(Modifier.fillMaxSize()) {
-            Row(
-                modifier = Modifier.align(Alignment.TopCenter),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = "handle",
-                    style = MaterialTheme.typography.subtitle2,
-                    color = MaterialTheme.colors.onBackground,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.fillMaxWidth(0.85f)
-                )
-
-                Text(
-                    text = "1543",
-                    style = MaterialTheme.typography.subtitle2,
-                    color = MaterialTheme.colors.onBackground,
-                    overflow = TextOverflow.Visible,
-                    textAlign = TextAlign.End,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-
-            Row(
-                modifier = Modifier.align(Alignment.BottomCenter),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = "Last active",
-                    style = MaterialTheme.typography.caption,
-                    color = MaterialTheme.colors.secondaryVariant,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.fillMaxWidth(0.85f)
-                )
-
-                Text(
-                    text = "▲ 13",
-                    style = MaterialTheme.typography.caption.copy(fontWeight = FontWeight.SemiBold),
-                    color = Green,
-                    textAlign = TextAlign.End,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-        }
-    }
-}
-
-@Composable
 private fun colorTextByUserRank(text: String, rank: String?) = buildAnnotatedString {
     if (listOf("legendary grandmaster", "легендарный гроссмейстер").contains(rank)) {
         withStyle(SpanStyle(color = Black)) { append(text[0]) }
@@ -189,14 +117,5 @@ private fun colorTextByUserRank(text: String, rank: String?) = buildAnnotatedStr
         withStyle(SpanStyle(color = colorResource(getColorByUserRank(rank)))) {
             append(text)
         }
-    }
-}
-
-@Preview
-@Composable
-fun ComposablePreview(
-) {
-    AlgoismeTheme {
-        UserItemView(Modifier.padding(horizontal = 20.dp))
     }
 }
