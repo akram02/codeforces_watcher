@@ -81,9 +81,7 @@ struct UserAccountViewCell: View {
             
             VStack(alignment: .leading, spacing: 4) {
                 PropertyData(imageName: "ratingIconNew", attributedText: rating)
-                
                 PropertyData(imageName: "maxRatingIconNew", attributedText: maxRating)
-                
                 PropertyData(imageName: "starIconNew", attributedText: contribution)
             }
         }
