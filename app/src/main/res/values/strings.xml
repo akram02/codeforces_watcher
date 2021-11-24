@@ -1,9 +1,9 @@
 <resources>
   <string name="app_name" translatable="false">Codeforces WatchR</string>
   <string name="default_channel" translatable="false">Default channel</string>
-  <string name="last_rating_update">Last rating update: %1$s</string>
+  <string name="last_activity">Last activity: %1$s</string>
   <string name="updated_on">Updated on %1$s</string>
-  <string name="no_rating_update">No rating update</string>
+  <string name="no_activity">No activity</string>
   <string name="none">None</string>
   <string name="check_connection_or_try_again_later">Check your connection or try again later</string>
   <string name="rating_changes">Rating Changes</string>

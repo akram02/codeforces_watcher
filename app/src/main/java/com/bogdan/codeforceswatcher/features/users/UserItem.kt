@@ -20,14 +20,14 @@ data class UserItem(private val user: User) {
     val handle: SpannableString = colorTextByUserRank(user.handle, user.rank)
     val rating: SpannableString = colorTextByUserRank(user.rating?.toString().orEmpty(), user.rank)
     var lastRatingUpdate: String = ""
-    var dateOfLastRatingUpdate: String = CwApp.app.getString(R.string.no_rating_update)
+    var dateOfLastRatingUpdate: String = CwApp.app.getString(R.string.no_activity)
     val rankColor: Int = getColorByUserRank(user.rank)
     val rank = user.rank
 
     init {
         user.ratingChanges.lastOrNull()?.let { ratingChange ->
             dateOfLastRatingUpdate = CwApp.app.getString(
-                R.string.last_rating_update,
+                R.string.last_activity,
                 getDateTime(ratingChange.ratingUpdateTimeSeconds)
             )
             val difference = ratingChange.newRating - ratingChange.oldRating
