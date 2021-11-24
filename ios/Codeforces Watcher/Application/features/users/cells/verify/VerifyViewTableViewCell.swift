@@ -21,7 +21,7 @@ struct VerifyViewTableViewCell: View {
                 Spacer()
                     .frame(width: 48)
                 
-                SmallCommonButton(
+                CommonSmallButton(
                     label: "verify".localized.uppercased(),
                     action: {
                         self.onVerify()
