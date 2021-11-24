@@ -1,6 +1,7 @@
 package com.bogdan.codeforceswatcher.features.users
 
 import android.text.SpannableString
+import io.xorum.codeforceswatcher.features.users.models.User
 import androidx.core.text.HtmlCompat
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
@@ -11,7 +12,7 @@ import kotlin.math.abs
 
 enum class Update { INCREASE, DECREASE, NULL }
 
-data class UserItem(private val user: io.xorum.codeforceswatcher.features.users.models.User) {
+data class UserItem(private val user: User) {
 
     val id: Long = user.id
     val avatarLink: String = user.avatar
@@ -21,6 +22,7 @@ data class UserItem(private val user: io.xorum.codeforceswatcher.features.users.
     var lastRatingUpdate: String = ""
     var dateOfLastRatingUpdate: String = CwApp.app.getString(R.string.no_rating_update)
     val rankColor: Int = getColorByUserRank(user.rank)
+    val rank = user.rank
 
     init {
         user.ratingChanges.lastOrNull()?.let { ratingChange ->
@@ -42,7 +44,7 @@ data class UserItem(private val user: io.xorum.codeforceswatcher.features.users.
 
     // Needed for disable flicking of epoxy model when all ratingChanges fetched
     override fun toString() =
-        "$id$avatarLink$update$handle$rating$lastRatingUpdate$dateOfLastRatingUpdate$rankColor"
+        "$id$avatarLink$update$handle$rating$lastRatingUpdate$dateOfLastRatingUpdate$rankColor$rank"
 }
 
 fun getColorByUserRank(rank: String?) = when (rank) {
