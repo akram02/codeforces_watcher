@@ -67,8 +67,8 @@ enum UserItem {
         }
     }
     
-    case loginItem(DoActionToIdentifyView.UIModel)
-    case verifyItem(DoActionToIdentifyView.UIModel)
+    case loginItem(() -> Void)
+    case verifyItem(() -> Void)
     case userItem(UserItem)
     case userAccount(UserAccountItem)
     case sectionTitle(String)

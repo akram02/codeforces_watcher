@@ -6,8 +6,12 @@ extension SwiftUI.Font {
         SwiftUI.Font.system(size: 40, weight: .medium, design: .monospaced)
     public static let subHeaderMedium =
         SwiftUI.Font.system(size: 36, weight: .medium, design: .monospaced)
+    public static let subHeaderMedium2 =
+        SwiftUI.Font.system(size: 28, weight: .medium, design: .monospaced)
     public static let midHeaderSemibold =
         SwiftUI.Font.system(size: 24, weight: .semibold, design: .monospaced)
+    public static let midHeaderSemibold2 =
+        SwiftUI.Font.system(size: 20, weight: .semibold, design: .monospaced)
     public static let headerMedium =
         SwiftUI.Font.system(size: 18, weight: .medium, design: .monospaced)
     public static let bodyRegular =

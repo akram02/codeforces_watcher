@@ -7,10 +7,13 @@ struct CircleImageViewNew: View {
     
     let userAvatar: String
     let borderColor: Color
+    let size: (width: CGFloat, height: CGFloat)
     
     var body: some View {
         if noImageAvatarLink == userAvatar {
             Image("noImage")
+                .resizable()
+                .frame(width: size.width, height: size.height)
                 .clipShape(Circle())
                 .overlay(
                     Circle()
@@ -20,7 +23,7 @@ struct CircleImageViewNew: View {
             WebImage(url: URL(string: userAvatar))
                 .resizable()
                 .placeholder(Image("noImage"))
-                .frame(width: 36, height: 36)
+                .frame(width: size.width, height: size.height)
                 .clipShape(Circle())
                 .overlay(
                     Circle()
@@ -34,7 +37,8 @@ struct CircleImageViewNew_Previews: PreviewProvider {
     static var previews: some View {
         CircleImageViewNew(
             userAvatar: "noImage",
-            borderColor: Palette.gray.swiftUIColor
+            borderColor: Palette.gray.swiftUIColor,
+            size: (36, 36)
         )
     }
 }

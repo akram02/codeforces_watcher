@@ -1,10 +1,10 @@
 import SwiftUI
 
-class VerifyTableViewCell: UITableViewCell {
+class LoginTableViewCell: UITableViewCell {
 
-    var cell = UIHostingController(rootView: VerifyViewTableViewCell())
+    var cell = UIHostingController(rootView: LoginViewTableViewCell())
     
-    var onVerify: () -> Void = {}
+    var onLogin: () -> Void = {}
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -29,13 +29,13 @@ class VerifyTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func bind(onVerify: @escaping () -> Void) {
-        self.onVerify = onVerify
+    func bind(onLogin: @escaping () -> Void) {
+        self.onLogin = onLogin
     }
     
     private func setInteractions() {
-        cell.rootView.onVerify = {
-            self.onVerify()
+        cell.rootView.onLogin = {
+            self.onLogin()
         }
     }
 }

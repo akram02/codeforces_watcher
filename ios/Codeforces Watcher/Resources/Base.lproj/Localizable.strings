@@ -86,13 +86,13 @@
 "unknown" = "Unknown";
 "never_updated" = "Never updated";
 
-"login_to_identify" = "Login to identify";
-"prompt_to_loginToIdentify" = "And get instant push notifications about rating updates";
-"login_in_42_seconds" = "Login in 42 seconds";
+"who_are_you" = "Who are you?";
+"login_to_identify" = "Login to identify and get instant push notifications about rating updates";
+"login" = "Login";
 
 "verify_account" = "Verify account";
 "verify_account_prompt" = "Pass the quick and simple verification to see your profile here";
-"verify_in_42_seconds" = "Verify in 42 seconds";
+"verify" = "Verify";
 
 "email" = "Email";
 "password" = "Password";
