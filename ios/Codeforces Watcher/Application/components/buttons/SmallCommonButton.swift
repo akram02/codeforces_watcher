@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct SmallCommonButton: View {
+struct CommonSmallButton: View {
     
     let label: String
     var action: () -> Void = {}
@@ -16,7 +16,7 @@ struct SmallCommonButton: View {
             Text(label)
                 .font(.hintSemibold)
                 .foregroundColor(foregroundColor)
-                .frame(minWidth: 104)
+                .frame(minWidth: 60)
                 .frame(height: 16)
                 .padding(8)
                 .background(backgroundColor)
@@ -32,9 +32,9 @@ struct SmallCommonButton: View {
     }
 }
 
-struct SmallCommonButton_Previews: PreviewProvider {
+struct CommonSmallButton_Previews: PreviewProvider {
     static var previews: some View {
-        SmallCommonButton(
+        CommonSmallButton(
             label: "Text",
             foregroundColor: Palette.black.swiftUIColor,
             backgroundColor: Palette.white.swiftUIColor

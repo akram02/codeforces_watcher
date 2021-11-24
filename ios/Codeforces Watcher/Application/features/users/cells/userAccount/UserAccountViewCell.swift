@@ -38,7 +38,7 @@ struct UserAccountViewCell: View {
                     
                     Spacer()
                     
-                    SmallCommonButton(
+                    CommonSmallButton(
                         label: "View profile",
                         action: {
                             self.onViewProfile(handle)
