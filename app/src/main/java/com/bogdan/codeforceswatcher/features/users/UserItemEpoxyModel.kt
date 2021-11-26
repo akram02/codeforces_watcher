@@ -6,13 +6,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.components.compose.UserItemView
+import com.bogdan.codeforceswatcher.features.users.compose.UserItemView
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 import com.bogdan.codeforceswatcher.epoxy.BaseEpoxyModel
 
 data class UserItemEpoxyModel(
     private val userItem: UserItem
-) : BaseEpoxyModel(R.layout.view_user_item_compose) {
+) : BaseEpoxyModel(R.layout.view_compose) {
 
     init {
         id("UserItemEpoxyModel", userItem.toString())

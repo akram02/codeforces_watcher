@@ -29,7 +29,7 @@ import kotlinx.android.synthetic.main.view_profile_item.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ProfileItemEpoxyModel(
+class ProfileItemEpoxyModell(
     private val userAccount: UserAccount?,
     private val authStage: AuthState.Stage
 ) : BaseEpoxyModel(R.layout.view_profile_item) {
@@ -143,7 +143,7 @@ class ProfileItemEpoxyModel(
             colorSubstring(startIndex, startIndex + it.toString().length, color)
         }
     }
-
+/*app/src/main/java/com/bogdan/codeforceswatcher/components/compose/theme/Shape.kt app/src/main/java/com/bogdan/codeforceswatcher/components/compose/theme/Theme.kt app/src/main/java/com/bogdan/codeforceswatcher/components/compose/theme/Type.kt app/src/main/java/com/bogdan/codeforceswatcher/features/users/ProfileItemEpoxyModel.kt app/src/main/java/com/bogdan/codeforceswatcher/features/users/UserItemEpoxyModel.kt app/src/main/java/com/bogdan/codeforceswatcher/features/users/compose/UserItemView.kt*/
     private fun User.buildMaxRating(context: Context) = SpannableString(
         context.getString(
             R.string.max_rating_only,

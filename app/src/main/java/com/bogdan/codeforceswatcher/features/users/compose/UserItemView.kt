@@ -1,4 +1,4 @@
-package com.bogdan.codeforceswatcher.components.compose
+package com.bogdan.codeforceswatcher.features.users.compose
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
