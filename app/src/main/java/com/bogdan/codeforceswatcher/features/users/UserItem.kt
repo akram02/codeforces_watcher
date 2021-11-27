@@ -15,7 +15,11 @@ enum class Update { INCREASE, DECREASE, NULL }
 data class UserItem(private val user: User) {
 
     val id: Long = user.id
-    val avatarLink: String = user.avatar
+    val avatar = if (user.avatar == "https://userpic.codeforces.org/no-avatar.jpg") {
+        R.drawable.ic_default_avatar
+    } else {
+        user.avatar
+    }
     var update: Update = Update.NULL
     val handle: SpannableString = colorTextByUserRank(user.handle, user.rank)
     val rating: SpannableString = colorTextByUserRank(user.rating?.toString().orEmpty(), user.rank)
@@ -44,7 +48,7 @@ data class UserItem(private val user: User) {
 
     // Needed for disable flicking of epoxy model when all ratingChanges fetched
     override fun toString() =
-        "$id$avatarLink$update$handle$rating$lastRatingUpdate$dateOfLastRatingUpdate$rankColor$rank"
+        "$id$avatar$update$handle$rating$lastRatingUpdate$dateOfLastRatingUpdate$rankColor$rank"
 }
 
 fun getColorByUserRank(rank: String?) = when (rank) {
