@@ -20,7 +20,10 @@ import com.bogdan.codeforceswatcher.components.compose.buttons.MiniButton
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 
 @Composable
-fun IdentifyView(modifier: Modifier = Modifier) {
+fun IdentifyView(
+    modifier: Modifier = Modifier,
+    onButtonClick: () -> Unit
+) {
     Card(modifier) {
         Column(
             modifier = Modifier
@@ -54,16 +57,8 @@ fun IdentifyView(modifier: Modifier = Modifier) {
                     modifier = Modifier.widthIn(max = 224.dp)
                 )
 
-                MiniButton("LOGIN") {  }
+                MiniButton("LOGIN") { onButtonClick() }
             }
         }
-    }
-}
-
-@Preview
-@Composable
-fun IdentifyViewPreview() {
-    AlgoismeTheme {
-        IdentifyView()
     }
 }
