@@ -90,6 +90,10 @@ Codeforces WatchR дає можливiсть:
     <string name="unknown">Невідомо</string>
     <string name="never_updated">Ніколи не оновлювався</string>
     <string name="login_to_identify">Увійдіть для ідентифікації</string>
+    <string name="login">Увійти</string>
+    <string name="login_to_identify_explanation">Увійдіть для ідентифікації і отримуйте миттєві push-сповіщення про оновлення рейтингу</string>
+    <string name="who_are_you">Хто Ви?</string>
+
     <string name="verify_account">Підтвердити акаунт</string>
     <string name="pass_quick_verification">Пройдіть швидку та просту перевірку, щоб побачити тут свій профіль</string>
     <string name="verify_in_42_seconds">Підтвердити за 42 секунди</string>
