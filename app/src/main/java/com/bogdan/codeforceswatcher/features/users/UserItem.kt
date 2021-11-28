@@ -1,6 +1,7 @@
 package com.bogdan.codeforceswatcher.features.users
 
 import android.text.SpannableString
+import io.xorum.codeforceswatcher.features.users.models.User
 import androidx.core.text.HtmlCompat
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
@@ -11,21 +12,26 @@ import kotlin.math.abs
 
 enum class Update { INCREASE, DECREASE, NULL }
 
-data class UserItem(private val user: io.xorum.codeforceswatcher.features.users.models.User) {
+data class UserItem(private val user: User) {
 
     val id: Long = user.id
-    val avatarLink: String = user.avatar
     var update: Update = Update.NULL
     val handle: SpannableString = colorTextByUserRank(user.handle, user.rank)
     val rating: SpannableString = colorTextByUserRank(user.rating?.toString().orEmpty(), user.rank)
     var lastRatingUpdate: String = ""
-    var dateOfLastRatingUpdate: String = CwApp.app.getString(R.string.no_rating_update)
+    var dateOfLastRatingUpdate: String = CwApp.app.getString(R.string.no_activity)
     val rankColor: Int = getColorByUserRank(user.rank)
+    val rank = user.rank
+    val avatar = if (user.avatar == "https://userpic.codeforces.org/no-avatar.jpg") {
+        R.drawable.ic_default_avatar
+    } else {
+        user.avatar
+    }
 
     init {
         user.ratingChanges.lastOrNull()?.let { ratingChange ->
             dateOfLastRatingUpdate = CwApp.app.getString(
-                R.string.last_rating_update,
+                R.string.last_activity,
                 getDateTime(ratingChange.ratingUpdateTimeSeconds)
             )
             val difference = ratingChange.newRating - ratingChange.oldRating
@@ -42,7 +48,7 @@ data class UserItem(private val user: io.xorum.codeforceswatcher.features.users.
 
     // Needed for disable flicking of epoxy model when all ratingChanges fetched
     override fun toString() =
-        "$id$avatarLink$update$handle$rating$lastRatingUpdate$dateOfLastRatingUpdate$rankColor"
+        "$id$update$handle$rating$lastRatingUpdate$dateOfLastRatingUpdate$rankColor$rank$avatar"
 }
 
 fun getColorByUserRank(rank: String?) = when (rank) {

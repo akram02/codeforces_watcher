@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="last_rating_update">Останнє оновлення рейтингу: %1$s</string>
+    <string name="last_activity">Остання активність: %1$s</string>
     <string name="updated_on">Oновлено %1$s</string>
-    <string name="no_rating_update">Немає оновлення рейтингу</string>
+    <string name="no_activity">Немає активності</string>
     <string name="none">Немає</string>
     <string name="check_connection_or_try_again_later">Перевірте підключення або спробуйте пізніше</string>
     <string name="rating_changes">Змiни рейтингу</string>
