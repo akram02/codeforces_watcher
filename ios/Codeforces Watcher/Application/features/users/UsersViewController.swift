@@ -290,30 +290,27 @@ class UsersViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
         
         switch (authState.authStage) {
         case .notSignedIn:
-            let uiModel = DoActionToIdentifyView.UIModel(
-                title: "login_to_identify".localized,
-                subtitle: "prompt_to_loginToIdentify".localized,
-                buttonText: "login_in_42_seconds".localized,
-                onButtonTap: {
-                    self.presentModal(SignInViewController())
-                    analyticsControler.logEvent(eventName: AnalyticsEvents().SIGN_IN_OPENED, params: [:])
-                }
-            )
-            tableAdapter.users = [.loginItem(uiModel)] + sortedUsers.mapToItems()
+            let onLogin = {
+                self.presentModal(SignInViewController())
+                analyticsControler.logEvent(eventName: AnalyticsEvents().SIGN_IN_OPENED, params: [:])
+            }
+            tableAdapter.users =
+                [.loginItem(onLogin)] +
+                [.sectionTitle("followed_users".localized)] +
+                sortedUsers.mapToItems()
         case .signedIn:
-            let uiModel = DoActionToIdentifyView.UIModel(
-                title: "verify_account".localized,
-                subtitle: "verify_account_prompt".localized,
-                buttonText: "verify_in_42_seconds".localized,
-                onButtonTap: {
-                    self.presentModal(VerifyViewController())
-                    analyticsControler.logEvent(eventName: AnalyticsEvents().VERIFY_OPENED, params: [:])
-                }
-            )
-            tableAdapter.users = [.verifyItem(uiModel)] + sortedUsers.mapToItems()
+            let onVerify = {
+                self.presentModal(VerifyViewController())
+                analyticsControler.logEvent(eventName: AnalyticsEvents().VERIFY_OPENED, params: [:])
+            }
+            tableAdapter.users =
+                [.verifyItem(onVerify)] +
+                [.sectionTitle("followed_users".localized)] +
+                sortedUsers.mapToItems()
         case .verified:
             guard let codeforcesUser = userState.userAccount?.codeforcesUser else { fatalError() }
-            tableAdapter.users = [.userAccount(UserItem.UserAccountItem(codeforcesUser))] +
+            tableAdapter.users =
+                [.userAccount(UserItem.UserAccountItem(codeforcesUser))] +
                 [.sectionTitle("followed_users".localized)] +
                 sortedUsers.mapToItems()
         default:

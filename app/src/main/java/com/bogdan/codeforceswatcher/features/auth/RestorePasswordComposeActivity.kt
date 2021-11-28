@@ -155,7 +155,10 @@ class RestorePasswordComposeActivity : ComponentActivity(), StoreSubscriber<Auth
 
     override fun onNewState(state: AuthState) {
         authState.postValue(state)
-        if (state.status == AuthState.Status.DONE) startRestorePasswordMailSentActivity()
-        if (state.status == AuthState.Status.IDLE) resetRestorePasswordMessage()
+        when (state.status) {
+            AuthState.Status.DONE -> startRestorePasswordMailSentActivity()
+            AuthState.Status.IDLE -> resetRestorePasswordMessage()
+            else -> authState.postValue(state)
+        }
     }
 }

@@ -32,18 +32,12 @@ fun UserItemView(
     userItem: UserItem,
     modifier: Modifier = Modifier
 ) {
-    val avatar = if(userItem.avatarLink == "https://userpic.codeforces.org/no-avatar.jpg") {
-        R.drawable.ic_default_avatar
-    } else {
-        userItem.avatarLink
-    }
-
     Row(
         modifier = modifier.height(40.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
-            painter = rememberImagePainter(avatar) { transformations(CircleCropTransformation()) },
+            painter = rememberImagePainter(userItem.avatar) { transformations(CircleCropTransformation()) },
             contentDescription = "avatar",
             modifier = Modifier
                 .size(36.dp)

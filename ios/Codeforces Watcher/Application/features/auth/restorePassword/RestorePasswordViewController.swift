@@ -4,7 +4,11 @@ import PKHUD
 
 class RestorePasswordViewController: UIHostingController<RestorePasswordView>, ReKampStoreSubscriber {
     
-    init() {
+    let dismissCallback: () -> Void
+    
+    init(dismissCallback: @escaping () -> Void) {
+        self.dismissCallback = dismissCallback
+        
         super.init(rootView: RestorePasswordView())
     }
     
@@ -40,7 +44,7 @@ class RestorePasswordViewController: UIHostingController<RestorePasswordView>, R
         switch (state.status) {
         case .done:
             hideLoading()
-            self.navigationController?.pushViewController(RestorePasswordMailSentViewController(), animated: true)
+            self.presentModal(RestorePasswordMailSentViewController(dismissCallback: dismissCallback))
         case .pending:
             showLoading()
         case .idle:
@@ -62,11 +66,11 @@ class RestorePasswordViewController: UIHostingController<RestorePasswordView>, R
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupComponents()
-        setupInteractions()
+        setComponents()
+        setInteractions()
     }
     
-    private func setupComponents() {
+    private func setComponents() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: UIImage(named: "back_arrow"),
             style: .plain,
@@ -75,14 +79,14 @@ class RestorePasswordViewController: UIHostingController<RestorePasswordView>, R
         )
     }
     
-    private func setupInteractions() {
+    private func setInteractions() {
         rootView.onRestorePassword = { email in
             store.dispatch(action: AuthRequests.SendPasswordReset(email: email))
         }
     }
     
-    func updateMessage(_ message: String) {
-        rootView.message = message
+    func updateMessage(_ message: String?) {
+        rootView.message = message ?? ""
     }
     
     func resetMessage() {
@@ -90,6 +94,6 @@ class RestorePasswordViewController: UIHostingController<RestorePasswordView>, R
     }
 
     @objc func closeViewController() {
-        self.navigationController?.popViewController(animated: true)
+        dismiss(animated: true)
     }
 }

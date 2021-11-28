@@ -35,6 +35,7 @@ struct AttributedTextView: UIViewRepresentable {
 
         if attributeTags.isEmpty {
             addFont()
+            addKerning()
         } else {
             addAttributes()
         }
@@ -51,8 +52,8 @@ struct AttributedTextView: UIViewRepresentable {
             
             $0.attributedText = attributedString
             $0.linkTextAttributes = [
-                .foregroundColor: Palette.black,
-                .underlineStyle: 1
+                NSAttributedString.Key.foregroundColor: Palette.black,
+                NSAttributedString.Key.underlineStyle: 1
             ]
             
             $0.textAlignment = alignment
@@ -101,6 +102,7 @@ struct AttributedTextView: UIViewRepresentable {
     private func addAttributes() {
         addFont()
         addForegroundColor()
+        addKerning()
         
         addTags()
     }
@@ -114,6 +116,12 @@ struct AttributedTextView: UIViewRepresentable {
     private func addForegroundColor() {
         attributedString.run {
             $0.colored(with: foregroundColor)
+        }
+    }
+    
+    private func addKerning() {
+        attributedString.run {
+            $0.addKerning(value: -1)
         }
     }
     
@@ -157,7 +165,7 @@ struct AttributedTextView: UIViewRepresentable {
     }
     
     private func addBoldAttribute() {
-        let tag = "bold"
+        let tag = "semibold"
         let range = attributedString.getRangeAndRemoveTag(tag: tag)
 
         attributedString.run {

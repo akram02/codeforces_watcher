@@ -14,18 +14,18 @@ class AuthRequests {
 
         override suspend fun execute() {
             if (email.isEmpty() || password.isEmpty()) {
-                store.dispatch(Failure(Strings.get("wrong_credentials")))
+                store.dispatch(Failure(Strings.get("fields_cannot_be_empty")))
                 return
             }
             firebaseController.signIn(email, password) { exception ->
                 exception?.let {
-                    store.dispatch(Failure(Strings.get("wrong_credentials")))
-                } ?: store.dispatch(Success(""))
+                    store.dispatch(Failure(exception.message))
+                } ?: store.dispatch(Success)
             }
         }
 
-        internal data class Success(val message: String) : Action
-        internal data class Failure(val message: String) : Action
+        object Success : Action
+        data class Failure(val message: String?) : Action
     }
 
     object ResetSignInMessage : Action
@@ -43,7 +43,7 @@ class AuthRequests {
                 return
             }
             if (password.isEmpty() || email.isEmpty() || confirmPassword.isEmpty()) {
-                store.dispatch(Failure(Strings.get("fields_can_not_be_empty")))
+                store.dispatch(Failure(Strings.get("fields_cannot_be_empty")))
                 return
             }
             if (password != confirmPassword) {
@@ -52,13 +52,13 @@ class AuthRequests {
             }
             firebaseController.signUp(email, password) { exception ->
                 exception?.let {
-                    store.dispatch(Failure(Strings.get("wrong_credentials")))
-                } ?: store.dispatch(Success(""))
+                    store.dispatch(Failure(exception.message))
+                } ?: store.dispatch(Success)
             }
         }
 
-        data class Success(val message: String) : Action
-        data class Failure(val message: String) : Action
+        object Success : Action
+        data class Failure(val message: String?) : Action
     }
 
     object ResetSignUpMessage : Action
@@ -88,18 +88,18 @@ class AuthRequests {
 
         override suspend fun execute() {
             if (email.isEmpty()) {
-                store.dispatch(Failure(Strings.get("user_does_not_exist")))
+                store.dispatch(Failure(Strings.get("fields_cannot_be_empty")))
                 return
             }
             firebaseController.sendPasswordReset(email) { exception ->
                 exception?.let {
-                    store.dispatch(Failure(Strings.get("user_does_not_exist")))
-                } ?: store.dispatch(Success(""))
+                    store.dispatch(Failure(exception.message))
+                } ?: store.dispatch(Success)
             }
         }
 
-        internal data class Success(val message: String) : Action
-        internal data class Failure(val message: String) : Action
+        object Success : Action
+        data class Failure(val message: String?) : Action
     }
 
     object ResetRestorePasswordMessage : Action

@@ -27,6 +27,10 @@ extension NSMutableAttributedString {
         addAttribute(.underlineStyle, value: 1, range: range)
     }
     
+    func addKerning(value: CGFloat) {
+        addAttribute(NSAttributedString.Key.kern, value: value, range: NSRange(location: 0, length: self.length))
+    }
+    
     func getRangeAndRemoveTag(tag: String) -> NSRange {
         let openTag = "<\(tag)>"
         let closeTag = "</\(tag)>"

@@ -28,7 +28,11 @@ class IOSToastHandler: ToastHandler {
         }
 
         if let text = text {
-            UIApplication.shared.windows.last?.makeToast(text)
+            showToast(message: text)
         }
+    }
+    
+    func showToast(message: String) {
+        UIApplication.shared.windows.last?.makeToast(message)
     }
 }

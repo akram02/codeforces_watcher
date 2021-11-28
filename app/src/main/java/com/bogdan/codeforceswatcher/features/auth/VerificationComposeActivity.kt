@@ -36,6 +36,7 @@ import com.bogdan.codeforceswatcher.components.compose.*
 import com.bogdan.codeforceswatcher.components.compose.textfields.AuthTextField
 import com.bogdan.codeforceswatcher.components.compose.textfields.HandleTextField
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
+import io.xorum.codeforceswatcher.features.auth.redux.AuthState
 import io.xorum.codeforceswatcher.features.verification.redux.VerificationRequests
 import io.xorum.codeforceswatcher.features.verification.redux.VerificationState
 import io.xorum.codeforceswatcher.redux.store
@@ -191,7 +192,10 @@ class VerificationComposeActivity : ComponentActivity(), StoreSubscriber<Verific
 
     override fun onNewState(state: VerificationState) {
         verificationState.postValue(state)
-        if (state.status == VerificationState.Status.DONE) finish()
-        if (state.status == VerificationState.Status.IDLE) resetVerificationCodeforcesMessage()
+        when (state.status) {
+            VerificationState.Status.DONE -> finish()
+            VerificationState.Status.IDLE -> resetVerificationCodeforcesMessage()
+            else -> return
+        }
     }
 }
