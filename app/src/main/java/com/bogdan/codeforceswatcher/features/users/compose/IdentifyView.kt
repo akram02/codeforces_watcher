@@ -11,15 +11,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.components.compose.AuthButton
+import com.bogdan.codeforceswatcher.components.compose.buttons.MiniButton
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 
 @Composable
@@ -36,7 +33,7 @@ fun IdentifyView(modifier: Modifier = Modifier) {
                 tint = MaterialTheme.colors.onBackground,
                 modifier = Modifier
                     .clip(CircleShape)
-                    .background(MaterialTheme.colors.background)
+                    .background(MaterialTheme.colors.primary)
             )
 
             Text(
@@ -48,20 +45,25 @@ fun IdentifyView(modifier: Modifier = Modifier) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.Top
+                verticalAlignment = Alignment.Bottom
             ) {
                 Text(
                     text = "Login to identify and get instant push notifications about rating updates",
                     style = MaterialTheme.typography.body1,
                     textAlign = TextAlign.Start,
-                    modifier = Modifier.widthIn(max = 208.dp)
+                    modifier = Modifier.widthIn(max = 224.dp)
                 )
 
-                AuthButton(
-                    label = "LOGIN",
-                    modifier = Modifier.defaultMinSize(minWidth = 80.dp, minHeight = 32.dp)
-                ) {  }
+                MiniButton("LOGIN") {  }
             }
         }
+    }
+}
+
+@Preview
+@Composable
+fun IdentifyViewPreview() {
+    AlgoismeTheme {
+        IdentifyView()
     }
 }

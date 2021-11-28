@@ -21,7 +21,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.components.compose.AuthButton
+import com.bogdan.codeforceswatcher.components.compose.buttons.BigButton
 import com.bogdan.codeforceswatcher.components.compose.NavigationBar
 import com.bogdan.codeforceswatcher.components.compose.Title
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
@@ -99,13 +99,13 @@ class RestorePasswordMailSentComposeActivity : ComponentActivity() {
 
             Spacer(Modifier.height(72.dp))
 
-            AuthButton(getString(R.string.open_mail)) {
+            BigButton(getString(R.string.open_mail)) {
                 startMailApp()
             }
 
             Spacer(Modifier.height(20.dp))
 
-            AuthButton(
+            BigButton(
                 label = getString(R.string.back_to_sign_in),
                 modifier = Modifier.border(
                     width = 2.dp,

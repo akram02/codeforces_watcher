@@ -27,6 +27,7 @@ import androidx.lifecycle.MutableLiveData
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.WebViewActivity
 import com.bogdan.codeforceswatcher.components.compose.*
+import com.bogdan.codeforceswatcher.components.compose.buttons.BigButton
 import com.bogdan.codeforceswatcher.components.compose.textfields.*
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 import io.xorum.codeforceswatcher.features.auth.redux.AuthRequests
@@ -143,7 +144,7 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
 
             Spacer(Modifier.height(26.dp))
 
-            AuthButton(
+            BigButton(
                 label = getString(R.string.sign_up).uppercase(),
                 modifier = Modifier.border(
                     width = 2.dp,
