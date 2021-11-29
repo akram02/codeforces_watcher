@@ -37,7 +37,7 @@ class ProblemsTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSo
             }
         }
         
-        return tableView.dequeueReusableCell(cellType: ProblemTableViewCell.self).apply {
+        return tableView.dequeueReusableCell(cellType: ProblemTableViewCellNew.self).apply {
             $0.bind(problems[indexPath.row])
         }
     }
@@ -54,8 +54,7 @@ class ProblemsTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSo
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if (problems.isEmpty) {
             return tableView.frame.height - 2 * tableView.tableHeaderView!.frame.height
-        } else {
-            return 63
         }
+        return 55
     }
 }

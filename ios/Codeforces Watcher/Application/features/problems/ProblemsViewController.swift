@@ -77,7 +77,7 @@ class ProblemsViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
             $0.separatorStyle = .none
         }
 
-        [ProblemTableViewCell.self, NoItemsTableViewCell.self].forEach(tableView.registerForReuse(cellType:))
+        [ProblemTableViewCellNew.self, NoItemsTableViewCell.self].forEach(tableView.registerForReuse(cellType:))
 
         tableAdapter.onProblemClick = { (link, title) in
             let webViewController = WebViewController(
