@@ -6,24 +6,43 @@ struct ProblemsView: View {
     var problems: [Problem] = []
     
     var body: some View {
-        if #available(iOS 14.0, *) {
-            ScrollView {
-                LazyVStack {
-                    ProblemsForEach()
-                }
-            }
-        } else {
-            List {
-                ProblemsForEach()
-            }
-            .onAppear {
-                UITableView.appearance().separatorStyle = .none
+        ZStack {
+            if #available(iOS 14.0, *) {
+                IOS14View()
+            } else {
+                IOS13View()
             }
         }
+        .background(Palette.accentGrayish.swiftUIColor.edgesIgnoringSafeArea(.top))
+    }
+    
+    private func IOS13View() -> some View {
+        List {
+            ProblemsForEach()
+        }
+        .onAppear {
+            UITableView.appearance().separatorStyle = .none
+        }
+        .screenBackground()
+    }
+    
+    @available(iOS 14.0, *)
+    private func IOS14View() -> some View {
+        ScrollView {
+            LazyVStack {
+                ProblemsForEach()
+            }
+        }
+        .screenBackground()
+    }
+    
+    private func ViewModifier() -> some View {
+        Palette.white.swiftUIColor
+            .cornerRadius(30, corners: [.topLeft, .topRight])
     }
     
     private func ProblemsForEach() -> some View {
-        return ForEach(problems, id: \.id) { problem in
+        ForEach(problems, id: \.id) { problem in
             ProblemViewTableViewCell()
                 .listRowInsets(EdgeInsets())
         }
