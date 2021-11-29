@@ -11,6 +11,9 @@ import common
 import FirebaseAnalytics
 
 class ProblemsViewControllerNew: UIHostingController<ProblemsView>, ReKampStoreSubscriber {
+    
+    let fabButton = FabButtonViewController()
+    
     init() {
         super.init(rootView: ProblemsView())
     }
@@ -35,10 +38,16 @@ class ProblemsViewControllerNew: UIHostingController<ProblemsView>, ReKampStoreS
         super.viewDidAppear(animated)
 
         hideNavigationBar()
+        
+        tabBarController?.tabBar.addSubview(fabButton.view)
+        fabButton.setView()
+        fabButton.setImage(name: "infinityIcon")
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
+        fabButton.hide()
         
         store.unsubscribe(subscriber: self)
     }
