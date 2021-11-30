@@ -38,7 +38,7 @@ struct ProblemsView: View {
     
     var ProblemsForEach: some View {
         ForEach(problems, id: \.id) { problem in
-            ProblemViewTableViewCell()
+            ProblemViewTableViewCell(problem)
                 .listRowInsets(EdgeInsets())
         }
     }

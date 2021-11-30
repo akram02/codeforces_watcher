@@ -1,17 +1,22 @@
 import SwiftUI
+import common
 
 struct ProblemViewTableViewCell: View {
     
-    @State var isFavourite = false
+    var problem: Problem
+    
+    init(_ problem: Problem) {
+        self.problem = problem
+    }
     
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 0) {
-                CommonText("1264A: Feeding Chicken")
+                CommonText(problem.title)
                     .font(.bodySemibold)
                     .foregroundColor(Palette.black.swiftUIColor)
                 
-                CommonText("Codeforces Round #601 (Div. 1)")
+                CommonText(problem.subtitle)
                     .font(.hintRegular)
                     .foregroundColor(Palette.darkGray.swiftUIColor)
             }
@@ -19,22 +24,20 @@ struct ProblemViewTableViewCell: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             
             Button(action: {
-                isFavourite.toggle()
+                onStar()
             }, label: {
                 Image("starIconNew")
                     .resizable()
                     .renderingMode(.template)
                     .frame(width: 20, height: 20)
-                    .foregroundColor(isFavourite ?
+                    .foregroundColor(problem.isFavourite ?
                                         Palette.colorAccent.swiftUIColor : Palette.black.swiftUIColor)
             })
         }
         .padding([.horizontal, .top], 20)
     }
-}
-
-struct ProblemViewTableViewCell_Previews: PreviewProvider {
-    static var previews: some View {
-        ProblemViewTableViewCell()
+    
+    private func onStar() {
+        store.dispatch(action: ProblemsRequests.ChangeStatusFavourite(problem: problem))
     }
 }

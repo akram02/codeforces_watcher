@@ -37,7 +37,7 @@ class ProblemsTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSo
             }
         }
         
-        return tableView.dequeueReusableCell(cellType: ProblemTableViewCellNew.self).apply {
+        return tableView.dequeueReusableCell(cellType: ProblemTableViewCell.self).apply {
             $0.bind(problems[indexPath.row])
         }
     }
