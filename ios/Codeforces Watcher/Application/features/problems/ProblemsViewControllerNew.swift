@@ -21,12 +21,6 @@ class ProblemsViewControllerNew: UIHostingController<ProblemsView>, ReKampStoreS
     @objc required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//
-//        setView()
-//    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -55,15 +49,11 @@ class ProblemsViewControllerNew: UIHostingController<ProblemsView>, ReKampStoreS
     }
     
     private func setView() {
-        hideNavigationBar()
+        self.navigationController?.navigationBar.isHidden = true
         
         tabBarController?.tabBar.addSubview(fabButton.view)
         fabButton.setView()
         fabButton.setButton(name: "infinityIcon", action: { self.onFabButton() })
-    }
-
-    private func hideNavigationBar() {
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     func onNewState(state: Any) {
