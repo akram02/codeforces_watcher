@@ -1,6 +1,5 @@
 package com.bogdan.codeforceswatcher.features.users.compose
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -17,9 +16,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.rememberImagePainter
-import coil.transform.CircleCropTransformation
-import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.compose.theme.Black
 import com.bogdan.codeforceswatcher.components.compose.theme.Green
 import com.bogdan.codeforceswatcher.components.compose.theme.Red
@@ -36,13 +32,16 @@ fun UserItemView(
         modifier = modifier.height(40.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Image(
-            painter = rememberImagePainter(userItem.avatar) { transformations(CircleCropTransformation()) },
-            contentDescription = "avatar",
-            modifier = Modifier
-                .size(36.dp)
-                .border(1.dp, colorResource(getColorByUserRank(userItem.rank)), CircleShape)
-        )
+        if (userItem.avatar == "https://userpic.codeforces.org/no-avatar.jpg") {
+            DefaultAvatarView(
+                Modifier.border(1.dp, colorResource(getColorByUserRank(userItem.rank)), CircleShape)
+            )
+        } else {
+            AvatarView(
+                avatar = userItem.avatar,
+                Modifier.border(1.dp, colorResource(getColorByUserRank(userItem.rank)), CircleShape)
+            )
+        }
 
         Spacer(Modifier.width(8.dp))
 
