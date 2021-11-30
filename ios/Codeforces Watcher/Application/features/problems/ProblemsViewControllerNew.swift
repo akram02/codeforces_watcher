@@ -21,6 +21,12 @@ class ProblemsViewControllerNew: UIHostingController<ProblemsView>, ReKampStoreS
     @objc required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//
+//        setView()
+//    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -37,11 +43,7 @@ class ProblemsViewControllerNew: UIHostingController<ProblemsView>, ReKampStoreS
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        hideNavigationBar()
-        
-        tabBarController?.tabBar.addSubview(fabButton.view)
-        fabButton.setView()
-        fabButton.setImage(name: "infinityIcon")
+        setView()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -51,6 +53,14 @@ class ProblemsViewControllerNew: UIHostingController<ProblemsView>, ReKampStoreS
         
         store.unsubscribe(subscriber: self)
     }
+    
+    private func setView() {
+        hideNavigationBar()
+        
+        tabBarController?.tabBar.addSubview(fabButton.view)
+        fabButton.setView()
+        fabButton.setButton(name: "infinityIcon", action: { self.onFabButton() })
+    }
 
     private func hideNavigationBar() {
         self.navigationController?.setNavigationBarHidden(true, animated: false)
@@ -59,6 +69,16 @@ class ProblemsViewControllerNew: UIHostingController<ProblemsView>, ReKampStoreS
     func onNewState(state: Any) {
         let state = state as! ProblemsState
         
+        updateFabButton(state.isFavourite)
+        
         rootView.problems = state.filteredProblems
+    }
+    
+    private func updateFabButton(_ isFavourite: Bool) {
+        fabButton.updateImage(name: isFavourite ? "starProblemsIcon" : "infinityIcon")
+    }
+    
+    private func onFabButton() {
+        store.dispatch(action: ProblemsActions.ChangeTypeProblems(isFavourite: !store.state.problems.isFavourite))
     }
 }

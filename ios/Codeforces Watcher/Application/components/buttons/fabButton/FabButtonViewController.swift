@@ -2,10 +2,10 @@ import SwiftUI
 
 class FabButtonViewController: UIHostingController<FabButtonView> {
     
+    var action: () -> Void = {}
+    
     init() {
         super.init(rootView: FabButtonView())
-        
-        self.view.isHidden = false
     }
     
     @objc required init?(coder aDecoder: NSCoder) {
@@ -14,17 +14,31 @@ class FabButtonViewController: UIHostingController<FabButtonView> {
     
     func setView() {
         self.view.run {
-            $0.topToSuperview(offset: -22)
+            $0.topToSuperview(offset: -16)
             $0.centerXToSuperview()
             $0.isHidden = false
+            $0.backgroundColor = .clear
         }
+        
+        setInteractions()
     }
     
-    func setImage(name: String) {
+    func setButton(name: String, action: @escaping () -> Void) {
+        updateImage(name: name)
+        self.action = action
+    }
+    
+    func updateImage(name: String) {
         rootView.name = name
     }
     
     func hide() {
         self.view.isHidden = true
+    }
+    
+    private func setInteractions() {
+        rootView.action = {
+            self.action()
+        }
     }
 }

@@ -2,12 +2,20 @@ import SwiftUI
 
 struct FabButtonView: View {
     
-    var name: String = ""
+    var name: String? = nil
+    
+    var action: () -> Void = {}
     
     var body: some View {
-        Button(action: {}, label: {
-            Image(name)
-                .renderingMode(.original)
+        Button(action: {
+            self.action()
+        }, label: {
+            if let name = name {
+                Image(name)
+                    .renderingMode(.original)
+            } else {
+                EmptyView()
+            }
         })
     }
 }
