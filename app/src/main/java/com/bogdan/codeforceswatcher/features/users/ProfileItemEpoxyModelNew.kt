@@ -15,6 +15,7 @@ import com.bogdan.codeforceswatcher.epoxy.BaseEpoxyModel
 import com.bogdan.codeforceswatcher.features.auth.SignInComposeActivity
 import com.bogdan.codeforceswatcher.features.auth.VerificationComposeActivity
 import com.bogdan.codeforceswatcher.features.users.compose.IdentifyView
+import com.bogdan.codeforceswatcher.features.users.compose.ProfileView
 import com.bogdan.codeforceswatcher.features.users.compose.VerifyView
 import io.xorum.codeforceswatcher.features.auth.models.UserAccount
 import io.xorum.codeforceswatcher.features.auth.redux.AuthState
@@ -50,7 +51,11 @@ class ProfileItemEpoxyModel(
             AuthState.Stage.SIGNED_IN -> {
                 VerifyView(Modifier.padding(20.dp)) { startVerifyActivity(context) }
             }
-            AuthState.Stage.VERIFIED -> /*ProfileView()*/ Text("ProfileView")
+            AuthState.Stage.VERIFIED -> {
+                ProfileView(userAccount?.codeforcesUser!!, Modifier.padding(20.dp)) {
+                    startUserAccountActivity(context)
+                }
+            }
         }
     }
 
@@ -62,5 +67,11 @@ class ProfileItemEpoxyModel(
     private fun startVerifyActivity(context: Context) {
         context.startActivity(Intent(context, VerificationComposeActivity::class.java))
         analyticsController.logEvent(AnalyticsEvents.VERIFY_OPENED)
+    }
+
+    private fun startUserAccountActivity(context: Context) {
+        context.startActivity(
+            UserActivity.newIntent(context, userAccount?.codeforcesUser?.handle!!, true)
+        )
     }
 }

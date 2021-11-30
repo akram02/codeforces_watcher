@@ -9,9 +9,17 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.material.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.core.content.ContextCompat
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
+import com.bogdan.codeforceswatcher.components.compose.theme.Green
+import com.bogdan.codeforceswatcher.components.compose.theme.Red
 import com.bogdan.codeforceswatcher.util.CustomMarkerView
 import com.bogdan.codeforceswatcher.util.colorSubstring
 import com.github.mikephil.charting.components.XAxis
@@ -233,5 +241,47 @@ fun User.buildContribution(): SpannableString {
         val startIndex = indexOf(contributionString)
         val color = if (contribution >= 0) R.color.bright_green else R.color.red
         colorSubstring(startIndex, startIndex + contributionString.length, color)
+    }
+}
+
+@Composable
+fun User.buildRatingNew() = buildAnnotatedString {
+    append("Rating: ")
+    withStyle(
+        SpanStyle(color = colorResource(getColorByUserRank(rank)))
+    ) {
+        append(rating.toString())
+    }
+}
+
+@Composable
+fun User.buildMaxRatingNew() = buildAnnotatedString {
+    append("Max rating: ")
+    withStyle(
+        SpanStyle(color = colorResource(getColorByUserRank(maxRank)))
+    ) {
+        append(maxRating.toString())
+    }
+}
+
+@Composable
+fun User.buildContributionNew() = buildAnnotatedString {
+    append("Contribution: ")
+    withStyle(
+        SpanStyle(
+            color = when {
+                contribution > 0 -> Green
+                contribution < 0 -> Red
+                else -> MaterialTheme.colors.secondaryVariant
+            }
+        )
+    ) {
+        append(
+            when {
+                contribution > 0 -> "+$contribution"
+                contribution < 0 -> "-$contribution"
+                else -> contribution.toString()
+            }
+        )
     }
 }
