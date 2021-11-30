@@ -21,9 +21,17 @@ class ProblemsViewControllerNew: UIHostingController<ProblemsView>, ReKampStoreS
     @objc required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setView()
+    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        fabButton.show()
 
         store.subscribe(subscriber: self) { subscription in
             subscription.skipRepeats { oldState, newState in
@@ -32,12 +40,6 @@ class ProblemsViewControllerNew: UIHostingController<ProblemsView>, ReKampStoreS
                 return state.problems
             }
         }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        setView()
     }
 
     override func viewWillDisappear(_ animated: Bool) {

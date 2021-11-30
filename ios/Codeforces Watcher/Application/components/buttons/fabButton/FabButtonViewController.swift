@@ -16,7 +16,6 @@ class FabButtonViewController: UIHostingController<FabButtonView> {
         self.view.run {
             $0.topToSuperview(offset: -16)
             $0.centerXToSuperview()
-            $0.isHidden = false
             $0.backgroundColor = .clear
         }
         
@@ -30,6 +29,10 @@ class FabButtonViewController: UIHostingController<FabButtonView> {
     
     func updateImage(name: String) {
         rootView.name = name
+    }
+    
+    func show() {
+        self.view.isHidden = false
     }
     
     func hide() {
