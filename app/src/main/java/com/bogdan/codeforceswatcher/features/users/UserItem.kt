@@ -1,10 +1,19 @@
 package com.bogdan.codeforceswatcher.features.users
 
 import android.text.SpannableString
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import io.xorum.codeforceswatcher.features.users.models.User
 import androidx.core.text.HtmlCompat
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
+import com.bogdan.codeforceswatcher.components.compose.theme.Black
+import com.bogdan.codeforceswatcher.features.users.compose.AvatarView
+import com.bogdan.codeforceswatcher.features.users.compose.DefaultAvatarView
 import com.bogdan.codeforceswatcher.util.colorSubstring
 import java.text.SimpleDateFormat
 import java.util.*
@@ -92,3 +101,29 @@ fun colorTextByUserRank(text: String, rank: String?) =
     } else SpannableString(text).apply {
         colorSubstring(0, text.length, getColorByUserRank(rank))
     }
+
+@Composable
+fun colorTextByUserRankNew(text: String, rank: String?) = buildAnnotatedString {
+    if (listOf("legendary grandmaster", "легендарный гроссмейстер").contains(rank)) {
+        withStyle(SpanStyle(color = Black)) { append(text[0]) }
+        withStyle(SpanStyle(color = colorResource(getColorByUserRank(rank)))) {
+            append(text.substring(1, text.length))
+        }
+    } else {
+        withStyle(SpanStyle(color = colorResource(getColorByUserRank(rank)))) {
+            append(text)
+        }
+    }
+}
+
+@Composable
+fun UserAvatar(
+    avatar: String,
+    modifier: Modifier
+) {
+    if (avatar == "https://userpic.codeforces.org/no-avatar.jpg") {
+        DefaultAvatarView(modifier)
+    } else {
+        AvatarView(avatar, modifier)
+    }
+}
