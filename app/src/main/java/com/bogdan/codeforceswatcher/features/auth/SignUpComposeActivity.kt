@@ -21,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.MutableLiveData
@@ -89,7 +90,8 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
             ),
             clickableTextStyle = MaterialTheme.typography.body2.copy(
                 fontSize = 14.sp,
-                color = MaterialTheme.colors.onBackground
+                color = MaterialTheme.colors.onBackground,
+                textDecoration = TextDecoration.Underline
             ),
             paragraphStyle = ParagraphStyle(textAlign = TextAlign.Center)
         )

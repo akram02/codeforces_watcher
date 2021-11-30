@@ -55,8 +55,7 @@ val MUHintBoldSemiBold13 = TextStyle(
     fontWeight = FontWeight(600),
     fontStyle = FontStyle.Normal,
     fontSize = 13.sp,
-    letterSpacing = (-1).sp,
-    textDecoration = TextDecoration.Underline
+    letterSpacing = (-1).sp
 )
 
 val MUPrimaryRegular16 = TextStyle(
