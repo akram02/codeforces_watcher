@@ -10,11 +10,14 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bogdan.codeforceswatcher.R
+import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 import com.bogdan.codeforceswatcher.features.users.*
 import com.bogdan.codeforceswatcher.features.users.buildRatingNew
 import io.xorum.codeforceswatcher.features.users.models.User
@@ -42,6 +45,24 @@ fun ProfileView(
                 Spacer(Modifier.width(20.dp))
 
                 RatingData(user)
+            }
+
+            Box(Modifier.height(56.dp)) {
+                Text(
+                    text = user.handle,
+                    style = MaterialTheme.typography.h5,
+                    color = MaterialTheme.colors.onBackground,
+                    maxLines = 1,
+                    modifier = Modifier.align(Alignment.TopStart)
+                )
+
+                Text(
+                    text = user.buildFullNameNew(),
+                    style = MaterialTheme.typography.body2,
+                    color = MaterialTheme.colors.secondaryVariant,
+                    maxLines = 1,
+                    modifier = Modifier.align(Alignment.BottomStart)
+                )
             }
         }
     }

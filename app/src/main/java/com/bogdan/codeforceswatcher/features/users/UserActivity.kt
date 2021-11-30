@@ -285,3 +285,15 @@ fun User.buildContributionNew() = buildAnnotatedString {
         )
     }
 }
+
+fun User.buildFullNameNew() = when {
+    firstName == null && lastName == null -> handle
+    firstName == null -> lastName.orEmpty()
+    lastName == null -> firstName.orEmpty()
+    else -> "$firstName $lastName"
+}
+
+@Composable
+fun User.buildRankNew() = rank?.let {
+    colorTextByUserRankNew(it.capitalize(), it)
+} ?: CwApp.app.applicationContext.getString(R.string.none)
