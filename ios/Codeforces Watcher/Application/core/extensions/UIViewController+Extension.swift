@@ -16,4 +16,8 @@ extension UIViewController {
             $0.modalTransitionStyle = .crossDissolve
         }, animated: true)
     }
+    
+    func hideNavigationBar() {
+        self.navigationController?.navigationBar.isHidden = true
+    }
 }

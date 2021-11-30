@@ -5,6 +5,8 @@ struct ProblemsView: View {
     
     var problems: [Problem] = []
     
+    var onProblem: (String, String) -> Void = { _, _ in }
+    
     var body: some View {
         ZStack {
             if #available(iOS 14.0, *) {
@@ -40,6 +42,9 @@ struct ProblemsView: View {
         ForEach(problems, id: \.id) { problem in
             ProblemViewTableViewCell(problem)
                 .listRowInsets(EdgeInsets())
+                .onTapGesture {
+                    self.onProblem(problem.link, problem.title)
+                }
         }
     }
 }

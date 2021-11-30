@@ -26,6 +26,7 @@ class ProblemsViewControllerNew: UIHostingController<ProblemsView>, ReKampStoreS
         super.viewDidLoad()
         
         setView()
+        setInteractions()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -51,7 +52,7 @@ class ProblemsViewControllerNew: UIHostingController<ProblemsView>, ReKampStoreS
     }
     
     private func setView() {
-        self.navigationController?.navigationBar.isHidden = true
+        self.hideNavigationBar()
         
         tabBarController?.tabBar.addSubview(fabButton.view)
         fabButton.setView()
@@ -72,5 +73,17 @@ class ProblemsViewControllerNew: UIHostingController<ProblemsView>, ReKampStoreS
     
     private func onFabButton() {
         store.dispatch(action: ProblemsActions.ChangeTypeProblems(isFavourite: !store.state.problems.isFavourite))
+    }
+    
+    private func setInteractions() {
+        rootView.onProblem = { link, title in
+            let webViewController = WebViewController(
+                link,
+                title,
+                AnalyticsEvents().PROBLEM_OPENED,
+                AnalyticsEvents().PROBLEM_SHARED
+            )
+            self.presentModal(webViewController)
+        }
     }
 }

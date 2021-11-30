@@ -86,11 +86,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func initAppStyle() {
         UINavigationBar.appearance().run {
             $0.isTranslucent = false
-            $0.backgroundColor = Palette.white
-            $0.titleTextAttributes = [
-                NSAttributedString.Key.foregroundColor: Palette.black,
-                NSAttributedString.Key.font: Font.textPageTitle
-            ]
+            $0.tintColor = Palette.black
+            $0.standardAppearance = UINavigationBarAppearance().apply {
+                $0.configureWithOpaqueBackground()
+                $0.backgroundColor = Palette.white
+                $0.titleTextAttributes = [
+                    NSAttributedString.Key.foregroundColor: Palette.black,
+                    NSAttributedString.Key.font: Font.textPageTitle
+                ]
+            }
+            $0.scrollEdgeAppearance = $0.standardAppearance
         }
 
         UITabBar.appearance().run {
