@@ -8,17 +8,17 @@ struct ProblemsView: View {
     var body: some View {
         ZStack {
             if #available(iOS 14.0, *) {
-                IOS14View()
+                IOS14View
             } else {
-                IOS13View()
+                IOS13View
             }
         }
         .background(Palette.accentGrayish.swiftUIColor.edgesIgnoringSafeArea(.top))
     }
     
-    private func IOS13View() -> some View {
+    var IOS13View: some View {
         List {
-            ProblemsForEach()
+            ProblemsForEach
         }
         .onAppear {
             UITableView.appearance().separatorStyle = .none
@@ -27,21 +27,16 @@ struct ProblemsView: View {
     }
     
     @available(iOS 14.0, *)
-    private func IOS14View() -> some View {
+    var IOS14View: some View {
         ScrollView {
             LazyVStack {
-                ProblemsForEach()
+                ProblemsForEach
             }
         }
         .screenBackground()
     }
     
-    private func ViewModifier() -> some View {
-        Palette.white.swiftUIColor
-            .cornerRadius(30, corners: [.topLeft, .topRight])
-    }
-    
-    private func ProblemsForEach() -> some View {
+    var ProblemsForEach: some View {
         ForEach(problems, id: \.id) { problem in
             ProblemViewTableViewCell()
                 .listRowInsets(EdgeInsets())
