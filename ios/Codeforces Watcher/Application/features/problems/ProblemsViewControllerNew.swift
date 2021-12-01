@@ -76,6 +76,10 @@ class ProblemsViewControllerNew: UIHostingController<ProblemsView>, ReKampStoreS
     }
     
     private func setInteractions() {
+        rootView.onFilter = {
+            self.presentModal(ProblemsFiltersViewController())
+        }
+        
         rootView.onProblem = { link, title in
             let webViewController = WebViewController(
                 link,
