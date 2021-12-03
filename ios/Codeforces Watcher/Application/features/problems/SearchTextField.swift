@@ -1,4 +1,5 @@
 import SwiftUI
+import common
 
 struct SearchTextField: UIViewRepresentable {
     
@@ -62,6 +63,7 @@ struct SearchTextField: UIViewRepresentable {
             }
             if willHide {
                 text = ""
+                context.coordinator.problemsRequest(query: text)
                 uiView.resignFirstResponder()
             }
         }
@@ -88,6 +90,7 @@ struct SearchTextField: UIViewRepresentable {
                 )
                 
                 self.parent.text = self.parent.text.replacingCharacters(in: textRange, with: string)
+                problemsRequest(query: self.parent.text)
                 
                 moveCursor(textField, location: cursorLocation)
             }
@@ -111,6 +114,10 @@ struct SearchTextField: UIViewRepresentable {
                     textField.selectedTextRange = textField.textRange(from: location, to: location)
                 }
             }
+        }
+        
+        func problemsRequest(query: String) {
+            store.dispatch(action: ProblemsRequests.SetQuery(query: query))
         }
     }
 }
