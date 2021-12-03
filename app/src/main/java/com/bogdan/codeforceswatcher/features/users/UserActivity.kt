@@ -11,10 +11,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.text.*
 import androidx.core.content.ContextCompat
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
@@ -294,6 +293,7 @@ fun User.buildFullNameNew() = when {
 }
 
 @Composable
-fun User.buildRankNew() = rank?.let {
-    colorTextByUserRankNew(it.capitalize(), it)
+fun User.buildRankNew() = rank?.let { rank ->
+//    colorTextByUserRankNew(rank.replaceFirstChar { it.uppercase() }, rank)
+    rank.replaceFirstChar { it.uppercase() }
 } ?: CwApp.app.applicationContext.getString(R.string.none)
