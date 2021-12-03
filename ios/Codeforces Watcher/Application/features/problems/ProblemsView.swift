@@ -11,7 +11,7 @@ struct ProblemsView: View {
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
-                searchBar
+                SearchBarView()
                 
                 if #available(iOS 14.0, *) {
                     IOS14View
@@ -23,26 +23,7 @@ struct ProblemsView: View {
         .background(Palette.accentGrayish.swiftUIColor.edgesIgnoringSafeArea(.top))
     }
     
-    var searchBar: some View {
-        HStack(spacing: 20) {
-            CommonText("Problems".localized)
-                .font(.headerMedium)
-                .foregroundColor(Palette.black.swiftUIColor)
-                .frame(maxWidth: .infinity, alignment: .leading)
-            
-            Image("searchIcon")
-            
-            Button(action: {
-                self.onFilter()
-            }, label: {
-                Image("filterIcon")
-            })
-        }
-        .frame(maxWidth: .infinity)
-        .frame(height: 56, alignment: .center)
-        .padding(.horizontal, 20)
-    }
-    
+    @ViewBuilder
     var IOS13View: some View {
         List {
             ProblemsForEach
@@ -53,6 +34,7 @@ struct ProblemsView: View {
         .screenBackground()
     }
     
+    @ViewBuilder
     @available(iOS 14.0, *)
     var IOS14View: some View {
         ScrollView {
@@ -63,6 +45,7 @@ struct ProblemsView: View {
         .screenBackground()
     }
     
+    @ViewBuilder
     var ProblemsForEach: some View {
         ForEach(problems, id: \.id) { problem in
             ProblemViewTableViewCell(problem)
