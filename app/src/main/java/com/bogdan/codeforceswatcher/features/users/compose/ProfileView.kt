@@ -11,15 +11,12 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.getColor
-import androidx.core.graphics.toColor
-import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.compose.buttons.MiniButton
 import com.bogdan.codeforceswatcher.components.compose.theme.White
@@ -51,40 +48,15 @@ fun ProfileView(
                 RatingData(user)
             }
 
-            Box(Modifier.height(56.dp)) {
-                Text(
-                    text = user.handle,
-                    style = MaterialTheme.typography.h5,
-                    color = MaterialTheme.colors.onBackground,
-                    maxLines = 1,
-                    modifier = Modifier.align(Alignment.TopStart)
-                )
-
-                Text(
-                    text = user.buildFullNameNew(),
-                    style = MaterialTheme.typography.body2,
-                    color = MaterialTheme.colors.secondaryVariant,
-                    maxLines = 1,
-                    modifier = Modifier.align(Alignment.BottomStart)
-                )
-            }
+            Username(user.handle, user.buildFullNameNew())
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.Bottom
             ) {
-                Text(
-                    text = user.buildRankNew(),
-                    style = MaterialTheme.typography.h6.copy(
-                        shadow = Shadow(
-                            color = adjustColor(getColor(CwApp.app, R.color.red), 0.2f),
-                            blurRadius = 30f,
-                        )
-                    ),
-                    color = if (isSystemInDarkTheme()) White else colorResource(getColorByUserRank(user.rank))
-                )
-                
+                Rank(user.buildRankNew(), user.rank)
+
                 MiniButton("View profile") { onButtonClick() }
             }
         }
@@ -137,6 +109,52 @@ private fun RatingDataItem(
             text = caption,
             style = MaterialTheme.typography.caption,
             color = MaterialTheme.colors.onBackground
+        )
+    }
+}
+
+@Composable
+private fun Rank(
+    label: String,
+    rank: String?,
+    modifier: Modifier = Modifier
+) {
+    val isDark = isSystemInDarkTheme()
+
+    Text(
+        text = label,
+        style = MaterialTheme.typography.h6.copy(
+            shadow = Shadow(
+                color = adjustColor(colorResource(getColorByUserRank(rank)).toArgb(), 0.2f),
+                blurRadius = 30f
+            ),
+        ),
+        color = if (isDark) White else colorResource(getColorByUserRank(rank)),
+        modifier = modifier
+    )
+}
+
+@Composable
+private fun Username(
+    handle: String,
+    name: String,
+    modifier: Modifier = Modifier
+) {
+    Box(modifier.height(56.dp)) {
+        Text(
+            text = handle,
+            style = MaterialTheme.typography.h5,
+            color = MaterialTheme.colors.onBackground,
+            maxLines = 1,
+            modifier = Modifier.align(Alignment.TopStart)
+        )
+
+        Text(
+            text = name,
+            style = MaterialTheme.typography.body2,
+            color = MaterialTheme.colors.secondaryVariant,
+            maxLines = 1,
+            modifier = Modifier.align(Alignment.BottomStart)
         )
     }
 }
