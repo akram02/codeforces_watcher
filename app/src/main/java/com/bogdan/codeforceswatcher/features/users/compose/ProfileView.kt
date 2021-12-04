@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import com.bogdan.codeforceswatcher.R
@@ -57,7 +58,7 @@ fun ProfileView(
             ) {
                 Rank(user.buildRankNew(), user.rank)
 
-                MiniButton("View profile") { onButtonClick() }
+                MiniButton(stringResource(R.string.view_profile)) { onButtonClick() }
             }
         }
     }

@@ -97,6 +97,8 @@ Codeforces WatchR позволяет:
     <string name="verify_in_42_seconds">Подтвердить за 42 секунды</string>
     <string name="get_instant_notifications">И получайте мгновенные push-уведомления об обновлениях рейтингов</string>
 
+    <string name="view_profile">Просмотреть профиль</string>
+
     <string name="log_out">Выйти</string>
     <string name="do_you_want_to_log_out">Вы хотите выйти?</string>
     <string name="stay_logged_in">Остаться в системе</string>
