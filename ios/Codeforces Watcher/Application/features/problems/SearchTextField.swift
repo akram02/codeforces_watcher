@@ -63,8 +63,10 @@ struct SearchTextField: UIViewRepresentable {
             }
             if willHide {
                 text = ""
-                context.coordinator.problemsRequest(query: text)
                 uiView.resignFirstResponder()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    context.coordinator.problemsRequest(query: "")
+                }
             }
         }
         uiView.attributedPlaceholder = placeholder
