@@ -11,7 +11,7 @@ struct SearchBarView: View {
     @State private var searchBoxText = ""
     
     private let textFieldAnimationDuration = 0.15
-    private let placehoderAnimationDelay = 0.1
+    private let placehoderAnimationDelay = 0.2
     
     var body: some View {
         HStack(spacing: 20) {

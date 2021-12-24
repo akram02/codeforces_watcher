@@ -7,17 +7,21 @@ struct ProblemsView: View {
     
     var onFilter: () -> Void = {}
     var onProblem: (String, String) -> Void = { _, _ in }
+    var refreshControl: UIRefreshControl = UIRefreshControl()
     
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
-                SearchBarView()
+                SearchBarView(onFilter: { self.onFilter() })
                 
-                if #available(iOS 14.0, *) {
-                    IOS14View
-                } else {
-                    IOS13View
-                }
+                RefreshableScrollView(content: {
+                    if #available(iOS 14.0, *) {
+                        IOS14View
+                    } else {
+                        IOS13View
+                    }
+                },refreshControl: refreshControl)
+                    .screenBackground()
             }
         }
         .background(Palette.accentGrayish.swiftUIColor.edgesIgnoringSafeArea(.top))
@@ -31,7 +35,6 @@ struct ProblemsView: View {
         .onAppear {
             UITableView.appearance().separatorStyle = .none
         }
-        .screenBackground()
     }
     
     @ViewBuilder
@@ -42,7 +45,6 @@ struct ProblemsView: View {
                 ProblemsForEach
             }
         }
-        .screenBackground()
     }
     
     @ViewBuilder

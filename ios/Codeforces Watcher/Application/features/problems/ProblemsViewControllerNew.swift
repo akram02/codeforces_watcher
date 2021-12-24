@@ -12,7 +12,8 @@ import FirebaseAnalytics
 
 class ProblemsViewControllerNew: UIHostingController<ProblemsView>, ReKampStoreSubscriber {
     
-    let fabButton = FabButtonViewController()
+    private let fabButton = FabButtonViewController()
+    private let refreshControl = UIRefreshControl()
     
     init() {
         super.init(rootView: ProblemsView())
@@ -26,6 +27,7 @@ class ProblemsViewControllerNew: UIHostingController<ProblemsView>, ReKampStoreS
         super.viewDidLoad()
         
         setView()
+        setRefreshControl()
         setInteractions()
     }
 
@@ -59,8 +61,21 @@ class ProblemsViewControllerNew: UIHostingController<ProblemsView>, ReKampStoreS
         fabButton.setButton(name: "infinityIcon", action: { self.onFabButton() })
     }
     
+    private func setRefreshControl() {
+        rootView.refreshControl = refreshControl
+        
+        refreshControl.run {
+            $0.addTarget(self, action: #selector(refreshProblems(_:)), for: .valueChanged)
+            $0.tintColor = Palette.colorPrimaryDark
+        }
+    }
+    
     func onNewState(state: Any) {
         let state = state as! ProblemsState
+        
+        if (state.status == .idle) {
+            refreshControl.endRefreshing()
+        }
         
         updateFabButton(state.isFavourite)
         
@@ -89,5 +104,14 @@ class ProblemsViewControllerNew: UIHostingController<ProblemsView>, ReKampStoreS
             )
             self.presentModal(webViewController)
         }
+    }
+    
+    @objc private func refreshProblems(_ sender: Any) {
+        fetchProblems()
+        analyticsControler.logEvent(eventName: AnalyticsEvents().PROBLEMS_REFRESH, params: [:])
+    }
+    
+    private func fetchProblems() {
+        store.dispatch(action: ProblemsRequests.FetchProblems(isInitiatedByUser: true))
     }
 }
