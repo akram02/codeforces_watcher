@@ -80,6 +80,7 @@ class ProblemsViewControllerNew: UIHostingController<ProblemsView>, ReKampStoreS
         updateFabButton(state.isFavourite)
         
         rootView.problems = state.filteredProblems
+        rootView.noProblemsExplanation = state.isFavourite ? "no_favourite_problems_explanation" : "problems_explanation"
     }
     
     private func updateFabButton(_ isFavourite: Bool) {

@@ -4,6 +4,7 @@ import common
 struct ProblemsView: View {
     
     var problems: [Problem] = []
+    var noProblemsExplanation = ""
     
     var onFilter: () -> Void = {}
     var onProblem: (String, String) -> Void = { _, _ in }
@@ -29,20 +30,28 @@ struct ProblemsView: View {
     
     @ViewBuilder
     var IOS13View: some View {
-        List {
-            ProblemsForEach
-        }
-        .onAppear {
-            UITableView.appearance().separatorStyle = .none
+        if problems.isEmpty {
+            NoItemsView(imageName: "noItemsProblems", text: noProblemsExplanation)
+        } else {
+            List {
+                ProblemsForEach
+            }
+            .onAppear {
+                UITableView.appearance().separatorStyle = .none
+            }
         }
     }
     
     @ViewBuilder
     @available(iOS 14.0, *)
     var IOS14View: some View {
-        ScrollView {
-            LazyVStack {
-                ProblemsForEach
+        if problems.isEmpty {
+            NoItemsView(imageName: "noItemsProblems", text: noProblemsExplanation)
+        } else {
+            ScrollView {
+                LazyVStack {
+                    ProblemsForEach
+                }
             }
         }
     }
