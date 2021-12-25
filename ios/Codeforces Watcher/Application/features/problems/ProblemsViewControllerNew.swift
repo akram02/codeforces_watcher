@@ -17,23 +17,20 @@ class ProblemsViewControllerNew: UIHostingController<ProblemsView>, ReKampStoreS
     
     init() {
         super.init(rootView: ProblemsView())
+        
+        setRefreshControl()
+        setInteractions()
     }
     
     @objc required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        setView()
-        setRefreshControl()
-        setInteractions()
-    }
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        hideNavigationBar()
+        setFabButton()
         fabButton.show()
 
         store.subscribe(subscriber: self) { subscription in
@@ -44,7 +41,7 @@ class ProblemsViewControllerNew: UIHostingController<ProblemsView>, ReKampStoreS
             }
         }
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -53,9 +50,7 @@ class ProblemsViewControllerNew: UIHostingController<ProblemsView>, ReKampStoreS
         store.unsubscribe(subscriber: self)
     }
     
-    private func setView() {
-        self.hideNavigationBar()
-        
+    private func setFabButton() {
         tabBarController?.tabBar.addSubview(fabButton.view)
         fabButton.setView()
         fabButton.setButton(name: "infinityIcon", action: { self.onFabButton() })
