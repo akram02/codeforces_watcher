@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
@@ -245,7 +246,7 @@ fun User.buildContribution(): SpannableString {
 
 @Composable
 fun User.buildRatingNew() = buildAnnotatedString {
-    append("Rating: ")
+    append("${stringResource(R.string.rating_new)}: ")
     withStyle(
         SpanStyle(color = colorResource(getColorByUserRank(rank)))
     ) {
@@ -255,7 +256,7 @@ fun User.buildRatingNew() = buildAnnotatedString {
 
 @Composable
 fun User.buildMaxRatingNew() = buildAnnotatedString {
-    append("Max rating: ")
+    append("${stringResource(R.string.max_rating_new)}: ")
     withStyle(
         SpanStyle(color = colorResource(getColorByUserRank(maxRank)))
     ) {
@@ -265,7 +266,7 @@ fun User.buildMaxRatingNew() = buildAnnotatedString {
 
 @Composable
 fun User.buildContributionNew() = buildAnnotatedString {
-    append("Contribution: ")
+    append("${stringResource(R.string.contribution_new)}: ")
     withStyle(
         SpanStyle(
             color = when {

@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun MiniButton(
+fun SmallButton(
     label: String,
     modifier: Modifier = Modifier,
     isInverted: Boolean = true,

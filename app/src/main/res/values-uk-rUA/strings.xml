@@ -99,6 +99,9 @@ Codeforces WatchR дає можливiсть:
     <string name="verify_in_42_seconds">Підтвердити за 42 секунди</string>
     <string name="get_instant_notifications">І отримуйте миттєві push-сповіщення про оновлення рейтингу</string>
 
+    <string name="rating_new">Рейтинг</string>
+    <string name="max_rating_new">Макс. рейтинг</string>
+    <string name="contribution_new">Внесок</string>
     <string name="view_profile">Переглянути профіль</string>
 
     <string name="log_out">Вийти</string>

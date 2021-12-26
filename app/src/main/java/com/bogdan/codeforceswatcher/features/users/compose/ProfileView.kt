@@ -19,7 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.components.compose.buttons.MiniButton
+import com.bogdan.codeforceswatcher.components.compose.buttons.SmallButton
 import com.bogdan.codeforceswatcher.components.compose.theme.White
 import com.bogdan.codeforceswatcher.features.users.*
 import io.xorum.codeforceswatcher.features.users.models.User
@@ -58,7 +58,7 @@ fun ProfileView(
             ) {
                 Rank(user.buildRankNew(), user.rank)
 
-                MiniButton(stringResource(R.string.view_profile)) { onButtonClick() }
+                SmallButton(stringResource(R.string.view_profile)) { onButtonClick() }
             }
         }
     }
