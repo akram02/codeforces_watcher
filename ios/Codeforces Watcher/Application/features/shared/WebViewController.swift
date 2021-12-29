@@ -49,6 +49,18 @@ class WebViewController: ClosableViewController, WKUIDelegate, WKNavigationDeleg
     private func setupView() {
         view = webView
         title = titleName
+        
+        let standardAppearance = UINavigationBar.appearance().standardAppearance.copy().apply {
+            $0.backgroundColor = Palette.accentGrayish
+        }
+        let scrollEdgeAppearance = UINavigationBar.appearance().scrollEdgeAppearance?.copy().apply {
+            $0.backgroundColor = Palette.accentGrayish
+        }
+        
+        navigationController?.navigationBar.run {
+            $0.standardAppearance = standardAppearance
+            $0.scrollEdgeAppearance = scrollEdgeAppearance
+        }
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "shareImage"), style: .plain, target: self, action: #selector(shareTapped))
     }
 

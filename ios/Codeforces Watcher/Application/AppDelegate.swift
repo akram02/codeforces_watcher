@@ -92,7 +92,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 $0.backgroundColor = Palette.white
                 $0.titleTextAttributes = [
                     NSAttributedString.Key.foregroundColor: Palette.black,
-                    NSAttributedString.Key.font: Font.textPageTitle
+                    NSAttributedString.Key.font: Font.monospacedHeaderMedium,
+                    NSAttributedString.Key.kern: -1
                 ]
             }
             $0.scrollEdgeAppearance = $0.standardAppearance
