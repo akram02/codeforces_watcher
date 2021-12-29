@@ -16,7 +16,7 @@ class MainViewController: UITabBarController {
         ContestsViewController().apply(title: "Contests", iconNamed: "contestsIcon"),
         UIViewController(),
         NewsViewController().apply(title: "News", iconNamed: "newsIcon"),
-        ProblemsViewControllerNew().apply(title: "Problems", iconNamed: "problemsIcon")
+        ProblemsViewController().apply(title: "Problems", iconNamed: "problemsIcon")
     ]
 
     required init() {
