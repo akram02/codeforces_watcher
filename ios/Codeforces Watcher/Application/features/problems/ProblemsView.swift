@@ -26,7 +26,8 @@ struct ProblemsView: View {
                         }
                     }
                 }, refreshControl: refreshControl)
-                    .screenBackground()
+                    .background(Palette.white.swiftUIColor)
+                    .cornerRadius(30, corners: [.topLeft, .topRight])
             }
         }
         .background(Palette.accentGrayish.swiftUIColor.edgesIgnoringSafeArea(.top))
@@ -36,6 +37,7 @@ struct ProblemsView: View {
     var ProblemsForEach: some View {
         ForEach(problems, id: \.id) { problem in
             ProblemViewTableViewCell(problem)
+                .contentShape(Rectangle())
                 .onTapGesture {
                     self.onProblem(problem.link, problem.title)
                 }
