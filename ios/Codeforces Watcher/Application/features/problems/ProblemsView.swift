@@ -8,7 +8,7 @@ struct ProblemsView: View {
     
     var onFilter: () -> Void = {}
     var onProblem: (String, String) -> Void = { _, _ in }
-    var refreshControl: UIRefreshControl = UIRefreshControl()
+    var refreshControl = UIRefreshControl()
     
     var body: some View {
         ZStack {
@@ -16,12 +16,16 @@ struct ProblemsView: View {
                 SearchBarView(onFilter: { self.onFilter() })
                 
                 RefreshableScrollView(content: {
-                    if #available(iOS 14.0, *) {
-                        IOS14View
+                    if problems.isEmpty {
+                        NoItemsView(imageName: "noItemsProblems", text: noProblemsExplanation)
                     } else {
-                        IOS13View
+                        ScrollView {
+                            LazyVStack {
+                                ProblemsForEach
+                            }
+                        }
                     }
-                },refreshControl: refreshControl)
+                }, refreshControl: refreshControl)
                     .screenBackground()
             }
         }
@@ -29,38 +33,9 @@ struct ProblemsView: View {
     }
     
     @ViewBuilder
-    var IOS13View: some View {
-        if problems.isEmpty {
-            NoItemsView(imageName: "noItemsProblems", text: noProblemsExplanation)
-        } else {
-            List {
-                ProblemsForEach
-            }
-            .onAppear {
-                UITableView.appearance().separatorStyle = .none
-            }
-        }
-    }
-    
-    @ViewBuilder
-    @available(iOS 14.0, *)
-    var IOS14View: some View {
-        if problems.isEmpty {
-            NoItemsView(imageName: "noItemsProblems", text: noProblemsExplanation)
-        } else {
-            ScrollView {
-                LazyVStack {
-                    ProblemsForEach
-                }
-            }
-        }
-    }
-    
-    @ViewBuilder
     var ProblemsForEach: some View {
         ForEach(problems, id: \.id) { problem in
             ProblemViewTableViewCell(problem)
-                .listRowInsets(EdgeInsets())
                 .onTapGesture {
                     self.onProblem(problem.link, problem.title)
                 }

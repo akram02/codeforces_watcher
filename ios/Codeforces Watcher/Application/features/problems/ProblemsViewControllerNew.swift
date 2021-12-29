@@ -61,7 +61,7 @@ class ProblemsViewControllerNew: UIHostingController<ProblemsView>, ReKampStoreS
         
         refreshControl.run {
             $0.addTarget(self, action: #selector(refreshProblems(_:)), for: .valueChanged)
-            $0.tintColor = Palette.colorPrimaryDark
+            $0.tintColor = Palette.black
         }
     }
     

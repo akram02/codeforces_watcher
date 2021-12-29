@@ -108,9 +108,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window!.rootViewController = rootViewController
         window!.makeKeyAndVisible()
 
-        if #available(iOS 13.0, *) {
-            window?.overrideUserInterfaceStyle = .unspecified
-        }
+        window?.overrideUserInterfaceStyle = .unspecified
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
