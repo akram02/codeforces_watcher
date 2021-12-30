@@ -6,6 +6,10 @@ class VerifyViewController: UIHostingController<VerifyView>, ReKampStoreSubscrib
     
     init() {
         super.init(rootView: VerifyView())
+        
+        fetchVerificationCode()
+        setNavigationBar()
+        setInteractions()
     }
     
     @objc required init?(coder aDecoder: NSCoder) {
@@ -49,14 +53,6 @@ class VerifyViewController: UIHostingController<VerifyView>, ReKampStoreSubscrib
         default:
             return
         }
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        fetchVerificationCode()
-        setNavigationBar()
-        setInteractions()
     }
     
     private func showLoading() {

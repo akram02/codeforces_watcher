@@ -6,6 +6,9 @@ class SignUpViewController: UIHostingController<SignUpView>, ReKampStoreSubscrib
     
     init() {
         super.init(rootView: SignUpView())
+        
+        setNavigationBar()
+        setInteractions()
     }
     
     @objc required init?(coder aDecoder: NSCoder) {
@@ -30,13 +33,6 @@ class SignUpViewController: UIHostingController<SignUpView>, ReKampStoreSubscrib
         resetMessage()
         
         store.unsubscribe(subscriber: self)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        setNavigationBar()
-        setInteractions()
     }
     
     func onNewState(state: Any) {

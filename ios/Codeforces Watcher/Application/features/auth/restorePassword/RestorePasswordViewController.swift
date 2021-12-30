@@ -10,6 +10,9 @@ class RestorePasswordViewController: UIHostingController<RestorePasswordView>, R
         self.dismissCallback = dismissCallback
         
         super.init(rootView: RestorePasswordView())
+        
+        setComponents()
+        setInteractions()
     }
     
     @objc required init?(coder aDecoder: NSCoder) {
@@ -61,13 +64,6 @@ class RestorePasswordViewController: UIHostingController<RestorePasswordView>, R
     
     private func hideLoading() {
         HUD.hide(afterDelay: 0)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        setComponents()
-        setInteractions()
     }
     
     private func setComponents() {
