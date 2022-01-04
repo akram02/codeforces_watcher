@@ -2,8 +2,7 @@ import SwiftUI
 
 struct FabButtonView: View {
     
-    var name: String? = nil
-    
+    var name: String
     var action: () -> Void = {}
     
     var body: some View {

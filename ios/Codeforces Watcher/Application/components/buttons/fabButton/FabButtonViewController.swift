@@ -4,8 +4,8 @@ class FabButtonViewController: UIHostingController<FabButtonView> {
     
     var action: () -> Void = {}
     
-    init() {
-        super.init(rootView: FabButtonView())
+    init(name: String) {
+        super.init(rootView: FabButtonView(name: name))
     }
     
     @objc required init?(coder aDecoder: NSCoder) {
@@ -22,8 +22,7 @@ class FabButtonViewController: UIHostingController<FabButtonView> {
         setInteractions()
     }
     
-    func setButton(name: String, action: @escaping () -> Void) {
-        updateImage(name: name)
+    func setButtonAction(action: @escaping () -> Void) {
         self.action = action
     }
     
