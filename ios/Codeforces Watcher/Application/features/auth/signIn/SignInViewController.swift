@@ -6,6 +6,9 @@ class SignInViewController: UIHostingController<SignInView>, ReKampStoreSubscrib
     
     init() {
         super.init(rootView: SignInView())
+        
+        setComponents()
+        setInteractions()
     }
     
     @objc required init?(coder aDecoder: NSCoder) {
@@ -57,13 +60,6 @@ class SignInViewController: UIHostingController<SignInView>, ReKampStoreSubscrib
     
     private func hideLoading() {
         HUD.hide(afterDelay: 0)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        setComponents()
-        setInteractions()
     }
     
     private func setComponents() {
