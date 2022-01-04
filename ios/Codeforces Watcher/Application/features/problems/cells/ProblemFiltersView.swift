@@ -3,7 +3,7 @@ import common
 
 struct ProblemFiltersView: View {
     
-    var filterItems: [ProblemFiltersViewControllerNew.UIModel] = []
+    var filterItems: [ProblemFiltersViewController.UIModel] = []
     
     var body: some View {
         ScrollView {
@@ -17,7 +17,7 @@ struct ProblemFiltersView: View {
     
     @ViewBuilder
     private func FilterView(
-        _ filterItem: ProblemFiltersViewControllerNew.UIModel
+        _ filterItem: ProblemFiltersViewController.UIModel
     ) -> some View {
         HStack {
             CommonText(filterItem.title)

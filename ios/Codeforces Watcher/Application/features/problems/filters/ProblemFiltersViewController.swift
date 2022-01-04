@@ -1,7 +1,7 @@
 import SwiftUI
 import common
 
-class ProblemFiltersViewControllerNew: UIHostingController<ProblemFiltersView>, ReKampStoreSubscriber {
+class ProblemFiltersViewController: UIHostingController<ProblemFiltersView>, ReKampStoreSubscriber {
     
     init() {
         super.init(rootView: ProblemFiltersView())
