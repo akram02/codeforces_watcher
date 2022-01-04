@@ -4,7 +4,10 @@ import FirebaseAnalytics
 
 class ProblemsViewController: UIHostingController<ProblemsView>, ReKampStoreSubscriber {
     
-    private let fabButton = FabButtonViewController(name: "infinityIcon")
+    private lazy var fabButton = FabButtonViewController(
+        name: "infinityIcon",
+        action: { self.onFabButton() }
+    )
     private let refreshControl = UIRefreshControl()
     
     init() {
