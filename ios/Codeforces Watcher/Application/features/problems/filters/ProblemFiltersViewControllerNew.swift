@@ -1,7 +1,7 @@
 import SwiftUI
 import common
 
-class ProblemsFiltersViewControllerNew: UIHostingController<ProblemFiltersView>, ReKampStoreSubscriber {
+class ProblemFiltersViewControllerNew: UIHostingController<ProblemFiltersView>, ReKampStoreSubscriber {
     
     init() {
         super.init(rootView: ProblemFiltersView())
@@ -57,10 +57,28 @@ class ProblemsFiltersViewControllerNew: UIHostingController<ProblemFiltersView>,
     }
     
     func onNewState(state: Any) {
+        let state = state as! ProblemsState
         
+        let filterItems = state.tags.map { tag in
+            UIModel(
+                title: tag,
+                isSelected: state.selectedTags.contains(tag),
+                onFilter: { isChecked in
+                    store.dispatch(action: ProblemsRequests.ChangeTagCheckStatus(tag: tag, isChecked: isChecked))
+                }
+            )
+        }
+        
+        rootView.filterItems = filterItems
     }
     
     @objc func closeViewController() {
         dismiss(animated: true)
+    }
+    
+    struct UIModel {
+        let title: String
+        let isSelected: Bool
+        let onFilter: (_ isOn: Bool) -> ()
     }
 }
