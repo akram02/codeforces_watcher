@@ -1,17 +1,50 @@
 {
   "images" : [
     {
-      "filename" : "toph.png",
+      "filename" : "TopH Secondary.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "toph@2x.png",
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "TopH.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "TopH Secondary-2.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "toph@3x.png",
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "TopH-2.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "TopH Secondary-3.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "TopH-3.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

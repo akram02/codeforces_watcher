@@ -1,23 +1,56 @@
 {
   "images" : [
     {
+      "filename" : "TopCoder Secondary.png",
       "idiom" : "universal",
-      "filename" : "topcoder.png",
       "scale" : "1x"
     },
     {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "TopCoder.png",
       "idiom" : "universal",
-      "filename" : "topcoder@2x.png",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "TopCoder Secondary-2.png",
+      "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "TopCoder-2.png",
       "idiom" : "universal",
-      "filename" : "topcoder@3x.png",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "TopCoder Secondary-3.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "TopCoder-3.png",
+      "idiom" : "universal",
       "scale" : "3x"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }

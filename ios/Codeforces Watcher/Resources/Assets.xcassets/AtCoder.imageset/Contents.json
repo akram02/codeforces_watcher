@@ -1,23 +1,56 @@
 {
   "images" : [
     {
+      "filename" : "AtCoder Secondary.png",
       "idiom" : "universal",
-      "filename" : "atcoder.png",
       "scale" : "1x"
     },
     {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "AtCoder.png",
       "idiom" : "universal",
-      "filename" : "atcoder@2x.png",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "AtCoder Secondary-2.png",
+      "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "AtCoder-2.png",
       "idiom" : "universal",
-      "filename" : "atcoder@3x.png",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "AtCoder Secondary-3.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "AtCoder-3.png",
+      "idiom" : "universal",
       "scale" : "3x"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }
