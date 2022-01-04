@@ -80,7 +80,7 @@ class ProblemsViewController: UIHostingController<ProblemsView>, ReKampStoreSubs
     
     private func setInteractions() {
         rootView.onFilter = {
-            self.presentModal(ProblemsFiltersViewController())
+            self.presentModal(ProblemsFiltersViewControllerNew())
         }
         
         rootView.onProblem = { link, title in
