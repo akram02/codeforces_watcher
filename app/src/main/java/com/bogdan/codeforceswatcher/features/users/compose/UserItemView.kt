@@ -1,6 +1,5 @@
-package com.bogdan.codeforceswatcher.components.compose
+package com.bogdan.codeforceswatcher.features.users.compose
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -10,22 +9,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.rememberImagePainter
-import coil.transform.CircleCropTransformation
-import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.components.compose.theme.Black
 import com.bogdan.codeforceswatcher.components.compose.theme.Green
 import com.bogdan.codeforceswatcher.components.compose.theme.Red
-import com.bogdan.codeforceswatcher.features.users.Update
-import com.bogdan.codeforceswatcher.features.users.UserItem
-import com.bogdan.codeforceswatcher.features.users.getColorByUserRank
+import com.bogdan.codeforceswatcher.features.users.*
 
 @Composable
 fun UserItemView(
@@ -36,12 +26,9 @@ fun UserItemView(
         modifier = modifier.height(40.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Image(
-            painter = rememberImagePainter(userItem.avatar) { transformations(CircleCropTransformation()) },
-            contentDescription = "avatar",
-            modifier = Modifier
-                .size(36.dp)
-                .border(1.dp, colorResource(getColorByUserRank(userItem.rank)), CircleShape)
+        UserAvatar(
+            avatar = userItem.avatar,
+            modifier = Modifier.border(1.dp, colorResource(getColorByUserRank(userItem.rank)), CircleShape)
         )
 
         Spacer(Modifier.width(8.dp))
@@ -52,7 +39,7 @@ fun UserItemView(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = colorTextByUserRank(userItem.handle.toString(), userItem.rank),
+                    text = colorTextByUserRankNew(userItem.handle.toString(), userItem.rank),
                     style = MaterialTheme.typography.subtitle2,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
@@ -60,7 +47,7 @@ fun UserItemView(
                 )
 
                 Text(
-                    text = colorTextByUserRank(userItem.rating.toString(), userItem.rank),
+                    text = colorTextByUserRankNew(userItem.rating.toString(), userItem.rank),
                     style = MaterialTheme.typography.subtitle2,
                     textAlign = TextAlign.End,
                     modifier = Modifier.fillMaxWidth()
@@ -96,20 +83,6 @@ fun UserItemView(
                     modifier = Modifier.fillMaxWidth()
                 )
             }
-        }
-    }
-}
-
-@Composable
-private fun colorTextByUserRank(text: String, rank: String?) = buildAnnotatedString {
-    if (listOf("legendary grandmaster", "легендарный гроссмейстер").contains(rank)) {
-        withStyle(SpanStyle(color = Black)) { append(text[0]) }
-        withStyle(SpanStyle(color = colorResource(getColorByUserRank(rank)))) {
-            append(text.substring(1, text.length))
-        }
-    } else {
-        withStyle(SpanStyle(color = colorResource(getColorByUserRank(rank)))) {
-            append(text)
         }
     }
 }

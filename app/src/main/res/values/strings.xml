@@ -91,10 +91,19 @@ Download it now on Google Play - https://play.google.com/store/apps/details?id=c
   <string name="unknown">Unknown</string>
   <string name="never_updated">Never updated</string>
   <string name="login_to_identify">Login to identify</string>
+  <string name="login">Login</string>
+  <string name="login_to_identify_explanation">Login to identify and get instant push notifications about rating updates</string>
+  <string name="who_are_you">Who are you?</string>
+
   <string name="verify_account">Verify account</string>
   <string name="pass_quick_verification">Pass the quick and simple verification to see your profile here</string>
   <string name="verify_in_42_seconds">Verify in 42 seconds</string>
   <string name="get_instant_notifications">And get instant push notifications about rating updates</string>
+
+  <string name="rating_new">Rating</string>
+  <string name="max_rating_new">Max Rating</string>
+  <string name="contribution_new">Contribution</string>
+  <string name="view_profile">View profile</string>
 
   <string name="log_out">Log out</string>
   <string name="do_you_want_to_log_out">Do you want to log out?</string>

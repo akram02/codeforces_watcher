@@ -5,8 +5,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -17,17 +15,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.ParagraphStyle
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.MutableLiveData
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.compose.*
-import com.bogdan.codeforceswatcher.components.compose.textfields.AuthTextField
+import com.bogdan.codeforceswatcher.components.compose.buttons.BigButton
 import com.bogdan.codeforceswatcher.components.compose.textfields.EmailTextField
 import com.bogdan.codeforceswatcher.components.compose.textfields.TextFieldPosition
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
@@ -80,7 +76,8 @@ class RestorePasswordComposeActivity : ComponentActivity(), StoreSubscriber<Auth
                 .alpha(0f),
             clickableTextStyle = MaterialTheme.typography.body2.copy(
                 fontSize = 14.sp,
-                color = MaterialTheme.colors.secondaryVariant
+                color = MaterialTheme.colors.secondaryVariant,
+                textDecoration = TextDecoration.Underline
             ),
             paragraphStyle = ParagraphStyle(textAlign = TextAlign.Center)
         )
@@ -119,7 +116,7 @@ class RestorePasswordComposeActivity : ComponentActivity(), StoreSubscriber<Auth
 
             Spacer(Modifier.height(30.dp))
 
-            AuthButton(getString(R.string.restore_password)) {
+            BigButton(getString(R.string.restore_password)) {
                 forgotPassword(email)
             }
         }

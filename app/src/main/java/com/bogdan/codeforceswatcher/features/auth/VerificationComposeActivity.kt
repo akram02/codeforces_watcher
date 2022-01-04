@@ -8,8 +8,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.ClickableText
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -23,8 +21,6 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
@@ -33,10 +29,9 @@ import androidx.lifecycle.MutableLiveData
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.compose.*
-import com.bogdan.codeforceswatcher.components.compose.textfields.AuthTextField
+import com.bogdan.codeforceswatcher.components.compose.buttons.BigButton
 import com.bogdan.codeforceswatcher.components.compose.textfields.HandleTextField
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
-import io.xorum.codeforceswatcher.features.auth.redux.AuthState
 import io.xorum.codeforceswatcher.features.verification.redux.VerificationRequests
 import io.xorum.codeforceswatcher.features.verification.redux.VerificationState
 import io.xorum.codeforceswatcher.redux.store
@@ -151,7 +146,7 @@ class VerificationComposeActivity : ComponentActivity(), StoreSubscriber<Verific
 
             Spacer(Modifier.height(30.dp))
 
-            AuthButton(getString(R.string.verify).uppercase()) {
+            BigButton(getString(R.string.verify).uppercase()) {
                 store.dispatch(VerificationRequests.VerifyCodeforces(handle))
             }
         }

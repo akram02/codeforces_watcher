@@ -32,7 +32,13 @@ val MUHeaderMedium18 = TextStyle(
     fontSize = 18.sp,
     letterSpacing = (-1).sp
 )
-val MUBigHeaderMedium40 = TextStyle(
+val MUHeaderMedium28 = TextStyle(
+    fontWeight = FontWeight(500),
+    fontStyle = FontStyle.Normal,
+    fontSize = 28.sp,
+    letterSpacing = (-1).sp
+)
+val MUHeaderMedium40 = TextStyle(
     fontWeight = FontWeight(500),
     fontStyle = FontStyle.Normal,
     fontSize = 40.sp,
@@ -49,8 +55,7 @@ val MUHintBoldSemiBold13 = TextStyle(
     fontWeight = FontWeight(600),
     fontStyle = FontStyle.Normal,
     fontSize = 13.sp,
-    letterSpacing = (-1).sp,
-    textDecoration = TextDecoration.Underline
+    letterSpacing = (-1).sp
 )
 
 val MUPrimaryRegular16 = TextStyle(
@@ -77,7 +82,8 @@ val MUButtonSemiBold16 = TextStyle(
 
 val Typography = Typography(
     defaultFontFamily = sfMono,
-    h3 = MUBigHeaderMedium40,
+    h3 = MUHeaderMedium40,
+    h5 = MUHeaderMedium28,
     h6 = MUHeaderMedium18,
     caption = MUHintRegular13,
     subtitle1 = MUPrimaryRegular16,
