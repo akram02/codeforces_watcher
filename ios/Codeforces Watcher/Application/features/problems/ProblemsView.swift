@@ -19,11 +19,7 @@ struct ProblemsView: View {
                     if problems.isEmpty {
                         NoItemsView(imageName: "noItemsProblems", text: noProblemsExplanation)
                     } else {
-                        ScrollView {
-                            LazyVStack {
-                                ProblemsForEach
-                            }
-                        }
+                        ProblemsList
                     }
                 }, refreshControl: refreshControl)
                     .background(Palette.white.swiftUIColor)
@@ -34,13 +30,17 @@ struct ProblemsView: View {
     }
     
     @ViewBuilder
-    var ProblemsForEach: some View {
-        ForEach(problems, id: \.id) { problem in
-            ProblemViewTableViewCell(problem)
-                .contentShape(Rectangle())
-                .onTapGesture {
-                    self.onProblem(problem.link, problem.title)
+    var ProblemsList: some View {
+        ScrollView {
+            LazyVStack {
+                ForEach(problems, id: \.id) { problem in
+                    ProblemViewTableViewCell(problem)
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            self.onProblem(problem.link, problem.title)
+                        }
                 }
+            }
         }
     }
 }

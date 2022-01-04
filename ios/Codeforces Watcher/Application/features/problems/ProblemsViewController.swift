@@ -60,7 +60,7 @@ class ProblemsViewController: UIHostingController<ProblemsView>, ReKampStoreSubs
     func onNewState(state: Any) {
         let state = state as! ProblemsState
         
-        if (state.status == .idle) {
+        if state.status == .idle {
             refreshControl.endRefreshing()
         }
         
