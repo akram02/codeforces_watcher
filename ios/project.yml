@@ -16,7 +16,7 @@ targets:
   "Codeforces Watcher Release":
     type: application
     platform: iOS
-    deploymentTarget: "13.0"
+    deploymentTarget: "14.0"
     sources:  
       - path: "Codeforces Watcher"
         excludes:
@@ -44,7 +44,7 @@ targets:
   "Codeforces Watcher Debug":
     type: application
     platform: iOS
-    deploymentTarget: "13.0"
+    deploymentTarget: "14.0"
     sources:
       - path: "Codeforces Watcher"
         excludes:
@@ -72,7 +72,7 @@ targets:
   "Codeforces Watcher Tests":
     type: bundle.unit-test
     platform: iOS
-    deploymentTarget: "13.0"
+    deploymentTarget: "14.0"
     sources:
       - path: "Codeforces Watcher Tests"
     dependencies:

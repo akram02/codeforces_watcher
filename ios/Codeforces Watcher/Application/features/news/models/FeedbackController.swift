@@ -89,7 +89,9 @@ class FeedbackController: BaseFeedbackController {
     }
 
     override func showAppStore() {
-        SKStoreReviewController.requestReview()
+        if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+            SKStoreReviewController.requestReview(in: scene)
+        }
     }
 
     override func currentTimeMillis() -> Int64 {
