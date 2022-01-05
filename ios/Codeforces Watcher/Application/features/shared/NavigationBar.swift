@@ -15,7 +15,9 @@ struct NavigationBar: View {
             Spacer()
             
             if isFilterIcon {
-                Button(action: {}, label: {
+                Button(action: {
+                    onFilter()
+                }, label: {
                     Image("filterIcon")
                         .renderingMode(.original)
                 })

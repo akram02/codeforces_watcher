@@ -7,12 +7,13 @@ struct ContestsView: View {
     
     var onContest: (Contest) -> Void = { _ in }
     var onCalendar: (Contest) -> Void = { _ in }
+    var onFilter: () -> Void = {}
     var refreshControl = UIRefreshControl()
     
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
-                NavigationBar(isFilterIcon: true)
+                NavigationBar(isFilterIcon: true, onFilter: { self.onFilter() })
                 
                 RefreshableScrollView(content: {
                     ContestsList

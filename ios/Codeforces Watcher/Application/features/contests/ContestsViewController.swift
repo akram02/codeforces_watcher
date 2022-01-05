@@ -90,6 +90,10 @@ class ContestsViewController: UIHostingController<ContestsView>, ReKampStoreSubs
                 }
             }
         }
+        
+        rootView.onFilter = {
+            self.presentModal(ContestsFiltersViewController())
+        }
     }
     
     func onNewState(state: Any) {
