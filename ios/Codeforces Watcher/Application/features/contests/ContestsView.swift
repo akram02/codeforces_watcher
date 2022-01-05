@@ -3,7 +3,7 @@ import common
 
 struct ContestsView: View {
     
-    var contests: [Contest] = []
+    var contests: [UIModel] = []
     
     var onContest: (Contest) -> Void = { _ in }
     var onCalendar: (Contest) -> Void = { _ in }
@@ -25,13 +25,26 @@ struct ContestsView: View {
     }
     
     private var ContestsList: some View {
-        ScrollView {
+        
+        return ScrollView {
             LazyVStack {
-                ForEach(contests, id: \.self) { contest in
-                    ContestView(contest)
+                ForEach(contests.indices, id: \.self) { index in
+                    let contest = contests[index]
+                    
+                    if index == 0 || contest.month != contests[index - 1].month {
+                        CommonText(contest.month.capitalizingFirstLetter())
+                            .font(.midHeaderSemibold2)
+                            .foregroundColor(Palette.black.swiftUIColor)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.top, 15)
+                            .padding(.bottom, 5)
+                            .padding(.horizontal, 20)
+                    }
+                    
+                    ContestView(contest.contest)
                         .contentShape(Rectangle())
                         .onTapGesture {
-                            self.onContest(contest)
+                            self.onContest(contest.contest)
                         }
                 }
             }
@@ -72,6 +85,11 @@ struct ContestsView: View {
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 10)
+    }
+    
+    struct UIModel {
+        let month: String
+        let contest: Contest
     }
 }
 

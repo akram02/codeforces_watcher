@@ -72,6 +72,7 @@
 "chart_info" = " = %@ (%@) \n Место: %@ \n %@ \n %@ ";
 
 "contest_date_format" = "d MMM в HH:mm, EEEE";
+"contest_date_month_format" = "LLLL";
 "user_date_format" = "d MMM yyyy";
 
 "be_the_first_to_comment" = "Прокомментируйте первым";

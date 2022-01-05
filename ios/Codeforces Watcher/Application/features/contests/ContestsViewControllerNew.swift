@@ -104,6 +104,12 @@ class ContestsViewControllerNew: UIHostingController<ContestsView>, ReKampStoreS
             .sorted(by: {
                 $0.startDateInMillis < $1.startDateInMillis
             })
+            .map {
+                ContestsView.UIModel(
+                    month: Double($0.startDateInMillis / 1000).secondsToContestDateMonthString(),
+                    contest: $0
+                )
+            }
     }
     
     private func addEventToCalendar(
