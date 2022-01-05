@@ -4,6 +4,10 @@ import common
 
 class ContestsViewControllerNew: UIHostingController<ContestsView>, ReKampStoreSubscriber {
     
+    private lazy var fabButton = FabButtonViewController(name: "eyeIcon").apply {
+        $0.setButtonAction(action: { self.onFabButton() } )
+    }
+    
     init() {
         super.init(rootView: ContestsView())
         
@@ -17,6 +21,9 @@ class ContestsViewControllerNew: UIHostingController<ContestsView>, ReKampStoreS
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        setFabButton()
+        fabButton.show()
+        
         store.subscribe(subscriber: self) { subscription in
             subscription.skipRepeats { oldState, newState in
                 KotlinBoolean(bool: oldState.contests == newState.contests)
@@ -29,7 +36,21 @@ class ContestsViewControllerNew: UIHostingController<ContestsView>, ReKampStoreS
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
+        fabButton.hide()
+        
         store.unsubscribe(subscriber: self)
+    }
+    
+    private func setFabButton() {
+        tabBarController?.tabBar.addSubview(fabButton.view)
+        fabButton.setView()
+    }
+    
+    private func onFabButton() {
+        let contestsLink = "https://clist.by/"
+        
+        let webViewController = WebViewController(contestsLink, "upcoming_contests".localized)
+        presentModal(webViewController)
     }
     
     private func setInteractions() {

@@ -4,10 +4,9 @@ import FirebaseAnalytics
 
 class ProblemsViewController: UIHostingController<ProblemsView>, ReKampStoreSubscriber {
     
-    private lazy var fabButton = FabButtonViewController(
-        name: "infinityIcon",
-        action: { self.onFabButton() }
-    )
+    private lazy var fabButton = FabButtonViewController(name: "infinityIcon").apply {
+        $0.setButtonAction(action: { self.onFabButton() } )
+    }
     private let refreshControl = UIRefreshControl()
     
     init() {
@@ -30,9 +29,9 @@ class ProblemsViewController: UIHostingController<ProblemsView>, ReKampStoreSubs
 
         store.subscribe(subscriber: self) { subscription in
             subscription.skipRepeats { oldState, newState in
-                return KotlinBoolean(bool: oldState.problems == newState.problems)
+                KotlinBoolean(bool: oldState.problems == newState.problems)
             }.select { state in
-                return state.problems
+                state.problems
             }
         }
     }
@@ -48,7 +47,7 @@ class ProblemsViewController: UIHostingController<ProblemsView>, ReKampStoreSubs
     private func setFabButton() {
         tabBarController?.tabBar.addSubview(fabButton.view)
         fabButton.setView()
-        fabButton.setButtonAction(action: { self.onFabButton() })
+//        fabButton.setButtonAction(action: { self.onFabButton() })
     }
     
     private func setRefreshControl() {
