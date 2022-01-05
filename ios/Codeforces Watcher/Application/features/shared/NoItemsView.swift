@@ -10,7 +10,7 @@ struct NoItemsView: View {
             VStack(alignment: .center, spacing: 34) {
                 Image(imageName)
                 
-                Text(text.localized)
+                CommonText(text.localized)
                     .font(.headerMedium)
                     .foregroundColor(Palette.darkGray.swiftUIColor)
                     .multilineTextAlignment(.center)

@@ -4,8 +4,11 @@ class FabButtonViewController: UIHostingController<FabButtonView> {
     
     var action: () -> Void = {}
     
-    init(name: String) {
-        super.init(rootView: FabButtonView(name: name))
+    init(
+        name: String,
+        action: @escaping () -> Void
+    ) {
+        super.init(rootView: FabButtonView(name: name, action: action))
     }
     
     @objc required init?(coder aDecoder: NSCoder) {
