@@ -17,12 +17,12 @@ class ProblemFiltersViewController: UIHostingController<ProblemFiltersView>, ReK
         super.viewWillAppear(animated)
         store.subscribe(subscriber: self) { subscription in
             subscription.skipRepeats { oldState, newState in
-                return KotlinBoolean(bool:
+                KotlinBoolean(bool:
                     oldState.problems.tags == newState.problems.tags
                         && oldState.problems.selectedTags == newState.problems.selectedTags
                 )
             }.select { state in
-                return state.problems
+                state.problems
             }
         }
     }
@@ -60,7 +60,7 @@ class ProblemFiltersViewController: UIHostingController<ProblemFiltersView>, ReK
         let state = state as! ProblemsState
         
         let filterItems = state.tags.map { tag in
-            UIModel(
+            ProblemFiltersView.UIModel(
                 title: tag,
                 isSelected: state.selectedTags.contains(tag),
                 onFilter: { isChecked in
@@ -74,11 +74,5 @@ class ProblemFiltersViewController: UIHostingController<ProblemFiltersView>, ReK
     
     @objc func closeViewController() {
         dismiss(animated: true)
-    }
-    
-    struct UIModel {
-        let title: String
-        let isSelected: Bool
-        let onFilter: (_ isOn: Bool) -> ()
     }
 }

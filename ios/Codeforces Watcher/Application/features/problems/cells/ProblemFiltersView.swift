@@ -3,7 +3,7 @@ import common
 
 struct ProblemFiltersView: View {
     
-    var filterItems: [ProblemFiltersViewController.UIModel] = []
+    var filterItems: [UIModel] = []
     
     var body: some View {
         ScrollView {
@@ -16,9 +16,7 @@ struct ProblemFiltersView: View {
     }
     
     @ViewBuilder
-    private func FilterView(
-        _ filterItem: ProblemFiltersViewController.UIModel
-    ) -> some View {
+    private func FilterView(_ filterItem: UIModel) -> some View {
         HStack {
             CommonText(filterItem.title)
                 .font(.bodyRegular)
@@ -30,12 +28,16 @@ struct ProblemFiltersView: View {
             Button(action: {
                 filterItem.onFilter(!filterItem.isSelected)
             }, label: {
-                let imageName = filterItem.isSelected ? "ic_checkbox_checked" : "ic_checkbox_unchecked"
-                
-                Image(imageName)
+                Image(filterItem.isSelected ? "ic_checkbox_checked" : "ic_checkbox_unchecked")
             })
         }
         .padding([.horizontal, .top], 20)
+    }
+    
+    struct UIModel {
+        let title: String
+        let isSelected: Bool
+        let onFilter: (_ isOn: Bool) -> ()
     }
 }
 
