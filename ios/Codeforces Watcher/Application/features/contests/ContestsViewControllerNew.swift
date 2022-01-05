@@ -21,6 +21,7 @@ class ContestsViewControllerNew: UIHostingController<ContestsView>, ReKampStoreS
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        hideNavigationBar()
         setFabButton()
         fabButton.show()
         
