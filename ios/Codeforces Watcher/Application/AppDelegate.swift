@@ -121,7 +121,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         willPresent notification: UNNotification,
         withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
     ) {
-        completionHandler([.alert, .badge, .sound])
+        completionHandler([.banner, .list, .badge, .sound])
     }
 
     func userNotificationCenter(
