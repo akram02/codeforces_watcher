@@ -21,12 +21,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.MutableLiveData
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.WebViewActivity
 import com.bogdan.codeforceswatcher.components.compose.*
+import com.bogdan.codeforceswatcher.components.compose.buttons.BigButton
 import com.bogdan.codeforceswatcher.components.compose.textfields.*
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 import io.xorum.codeforceswatcher.features.auth.redux.AuthRequests
@@ -88,7 +90,8 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
             ),
             clickableTextStyle = MaterialTheme.typography.body2.copy(
                 fontSize = 14.sp,
-                color = MaterialTheme.colors.onBackground
+                color = MaterialTheme.colors.onBackground,
+                textDecoration = TextDecoration.Underline
             ),
             paragraphStyle = ParagraphStyle(textAlign = TextAlign.Center)
         )
@@ -143,7 +146,7 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
 
             Spacer(Modifier.height(26.dp))
 
-            AuthButton(
+            BigButton(
                 label = getString(R.string.sign_up).uppercase(),
                 modifier = Modifier.border(
                     width = 2.dp,

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="last_rating_update">Останнє оновлення рейтингу: %1$s</string>
+    <string name="last_activity">Остання активність: %1$s</string>
     <string name="updated_on">Oновлено %1$s</string>
-    <string name="no_rating_update">Немає оновлення рейтингу</string>
+    <string name="no_activity">Немає активності</string>
     <string name="none">Немає</string>
     <string name="check_connection_or_try_again_later">Перевірте підключення або спробуйте пізніше</string>
     <string name="rating_changes">Змiни рейтингу</string>
@@ -90,10 +90,19 @@ Codeforces WatchR дає можливiсть:
     <string name="unknown">Невідомо</string>
     <string name="never_updated">Ніколи не оновлювався</string>
     <string name="login_to_identify">Увійдіть для ідентифікації</string>
+    <string name="login">Увійти</string>
+    <string name="login_to_identify_explanation">Увійдіть для ідентифікації і отримуйте миттєві push-сповіщення про оновлення рейтингу</string>
+    <string name="who_are_you">Хто Ви?</string>
+
     <string name="verify_account">Підтвердити акаунт</string>
     <string name="pass_quick_verification">Пройдіть швидку та просту перевірку, щоб побачити тут свій профіль</string>
     <string name="verify_in_42_seconds">Підтвердити за 42 секунди</string>
     <string name="get_instant_notifications">І отримуйте миттєві push-сповіщення про оновлення рейтингу</string>
+
+    <string name="rating_new">Рейтинг</string>
+    <string name="max_rating_new">Макс. рейтинг</string>
+    <string name="contribution_new">Внесок</string>
+    <string name="view_profile">Переглянути профіль</string>
 
     <string name="log_out">Вийти</string>
     <string name="do_you_want_to_log_out">Ви хочете вийти?</string>

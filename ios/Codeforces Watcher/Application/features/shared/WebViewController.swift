@@ -48,8 +48,30 @@ class WebViewController: ClosableViewController, WKUIDelegate, WKNavigationDeleg
     
     private func setupView() {
         view = webView
-        title = titleName
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "shareImage"), style: .plain, target: self, action: #selector(shareTapped))
+        
+        setNavigationBarBackground()
+        
+        let titleLabel = UILabel().apply {
+            $0.text = titleName
+            $0.attributedText = NSAttributedString(
+                string: titleName,
+                attributes: [
+                    NSAttributedString.Key.font: Font.monospacedHeaderMedium,
+                    NSAttributedString.Key.foregroundColor: Palette.black,
+                    NSAttributedString.Key.kern: -1
+                ]
+            )
+        }
+        navigationItem.leftBarButtonItems?.append(
+            UIBarButtonItem(customView: titleLabel)
+        )
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: UIImage(named: "shareImage"),
+            style: .plain,
+            target: self,
+            action: #selector(shareTapped)
+        )
     }
 
     @objc func shareTapped() {

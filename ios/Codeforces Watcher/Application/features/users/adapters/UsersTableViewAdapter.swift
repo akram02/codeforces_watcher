@@ -36,13 +36,13 @@ class UsersTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSourc
         }
         
         switch(users[indexPath.row]) {
-        case .loginItem(let uiModel):
+        case .loginItem(let onLogin):
             return tableView.dequeueReusableCell(cellType: LoginTableViewCell.self).apply {
-                $0.bind(uiModel)
+                $0.bind(onLogin: onLogin)
             }
-        case .verifyItem(let uiModel):
+        case .verifyItem(let onVerify):
             return tableView.dequeueReusableCell(cellType: VerifyTableViewCell.self).apply {
-                $0.bind(uiModel)
+                $0.bind(onVerify: onVerify)
             }
         case .userItem(let item):
             return tableView.dequeueReusableCell(cellType: UserTableViewCell.self).apply {
@@ -50,7 +50,7 @@ class UsersTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSourc
             }
         case .userAccount(let item):
             return tableView.dequeueReusableCell(cellType: UserAccountTableViewCell.self).apply {
-                $0.bind(item)
+                $0.bind(item, onUserAccountTap: onUserAccountTap)
             }
         case .sectionTitle(let title):
             return tableView.dequeueReusableCell(cellType: TitleSectionTableViewCell.self).apply {
@@ -62,14 +62,10 @@ class UsersTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard !users.isEmpty else { return }
         switch(users[indexPath.row]) {
-        case .loginItem, .sectionTitle:
+        case .loginItem, .sectionTitle, .userAccount, .verifyItem:
             break
-        case .verifyItem:
-            onVerifyCellTap()
         case .userItem(let item):
             onUserTap(item.handle)
-        case .userAccount(let item):
-            onUserAccountTap(item.handle)
         }
     }
 

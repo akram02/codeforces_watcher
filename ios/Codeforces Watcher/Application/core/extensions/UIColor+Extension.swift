@@ -29,12 +29,6 @@ extension UIColor {
         lightColor: UIColor,
         darkColor: UIColor
     ) {
-        guard #available(iOS 13.0, *)
-        else {
-            self.init(cgColor: lightColor.cgColor)
-            return
-        }
-
         self.init(dynamicProvider: {
             $0.userInterfaceStyle == .dark
                 ? darkColor : lightColor
@@ -43,6 +37,28 @@ extension UIColor {
     
     var swiftUIColor: SwiftUI.Color {
         Color(self)
+    }
+    
+    func lighter(by amount: CGFloat, alpha: CGFloat = 1) -> UIColor? {
+        self.adjust(by: amount, alpha: alpha)
+    }
+
+    func darker(by amount: CGFloat, alpha: CGFloat = 1) -> UIColor? {
+        self.adjust(by: amount, alpha: alpha)
+    }
+
+    func adjust(by amount: CGFloat, alpha: CGFloat = 1) -> UIColor? {
+        var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0
+        if self.getRed(&red, green: &green, blue: &blue, alpha: nil) {
+            return UIColor(
+                red: min(red + amount, 1),
+                green: min(green + amount, 1),
+                blue: min(blue + amount, 1),
+                alpha: alpha
+            )
+        } else {
+            return nil
+        }
     }
 }
 

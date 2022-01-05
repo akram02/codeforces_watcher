@@ -41,9 +41,9 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState>,
         initViews()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater?.inflate(R.menu.menu_problems, menu)
-        val searchItem = menu?.findItem(R.id.action_search)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_problems, menu)
+        val searchItem = menu.findItem(R.id.action_search)
         searchView = searchItem?.actionView as? SearchView
 
         adjustSearchViewHint()
@@ -65,8 +65,8 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState>,
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (item?.itemId == R.id.action_filter) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_filter) {
             startActivity(Intent(activity, ProblemsFiltersActivity::class.java))
         }
         return super.onOptionsItemSelected(item)

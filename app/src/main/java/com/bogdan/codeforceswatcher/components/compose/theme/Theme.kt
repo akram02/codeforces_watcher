@@ -14,10 +14,12 @@ private val DarkColorPalette = darkColors(
     secondaryVariant = SilverChalice,
     background = CodGray,
     error = Red,
+    surface = MineShaft,
     onPrimary = White,
     onSecondary = CodGray,
     onBackground = White,
-    onError = White
+    onError = White,
+    onSurface = White
 )
 
 private val LightColorPalette = lightColors(
@@ -27,10 +29,12 @@ private val LightColorPalette = lightColors(
     secondaryVariant = DoveGray,
     background = White,
     error = Red,
+    surface = Gallery,
     onPrimary = Black,
     onSecondary = White,
     onBackground = Black,
-    onError = Black
+    onError = Black,
+    onSurface = Black
 )
 
 @Composable

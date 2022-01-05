@@ -1,7 +1,7 @@
 <resources>
-    <string name="last_rating_update">अंतिम रेटिंग बदलाव: %1$s</string>
+    <string name="last_activity">आख़िरी गतिविधि: %1$s</string>
     <string name="updated_on">संशोधित किया गया %1$s</string>
-    <string name="no_rating_update">कोई रेटिंग परिवर्तन नहीं</string>
+    <string name="no_activity">कोई गतिविधि नहीं</string>
     <string name="none">कोई परिणाम नहीं</string>
     <string name="check_connection_or_try_again_later">अपना कनेक्शन जांचें या बाद में पुन: प्रयास करें</string>
     <string name="rating_changes">रेटिंग में बदलाव</string>
