@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Shape.png",
+      "filename" : "Contests.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Shape-1.png",
+      "filename" : "Contests-1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Shape-2.png",
+      "filename" : "Contests-2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
