@@ -8,7 +8,9 @@ fun problemsReducer(action: Action, state: AppState): ProblemsState {
 
     when (action) {
         is ProblemsRequests.FetchProblems -> {
-            newState = newState.copy(status = ProblemsState.Status.PENDING)
+            newState = newState.copy(
+                status = ProblemsState.Status.PENDING
+            )
         }
         is ProblemsRequests.FetchProblems.Success -> {
             newState = newState.copy(
@@ -18,15 +20,21 @@ fun problemsReducer(action: Action, state: AppState): ProblemsState {
             ).withOrderedTags().withFilteredProblems()
         }
         is ProblemsRequests.FetchProblems.Failure -> {
-            newState = newState.copy(status = ProblemsState.Status.IDLE)
+            newState = newState.copy(
+                status = ProblemsState.Status.IDLE
+            )
         }
         is ProblemsActions.ChangeTypeProblems -> {
-            newState = newState.copy(isFavourite = action.isFavourite).withFilteredProblems()
+            newState = newState.copy(
+                isFavourite = action.isFavourite
+            ).withFilteredProblems()
         }
         is ProblemsRequests.ChangeStatusFavourite.Success -> {
-            newState = newState.copy(problems = newState.problems.map {
-                if (it.id == action.problem.id) action.problem else it
-            }).withFilteredProblems()
+            newState = newState.copy(
+                problems = newState.problems.map {
+                    if (it.id == action.problem.id) action.problem else it
+                }
+            ).withFilteredProblems()
         }
         is ProblemsRequests.ChangeTagCheckStatus -> {
             newState = newState.copy(
@@ -35,7 +43,9 @@ fun problemsReducer(action: Action, state: AppState): ProblemsState {
             ).withFilteredProblems()
         }
         is ProblemsRequests.SetQuery -> {
-            newState = newState.copy(query = action.query).withFilteredProblems()
+            newState = newState.copy(
+                query = action.query
+            ).withFilteredProblems()
         }
     }
 

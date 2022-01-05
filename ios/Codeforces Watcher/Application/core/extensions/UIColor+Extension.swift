@@ -29,12 +29,6 @@ extension UIColor {
         lightColor: UIColor,
         darkColor: UIColor
     ) {
-        guard #available(iOS 13.0, *)
-        else {
-            self.init(cgColor: lightColor.cgColor)
-            return
-        }
-
         self.init(dynamicProvider: {
             $0.userInterfaceStyle == .dark
                 ? darkColor : lightColor
