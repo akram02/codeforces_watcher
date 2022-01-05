@@ -47,7 +47,6 @@ class ProblemsViewController: UIHostingController<ProblemsView>, ReKampStoreSubs
     private func setFabButton() {
         tabBarController?.tabBar.addSubview(fabButton.view)
         fabButton.setView()
-//        fabButton.setButtonAction(action: { self.onFabButton() })
     }
     
     private func setRefreshControl() {

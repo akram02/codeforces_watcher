@@ -7,10 +7,12 @@ class ContestsViewControllerNew: UIHostingController<ContestsView>, ReKampStoreS
     private lazy var fabButton = FabButtonViewController(name: "eyeIcon").apply {
         $0.setButtonAction(action: { self.onFabButton() } )
     }
+    private let refreshControl = UIRefreshControl()
     
     init() {
         super.init(rootView: ContestsView())
         
+        setRefreshControl()
         setInteractions()
     }
     
@@ -54,6 +56,15 @@ class ContestsViewControllerNew: UIHostingController<ContestsView>, ReKampStoreS
         presentModal(webViewController)
     }
     
+    private func setRefreshControl() {
+        rootView.refreshControl = refreshControl
+        
+        refreshControl.run {
+            $0.addTarget(self, action: #selector(refreshContests(_:)), for: .valueChanged)
+            $0.tintColor = Palette.black
+        }
+    }
+    
     private func setInteractions() {
         rootView.onContest = { contest in
             let webViewController = WebViewController(
@@ -83,6 +94,10 @@ class ContestsViewControllerNew: UIHostingController<ContestsView>, ReKampStoreS
     
     func onNewState(state: Any) {
         let state = state as! ContestsState
+        
+        if state.status == .idle {
+            refreshControl.endRefreshing()
+        }
 
         rootView.contests = state.contests
             .filter { $0.phase == .pending && state.filters.contains($0.platform) }
@@ -146,5 +161,14 @@ class ContestsViewControllerNew: UIHostingController<ContestsView>, ReKampStoreS
         alertController.addAction(okButton)
 
         present(alertController, animated: true, completion: nil)
+    }
+    
+    @objc private func refreshContests(_ sender: Any) {
+        analyticsControler.logEvent(eventName: AnalyticsEvents().CONTESTS_REFRESH, params: [:])
+        fetchContests()
+    }
+    
+    private func fetchContests() {
+        store.dispatch(action: ContestsRequests.FetchContests(isInitiatedByUser: true))
     }
 }

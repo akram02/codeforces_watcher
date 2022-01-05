@@ -7,13 +7,16 @@ struct ContestsView: View {
     
     var onContest: (Contest) -> Void = { _ in }
     var onCalendar: (Contest) -> Void = { _ in }
+    var refreshControl = UIRefreshControl()
     
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
                 NavigationBar(isFilterIcon: true)
                 
-                ContestsList
+                RefreshableScrollView(content: {
+                    ContestsList
+                }, refreshControl: refreshControl)
                     .background(Palette.white.swiftUIColor)
                     .cornerRadius(30, corners: [.topLeft, .topRight])
             }
