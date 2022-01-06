@@ -13,8 +13,10 @@ extension Contest.Platform {
     
     static func getImageNameByPlatform(_ platform: Contest.Platform) -> String {
         switch (platform) {
-        case .codeforces, .codeforcesGym:
+        case .codeforces:
             return "Codeforces"
+        case .codeforcesGym:
+            return "CodeforcesGym"
         case .atcoder:
             return "AtCoder"
         case .codechef:

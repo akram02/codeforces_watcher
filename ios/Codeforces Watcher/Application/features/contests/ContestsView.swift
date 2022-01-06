@@ -3,17 +3,18 @@ import common
 
 struct ContestsView: View {
     
-    var contests: [UIModel] = []
+    var contests: [ContestUIModel] = []
+    var filterItems: [FilterUIModel] = []
     
     var onContest: (Contest) -> Void = { _ in }
     var onCalendar: (Contest) -> Void = { _ in }
-    var onFilter: () -> Void = {}
+    
     var refreshControl = UIRefreshControl()
     
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
-                NavigationBar(isFilterIcon: true, onFilter: { self.onFilter() })
+                NavigationBarContests(filterItems: filterItems)
                 
                 RefreshableScrollView(content: {
                     ContestsList
@@ -25,9 +26,9 @@ struct ContestsView: View {
         .background(Palette.accentGrayish.swiftUIColor.edgesIgnoringSafeArea(.top))
     }
     
+    @ViewBuilder
     private var ContestsList: some View {
-        
-        return ScrollView {
+        ScrollView {
             LazyVStack {
                 ForEach(contests.indices, id: \.self) { index in
                     let contest = contests[index]
@@ -88,9 +89,16 @@ struct ContestsView: View {
         .padding(.vertical, 10)
     }
     
-    struct UIModel {
+    struct ContestUIModel {
         let month: String
         let contest: Contest
+    }
+    
+    struct FilterUIModel {
+        let title: String
+        let image: Image
+        let isSelected: Bool
+        let onFilter: (_ isSelected: Bool) -> Void
     }
 }
 

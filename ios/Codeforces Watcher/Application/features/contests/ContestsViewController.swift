@@ -90,10 +90,6 @@ class ContestsViewController: UIHostingController<ContestsView>, ReKampStoreSubs
                 }
             }
         }
-        
-        rootView.onFilter = {
-            self.presentModal(ContestsFiltersViewController())
-        }
     }
     
     func onNewState(state: Any) {
@@ -102,18 +98,96 @@ class ContestsViewController: UIHostingController<ContestsView>, ReKampStoreSubs
         if state.status == .idle {
             refreshControl.endRefreshing()
         }
-
+        
+        updateContests(state)
+        updateContestFilters(state)
+    }
+    
+    private func updateContests(_ state: ContestsState) {
         rootView.contests = state.contests
             .filter { $0.phase == .pending && state.filters.contains($0.platform) }
             .sorted(by: {
                 $0.startDateInMillis < $1.startDateInMillis
             })
             .map {
-                ContestsView.UIModel(
+                ContestsView.ContestUIModel(
                     month: Double($0.startDateInMillis / 1000).secondsToContestDateMonthString(),
                     contest: $0
                 )
             }
+    }
+    
+    private func updateContestFilters(_ state: ContestsState) {
+        let filters = state.filters
+
+        rootView.filterItems = [
+            .init(
+                title: "Codeforces",
+                image: Image(Contest.Platform.getImageNameByPlatform(.codeforces)),
+                isSelected: filters.contains(.codeforces),
+                onFilter: { isSelected in self.onFilter(.codeforces, isSelected) }
+            ),
+            .init(
+                title: "Codeforces Gym",
+                image: Image(Contest.Platform.getImageNameByPlatform(.codeforcesGym)),
+                isSelected: filters.contains(.codeforcesGym),
+                onFilter: { isSelected in self.onFilter(.codeforcesGym, isSelected) }
+            ),
+            .init(
+                title: "AtCoder",
+                image: Image(Contest.Platform.getImageNameByPlatform(.atcoder)),
+                isSelected: filters.contains(.atcoder),
+                onFilter: { isSelected in self.onFilter(.atcoder, isSelected) }
+            ),
+            .init(
+                title: "LeetCode",
+                image: Image(Contest.Platform.getImageNameByPlatform(.leetcode)),
+                isSelected: filters.contains(.leetcode),
+                onFilter: { isSelected in self.onFilter(.leetcode, isSelected) }
+            ),
+            .init(
+                title: "TopCoder",
+                image: Image(Contest.Platform.getImageNameByPlatform(.topcoder)),
+                isSelected: filters.contains(.topcoder),
+                onFilter: { isSelected in self.onFilter(.topcoder, isSelected) }
+            ),
+            .init(
+                title: "CS Academy",
+                image: Image(Contest.Platform.getImageNameByPlatform(.csAcademy)),
+                isSelected: filters.contains(.csAcademy),
+                onFilter: { isSelected in self.onFilter(.csAcademy, isSelected) }
+            ),
+            .init(
+                title: "CodeChef",
+                image: Image(Contest.Platform.getImageNameByPlatform(.codechef)),
+                isSelected: filters.contains(.codechef),
+                onFilter: { isSelected in self.onFilter(.codechef, isSelected) }
+            ),
+            .init(
+                title: "HackerRank",
+                image: Image(Contest.Platform.getImageNameByPlatform(.hackerrank)),
+                isSelected: filters.contains(.hackerrank),
+                onFilter: { isSelected in self.onFilter(.hackerrank, isSelected) }
+            ),
+            .init(
+                title: "HackerEarth",
+                image: Image(Contest.Platform.getImageNameByPlatform(.hackerearth)),
+                isSelected: filters.contains(.hackerearth),
+                onFilter: { isSelected in self.onFilter(.hackerearth, isSelected) }
+            ),
+            .init(
+                title: "Kick Start",
+                image: Image(Contest.Platform.getImageNameByPlatform(.kickStart)),
+                isSelected: filters.contains(.kickStart),
+                onFilter: { isSelected in self.onFilter(.kickStart, isSelected) }
+            ),
+            .init(
+                title: "Toph",
+                image: Image(Contest.Platform.getImageNameByPlatform(.toph)),
+                isSelected: filters.contains(.toph),
+                onFilter: { isSelected in self.onFilter(.toph, isSelected) }
+            )
+        ]
     }
     
     private func addEventToCalendar(
@@ -180,5 +254,9 @@ class ContestsViewController: UIHostingController<ContestsView>, ReKampStoreSubs
     
     private func fetchContests() {
         store.dispatch(action: ContestsRequests.FetchContests(isInitiatedByUser: true))
+    }
+    
+    private func onFilter(_ platform: Contest.Platform, _ isOn: Bool) {
+        store.dispatch(action: ContestsRequests.ChangeFilterCheckStatus(platform: platform, isChecked: isOn))
     }
 }
