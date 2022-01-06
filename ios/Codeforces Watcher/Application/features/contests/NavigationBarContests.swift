@@ -47,20 +47,27 @@ struct NavigationBarContests: View {
             let chunkedFilterItems = filterItems.chunked(into: 5)
             ForEach(chunkedFilterItems.indices) { filterItemsRowIndex in
                 let filterItemsRow = chunkedFilterItems[filterItemsRowIndex]
-                GeometryReader { geometry in
-                    HStack {
-                        ForEach(filterItemsRow, id: \.title) { filterItem in
-                            FilterView(filterItem)
-                            
-                            if filterItem.title != filterItemsRow.last?.title {
-                                Spacer()
-                            }
-                        }
-                    }
-                }
-                .frame(height: 50)
+                ContestFiltersRowView(filterItemsRow)
             }
         }
+    }
+    
+    @ViewBuilder
+    private func ContestFiltersRowView(
+        _ filterItemsRow: [ContestsView.FilterUIModel]
+    ) -> some View {
+        GeometryReader { geometry in
+            HStack {
+                ForEach(filterItemsRow, id: \.title) { filterItem in
+                    FilterView(filterItem)
+                    
+                    if filterItem.title != filterItemsRow.last?.title {
+                        Spacer()
+                    }
+                }
+            }
+        }
+        .frame(height: 50)
     }
     
     @ViewBuilder
