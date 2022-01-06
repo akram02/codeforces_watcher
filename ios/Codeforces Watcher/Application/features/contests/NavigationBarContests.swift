@@ -4,7 +4,8 @@ struct NavigationBarContests: View {
     
     var filterItems: [ContestsView.FilterUIModel]
     
-    @State var isContestFiltersView = false
+    @State private var isContestFiltersView = false
+    @State var geometryHeight: CGFloat = 0
     
     var body: some View {
         HStack {
@@ -43,31 +44,44 @@ struct NavigationBarContests: View {
     
     @ViewBuilder
     private var ContestFiltersView: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            let chunkedFilterItems = filterItems.chunked(into: 5)
-            ForEach(chunkedFilterItems.indices) { filterItemsRowIndex in
-                let filterItemsRow = chunkedFilterItems[filterItemsRowIndex]
-                ContestFiltersRowView(filterItemsRow)
+        GeometryReader { geometry in
+            let filterItemsRowCount = Int(geometry.size.width) / 70
+            let spacerWidth = (geometry.size.width - CGFloat(filterItemsRowCount * 50)) / CGFloat(filterItemsRowCount - 1)
+            
+            VStack(alignment: .leading, spacing: 20) {
+                let chunkedFilterItems = filterItems.chunked(into: filterItemsRowCount)
+                
+                ForEach(chunkedFilterItems.indices) { filterItemsRowIndex in
+                    let filterItemsRow = chunkedFilterItems[filterItemsRowIndex]
+                    
+                    ContestFiltersRowView(filterItemsRow, spacerWidth: spacerWidth)
+                }
             }
+            .background(GeometryReader { gm -> Color in
+                DispatchQueue.main.async {
+                    self.geometryHeight = gm.size.height
+                }
+                return Color.clear
+            })
         }
+        .frame(height: geometryHeight)
     }
     
     @ViewBuilder
     private func ContestFiltersRowView(
-        _ filterItemsRow: [ContestsView.FilterUIModel]
+        _ filterItemsRow: [ContestsView.FilterUIModel],
+        spacerWidth: CGFloat
     ) -> some View {
-        GeometryReader { geometry in
-            HStack {
-                ForEach(filterItemsRow, id: \.title) { filterItem in
-                    FilterView(filterItem)
-                    
-                    if filterItem.title != filterItemsRow.last?.title {
-                        Spacer()
-                    }
+        HStack {
+            ForEach(filterItemsRow, id: \.title) { filterItem in
+                FilterView(filterItem)
+                
+                if filterItem.title != filterItemsRow.last?.title {
+                    Spacer()
+                        .frame(width: spacerWidth)
                 }
             }
         }
-        .frame(height: 50)
     }
     
     @ViewBuilder
