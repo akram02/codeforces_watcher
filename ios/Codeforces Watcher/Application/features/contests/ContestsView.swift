@@ -10,13 +10,19 @@ struct ContestsView: View {
     var onFilter: () -> Void = {}
     var refreshControl = UIRefreshControl()
     
+    private let noContestsExplanation = "Contests are on the way to your device..."
+    
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
                 NavigationBar(isFilterIcon: true, onFilter: { self.onFilter() })
                 
                 RefreshableScrollView(content: {
-                    ContestsList
+                    if contests.isEmpty {
+                        NoItemsView(imageName: "noItemsContests", text: noContestsExplanation)
+                    } else {
+                        ContestsList
+                    }
                 }, refreshControl: refreshControl)
                     .background(Palette.white.swiftUIColor)
                     .cornerRadius(30, corners: [.topLeft, .topRight])
@@ -25,9 +31,9 @@ struct ContestsView: View {
         .background(Palette.accentGrayish.swiftUIColor.edgesIgnoringSafeArea(.top))
     }
     
+    @ViewBuilder
     private var ContestsList: some View {
-        
-        return ScrollView {
+        ScrollView {
             LazyVStack {
                 ForEach(contests.indices, id: \.self) { index in
                     let contest = contests[index]
