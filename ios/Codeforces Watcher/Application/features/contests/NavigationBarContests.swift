@@ -87,13 +87,25 @@ struct NavigationBarContests: View {
     @ViewBuilder
     private func FilterView(_ filterItem: ContestsView.FilterUIModel) -> some View {
         Button(action: {
-            filterItem.onFilter(filterItem.isSelected)
+            filterItem.onFilter(!filterItem.isSelected)
         }, label: {
-            filterItem.image
-                .renderingMode(.original)
-                .resizable()
-                .frame(width: 50, height: 50)
+            if filterItem.isSelected {
+                FilterImageView(filterItem.image)
+            } else {
+                Circle()
+                    .fill(UIColor(rgb: 0x636363).swiftUIColor.opacity(0.5))
+                    .frame(width: 50, height: 50)
+                    .background(FilterImageView(filterItem.image))
+            }
         })
+    }
+    
+    @ViewBuilder
+    private func FilterImageView(_ filterImage: Image) -> some View {
+        filterImage
+            .renderingMode(.original)
+            .resizable()
+            .frame(width: 50, height: 50)
     }
 }
 
