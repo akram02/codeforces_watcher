@@ -13,7 +13,7 @@ struct ContestsView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            NavigationBarContests(filterItems: filterItems)
+            ContestsNavigationBar(filterItems: filterItems)
             
             RefreshableScrollView(content: {
                 if contests.isEmpty {

@@ -1,31 +1,41 @@
 import SwiftUI
 
-struct NavigationBarContests: View {
+struct ContestsNavigationBar: View {
     
     var filterItems: [ContestsView.FilterUIModel]
     
+    private let filtersViewAnimationDuration = 0.3
     @State private var isContestFiltersView = false
-    @State var geometryHeight: CGFloat = 0
+    @State private var geometryHeight: CGFloat = 0
     
     var body: some View {
         HStack {
-            CommonText("Contests".localized)
+            CommonText((isContestFiltersView ? "filters" : "Contests").localized)
                 .font(.headerMedium)
                 .foregroundColor(Palette.black.swiftUIColor)
-                .lineLimit(1)
+                .animation(nil)
+                .modifier(Shake(animatableData: isContestFiltersView ? 1 : 0))
             
             Spacer()
             
             if isContestFiltersView {
                 Button(action: {
-                    isContestFiltersView.toggle()
+                    withAnimation(.easeOut(duration: filtersViewAnimationDuration)) {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                            isContestFiltersView.toggle()
+                        }
+                    }
                 }, label: {
                     Image("crossIconNew")
                         .renderingMode(.original)
                 })
             } else {
                 Button(action: {
-                    isContestFiltersView.toggle()
+                    withAnimation(.easeOut(duration: filtersViewAnimationDuration)) {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                            isContestFiltersView.toggle()
+                        }
+                    }
                 }, label: {
                     Image("filterIcon")
                         .renderingMode(.original)
@@ -57,14 +67,14 @@ struct NavigationBarContests: View {
                     ContestFiltersRowView(filterItemsRow, spacerWidth: spacerWidth)
                 }
             }
-            .background(GeometryReader { gm -> Color in
+            .background(GeometryReader { g -> Color in
                 DispatchQueue.main.async {
-                    self.geometryHeight = gm.size.height
+                    self.geometryHeight = g.size.height
                 }
                 return Color.clear
             })
         }
-        .frame(height: geometryHeight)
+        .frame(height: isContestFiltersView ? geometryHeight : 0)
     }
     
     @ViewBuilder
@@ -117,8 +127,19 @@ fileprivate extension Array {
     }
 }
 
-struct NavigationBarContests_Previews: PreviewProvider {
+fileprivate struct Shake: GeometryEffect {
+    var animatableData: CGFloat
+
+    func effectValue(size: CGSize) -> ProjectionTransform {
+        ProjectionTransform(CGAffineTransform(
+            translationX: sin(animatableData * .pi),
+            y: 0
+        ))
+    }
+}
+
+struct ContestsNavigationBar_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationBarContests(filterItems: [])
+        ContestsNavigationBar(filterItems: [])
     }
 }
