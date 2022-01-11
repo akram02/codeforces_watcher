@@ -8,25 +8,26 @@ struct ContestsView: View {
     var onContest: (Contest) -> Void = { _ in }
     var onCalendar: (Contest) -> Void = { _ in }
     var onFilter: () -> Void = {}
-    var refreshControl = UIRefreshControl()
+    let refreshControl = UIRefreshControl()
     
     private let noContestsExplanation = "Contests are on the way to your device..."
     
     var body: some View {
-        ZStack {
-            VStack(spacing: 0) {
-                NavigationBar(isFilterIcon: true, onFilter: { self.onFilter() })
-                
-                RefreshableScrollView(content: {
-                    if contests.isEmpty {
-                        NoItemsView(imageName: "noItemsContests", text: noContestsExplanation)
-                    } else {
-                        ContestsList
-                    }
-                }, refreshControl: refreshControl)
-                    .background(Palette.white.swiftUIColor)
-                    .cornerRadius(30, corners: [.topLeft, .topRight])
-            }
+        VStack(spacing: 0) {
+            NavigationBar(isFilterIcon: true, onFilter: { self.onFilter() })
+            
+            RefreshableScrollView(content: {
+                if contests.isEmpty {
+                    NoItemsView(
+                        imageName: "noItemsContests",
+                        text: "Contests are on the way to your device...".localized
+                    )
+                } else {
+                    ContestsList
+                }
+            }, refreshControl: refreshControl)
+                .background(Palette.white.swiftUIColor)
+                .cornerRadius(30, corners: [.topLeft, .topRight])
         }
         .background(Palette.accentGrayish.swiftUIColor.edgesIgnoringSafeArea(.top))
     }
@@ -59,7 +60,7 @@ struct ContestsView: View {
     }
     
     private func ContestView(_ contest: Contest) -> some View {
-        let name = contest.title
+        let title = contest.title
         let logoName = Contest.Platform.getImageNameByPlatform(contest.platform)
         let date = Double(contest.startDateInMillis / 1000).secondsToContestDateString()
         
@@ -70,7 +71,7 @@ struct ContestsView: View {
                 .clipShape(Circle())
             
             VStack(spacing: 4) {
-                CommonText(name)
+                CommonText(title)
                     .font(.bodySemibold)
                     .foregroundColor(Palette.black.swiftUIColor)
                     .frame(maxWidth: .infinity, alignment: .leading)

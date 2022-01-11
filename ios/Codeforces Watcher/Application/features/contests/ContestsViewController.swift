@@ -7,7 +7,6 @@ class ContestsViewController: UIHostingController<ContestsView>, ReKampStoreSubs
     private lazy var fabButton = FabButtonViewController(name: "eyeIcon").apply {
         $0.setButtonAction(action: { self.onFabButton() } )
     }
-    private let refreshControl = UIRefreshControl()
     
     init() {
         super.init(rootView: ContestsView())
@@ -51,15 +50,12 @@ class ContestsViewController: UIHostingController<ContestsView>, ReKampStoreSubs
     
     private func onFabButton() {
         let contestsLink = "https://clist.by/"
-        
         let webViewController = WebViewController(contestsLink, "upcoming_contests".localized)
         presentModal(webViewController)
     }
     
     private func setRefreshControl() {
-        rootView.refreshControl = refreshControl
-        
-        refreshControl.run {
+        rootView.refreshControl.run {
             $0.addTarget(self, action: #selector(refreshContests(_:)), for: .valueChanged)
             $0.tintColor = Palette.black
         }
@@ -100,7 +96,7 @@ class ContestsViewController: UIHostingController<ContestsView>, ReKampStoreSubs
         let state = state as! ContestsState
         
         if state.status == .idle {
-            refreshControl.endRefreshing()
+            rootView.refreshControl.endRefreshing()
         }
 
         rootView.contests = state.contests
