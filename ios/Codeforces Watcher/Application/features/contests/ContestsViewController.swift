@@ -7,7 +7,6 @@ class ContestsViewController: UIHostingController<ContestsView>, ReKampStoreSubs
     private lazy var fabButton = FabButtonViewController(name: "eyeIcon").apply {
         $0.setButtonAction(action: { self.onFabButton() } )
     }
-    private let refreshControl = UIRefreshControl()
     
     init() {
         super.init(rootView: ContestsView())
@@ -51,15 +50,12 @@ class ContestsViewController: UIHostingController<ContestsView>, ReKampStoreSubs
     
     private func onFabButton() {
         let contestsLink = "https://clist.by/"
-        
         let webViewController = WebViewController(contestsLink, "upcoming_contests".localized)
         presentModal(webViewController)
     }
     
     private func setRefreshControl() {
-        rootView.refreshControl = refreshControl
-        
-        refreshControl.run {
+        rootView.refreshControl.run {
             $0.addTarget(self, action: #selector(refreshContests(_:)), for: .valueChanged)
             $0.tintColor = Palette.black
         }
@@ -82,7 +78,7 @@ class ContestsViewController: UIHostingController<ContestsView>, ReKampStoreSubs
                 if success {
                     analyticsControler.logEvent(
                         eventName: AnalyticsEvents().ADD_CONTEST_TO_CALENDAR,
-                        params: ["contest_name": contest.title, "contest_platform": contest.platform.name]
+                        params: ["contest_name": contest.title, "contest_platform": contest.platformTitle]
                     )
                     self.showAlertWithOK(title: contest.title, message: "Has been added to your calendar".localized)
                 } else {
@@ -96,7 +92,7 @@ class ContestsViewController: UIHostingController<ContestsView>, ReKampStoreSubs
         let state = state as! ContestsState
         
         if state.status == .idle {
-            refreshControl.endRefreshing()
+            rootView.refreshControl.endRefreshing()
         }
         
         updateContests(state)
@@ -110,9 +106,15 @@ class ContestsViewController: UIHostingController<ContestsView>, ReKampStoreSubs
                 $0.startDateInMillis < $1.startDateInMillis
             })
             .map {
-                ContestsView.ContestUIModel(
-                    month: Double($0.startDateInMillis / 1000).secondsToContestDateMonthString(),
-                    contest: $0
+                .init(
+                    startDateMonth: Double($0.startDateInMillis / 1000).secondsToContestDateMonthString(),
+                    title: $0.title,
+                    platformTitle: $0.platform.name,
+                    platformLogoTitle: Contest.Platform.getImageNameByPlatform($0.platform),
+                    link: $0.link,
+                    startDateInMillis: $0.startDateInMillis,
+                    durationInMillis: $0.durationInMillis,
+                    date: Double($0.startDateInMillis / 1000).secondsToContestDateString()
                 )
             }
     }
@@ -191,7 +193,7 @@ class ContestsViewController: UIHostingController<ContestsView>, ReKampStoreSubs
     }
     
     private func addEventToCalendar(
-        _ contest: Contest,
+        _ contest: ContestsView.ContestUIModel,
         completion: @escaping (Bool, NSError?) -> Void = { _, _ in }
     ) {
         let eventStore = EKEventStore()
@@ -217,7 +219,7 @@ class ContestsViewController: UIHostingController<ContestsView>, ReKampStoreSubs
     
     private func saveContestEvent(
         eventStore: EKEventStore,
-        contest: Contest,
+        contest: ContestsView.ContestUIModel,
         completion: @escaping (Bool, NSError?) -> Void = { _, _ in }
     ) {
         let startDate = Date(timeIntervalSince1970: Double(contest.startDateInMillis / 1000))
