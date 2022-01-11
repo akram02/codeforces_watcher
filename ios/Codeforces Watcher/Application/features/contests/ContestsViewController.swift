@@ -78,7 +78,7 @@ class ContestsViewController: UIHostingController<ContestsView>, ReKampStoreSubs
                 if success {
                     analyticsControler.logEvent(
                         eventName: AnalyticsEvents().ADD_CONTEST_TO_CALENDAR,
-                        params: ["contest_name": contest.title, "contest_platform": contest.platform.name]
+                        params: ["contest_name": contest.title, "contest_platform": contest.platformTitle]
                     )
                     self.showAlertWithOK(title: contest.title, message: "Has been added to your calendar".localized)
                 } else {
@@ -105,15 +105,21 @@ class ContestsViewController: UIHostingController<ContestsView>, ReKampStoreSubs
                 $0.startDateInMillis < $1.startDateInMillis
             })
             .map {
-                ContestsView.UIModel(
-                    month: Double($0.startDateInMillis / 1000).secondsToContestDateMonthString(),
-                    contest: $0
+                .init(
+                    startDateMonth: Double($0.startDateInMillis / 1000).secondsToContestDateMonthString(),
+                    title: $0.title,
+                    platformTitle: $0.platform.name,
+                    platformLogoTitle: Contest.Platform.getImageNameByPlatform($0.platform),
+                    link: $0.link,
+                    startDateInMillis: $0.startDateInMillis,
+                    durationInMillis: $0.durationInMillis,
+                    date: Double($0.startDateInMillis / 1000).secondsToContestDateString()
                 )
             }
     }
     
     private func addEventToCalendar(
-        _ contest: Contest,
+        _ contest: ContestsView.UIModel,
         completion: @escaping (Bool, NSError?) -> Void = { _, _ in }
     ) {
         let eventStore = EKEventStore()
@@ -139,7 +145,7 @@ class ContestsViewController: UIHostingController<ContestsView>, ReKampStoreSubs
     
     private func saveContestEvent(
         eventStore: EKEventStore,
-        contest: Contest,
+        contest: ContestsView.UIModel,
         completion: @escaping (Bool, NSError?) -> Void = { _, _ in }
     ) {
         let startDate = Date(timeIntervalSince1970: Double(contest.startDateInMillis / 1000))

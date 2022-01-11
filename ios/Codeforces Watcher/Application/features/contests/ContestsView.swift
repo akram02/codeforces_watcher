@@ -5,12 +5,10 @@ struct ContestsView: View {
     
     var contests: [UIModel] = []
     
-    var onContest: (Contest) -> Void = { _ in }
-    var onCalendar: (Contest) -> Void = { _ in }
+    var onContest: (UIModel) -> Void = { _ in }
+    var onCalendar: (UIModel) -> Void = { _ in }
     var onFilter: () -> Void = {}
     let refreshControl = UIRefreshControl()
-    
-    private let noContestsExplanation = "Contests are on the way to your device..."
     
     var body: some View {
         VStack(spacing: 0) {
@@ -39,8 +37,8 @@ struct ContestsView: View {
                 ForEach(contests.indices, id: \.self) { index in
                     let contest = contests[index]
                     
-                    if index == 0 || contest.month != contests[index - 1].month {
-                        CommonText(contest.month.capitalizingFirstLetter())
+                    if index == 0 || contest.startDateMonth != contests[index - 1].startDateMonth {
+                        CommonText(contest.startDateMonth.capitalizingFirstLetter())
                             .font(.midHeaderSemibold2)
                             .foregroundColor(Palette.black.swiftUIColor)
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -49,34 +47,31 @@ struct ContestsView: View {
                             .padding(.horizontal, 20)
                     }
                     
-                    ContestView(contest.contest)
+                    ContestView(contest)
                         .contentShape(Rectangle())
                         .onTapGesture {
-                            self.onContest(contest.contest)
+                            self.onContest(contest)
                         }
                 }
             }
         }
     }
     
-    private func ContestView(_ contest: Contest) -> some View {
-        let title = contest.title
-        let logoName = Contest.Platform.getImageNameByPlatform(contest.platform)
-        let date = Double(contest.startDateInMillis / 1000).secondsToContestDateString()
-        
-        return HStack(spacing: 8) {
-            Image(logoName)
+    @ViewBuilder
+    private func ContestView(_ contest: UIModel) -> some View {
+        HStack(spacing: 8) {
+            Image(contest.platformLogoTitle)
                 .resizable()
                 .frame(width: 36, height: 36)
                 .clipShape(Circle())
             
             VStack(spacing: 4) {
-                CommonText(title)
+                CommonText(contest.title)
                     .font(.bodySemibold)
                     .foregroundColor(Palette.black.swiftUIColor)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
-                CommonText(date)
+                CommonText(contest.date)
                     .font(.hintRegular)
                     .foregroundColor(Palette.darkGray.swiftUIColor)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -96,8 +91,14 @@ struct ContestsView: View {
     }
     
     struct UIModel {
-        let month: String
-        let contest: Contest
+        let startDateMonth: String
+        let title: String
+        let platformTitle: String
+        let platformLogoTitle: String
+        let link: String
+        let startDateInMillis: Int64
+        let durationInMillis: Int64
+        let date: String
     }
 }
 
