@@ -102,10 +102,9 @@ struct ContestsNavigationBar: View {
             if filterItem.isSelected {
                 FilterImageView(filterItem.image)
             } else {
-                Circle()
-                    .fill(UIColor(rgb: 0x636363).swiftUIColor.opacity(0.5))
-                    .frame(width: 50, height: 50)
-                    .background(FilterImageView(filterItem.image))
+                FilterImageView(filterItem.image)
+                    .saturation(0)
+                    .opacity(0.5)
             }
         })
     }
@@ -116,6 +115,7 @@ struct ContestsNavigationBar: View {
             .renderingMode(.original)
             .resizable()
             .frame(width: 50, height: 50)
+            .environment(\.colorScheme, .dark)
     }
 }
 
