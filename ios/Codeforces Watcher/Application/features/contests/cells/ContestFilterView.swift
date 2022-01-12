@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct FilterView: View {
+struct ContestFilterView: View {
     
     var filter: UIModel
     
@@ -39,9 +39,9 @@ struct FilterView: View {
     }
 }
 
-struct FilterView_Previews: PreviewProvider {
+struct ContestFilterView_Previews: PreviewProvider {
     static var previews: some View {
-        FilterView(
+        ContestFilterView(
             .init(
                 title: "Codeforces",
                 image: Image("Codeforces"),

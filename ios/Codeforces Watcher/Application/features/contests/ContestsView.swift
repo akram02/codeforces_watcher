@@ -4,7 +4,7 @@ import common
 struct ContestsView: View {
     
     var contests: [ContestView.UIModel] = []
-    var filterItems: [FilterView.UIModel] = []
+    var filterItems: [ContestFilterView.UIModel] = []
     
     var onContest: (ContestView.UIModel) -> Void = { _ in }
     var onCalendar: (ContestView.UIModel) -> Void = { _ in }

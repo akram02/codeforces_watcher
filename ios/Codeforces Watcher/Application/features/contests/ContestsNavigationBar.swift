@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ContestsNavigationBar: View {
     
-    var filterItems: [FilterView.UIModel]
+    var filterItems: [ContestFilterView.UIModel]
     
     private let filtersViewAnimationDuration = 0.3
     @State private var isContestFiltersView = false
@@ -79,12 +79,12 @@ struct ContestsNavigationBar: View {
     
     @ViewBuilder
     private func ContestFiltersRowView(
-        _ filterItemsRow: [FilterView.UIModel],
+        _ filterItemsRow: [ContestFilterView.UIModel],
         spacerWidth: CGFloat
     ) -> some View {
         HStack {
             ForEach(filterItemsRow, id: \.title) { filterItem in
-                FilterView(filterItem)
+                ContestFilterView(filterItem)
                 
                 if filterItem.title != filterItemsRow.last?.title {
                     Spacer()

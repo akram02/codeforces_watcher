@@ -96,7 +96,7 @@ class ContestsViewController: UIHostingController<ContestsView>, ReKampStoreSubs
         }
         
         updateContests(state)
-        updateContestFilters(state)
+        updateFilters(state)
     }
     
     private func updateContests(_ state: ContestsState) {
@@ -119,7 +119,73 @@ class ContestsViewController: UIHostingController<ContestsView>, ReKampStoreSubs
             }
     }
     
-    private func updateContestFilters(_ state: ContestsState) {
+    private func addEventToCalendar(
+        _ contest: ContestView.UIModel,
+        completion: @escaping (Bool, NSError?) -> Void = { _, _ in }
+    ) {
+        let eventStore = EKEventStore()
+
+        if EKEventStore.authorizationStatus(for: .event) != EKAuthorizationStatus.authorized {
+            eventStore.requestAccess(to: .event, completion: { granted, error in
+                DispatchQueue.main.async {
+                    if granted && error == nil {
+                        self.saveContestEvent(eventStore: eventStore, contest: contest, completion: { success, NSError in
+                            completion(success, NSError)
+                        })
+                    } else {
+                        completion(false, error as NSError?)
+                    }
+                }
+            })
+        } else {
+            saveContestEvent(eventStore: eventStore, contest: contest, completion: { success, NSError in
+                completion(success, NSError)
+            })
+        }
+    }
+    
+    private func saveContestEvent(
+        eventStore: EKEventStore,
+        contest: ContestView.UIModel,
+        completion: @escaping (Bool, NSError?) -> Void = { _, _ in }
+    ) {
+        let startDate = Date(timeIntervalSince1970: Double(contest.startDateInMillis / 1000))
+        let endDate = Date(timeIntervalSince1970: Double(contest.startDateInMillis / 1000 + contest.durationInMillis / 1000))
+        
+        let event = EKEvent(eventStore: eventStore).apply {
+            $0.title = contest.title
+            $0.startDate = startDate
+            $0.endDate = endDate
+            $0.calendar = eventStore.defaultCalendarForNewEvents
+        }
+
+        do {
+            try eventStore.save(event, span: .thisEvent)
+        } catch let e as NSError {
+            completion(false, e)
+            return
+        }
+        completion(true, nil)
+    }
+    
+    private func showAlertWithOK(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okButton = UIAlertAction(title: "OK".localized, style: .cancel)
+        alertController.addAction(okButton)
+
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    @objc private func refreshContests(_ sender: Any) {
+        analyticsControler.logEvent(eventName: AnalyticsEvents().CONTESTS_REFRESH, params: [:])
+        fetchContests()
+    }
+    
+    private func fetchContests() {
+        store.dispatch(action: ContestsRequests.FetchContests(isInitiatedByUser: true))
+    }
+    
+    private func updateFilters(_ state: ContestsState) {
         let filters = state.filters
 
         rootView.filterItems = [
@@ -190,72 +256,6 @@ class ContestsViewController: UIHostingController<ContestsView>, ReKampStoreSubs
                 onFilter: { isSelected in self.onFilter(.toph, isSelected) }
             )
         ]
-    }
-    
-    private func addEventToCalendar(
-        _ contest: ContestView.UIModel,
-        completion: @escaping (Bool, NSError?) -> Void = { _, _ in }
-    ) {
-        let eventStore = EKEventStore()
-
-        if EKEventStore.authorizationStatus(for: .event) != EKAuthorizationStatus.authorized {
-            eventStore.requestAccess(to: .event, completion: { granted, error in
-                DispatchQueue.main.async {
-                    if granted && error == nil {
-                        self.saveContestEvent(eventStore: eventStore, contest: contest, completion: { success, NSError in
-                            completion(success, NSError)
-                        })
-                    } else {
-                        completion(false, error as NSError?)
-                    }
-                }
-            })
-        } else {
-            saveContestEvent(eventStore: eventStore, contest: contest, completion: { success, NSError in
-                completion(success, NSError)
-            })
-        }
-    }
-    
-    private func saveContestEvent(
-        eventStore: EKEventStore,
-        contest: ContestView.UIModel,
-        completion: @escaping (Bool, NSError?) -> Void = { _, _ in }
-    ) {
-        let startDate = Date(timeIntervalSince1970: Double(contest.startDateInMillis / 1000))
-        let endDate = Date(timeIntervalSince1970: Double(contest.startDateInMillis / 1000 + contest.durationInMillis / 1000))
-        
-        let event = EKEvent(eventStore: eventStore).apply {
-            $0.title = contest.title
-            $0.startDate = startDate
-            $0.endDate = endDate
-            $0.calendar = eventStore.defaultCalendarForNewEvents
-        }
-
-        do {
-            try eventStore.save(event, span: .thisEvent)
-        } catch let e as NSError {
-            completion(false, e)
-            return
-        }
-        completion(true, nil)
-    }
-    
-    private func showAlertWithOK(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let okButton = UIAlertAction(title: "OK".localized, style: .cancel)
-        alertController.addAction(okButton)
-
-        present(alertController, animated: true, completion: nil)
-    }
-    
-    @objc private func refreshContests(_ sender: Any) {
-        analyticsControler.logEvent(eventName: AnalyticsEvents().CONTESTS_REFRESH, params: [:])
-        fetchContests()
-    }
-    
-    private func fetchContests() {
-        store.dispatch(action: ContestsRequests.FetchContests(isInitiatedByUser: true))
     }
     
     private func onFilter(_ platform: Contest.Platform, _ isOn: Bool) {
