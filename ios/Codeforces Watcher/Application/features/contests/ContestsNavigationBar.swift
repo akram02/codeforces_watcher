@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ContestsNavigationBar: View {
     
-    var filterItems: [ContestsView.FilterUIModel]
+    var filterItems: [FilterView.UIModel]
     
     private let filtersViewAnimationDuration = 0.3
     @State private var isContestFiltersView = false
@@ -79,7 +79,7 @@ struct ContestsNavigationBar: View {
     
     @ViewBuilder
     private func ContestFiltersRowView(
-        _ filterItemsRow: [ContestsView.FilterUIModel],
+        _ filterItemsRow: [FilterView.UIModel],
         spacerWidth: CGFloat
     ) -> some View {
         HStack {
@@ -92,30 +92,6 @@ struct ContestsNavigationBar: View {
                 }
             }
         }
-    }
-    
-    @ViewBuilder
-    private func FilterView(_ filterItem: ContestsView.FilterUIModel) -> some View {
-        Button(action: {
-            filterItem.onFilter(!filterItem.isSelected)
-        }, label: {
-            if filterItem.isSelected {
-                FilterImageView(filterItem.image)
-            } else {
-                FilterImageView(filterItem.image)
-                    .saturation(0)
-                    .opacity(0.5)
-            }
-        })
-    }
-    
-    @ViewBuilder
-    private func FilterImageView(_ filterImage: Image) -> some View {
-        filterImage
-            .renderingMode(.original)
-            .resizable()
-            .frame(width: 50, height: 50)
-            .environment(\.colorScheme, .dark)
     }
 }
 

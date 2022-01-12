@@ -4,7 +4,7 @@ import common
 struct ContestsView: View {
     
     var contests: [ContestView.UIModel] = []
-    var filterItems: [FilterUIModel] = []
+    var filterItems: [FilterView.UIModel] = []
     
     var onContest: (ContestView.UIModel) -> Void = { _ in }
     var onCalendar: (ContestView.UIModel) -> Void = { _ in }
@@ -56,13 +56,6 @@ struct ContestsView: View {
                 }
             }
         }
-    }
-    
-    struct FilterUIModel {
-        let title: String
-        let image: Image
-        let isSelected: Bool
-        let onFilter: (_ isSelected: Bool) -> Void
     }
 }
 

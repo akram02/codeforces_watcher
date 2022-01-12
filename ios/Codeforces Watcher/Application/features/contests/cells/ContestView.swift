@@ -63,7 +63,7 @@ struct ContestView: View {
 struct ContestView_Previews: PreviewProvider {
     static var previews: some View {
         ContestView(
-            ContestView.UIModel(
+            .init(
                 startDateMonth: "January",
                 title: "Hello 2022!",
                 platformTitle: "Codeforces",
