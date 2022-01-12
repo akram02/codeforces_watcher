@@ -193,7 +193,7 @@ class ContestsViewController: UIHostingController<ContestsView>, ReKampStoreSubs
     }
     
     private func addEventToCalendar(
-        _ contest: ContestsView.ContestUIModel,
+        _ contest: ContestView.UIModel,
         completion: @escaping (Bool, NSError?) -> Void = { _, _ in }
     ) {
         let eventStore = EKEventStore()
@@ -219,7 +219,7 @@ class ContestsViewController: UIHostingController<ContestsView>, ReKampStoreSubs
     
     private func saveContestEvent(
         eventStore: EKEventStore,
-        contest: ContestsView.ContestUIModel,
+        contest: ContestView.UIModel,
         completion: @escaping (Bool, NSError?) -> Void = { _, _ in }
     ) {
         let startDate = Date(timeIntervalSince1970: Double(contest.startDateInMillis / 1000))

@@ -3,11 +3,11 @@ import common
 
 struct ContestsView: View {
     
-    var contests: [ContestUIModel] = []
+    var contests: [ContestView.UIModel] = []
     var filterItems: [FilterUIModel] = []
     
-    var onContest: (ContestUIModel) -> Void = { _ in }
-    var onCalendar: (ContestUIModel) -> Void = { _ in }
+    var onContest: (ContestView.UIModel) -> Void = { _ in }
+    var onCalendar: (ContestView.UIModel) -> Void = { _ in }
     var onFilter: () -> Void = {}
     let refreshControl = UIRefreshControl()
     
@@ -48,7 +48,7 @@ struct ContestsView: View {
                             .padding(.horizontal, 20)
                     }
                     
-                    ContestView(contest)
+                    ContestView(contest, onContest, onCalendar)
                         .contentShape(Rectangle())
                         .onTapGesture {
                             self.onContest(contest)
@@ -56,50 +56,6 @@ struct ContestsView: View {
                 }
             }
         }
-    }
-    
-    @ViewBuilder
-    private func ContestView(_ contest: ContestUIModel) -> some View {
-        HStack(spacing: 8) {
-            Image(contest.platformLogoTitle)
-                .resizable()
-                .frame(width: 36, height: 36)
-                .clipShape(Circle())
-            
-            VStack(spacing: 4) {
-                CommonText(contest.title)
-                    .font(.bodySemibold)
-                    .foregroundColor(Palette.black.swiftUIColor)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                
-                CommonText(contest.date)
-                    .font(.hintRegular)
-                    .foregroundColor(Palette.darkGray.swiftUIColor)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .lineLimit(1)
-            
-            Button(action: {
-                onCalendar(contest)
-            }, label: {
-                Image("calendarAddIcon")
-                    .frame(width: 18, height: 20)
-            })
-        }
-        .padding(.horizontal, 20)
-        .padding(.vertical, 10)
-    }
-    
-    struct ContestUIModel {
-        let startDateMonth: String
-        let title: String
-        let platformTitle: String
-        let platformLogoTitle: String
-        let link: String
-        let startDateInMillis: Int64
-        let durationInMillis: Int64
-        let date: String
     }
     
     struct FilterUIModel {
