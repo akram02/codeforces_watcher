@@ -13,7 +13,7 @@ struct ProblemsView: View {
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
-                SearchBarView(onFilter: { self.onFilter() })
+                ProblemsSearchBarView(onFilter: { self.onFilter() })
                 
                 RefreshableScrollView(content: {
                     if problems.isEmpty {
@@ -34,7 +34,7 @@ struct ProblemsView: View {
         ScrollView {
             LazyVStack {
                 ForEach(problems, id: \.id) { problem in
-                    ProblemViewTableViewCell(problem)
+                    ProblemView(problem)
                         .contentShape(Rectangle())
                         .onTapGesture {
                             self.onProblem(problem.link, problem.title)

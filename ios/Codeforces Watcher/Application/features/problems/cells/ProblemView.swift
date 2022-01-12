@@ -1,7 +1,7 @@
 import SwiftUI
 import common
 
-struct ProblemViewTableViewCell: View {
+struct ProblemView: View {
     
     var problem: Problem
     
