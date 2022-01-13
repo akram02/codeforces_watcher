@@ -95,6 +95,10 @@ class ProblemsViewController: UIHostingController<ProblemsView>, ReKampStoreSubs
             )
             self.presentModal(webViewController)
         }
+        
+        rootView.onStar = { problem in
+            store.dispatch(action: ProblemsRequests.ChangeStatusFavourite(problem: problem))
+        }
     }
     
     @objc private func refreshProblems(_ sender: Any) {

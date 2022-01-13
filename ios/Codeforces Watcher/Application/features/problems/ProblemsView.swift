@@ -8,6 +8,7 @@ struct ProblemsView: View {
     
     var onFilter: () -> Void = {}
     var onProblem: (String, String) -> Void = { _, _ in }
+    var onStar: (Problem) -> Void = { _ in }
     var refreshControl = UIRefreshControl()
     
     var body: some View {
@@ -34,11 +35,7 @@ struct ProblemsView: View {
         ScrollView {
             LazyVStack {
                 ForEach(problems, id: \.id) { problem in
-                    ProblemView(problem)
-                        .contentShape(Rectangle())
-                        .onTapGesture {
-                            self.onProblem(problem.link, problem.title)
-                        }
+                    ProblemView(problem, onProblem, onStar)
                 }
             }
         }

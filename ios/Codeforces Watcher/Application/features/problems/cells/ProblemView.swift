@@ -4,9 +4,17 @@ import common
 struct ProblemView: View {
     
     var problem: Problem
+    var onProblem: (String, String) -> Void = { _, _ in }
+    var onStar: (Problem) -> Void = { _ in }
     
-    init(_ problem: Problem) {
+    init(
+        _ problem: Problem,
+        _ onProblem: @escaping (String, String) -> Void,
+        _ onStar: @escaping (Problem) -> Void
+    ) {
         self.problem = problem
+        self.onProblem = onProblem
+        self.onStar = onStar
     }
     
     var body: some View {
@@ -24,7 +32,7 @@ struct ProblemView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             
             Button(action: {
-                onStar()
+                onStar(problem)
             }, label: {
                 Image("starIconNew")
                     .resizable()
@@ -35,9 +43,9 @@ struct ProblemView: View {
             })
         }
         .padding([.horizontal, .top], 20)
-    }
-    
-    private func onStar() {
-        store.dispatch(action: ProblemsRequests.ChangeStatusFavourite(problem: problem))
+        .contentShape(Rectangle())
+        .onTapGesture {
+            onProblem(problem.link, problem.title)
+        }
     }
 }
