@@ -8,7 +8,6 @@ class ProblemsViewController: UIHostingController<ProblemsView>, ReKampStoreSubs
         name: "infinityIcon",
         action: { self.onFabButton() }
     )
-    private let refreshControl = UIRefreshControl()
     
     init() {
         super.init(rootView: ProblemsView())
@@ -52,9 +51,7 @@ class ProblemsViewController: UIHostingController<ProblemsView>, ReKampStoreSubs
     }
     
     private func setRefreshControl() {
-        rootView.refreshControl = refreshControl
-        
-        refreshControl.run {
+        rootView.refreshControl.run {
             $0.addTarget(self, action: #selector(refreshProblems(_:)), for: .valueChanged)
             $0.tintColor = Palette.black
         }
@@ -64,7 +61,7 @@ class ProblemsViewController: UIHostingController<ProblemsView>, ReKampStoreSubs
         let state = state as! ProblemsState
         
         if state.status == .idle {
-            refreshControl.endRefreshing()
+            rootView.refreshControl.endRefreshing()
         }
         
         updateFabButton(state.isFavourite)

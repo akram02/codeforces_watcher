@@ -9,7 +9,8 @@ struct ProblemsView: View {
     var onFilter: () -> Void = {}
     var onProblem: (String, String) -> Void = { _, _ in }
     var onStar: (Problem) -> Void = { _ in }
-    var refreshControl = UIRefreshControl()
+    
+    let refreshControl = UIRefreshControl()
     
     var body: some View {
         ZStack {
