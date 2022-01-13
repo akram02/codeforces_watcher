@@ -45,6 +45,6 @@ struct ProblemsView: View {
 
 struct ProblemsView_Previews: PreviewProvider {
     static var previews: some View {
-        ProblemsView(problems: [])
+        ProblemsView()
     }
 }

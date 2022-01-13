@@ -94,7 +94,7 @@ class ProblemsViewController: UIHostingController<ProblemsView>, ReKampStoreSubs
         }
         
         rootView.onStar = { problem in
-            store.dispatch(action: ProblemsRequests.ChangeStatusFavourite(problem: problem))
+            store.dispatch(action: ProblemsRequests.ChangeStatusFavourite(id: problem.id))
         }
     }
     
