@@ -29,9 +29,9 @@ class ProblemsViewController: UIHostingController<ProblemsView>, ReKampStoreSubs
 
         store.subscribe(subscriber: self) { subscription in
             subscription.skipRepeats { oldState, newState in
-                return KotlinBoolean(bool: oldState.problems == newState.problems)
+                KotlinBoolean(bool: oldState.problems == newState.problems)
             }.select { state in
-                return state.problems
+                state.problems
             }
         }
     }
@@ -67,6 +67,15 @@ class ProblemsViewController: UIHostingController<ProblemsView>, ReKampStoreSubs
         updateFabButton(state.isFavourite)
         
         rootView.problems = state.filteredProblems
+            .map {
+                .init(
+                    id: $0.id,
+                    title: $0.title,
+                    subtitle: $0.subtitle,
+                    isFavourite: $0.isFavourite,
+                    link: $0.link
+                )
+            }
         rootView.noProblemsExplanation = state.isFavourite ? "no_favourite_problems_explanation" : "problems_explanation"
     }
     
@@ -93,8 +102,8 @@ class ProblemsViewController: UIHostingController<ProblemsView>, ReKampStoreSubs
             self.presentModal(webViewController)
         }
         
-        rootView.onStar = { problem in
-            store.dispatch(action: ProblemsRequests.ChangeStatusFavourite(id: problem.id))
+        rootView.onStar = { id in
+            store.dispatch(action: ProblemsRequests.ChangeStatusFavourite(id: id))
         }
     }
     

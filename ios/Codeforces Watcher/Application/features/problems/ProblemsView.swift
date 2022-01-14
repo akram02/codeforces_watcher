@@ -3,12 +3,12 @@ import common
 
 struct ProblemsView: View {
     
-    var problems: [Problem] = []
+    var problems: [ProblemView.UIModel] = []
     var noProblemsExplanation = ""
     
     var onFilter: () -> Void = {}
     var onProblem: (String, String) -> Void = { _, _ in }
-    var onStar: (Problem) -> Void = { _ in }
+    var onStar: (String) -> Void = { _ in }
     
     let refreshControl = UIRefreshControl()
     

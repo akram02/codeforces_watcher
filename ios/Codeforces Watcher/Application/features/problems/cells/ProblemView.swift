@@ -3,14 +3,14 @@ import common
 
 struct ProblemView: View {
     
-    var problem: Problem
+    var problem: UIModel
     var onProblem: (String, String) -> Void = { _, _ in }
-    var onStar: (Problem) -> Void = { _ in }
+    var onStar: (String) -> Void = { _ in }
     
     init(
-        _ problem: Problem,
+        _ problem: UIModel,
         _ onProblem: @escaping (String, String) -> Void,
-        _ onStar: @escaping (Problem) -> Void
+        _ onStar: @escaping (String) -> Void
     ) {
         self.problem = problem
         self.onProblem = onProblem
@@ -32,7 +32,7 @@ struct ProblemView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             
             Button(action: {
-                onStar(problem)
+                onStar(problem.id)
             }, label: {
                 Image("starIconNew")
                     .resizable()
@@ -47,5 +47,13 @@ struct ProblemView: View {
         .onTapGesture {
             onProblem(problem.link, problem.title)
         }
+    }
+    
+    struct UIModel {
+        let id: String
+        let title: String
+        let subtitle: String
+        let isFavourite: Bool
+        let link: String
     }
 }
