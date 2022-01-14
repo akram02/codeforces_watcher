@@ -13,20 +13,18 @@ struct ProblemsView: View {
     let refreshControl = UIRefreshControl()
     
     var body: some View {
-        ZStack {
-            VStack(spacing: 0) {
-                ProblemsSearchBarView(onFilter: { self.onFilter() })
-                
-                RefreshableScrollView(content: {
-                    if problems.isEmpty {
-                        NoItemsView(imageName: "noItemsProblems", text: noProblemsExplanation)
-                    } else {
-                        ProblemsList
-                    }
-                }, refreshControl: refreshControl)
-                    .background(Palette.white.swiftUIColor)
-                    .cornerRadius(30, corners: [.topLeft, .topRight])
-            }
+        VStack(spacing: 0) {
+            ProblemsSearchBarView(onFilter: { self.onFilter() })
+            
+            RefreshableScrollView(content: {
+                if problems.isEmpty {
+                    NoItemsView(imageName: "noItemsProblems", text: noProblemsExplanation)
+                } else {
+                    ProblemsList
+                }
+            }, refreshControl: refreshControl)
+                .background(Palette.white.swiftUIColor)
+                .cornerRadius(30, corners: [.topLeft, .topRight])
         }
         .background(Palette.accentGrayish.swiftUIColor.edgesIgnoringSafeArea(.top))
     }
