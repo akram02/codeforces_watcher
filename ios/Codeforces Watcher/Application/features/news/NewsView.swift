@@ -24,6 +24,8 @@ struct NewsView: View {
                 VideoView()
                 
                 PostWithCommentViewNew()
+                
+                PostView()
             }
             .padding([.horizontal, .top], 20)
         }
