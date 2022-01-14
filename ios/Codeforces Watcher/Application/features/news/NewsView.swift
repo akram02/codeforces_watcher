@@ -1,8 +1,20 @@
 import SwiftUI
 
 struct NewsView: View {
+    
+    let refreshControl = UIRefreshControl()
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(spacing: 0) {
+            NewsNavigationBar(title: "News".localized)
+            
+            RefreshableScrollView(content: {
+                CommonText("News")
+            }, refreshControl: refreshControl)
+                .background(Palette.white.swiftUIColor)
+                .cornerRadius(30, corners: [.topLeft, .topRight])
+        }
+        .background(Palette.accentGrayish.swiftUIColor.edgesIgnoringSafeArea(.top))
     }
 }
 
