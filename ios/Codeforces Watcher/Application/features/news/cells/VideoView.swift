@@ -35,7 +35,6 @@ struct VideoView: View {
         .padding(12)
         .background(Palette.accentGrayish.swiftUIColor)
         .cornerRadius(20)
-        .padding(.top, 20)
     }
 }
 

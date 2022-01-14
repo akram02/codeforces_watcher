@@ -20,10 +20,12 @@ struct NewsView: View {
     @ViewBuilder
     private var NewsList: some View {
         ScrollView {
-            LazyVStack {
+            LazyVStack(spacing: 12) {
                 VideoView()
+                
+                PostWithCommentNew()
             }
-            .padding(.horizontal, 20)
+            .padding([.horizontal, .top], 20)
         }
     }
 }
