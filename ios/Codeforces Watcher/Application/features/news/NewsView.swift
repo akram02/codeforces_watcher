@@ -9,12 +9,22 @@ struct NewsView: View {
             NewsNavigationBar(title: "News".localized)
             
             RefreshableScrollView(content: {
-                CommonText("News")
+                NewsList
             }, refreshControl: refreshControl)
                 .background(Palette.white.swiftUIColor)
                 .cornerRadius(30, corners: [.topLeft, .topRight])
         }
         .background(Palette.accentGrayish.swiftUIColor.edgesIgnoringSafeArea(.top))
+    }
+    
+    @ViewBuilder
+    private var NewsList: some View {
+        ScrollView {
+            LazyVStack {
+                VideoView()
+            }
+            .padding(.horizontal, 20)
+        }
     }
 }
 
