@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct PostWithCommentNew: View {
+struct PostWithCommentViewNew: View {
     var body: some View {
         VStack(spacing: 10) {
             PostTextView()
@@ -64,8 +64,8 @@ struct PostWithCommentNew: View {
     }
 }
 
-struct PostWithCommentNew_Previews: PreviewProvider {
+struct PostWithCommentViewNew_Previews: PreviewProvider {
     static var previews: some View {
-        PostWithCommentNew()
+        PostWithCommentViewNew()
     }
 }

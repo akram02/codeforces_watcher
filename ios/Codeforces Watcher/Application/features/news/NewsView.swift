@@ -23,7 +23,7 @@ struct NewsView: View {
             LazyVStack(spacing: 12) {
                 VideoView()
                 
-                PostWithCommentNew()
+                PostWithCommentViewNew()
             }
             .padding([.horizontal, .top], 20)
         }
