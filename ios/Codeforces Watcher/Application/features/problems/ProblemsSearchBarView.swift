@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct SearchBarView: View {
+struct ProblemsSearchBarView: View {
     
     var onFilter: () -> Void = {}
     
@@ -46,7 +46,7 @@ struct SearchBarView: View {
     
     @ViewBuilder
     private var SearchTextFieldView: some View {
-        SearchTextField(
+        ProblemsSearchTextField(
             text: $searchBoxText,
             placeholder: didShownSearchField ? "Search for problems...".localized : "",
             willShow: $willShowSearchField,
@@ -108,8 +108,8 @@ struct SearchBarView: View {
     }
 }
 
-struct SearchBarView_Previews: PreviewProvider {
+struct ProblemsSearchBarView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchBarView()
+        ProblemsSearchBarView()
     }
 }

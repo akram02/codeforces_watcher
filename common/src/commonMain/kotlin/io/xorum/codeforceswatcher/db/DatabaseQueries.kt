@@ -135,6 +135,8 @@ internal object DatabaseQueries {
             )
         }
 
+        fun getById(id: String) = Problem.fromDB(database.problemQueries.getById(id).executeAsOne())
+
         fun deleteAll() = database.problemQueries.deleteAll()
     }
 }

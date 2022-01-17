@@ -1,7 +1,7 @@
 import SwiftUI
 import common
 
-struct SearchTextField: UIViewRepresentable {
+struct ProblemsSearchTextField: UIViewRepresentable {
     
     @Binding var text: String
     var placeholder: NSMutableAttributedString
@@ -28,7 +28,7 @@ struct SearchTextField: UIViewRepresentable {
         )
     }
 
-    func makeUIView(context: UIViewRepresentableContext<SearchTextField>) -> UITextField {
+    func makeUIView(context: UIViewRepresentableContext<ProblemsSearchTextField>) -> UITextField {
         let textField = UITextField().apply {
             $0.delegate = context.coordinator
             $0.borderStyle = .none
@@ -78,9 +78,9 @@ struct SearchTextField: UIViewRepresentable {
     }
 
     class Coordinator: NSObject, UITextFieldDelegate {
-        var parent: SearchTextField
+        var parent: ProblemsSearchTextField
         
-        init(_ customTextField: SearchTextField) {
+        init(_ customTextField: ProblemsSearchTextField) {
             parent = customTextField
         }
         
