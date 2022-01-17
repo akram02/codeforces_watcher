@@ -21,6 +21,8 @@ struct NewsView: View {
     private var NewsList: some View {
         ScrollView {
             LazyVStack(spacing: 12) {
+                FeedbackViewNew()
+                
                 VideoView()
                 
                 PostWithCommentViewNew()
