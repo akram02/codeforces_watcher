@@ -189,73 +189,30 @@ class ContestsViewController: UIHostingController<ContestsView>, ReKampStoreSubs
         let filters = state.filters
 
         rootView.filterItems = [
-            .init(
-                title: "Codeforces",
-                image: Image(Contest.Platform.getImageNameByPlatform(.codeforces)),
-                isSelected: filters.contains(.codeforces),
-                onFilter: { isSelected in self.onFilter(.codeforces, isSelected) }
-            ),
-            .init(
-                title: "Codeforces Gym",
-                image: Image(Contest.Platform.getImageNameByPlatform(.codeforcesGym)),
-                isSelected: filters.contains(.codeforcesGym),
-                onFilter: { isSelected in self.onFilter(.codeforcesGym, isSelected) }
-            ),
-            .init(
-                title: "AtCoder",
-                image: Image(Contest.Platform.getImageNameByPlatform(.atcoder)),
-                isSelected: filters.contains(.atcoder),
-                onFilter: { isSelected in self.onFilter(.atcoder, isSelected) }
-            ),
-            .init(
-                title: "LeetCode",
-                image: Image(Contest.Platform.getImageNameByPlatform(.leetcode)),
-                isSelected: filters.contains(.leetcode),
-                onFilter: { isSelected in self.onFilter(.leetcode, isSelected) }
-            ),
-            .init(
-                title: "TopCoder",
-                image: Image(Contest.Platform.getImageNameByPlatform(.topcoder)),
-                isSelected: filters.contains(.topcoder),
-                onFilter: { isSelected in self.onFilter(.topcoder, isSelected) }
-            ),
-            .init(
-                title: "CS Academy",
-                image: Image(Contest.Platform.getImageNameByPlatform(.csAcademy)),
-                isSelected: filters.contains(.csAcademy),
-                onFilter: { isSelected in self.onFilter(.csAcademy, isSelected) }
-            ),
-            .init(
-                title: "CodeChef",
-                image: Image(Contest.Platform.getImageNameByPlatform(.codechef)),
-                isSelected: filters.contains(.codechef),
-                onFilter: { isSelected in self.onFilter(.codechef, isSelected) }
-            ),
-            .init(
-                title: "HackerRank",
-                image: Image(Contest.Platform.getImageNameByPlatform(.hackerrank)),
-                isSelected: filters.contains(.hackerrank),
-                onFilter: { isSelected in self.onFilter(.hackerrank, isSelected) }
-            ),
-            .init(
-                title: "HackerEarth",
-                image: Image(Contest.Platform.getImageNameByPlatform(.hackerearth)),
-                isSelected: filters.contains(.hackerearth),
-                onFilter: { isSelected in self.onFilter(.hackerearth, isSelected) }
-            ),
-            .init(
-                title: "Kick Start",
-                image: Image(Contest.Platform.getImageNameByPlatform(.kickStart)),
-                isSelected: filters.contains(.kickStart),
-                onFilter: { isSelected in self.onFilter(.kickStart, isSelected) }
-            ),
-            .init(
-                title: "Toph",
-                image: Image(Contest.Platform.getImageNameByPlatform(.toph)),
-                isSelected: filters.contains(.toph),
-                onFilter: { isSelected in self.onFilter(.toph, isSelected) }
-            )
+            filterItem(title: "Codeforces", platform: .codeforces),
+            filterItem(title: "Codeforces Gym", platform: .codeforcesGym),
+            filterItem(title: "AtCoder", platform: .atcoder),
+            filterItem(title: "LeetCode", platform: .leetcode),
+            filterItem(title: "TopCoder", platform: .topcoder),
+            filterItem(title: "CS Academy", platform: .csAcademy),
+            filterItem(title: "CodeChef", platform: .codechef),
+            filterItem(title: "HackerRank", platform: .hackerrank),
+            filterItem(title: "HackerEarth", platform: .hackerearth),
+            filterItem(title: "Kick Start", platform: .kickStart),
+            filterItem(title: "Toph", platform: .toph)
         ]
+        
+        func filterItem(
+            title: String,
+            platform: Contest.Platform
+        ) -> ContestFilterView.UIModel {
+            .init(
+                title: title,
+                image: Image(Contest.Platform.getImageNameByPlatform(platform)),
+                isSelected: filters.contains(platform),
+                onFilter: { isSelected in self.onFilter(platform, isSelected) }
+            )
+        }
     }
     
     private func onFilter(_ platform: Contest.Platform, _ isOn: Bool) {
