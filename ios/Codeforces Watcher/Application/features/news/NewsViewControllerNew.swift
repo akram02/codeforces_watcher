@@ -3,10 +3,7 @@ import common
 
 class NewsViewControllerNew: UIHostingController<NewsView> {
     
-    private lazy var fabButton = FabButtonViewController(
-        name: "newsShareIcon",
-        action: { self.onFabButton() }
-    )
+    private lazy var fabButton = FabButtonViewController(name: "newsShareIcon")
     
     init() {
         super.init(rootView: NewsView())
