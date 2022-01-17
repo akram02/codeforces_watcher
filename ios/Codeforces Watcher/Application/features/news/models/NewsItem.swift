@@ -121,6 +121,8 @@ enum NewsItem {
     case pinnedItem(PinnedItem)
     case feedbackItem(FeedbackItem)
     case videoItem(VideoItem)
+    
+//    static var allCases: [PostWithCommentItem, PostItem, PinnedItem, FeedbackItem, VideoItem]
 }
 
 fileprivate extension Int64 {
