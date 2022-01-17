@@ -4,49 +4,30 @@ struct ContestsNavigationBar: View {
     
     var filterItems: [ContestFilterView.UIModel]
     
-    private let filtersViewAnimationDuration = 0.3
-    @State private var isContestFiltersView = false
+    @State private var isFiltersDisplayed = false
     @State private var geometryHeight: CGFloat = 0
     
     var body: some View {
         HStack {
-            CommonText((isContestFiltersView ? "filters" : "Contests").localized)
+            CommonText((isFiltersDisplayed ? "filters" : "Contests").localized)
                 .font(.headerMedium)
                 .foregroundColor(Palette.black.swiftUIColor)
                 .animation(nil)
-                .modifier(Shake(animatableData: isContestFiltersView ? 1 : 0))
+                .modifier(Shake(animatableData: isFiltersDisplayed ? 1 : 0))
             
             Spacer()
             
-            if isContestFiltersView {
-                Button(action: {
-                    withAnimation(.easeOut(duration: filtersViewAnimationDuration)) {
-                        withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                            isContestFiltersView.toggle()
-                        }
-                    }
-                }, label: {
-                    Image("crossIconNew")
-                        .renderingMode(.original)
-                })
+            if isFiltersDisplayed {
+                RightButton("crossIconNew")
             } else {
-                Button(action: {
-                    withAnimation(.easeOut(duration: filtersViewAnimationDuration)) {
-                        withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                            isContestFiltersView.toggle()
-                        }
-                    }
-                }, label: {
-                    Image("filterIcon")
-                        .renderingMode(.original)
-                })
+                RightButton("filterIcon")
             }
         }
         .frame(maxWidth: .infinity)
         .frame(height: 56, alignment: .center)
         .padding(.horizontal, 20)
         
-        if isContestFiltersView {
+        if isFiltersDisplayed {
             ContestFiltersView
                 .padding([.horizontal, .vertical], 20)
         }
@@ -74,7 +55,7 @@ struct ContestsNavigationBar: View {
                 return Color.clear
             })
         }
-        .frame(height: isContestFiltersView ? geometryHeight : 0)
+        .frame(height: isFiltersDisplayed ? geometryHeight : 0)
     }
     
     @ViewBuilder
@@ -92,6 +73,22 @@ struct ContestsNavigationBar: View {
                 }
             }
         }
+    }
+    
+    private func RightButton(_ imageName: String) -> some View {
+        
+        let filtersViewAnimationDuration = 0.3
+        
+        return Button(action: {
+            withAnimation(.easeOut(duration: filtersViewAnimationDuration)) {
+                withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                    isFiltersDisplayed.toggle()
+                }
+            }
+        }, label: {
+            Image(imageName)
+                .renderingMode(.original)
+        })
     }
 }
 
