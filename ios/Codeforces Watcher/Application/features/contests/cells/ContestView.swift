@@ -46,6 +46,10 @@ struct ContestView: View {
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 10)
+        .contentShape(Rectangle())
+        .onTapGesture {
+            self.onContest(contest)
+        }
     }
     
     struct UIModel {

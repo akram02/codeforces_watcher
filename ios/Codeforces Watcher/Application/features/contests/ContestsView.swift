@@ -49,10 +49,6 @@ struct ContestsView: View {
                     }
                     
                     ContestView(contest, onContest, onCalendar)
-                        .contentShape(Rectangle())
-                        .onTapGesture {
-                            self.onContest(contest)
-                        }
                 }
             }
         }
