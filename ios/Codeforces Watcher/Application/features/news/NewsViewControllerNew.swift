@@ -7,6 +7,8 @@ class NewsViewControllerNew: UIHostingController<NewsView>, ReKampStoreSubscribe
     
     init() {
         super.init(rootView: NewsView())
+        
+        setInteractions()
     }
     
     @objc required init?(coder aDecoder: NSCoder) {
@@ -55,6 +57,22 @@ class NewsViewControllerNew: UIHostingController<NewsView>, ReKampStoreSubscribe
         present(activityController, animated: true)
         
         analyticsControler.logEvent(eventName: AnalyticsEvents().SHARE_APP, params: [:])
+    }
+    
+    private func setInteractions() {
+        rootView.onPostWithCommentView = { title, link in
+            let title = buildShareText(title, link)
+            let onOpenEvent = AnalyticsEvents().POST_OPENED
+            let onShareEvent = AnalyticsEvents().NEWS_SHARED
+            
+            let webViewController = WebViewController(
+                link,
+                title,
+                onOpenEvent,
+                onShareEvent
+            )
+            self.presentModal(webViewController)
+        }
     }
     
     func onNewState(state: Any) {

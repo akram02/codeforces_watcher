@@ -3,7 +3,7 @@ import SwiftUI
 struct PostView: View {
     var body: some View {
         VStack(spacing: 0) {
-            PostTextView()
+//            PostTextView()
             
             CommentView
         }

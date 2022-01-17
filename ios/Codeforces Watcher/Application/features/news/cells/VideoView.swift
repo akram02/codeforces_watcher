@@ -4,7 +4,7 @@ struct VideoView: View {
     
     var body: some View {
         VStack(spacing: 12) {
-            PostTitleView()
+//            PostTitleView()
             
             Image("video_placeholder")
                 .resizable()

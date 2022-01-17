@@ -2,32 +2,45 @@ import SwiftUI
 
 struct PostTitleView: View {
     
+    var authorAvatar: String
+    var authorHandle: NSAttributedString
+    var authorRankColor: CGColor
+    var title: String
+    var agoText: String
+    
     var body: some View {
         HStack(spacing: 8) {
-            Image("noImage")
+            CircleImageViewNew(
+                userAvatar: authorAvatar,
+                borderColor: Color(authorRankColor),
+                size: (width: 36, height: 36)
+            )
             
             VStack(alignment: .leading, spacing: 0) {
-                CommonText("Matrix Exponentiation Coding")
+                CommonText(title)
                     .font(.bodySemibold)
                     .foregroundColor(Palette.black.swiftUIColor)
+                    .lineLimit(1)
                 
-                HStack(spacing: 0) {
-                    CommonText("errichto")
-                        .foregroundColor(Palette.red.swiftUIColor)
-                    
-                    CommonText(" · 5 minutes ago")
-                        .foregroundColor(Palette.darkGray.swiftUIColor)
-                }
-                .font(.hintRegular)
-                .frame(maxWidth: .infinity, alignment: .leading)
+                PostDetail
             }
             .frame(maxWidth: .infinity)
         }
     }
-}
-
-struct PostTitleView_Previews: PreviewProvider {
-    static var previews: some View {
-        PostTitleView()
+    
+    private var PostDetail: some View {
+        HStack(spacing: 0) {
+            AttributedTextView(
+                attributedString: authorHandle as! NSMutableAttributedString,
+                font: Font.monospacedHintRegular,
+                alignment: .left
+            )
+                .fixedSize()
+            
+            CommonText(agoText)
+                .foregroundColor(Palette.darkGray.swiftUIColor)
+        }
+        .font(.hintRegular)
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }

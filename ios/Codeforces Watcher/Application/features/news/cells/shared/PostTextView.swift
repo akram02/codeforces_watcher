@@ -2,11 +2,24 @@ import SwiftUI
 
 struct PostTextView: View {
     
+    var content: String
+    var authorAvatar: String
+    var authorHandle: NSAttributedString
+    var authorRankColor: CGColor
+    var title: String
+    var agoText: String
+    
     var body: some View {
         VStack(spacing: 12) {
-            PostTitleView()
+            PostTitleView(
+                authorAvatar: authorAvatar,
+                authorHandle: authorHandle,
+                authorRankColor: authorRankColor,
+                title: title,
+                agoText: agoText
+            )
             
-            CommonText("A left-leaning red–black (LLRB) tree is a type of self-balancing binary search tree. It is a variant of the red–black tree and guarantees the same guarantees the same...")
+            CommonText(content)
                 .font(.hintRegular)
                 .foregroundColor(Palette.black.swiftUIColor)
                 .lineLimit(4)
@@ -15,11 +28,5 @@ struct PostTextView: View {
         .padding(12)
         .background(Palette.accentGrayish.swiftUIColor)
         .cornerRadius(20)
-    }
-}
-
-struct PostTextView_Previews: PreviewProvider {
-    static var previews: some View {
-        PostTextView()
     }
 }

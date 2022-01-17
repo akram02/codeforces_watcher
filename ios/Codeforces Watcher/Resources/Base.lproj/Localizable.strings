@@ -6,8 +6,8 @@
 "Problems" = "Problems";
 
 "Commented by" = "Commented by";
-"ago" = " - %@ ago";
-"post_ago" = " - %@ %@ ago";
+"ago" = " · %@ ago";
+"post_ago" = " · %@ %@ ago";
 
 "news_explanation" = "Recent news are on the way to your device...";
 
