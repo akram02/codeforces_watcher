@@ -56,13 +56,13 @@ fileprivate struct ContestFiltersView: View {
     
     @State private var geometryHeight: CGFloat = 0
     
-    private let filterWidth = 50
+    private let filterIconWidth = 50
     private let minSpacerWidth = 20
     
     var body: some View {
         GeometryReader { geometry in
-            let filterItemsRowCount = Int(geometry.size.width) / (filterWidth + minSpacerWidth)
-            let spacerWidth = (geometry.size.width - CGFloat(filterItemsRowCount * filterWidth)) / CGFloat(filterItemsRowCount - 1)
+            let filterItemsRowCount = Int(geometry.size.width) / (filterIconWidth + minSpacerWidth)
+            let spacerWidth = (geometry.size.width - CGFloat(filterItemsRowCount * filterIconWidth)) / CGFloat(filterItemsRowCount - 1)
             
             VStack(alignment: .leading, spacing: 20) {
                 let chunkedFilterItems = filterItems.chunked(into: filterItemsRowCount)
