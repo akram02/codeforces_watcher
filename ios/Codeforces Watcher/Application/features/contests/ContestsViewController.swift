@@ -86,10 +86,6 @@ class ContestsViewController: UIHostingController<ContestsView>, ReKampStoreSubs
                 }
             }
         }
-        
-        rootView.onFilter = {
-            self.presentModal(ContestsFiltersViewController())
-        }
     }
     
     func onNewState(state: Any) {
@@ -98,7 +94,12 @@ class ContestsViewController: UIHostingController<ContestsView>, ReKampStoreSubs
         if state.status == .idle {
             rootView.refreshControl.endRefreshing()
         }
-
+        
+        updateContests(state)
+        updateFilters(state)
+    }
+    
+    private func updateContests(_ state: ContestsState) {
         rootView.contests = state.contests
             .filter { $0.phase == .pending && state.filters.contains($0.platform) }
             .sorted(by: {
@@ -119,7 +120,7 @@ class ContestsViewController: UIHostingController<ContestsView>, ReKampStoreSubs
     }
     
     private func addEventToCalendar(
-        _ contest: ContestsView.UIModel,
+        _ contest: ContestView.UIModel,
         completion: @escaping (Bool, NSError?) -> Void = { _, _ in }
     ) {
         let eventStore = EKEventStore()
@@ -145,7 +146,7 @@ class ContestsViewController: UIHostingController<ContestsView>, ReKampStoreSubs
     
     private func saveContestEvent(
         eventStore: EKEventStore,
-        contest: ContestsView.UIModel,
+        contest: ContestView.UIModel,
         completion: @escaping (Bool, NSError?) -> Void = { _, _ in }
     ) {
         let startDate = Date(timeIntervalSince1970: Double(contest.startDateInMillis / 1000))
@@ -182,5 +183,39 @@ class ContestsViewController: UIHostingController<ContestsView>, ReKampStoreSubs
     
     private func fetchContests() {
         store.dispatch(action: ContestsRequests.FetchContests(isInitiatedByUser: true))
+    }
+    
+    private func updateFilters(_ state: ContestsState) {
+        let filters = state.filters
+
+        rootView.filterItems = [
+            filterItem(title: "Codeforces", platform: .codeforces),
+            filterItem(title: "Codeforces Gym", platform: .codeforcesGym),
+            filterItem(title: "AtCoder", platform: .atcoder),
+            filterItem(title: "LeetCode", platform: .leetcode),
+            filterItem(title: "TopCoder", platform: .topcoder),
+            filterItem(title: "CS Academy", platform: .csAcademy),
+            filterItem(title: "CodeChef", platform: .codechef),
+            filterItem(title: "HackerRank", platform: .hackerrank),
+            filterItem(title: "HackerEarth", platform: .hackerearth),
+            filterItem(title: "Kick Start", platform: .kickStart),
+            filterItem(title: "Toph", platform: .toph)
+        ]
+        
+        func filterItem(
+            title: String,
+            platform: Contest.Platform
+        ) -> ContestFilterView.UIModel {
+            .init(
+                title: title,
+                image: Image(Contest.Platform.getImageNameByPlatform(platform)),
+                isSelected: filters.contains(platform),
+                onFilter: { isSelected in self.onFilter(platform, isSelected) }
+            )
+        }
+    }
+    
+    private func onFilter(_ platform: Contest.Platform, _ isOn: Bool) {
+        store.dispatch(action: ContestsRequests.ChangeFilterCheckStatus(platform: platform, isChecked: isOn))
     }
 }
