@@ -5,7 +5,6 @@ struct ContestsNavigationBar: View {
     var filterItems: [ContestFilterView.UIModel]
     
     @State private var isFiltersDisplayed = false
-    @State private var geometryHeight: CGFloat = 0
     
     var body: some View {
         HStack {
@@ -28,16 +27,42 @@ struct ContestsNavigationBar: View {
         .padding(.horizontal, 20)
         
         if isFiltersDisplayed {
-            ContestFiltersView
+            ContestFiltersView(filterItems: filterItems)
                 .padding([.horizontal, .vertical], 20)
         }
     }
+
     
-    @ViewBuilder
-    private var ContestFiltersView: some View {
+    private func RightButton(_ imageName: String) -> some View {
+        
+        let filtersViewAnimationDuration = 0.3
+        
+        return Button(action: {
+            withAnimation(.easeOut(duration: filtersViewAnimationDuration)) {
+                withAnimation(.spring(response: filtersViewAnimationDuration, dampingFraction: 0.7)) {
+                    isFiltersDisplayed.toggle()
+                }
+            }
+        }, label: {
+            Image(imageName)
+                .renderingMode(.original)
+        })
+    }
+}
+
+fileprivate struct ContestFiltersView: View {
+    
+    var filterItems: [ContestFilterView.UIModel]
+    
+    @State private var geometryHeight: CGFloat = 0
+    
+    private let filterWidth = 50
+    private let minSpacerWidth = 20
+    
+    var body: some View {
         GeometryReader { geometry in
-            let filterItemsRowCount = Int(geometry.size.width) / 70
-            let spacerWidth = (geometry.size.width - CGFloat(filterItemsRowCount * 50)) / CGFloat(filterItemsRowCount - 1)
+            let filterItemsRowCount = Int(geometry.size.width) / (filterWidth + minSpacerWidth)
+            let spacerWidth = (geometry.size.width - CGFloat(filterItemsRowCount * filterWidth)) / CGFloat(filterItemsRowCount - 1)
             
             VStack(alignment: .leading, spacing: 20) {
                 let chunkedFilterItems = filterItems.chunked(into: filterItemsRowCount)
@@ -55,7 +80,7 @@ struct ContestsNavigationBar: View {
                 return Color.clear
             })
         }
-        .frame(height: isFiltersDisplayed ? geometryHeight : 0)
+        .frame(height: geometryHeight)
     }
     
     @ViewBuilder
@@ -74,30 +99,6 @@ struct ContestsNavigationBar: View {
             }
         }
     }
-    
-    private func RightButton(_ imageName: String) -> some View {
-        
-        let filtersViewAnimationDuration = 0.3
-        
-        return Button(action: {
-            withAnimation(.easeOut(duration: filtersViewAnimationDuration)) {
-                withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                    isFiltersDisplayed.toggle()
-                }
-            }
-        }, label: {
-            Image(imageName)
-                .renderingMode(.original)
-        })
-    }
-}
-
-fileprivate extension Array {
-    func chunked(into size: Int) -> [[Element]] {
-        return stride(from: 0, to: count, by: size).map {
-            Array(self[$0 ..< Swift.min($0 + size, count)])
-        }
-    }
 }
 
 fileprivate struct Shake: GeometryEffect {
@@ -108,6 +109,14 @@ fileprivate struct Shake: GeometryEffect {
             translationX: sin(animatableData * .pi),
             y: 0
         ))
+    }
+}
+
+fileprivate extension Array {
+    func chunked(into size: Int) -> [[Element]] {
+        return stride(from: 0, to: count, by: size).map {
+            Array(self[$0 ..< Swift.min($0 + size, count)])
+        }
     }
 }
 
