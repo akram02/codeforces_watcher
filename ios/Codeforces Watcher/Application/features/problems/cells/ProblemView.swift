@@ -1,12 +1,20 @@
 import SwiftUI
 import common
 
-struct ProblemViewTableViewCell: View {
+struct ProblemView: View {
     
-    var problem: Problem
+    var problem: UIModel
+    var onProblem: (String, String) -> Void = { _, _ in }
+    var onStar: (String) -> Void = { _ in }
     
-    init(_ problem: Problem) {
+    init(
+        _ problem: UIModel,
+        _ onProblem: @escaping (String, String) -> Void,
+        _ onStar: @escaping (String) -> Void
+    ) {
         self.problem = problem
+        self.onProblem = onProblem
+        self.onStar = onStar
     }
     
     var body: some View {
@@ -24,7 +32,7 @@ struct ProblemViewTableViewCell: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             
             Button(action: {
-                onStar()
+                onStar(problem.id)
             }, label: {
                 Image("starIconNew")
                     .resizable()
@@ -35,9 +43,17 @@ struct ProblemViewTableViewCell: View {
             })
         }
         .padding([.horizontal, .top], 20)
+        .contentShape(Rectangle())
+        .onTapGesture {
+            onProblem(problem.link, problem.title)
+        }
     }
     
-    private func onStar() {
-        store.dispatch(action: ProblemsRequests.ChangeStatusFavourite(problem: problem))
+    struct UIModel {
+        let id: String
+        let title: String
+        let subtitle: String
+        let isFavourite: Bool
+        let link: String
     }
 }
