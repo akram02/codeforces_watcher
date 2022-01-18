@@ -1,14 +1,31 @@
 import SwiftUI
 
 struct PostView: View {
+    
+    var post: NewsItem.PostItem
+    var onNews: (
+        _ title: String,
+        _ link: String
+    ) -> () = { _, _ in }
+    
     var body: some View {
         VStack(spacing: 0) {
-//            PostTextView()
+            PostTextView(
+                content: post.content,
+                authorAvatar: post.authorAvatar,
+                authorHandle: post.authorHandle,
+                authorRankColor: post.rankColor,
+                title: post.blogTitle,
+                agoText: post.agoText
+            )
             
             CommentView
         }
         .background(Palette.lightGray.swiftUIColor)
         .cornerRadius(20)
+        .onTapGesture {
+            onNews(post.blogTitle, post.link)
+        }
     }
     
     @ViewBuilder
@@ -28,11 +45,5 @@ struct PostView: View {
         .padding(.horizontal, 12)
         .background(Color.clear)
         .cornerRadius(20)
-    }
-}
-
-struct PostView_Previews: PreviewProvider {
-    static var previews: some View {
-        PostView()
     }
 }

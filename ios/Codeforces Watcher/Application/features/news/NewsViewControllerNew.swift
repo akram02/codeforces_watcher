@@ -65,14 +65,30 @@ class NewsViewControllerNew: UIHostingController<NewsView>, ReKampStoreSubscribe
             let onOpenEvent = AnalyticsEvents().POST_OPENED
             let onShareEvent = AnalyticsEvents().NEWS_SHARED
             
-            let webViewController = WebViewController(
-                link,
-                title,
-                onOpenEvent,
-                onShareEvent
-            )
-            self.presentModal(webViewController)
+            self.openWebViewController(link, title, onOpenEvent, onShareEvent)
         }
+        
+        rootView.onPost = { title, link in
+            let onOpenEvent = AnalyticsEvents().POST_OPENED
+            let onShareEvent = AnalyticsEvents().NEWS_SHARED
+            
+            self.openWebViewController(link, title, onOpenEvent, onShareEvent)
+        }
+    }
+    
+    private func openWebViewController(
+        _ link: String,
+        _ title: String,
+        _ onOpenEvent: String,
+        _ onShareEvent: String
+    ) {
+        let webViewController = WebViewController(
+            link,
+            title,
+            onOpenEvent,
+            onShareEvent
+        )
+        self.presentModal(webViewController)
     }
     
     func onNewState(state: Any) {

@@ -3,10 +3,9 @@ import SwiftUI
 struct NewsView: View {
     
     var news: [NewsItem] = []
-    var onPostWithCommentView: (
-        _ title: String,
-        _ link: String
-    ) -> () = { _, _ in }
+    
+    var onPostWithCommentView: (_ title: String, _ link: String) -> () = { _, _ in }
+    var onPost: (_ title: String, _ link: String) -> () = { _, _ in }
     
     let refreshControl = UIRefreshControl()
     
@@ -34,7 +33,7 @@ struct NewsView: View {
                     case .postWithCommentItem(let item):
                         PostWithCommentViewNew(post: item, onNews: onPostWithCommentView)
                     case .postItem(let item):
-                        CommonText(item.blogTitle)
+                        PostView(post: item, onNews: onPost)
                     case .pinnedItem(let item):
                         CommonText(item.title)
                     case .feedbackItem(let item):
