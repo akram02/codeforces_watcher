@@ -17,9 +17,9 @@ struct ContestsNavigationBar: View {
             Spacer()
             
             if isFiltersDisplayed {
-                RightButton("crossIconNew")
+                ToggleButton("crossIconNew")
             } else {
-                RightButton("filterIcon")
+                ToggleButton("filterIcon")
             }
         }
         .frame(maxWidth: .infinity)
@@ -33,7 +33,7 @@ struct ContestsNavigationBar: View {
     }
 
     
-    private func RightButton(_ imageName: String) -> some View {
+    private func ToggleButton(_ imageName: String) -> some View {
         
         let filtersViewAnimationDuration = 0.3
         
