@@ -4,10 +4,7 @@ import FirebaseAnalytics
 
 class ProblemsViewController: UIHostingController<ProblemsView>, ReKampStoreSubscriber {
     
-    private lazy var fabButton = FabButtonViewController(
-        name: "infinityIcon",
-        action: { self.onFabButton() }
-    )
+    private lazy var fabButton = FabButtonViewController(name: "infinityIcon")
     
     init() {
         super.init(rootView: ProblemsView())
@@ -47,7 +44,6 @@ class ProblemsViewController: UIHostingController<ProblemsView>, ReKampStoreSubs
     private func setFabButton() {
         tabBarController?.tabBar.addSubview(fabButton.view)
         fabButton.setView()
-        fabButton.setButtonAction(action: { self.onFabButton() })
     }
     
     private func setRefreshControl() {

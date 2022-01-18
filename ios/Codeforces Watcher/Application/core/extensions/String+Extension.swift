@@ -27,12 +27,22 @@ extension String {
         return String(format: format, arguments: args)
     }
     
-    var attributed: NSMutableAttributedString { return NSMutableAttributedString(string: self) }
+    var attributed: NSMutableAttributedString {
+        NSMutableAttributedString(string: self)
+    }
     
     func colorString(color: UIColor) -> NSAttributedString {
         return self.attributed.apply {
             $0.addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: NSRange(location: 0, length: self.count))
         }
+    }
+    
+    func capitalizingFirstLetter() -> String {
+        prefix(1).capitalized + dropFirst()
+    }
+
+    mutating func capitalizeFirstLetter() {
+        self = self.capitalizingFirstLetter()
     }
 }
 

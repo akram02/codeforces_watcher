@@ -1,23 +1,56 @@
 {
   "images" : [
     {
+      "filename" : "Calendar Add.png",
       "idiom" : "universal",
-      "filename" : "ic_calendar_add.png",
       "scale" : "1x"
     },
     {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "Calendar Add-3.png",
       "idiom" : "universal",
-      "filename" : "ic_calendar_add@2x.png",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "Calendar Add-1.png",
+      "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "Calendar Add-4.png",
       "idiom" : "universal",
-      "filename" : "ic_calendar_add@3x.png",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "Calendar Add-2.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "Calendar Add-5.png",
+      "idiom" : "universal",
       "scale" : "3x"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }

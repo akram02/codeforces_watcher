@@ -1,23 +1,56 @@
 {
   "images" : [
     {
+      "filename" : "LeetCode Secondary.png",
       "idiom" : "universal",
-      "filename" : "LeetCode.png",
       "scale" : "1x"
     },
     {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "LeetCode.png",
       "idiom" : "universal",
-      "filename" : "LeetCode@2x.png",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "LeetCode Secondary-2.png",
+      "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "LeetCode-2.png",
       "idiom" : "universal",
-      "filename" : "LeetCode@3x.png",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "LeetCode Secondary-3.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "LeetCode-3.png",
+      "idiom" : "universal",
       "scale" : "3x"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }

@@ -4,11 +4,8 @@ class FabButtonViewController: UIHostingController<FabButtonView> {
     
     var action: () -> Void = {}
     
-    init(
-        name: String,
-        action: @escaping () -> Void
-    ) {
-        super.init(rootView: FabButtonView(name: name, action: action))
+    init(name: String) {
+        super.init(rootView: FabButtonView(name: name))
     }
     
     @objc required init?(coder aDecoder: NSCoder) {
@@ -38,6 +35,7 @@ class FabButtonViewController: UIHostingController<FabButtonView> {
     }
     
     func hide() {
+        self.removeFromParent()
         self.view.isHidden = true
     }
     
