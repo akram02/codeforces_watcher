@@ -1,35 +1,24 @@
 import SwiftUI
 
 struct FeedbackViewNew: View {
+    
+    var post: NewsItem.FeedbackItem
+    var callback: () -> Void = {}
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             HStack(alignment: .top) {
-                CommonText("rate_us_first_title".localized)
-                    .font(SwiftUI.Font.system(size: 22, weight: .regular, design: .monospaced))
-                    .foregroundColor(Palette.black.swiftUIColor)
+                Title
                 
                 Spacer()
                 
-                Image("crossIconNew")
-                    .resizable()
-                    .frame(width: 24, height: 24)
+                CloseButton
             }
             
             HStack(spacing: 20) {
-                CommonSmallButton(
-                    label: "yes".localized,
-                    action: {},
-                    foregroundColor: Palette.white.swiftUIColor,
-                    backgroundColor: Palette.black.swiftUIColor,
-                    borderColor: Palette.white.swiftUIColor,
-                    borderWidth: 0
-                )
+                PositiveButton
                 
-                Button(action: {}, label: {
-                    CommonText("no_thanks".localized)
-                        .font(.hintSemibold)
-                        .foregroundColor(Palette.black.swiftUIColor)
-                })
+                NegativeButton
             }
         }
         .frame(maxWidth: .infinity)
@@ -37,10 +26,50 @@ struct FeedbackViewNew: View {
         .background(Palette.accentGrayish.swiftUIColor)
         .cornerRadius(20)
     }
-}
-
-struct FeedbackViewNew_Previews: PreviewProvider {
-    static var previews: some View {
-        FeedbackViewNew()
+    
+    @ViewBuilder
+    private var Title: some View {
+        CommonText(post.textTitle)
+            .font(SwiftUI.Font.system(size: 22, weight: .regular, design: .monospaced))
+            .foregroundColor(Palette.black.swiftUIColor)
+    }
+    
+    @ViewBuilder
+    private var CloseButton: some View {
+        Button(action: {
+            post.neutralButtonClick()
+            callback()
+        }, label: {
+            Image("crossIconNew")
+                .resizable()
+                .frame(width: 24, height: 24)
+        })
+    }
+    
+    @ViewBuilder
+    private var PositiveButton: some View {
+        CommonSmallButton(
+            label: post.textPositiveButton,
+            action: {
+                post.positiveButtonClick()
+                callback()
+            },
+            foregroundColor: Palette.white.swiftUIColor,
+            backgroundColor: Palette.black.swiftUIColor,
+            borderColor: Palette.white.swiftUIColor,
+            borderWidth: 0
+        )
+    }
+    
+    @ViewBuilder
+    private var NegativeButton: some View {
+        Button(action: {
+            post.negativeButtonClick()
+            callback()
+        }, label: {
+            CommonText(post.textNegativeButton)
+                .font(.hintSemibold)
+                .foregroundColor(Palette.black.swiftUIColor)
+        })
     }
 }

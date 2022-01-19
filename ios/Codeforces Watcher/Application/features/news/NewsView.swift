@@ -4,9 +4,10 @@ struct NewsView: View {
     
     var news: [NewsItem] = []
     
-    var onPostWithCommentItem: (_ title: String, _ link: String) -> () = { _, _ in }
-    var onPostItem: (_ title: String, _ link: String) -> () = { _, _ in }
-    var onVideoItem: (_ title: String, _ link: String) -> () = { _, _ in }
+    var onPostWithCommentItem: (_ title: String, _ link: String) -> Void = { _, _ in }
+    var onPostItem: (_ title: String, _ link: String) -> Void = { _, _ in }
+    var onVideoItem: (_ title: String, _ link: String) -> Void = { _, _ in }
+    var onFeedbackItemCallback: () -> Void = {}
     
     let refreshControl = UIRefreshControl()
     
@@ -38,7 +39,7 @@ struct NewsView: View {
                     case .pinnedItem(let item):
                         CommonText(item.title)
                     case .feedbackItem(let item):
-                        CommonText(item.textTitle)
+                        FeedbackViewNew(post: item, callback: onFeedbackItemCallback)
                     case .videoItem(let item):
                         VideoView(post: item, onNews: onVideoItem)
                     }

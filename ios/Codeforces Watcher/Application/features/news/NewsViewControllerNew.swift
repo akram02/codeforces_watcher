@@ -81,6 +81,7 @@ class NewsViewControllerNew: UIHostingController<NewsView>, ReKampStoreSubscribe
             
             self.openWebViewController(link, title, onOpenEvent, onShareEvent)
         }
+        
     }
     
     private func openWebViewController(
@@ -101,6 +102,15 @@ class NewsViewControllerNew: UIHostingController<NewsView>, ReKampStoreSubscribe
     func onNewState(state: Any) {
         let state = state as! NewsState
         var items: [NewsItem] = []
+        
+        if state.status == .idle {
+            if feedbackController.shouldShowFeedbackCell() {
+                items.append(NewsItem.feedbackItem(NewsItem.FeedbackItem(feedbackController.feedUIModel)))
+                rootView.onFeedbackItemCallback = {
+                    self.onNewState(state: state)
+                }
+            }
+        }
         
         let news = state.news.filter { news in
             if let news = news as? News.PinnedPost {
