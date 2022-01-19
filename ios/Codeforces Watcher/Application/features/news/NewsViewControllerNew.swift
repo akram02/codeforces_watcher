@@ -60,7 +60,7 @@ class NewsViewControllerNew: UIHostingController<NewsView>, ReKampStoreSubscribe
     }
     
     private func setInteractions() {
-        rootView.onPostWithCommentView = { title, link in
+        rootView.onPostWithCommentItem = { title, link in
             let title = buildShareText(title, link)
             let onOpenEvent = AnalyticsEvents().POST_OPENED
             let onShareEvent = AnalyticsEvents().NEWS_SHARED
@@ -68,9 +68,16 @@ class NewsViewControllerNew: UIHostingController<NewsView>, ReKampStoreSubscribe
             self.openWebViewController(link, title, onOpenEvent, onShareEvent)
         }
         
-        rootView.onPost = { title, link in
+        rootView.onPostItem = { title, link in
             let onOpenEvent = AnalyticsEvents().POST_OPENED
             let onShareEvent = AnalyticsEvents().NEWS_SHARED
+            
+            self.openWebViewController(link, title, onOpenEvent, onShareEvent)
+        }
+        
+        rootView.onVideoItem = { title, link in
+            let onOpenEvent = AnalyticsEvents().VIDEO_OPENED
+            let onShareEvent = AnalyticsEvents().VIDEO_SHARED
             
             self.openWebViewController(link, title, onOpenEvent, onShareEvent)
         }

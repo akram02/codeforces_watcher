@@ -4,8 +4,9 @@ struct NewsView: View {
     
     var news: [NewsItem] = []
     
-    var onPostWithCommentView: (_ title: String, _ link: String) -> () = { _, _ in }
-    var onPost: (_ title: String, _ link: String) -> () = { _, _ in }
+    var onPostWithCommentItem: (_ title: String, _ link: String) -> () = { _, _ in }
+    var onPostItem: (_ title: String, _ link: String) -> () = { _, _ in }
+    var onVideoItem: (_ title: String, _ link: String) -> () = { _, _ in }
     
     let refreshControl = UIRefreshControl()
     
@@ -31,15 +32,15 @@ struct NewsView: View {
                 ForEach(news.indices, id: \.self) { index in
                     switch (news[index]) {
                     case .postWithCommentItem(let item):
-                        PostWithCommentViewNew(post: item, onNews: onPostWithCommentView)
+                        PostWithCommentViewNew(post: item, onNews: onPostWithCommentItem)
                     case .postItem(let item):
-                        PostView(post: item, onNews: onPost)
+                        PostView(post: item, onNews: onPostItem)
                     case .pinnedItem(let item):
                         CommonText(item.title)
                     case .feedbackItem(let item):
                         CommonText(item.textTitle)
                     case .videoItem(let item):
-                        CommonText(item.title)
+                        VideoView(post: item, onNews: onVideoItem)
                     }
                 }
             }
