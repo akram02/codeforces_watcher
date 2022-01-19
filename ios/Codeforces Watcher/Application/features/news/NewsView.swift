@@ -37,7 +37,7 @@ struct NewsView: View {
                     case .postItem(let item):
                         PostView(post: item, onNews: onPostItem)
                     case .pinnedItem(let item):
-                        CommonText(item.title)
+                        PinnedPostViewNew()
                     case .feedbackItem(let item):
                         FeedbackViewNew(post: item, callback: onFeedbackItemCallback)
                     case .videoItem(let item):
