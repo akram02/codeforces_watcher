@@ -17,7 +17,12 @@ struct NewsView: View {
             NewsNavigationBar(title: "News".localized)
             
             RefreshableScrollView(content: {
-                if !news.isEmpty {
+                if news.isEmpty {
+                    NoItemsView(
+                        imageName: "noItemsNews",
+                        text: "news_explanation".localized
+                    )
+                } else {
                     NewsList
                 }
             }, refreshControl: refreshControl)
