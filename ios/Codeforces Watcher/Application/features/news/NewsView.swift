@@ -4,11 +4,11 @@ struct NewsView: View {
     
     var news: [NewsItem] = []
     
-    var onPostWithCommentItem: (_ title: String, _ link: String) -> Void = { _, _ in }
-    var onPostItem: (_ title: String, _ link: String) -> Void = { _, _ in }
-    var onVideoItem: (_ title: String, _ link: String) -> Void = { _, _ in }
     var onFeedbackItemCallback: () -> Void = {}
     var onPinnedPostItem: (_ title: String, _ link: String) -> Void = { _, _ in }
+    var onPostItem: (_ title: String, _ link: String) -> Void = { _, _ in }
+    var onPostWithCommentItem: (_ title: String, _ link: String) -> Void = { _, _ in }
+    var onVideoItem: (_ title: String, _ link: String) -> Void = { _, _ in }
     
     let refreshControl = UIRefreshControl()
     
@@ -33,14 +33,14 @@ struct NewsView: View {
             LazyVStack(spacing: 12) {
                 ForEach(news.indices, id: \.self) { index in
                     switch (news[index]) {
-                    case .postWithCommentItem(let item):
-                        PostWithCommentView(post: item, onNews: onPostWithCommentItem)
-                    case .postItem(let item):
-                        PostView(post: item, onNews: onPostItem)
-                    case .pinnedItem(let item):
-                        PinnedPostView(post: item, onNews: onPinnedPostItem)
                     case .feedbackItem(let item):
                         FeedbackView(post: item, callback: onFeedbackItemCallback)
+                    case .pinnedItem(let item):
+                        PinnedPostView(post: item, onNews: onPinnedPostItem)
+                    case .postItem(let item):
+                        PostView(post: item, onNews: onPostItem)
+                    case .postWithCommentItem(let item):
+                        PostWithCommentView(post: item, onNews: onPostWithCommentItem)
                     case .videoItem(let item):
                         PostVideoView(post: item, onNews: onVideoItem)
                     }

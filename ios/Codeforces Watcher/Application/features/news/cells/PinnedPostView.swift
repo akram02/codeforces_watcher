@@ -45,7 +45,7 @@ fileprivate struct HiddenPinnedPostView: View {
         }
         .padding(.horizontal, 12)
         .frame(height: 60)
-        .background(Background)
+        .background(BackgroundView)
         .cornerRadius(20)
     }
     
@@ -76,7 +76,7 @@ fileprivate struct HiddenPinnedPostView: View {
     }
     
     @ViewBuilder
-    private var Background: some View {
+    private var BackgroundView: some View {
         LinearGradient(
             gradient: Gradient(stops: [
                 .init(color: Palette.black.swiftUIColor.opacity(0.65), location: 0.26),
@@ -102,7 +102,7 @@ fileprivate struct VisiblePinnedPostView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Header
+            HeaderView
             
             Spacer()
                 .frame(height: 72)
@@ -115,12 +115,12 @@ fileprivate struct VisiblePinnedPostView: View {
             SeeDetailsView
         }
         .padding(12)
-        .background(Background)
+        .background(BackgroundView)
         .cornerRadius(20)
     }
     
     @ViewBuilder
-    private var Header: some View {
+    private var HeaderView: some View {
         HStack {
             Image("logo")
                 .frame(width: 32, height: 32)
@@ -175,7 +175,7 @@ fileprivate struct VisiblePinnedPostView: View {
     }
     
     @ViewBuilder
-    private var Background: some View {
+    private var BackgroundView: some View {
         GeometryReader { geometry in
             RadialGradient(
                 gradient: Gradient(stops: [

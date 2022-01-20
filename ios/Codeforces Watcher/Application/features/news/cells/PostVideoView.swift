@@ -4,10 +4,7 @@ import SDWebImageSwiftUI
 struct PostVideoView: View {
     
     var post: NewsItem.VideoItem
-    var onNews: (
-        _ title: String,
-        _ link: String
-    ) -> () = { _, _ in }
+    var onNews: (_ title: String, _ link: String) -> () = { _, _ in }
     
     @State private var geometryHeight: CGFloat = 0
     
@@ -21,7 +18,7 @@ struct PostVideoView: View {
                 agoText: post.agoText
             )
             
-            ThumbnailImage
+            ThumbnailImageView
         }
         .frame(maxWidth: .infinity)
         .padding(12)
@@ -33,7 +30,7 @@ struct PostVideoView: View {
     }
     
     @ViewBuilder
-    private var ThumbnailImage: some View {
+    private var ThumbnailImageView: some View {
         GeometryReader { geometry in
             WebImage(url: URL(string: post.thumbnailLink))
                 .resizable()

@@ -8,17 +8,17 @@ struct FeedbackView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             HStack(alignment: .top) {
-                Title
+                TitleView
                 
                 Spacer()
                 
-                CloseButton
+                CloseButtonView
             }
             
             HStack(spacing: 20) {
-                PositiveButton
+                PositiveButtonView
                 
-                NegativeButton
+                NegativeButtonView
             }
         }
         .frame(maxWidth: .infinity)
@@ -28,14 +28,14 @@ struct FeedbackView: View {
     }
     
     @ViewBuilder
-    private var Title: some View {
+    private var TitleView: some View {
         CommonText(post.textTitle)
             .font(SwiftUI.Font.system(size: 22, weight: .regular, design: .monospaced))
             .foregroundColor(Palette.black.swiftUIColor)
     }
     
     @ViewBuilder
-    private var CloseButton: some View {
+    private var CloseButtonView: some View {
         Button(action: {
             post.neutralButtonClick()
             callback()
@@ -47,7 +47,7 @@ struct FeedbackView: View {
     }
     
     @ViewBuilder
-    private var PositiveButton: some View {
+    private var PositiveButtonView: some View {
         CommonSmallButton(
             label: post.textPositiveButton,
             action: {
@@ -62,7 +62,7 @@ struct FeedbackView: View {
     }
     
     @ViewBuilder
-    private var NegativeButton: some View {
+    private var NegativeButtonView: some View {
         Button(action: {
             post.negativeButtonClick()
             callback()

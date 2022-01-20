@@ -3,10 +3,7 @@ import SwiftUI
 struct PostView: View {
     
     var post: NewsItem.PostItem
-    var onNews: (
-        _ title: String,
-        _ link: String
-    ) -> () = { _, _ in }
+    var onNews: (_ title: String, _ link: String) -> () = { _, _ in }
     
     var body: some View {
         VStack(spacing: 0) {

@@ -3,10 +3,7 @@ import SwiftUI
 struct PostWithCommentView: View {
     
     var post: NewsItem.PostWithCommentItem
-    var onNews: (
-        _ title: String,
-        _ link: String
-    ) -> () = { _, _ in }
+    var onNews: (_ title: String, _ link: String) -> () = { _, _ in }
     
     var body: some View {
         VStack(spacing: 10) {
@@ -79,7 +76,7 @@ fileprivate struct CommentView: View {
             )
             
             VStack(spacing: 4) {
-                CommentDetail
+                CommentDetailView
                 
                 CommonText(commentContent)
                     .foregroundColor(Palette.black.swiftUIColor)
@@ -97,7 +94,7 @@ fileprivate struct CommentView: View {
         .background(Color.clear)
     }
     
-    private var CommentDetail: some View {
+    private var CommentDetailView: some View {
         HStack(spacing: 0) {
             AttributedTextView(
                 attributedString: commentatorHandle as! NSMutableAttributedString,
