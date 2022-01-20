@@ -2,18 +2,18 @@ import SwiftUI
 
 struct PinnedPostViewNew: View {
     
-    @State var isHidden = false
+    @State var isHidden = true
     
     var body: some View {
         if isHidden {
-            VisiblePinnedPostView(onCrossButton: {
-                isHidden.toggle()
-            })
-        } else {
             Button(action: {
                 isHidden.toggle()
             }, label: {
                 HiddenPinnedPostView()
+            })
+        } else {
+            VisiblePinnedPostView(onCrossButton: {
+                isHidden.toggle()
             })
         }
     }
@@ -26,7 +26,7 @@ fileprivate struct HiddenPinnedPostView: View {
             Image("logo")
                 .frame(width: 32, height: 32)
             
-            TextView
+            TitleView
         }
         .padding(.horizontal, 12)
         .frame(height: 60)
@@ -35,8 +35,8 @@ fileprivate struct HiddenPinnedPostView: View {
     }
     
     @ViewBuilder
-    private var TextView: some View {
-        VStack(spacing: 0) {
+    private var TitleView: some View {
+        VStack(alignment: .leading, spacing: 0) {
             LinearGradient(
                 gradient: Gradient(colors: [
                     GradientPalette.red.swiftUIColor,
@@ -55,9 +55,9 @@ fileprivate struct HiddenPinnedPostView: View {
             CommonText("Click here to see more")
                 .font(.hintSemibold)
                 .foregroundColor(Palette.white.swiftUIColor)
-                .frame(maxWidth: .infinity, alignment: .leading)
         }
         .lineLimit(1)
+        .frame(maxWidth: .infinity)
     }
     
     @ViewBuilder
@@ -85,18 +85,7 @@ fileprivate struct VisiblePinnedPostView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            HStack {
-                Image("logo")
-                    .frame(width: 32, height: 32)
-                
-                Spacer()
-                
-                Button(action: {
-                    onCrossButton()
-                }, label: {
-                    Image("crossIconNew")
-                })
-            }
+            Header
             
             Spacer()
                 .frame(height: 72)
@@ -110,8 +99,23 @@ fileprivate struct VisiblePinnedPostView: View {
         }
         .padding(12)
         .background(Background)
-        .background(Palette.black.swiftUIColor)
         .cornerRadius(20)
+    }
+    
+    @ViewBuilder
+    private var Header: some View {
+        HStack {
+            Image("logo")
+                .frame(width: 32, height: 32)
+            
+            Spacer()
+            
+            Button(action: {
+                onCrossButton()
+            }, label: {
+                Image("crossIconNew")
+            })
+        }
     }
     
     private var TitleView: some View {
@@ -136,6 +140,7 @@ fileprivate struct VisiblePinnedPostView: View {
             CommonText("Huge redesign, mentors & more!")
                 .font(.bodySemibold)
                 .foregroundColor(Palette.white.swiftUIColor)
+                .lineLimit(2)
             
             Spacer()
             
@@ -154,7 +159,7 @@ fileprivate struct VisiblePinnedPostView: View {
             RadialGradient(
                 gradient: Gradient(stops: [
                     .init(color: Palette.black.swiftUIColor.opacity(0), location: 0.44),
-                    .init(color: Palette.black.swiftUIColor.opacity(0.6), location: 0.87)
+                    .init(color: Palette.black.swiftUIColor.opacity(0.6), location: 0.88)
                 ]),
                 center: UnitPoint(x: 0.8, y: 0.2),
                 startRadius: 1,
