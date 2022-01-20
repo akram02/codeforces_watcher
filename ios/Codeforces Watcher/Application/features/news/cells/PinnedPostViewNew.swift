@@ -2,7 +2,10 @@ import SwiftUI
 
 struct PinnedPostViewNew: View {
     
-    @State var isHidden = true
+    var post: NewsItem.PinnedItem
+    var onNews: (_ title: String, _ link: String) -> Void = { _, _ in }
+    
+    @State private var isHidden = true
     
     var body: some View {
         if isHidden {
@@ -12,9 +15,13 @@ struct PinnedPostViewNew: View {
                 HiddenPinnedPostView()
             })
         } else {
-            VisiblePinnedPostView(onCrossButton: {
-                isHidden.toggle()
-            })
+            VisiblePinnedPostView(
+                post: post,
+                onNews: onNews,
+                onCrossButton: {
+                    isHidden.toggle()
+                }
+            )
         }
     }
 }
@@ -81,6 +88,8 @@ fileprivate struct HiddenPinnedPostView: View {
 
 fileprivate struct VisiblePinnedPostView: View {
     
+    var post: NewsItem.PinnedItem
+    var onNews: (_ title: String, _ link: String) -> Void = { _, _ in }
     var onCrossButton: () -> Void = {}
     
     var body: some View {
@@ -129,10 +138,12 @@ fileprivate struct VisiblePinnedPostView: View {
             endPoint: .trailing
         )
             .mask(
-            CommonText("Update 3.0: What’s New?")
-                .font(SwiftUI.Font.system(size: 30, weight: .semibold, design: .monospaced))
+                CommonText(post.title)
+                    .font(SwiftUI.Font.system(size: 30, weight: .semibold, design: .monospaced))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .lineLimit(2)
         )
-            .frame(width: 200, height: 72)
+            .frame(height: 72)
     }
     
     private var SeeDetailsView: some View {
@@ -146,7 +157,9 @@ fileprivate struct VisiblePinnedPostView: View {
             
             CommonSmallButton(
                 label: "See details",
-                action: {},
+                action: {
+                    onNews(post.title, post.link)
+                },
                 foregroundColor: Palette.black.swiftUIColor,
                 backgroundColor: Palette.white.swiftUIColor
             )
@@ -159,7 +172,7 @@ fileprivate struct VisiblePinnedPostView: View {
             RadialGradient(
                 gradient: Gradient(stops: [
                     .init(color: Palette.black.swiftUIColor.opacity(0), location: 0.44),
-                    .init(color: Palette.black.swiftUIColor.opacity(0.6), location: 0.88)
+                    .init(color: Palette.black.swiftUIColor.opacity(0.5), location: 0.88)
                 ]),
                 center: UnitPoint(x: 0.8, y: 0.2),
                 startRadius: 1,
@@ -170,11 +183,5 @@ fileprivate struct VisiblePinnedPostView: View {
                     .scaledToFill()
             )
         }
-    }
-}
-
-struct PinnedPostViewNew_Previews: PreviewProvider {
-    static var previews: some View {
-        PinnedPostViewNew()
     }
 }

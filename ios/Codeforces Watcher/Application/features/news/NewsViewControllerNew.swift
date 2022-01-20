@@ -82,6 +82,12 @@ class NewsViewControllerNew: UIHostingController<NewsView>, ReKampStoreSubscribe
             self.openWebViewController(link, title, onOpenEvent, onShareEvent)
         }
         
+        rootView.onPinnedPostItem = { title, link in
+            let onOpenEvent = AnalyticsEvents().PINNED_POST_OPENED
+            let onShareEvent = AnalyticsEvents().NEWS_SHARED
+            
+            self.openWebViewController(link, title, onOpenEvent, onShareEvent)
+        }
     }
     
     private func openWebViewController(

@@ -8,6 +8,7 @@ struct NewsView: View {
     var onPostItem: (_ title: String, _ link: String) -> Void = { _, _ in }
     var onVideoItem: (_ title: String, _ link: String) -> Void = { _, _ in }
     var onFeedbackItemCallback: () -> Void = {}
+    var onPinnedPostItem: (_ title: String, _ link: String) -> Void = { _, _ in }
     
     let refreshControl = UIRefreshControl()
     
@@ -37,7 +38,7 @@ struct NewsView: View {
                     case .postItem(let item):
                         PostView(post: item, onNews: onPostItem)
                     case .pinnedItem(let item):
-                        PinnedPostViewNew()
+                        PinnedPostViewNew(post: item, onNews: onPinnedPostItem)
                     case .feedbackItem(let item):
                         FeedbackViewNew(post: item, callback: onFeedbackItemCallback)
                     case .videoItem(let item):
