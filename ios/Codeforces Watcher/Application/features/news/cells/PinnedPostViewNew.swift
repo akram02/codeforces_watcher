@@ -7,10 +7,12 @@ struct PinnedPostViewNew: View {
     
     @State private var isHidden = true
     
+    private let animationDuration = 0.3
+    
     var body: some View {
         if isHidden {
             Button(action: {
-                isHidden.toggle()
+                toggle()
             }, label: {
                 HiddenPinnedPostView()
             })
@@ -19,9 +21,15 @@ struct PinnedPostViewNew: View {
                 post: post,
                 onNews: onNews,
                 onCrossButton: {
-                    isHidden.toggle()
+                    toggle()
                 }
             )
+        }
+    }
+    
+    private func toggle() {
+        withAnimation(.easeIn(duration: animationDuration)) {
+            isHidden.toggle()
         }
     }
 }
