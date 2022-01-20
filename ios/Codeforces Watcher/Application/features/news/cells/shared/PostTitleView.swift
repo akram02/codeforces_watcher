@@ -20,7 +20,6 @@ struct PostTitleView: View {
                 CommonText(title)
                     .font(.bodySemibold)
                     .foregroundColor(Palette.black.swiftUIColor)
-                    .lineLimit(1)
                 
                 PostDetail
             }

@@ -14,7 +14,7 @@ struct PinnedPostView: View {
             Button(action: {
                 toggle()
             }, label: {
-                HiddenPinnedPostView()
+                HiddenPinnedPostView(title: post.title)
             })
         } else {
             VisiblePinnedPostView(
@@ -35,6 +35,8 @@ struct PinnedPostView: View {
 }
 
 fileprivate struct HiddenPinnedPostView: View {
+    
+    var title: String
     
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
@@ -62,17 +64,15 @@ fileprivate struct HiddenPinnedPostView: View {
                 startPoint: .leading,
                 endPoint: .trailing
             ).mask(
-                CommonText("Update 3.0: What’s New?")
+                CommonText(title)
                     .font(.midHeaderSemibold2)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .lineLimit(1)
             )
                 .frame(height: 18)
             
             CommonText("Click here to see more")
                 .font(.hintSemibold)
                 .foregroundColor(Palette.white.swiftUIColor)
-                .lineLimit(1)
         }
         .lineLimit(1)
         .frame(maxWidth: .infinity)
