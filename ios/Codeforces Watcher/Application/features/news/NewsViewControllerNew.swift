@@ -8,6 +8,7 @@ class NewsViewControllerNew: UIHostingController<NewsView>, ReKampStoreSubscribe
     init() {
         super.init(rootView: NewsView())
         
+        setRefreshControl()
         setInteractions()
     }
     
@@ -57,6 +58,13 @@ class NewsViewControllerNew: UIHostingController<NewsView>, ReKampStoreSubscribe
         present(activityController, animated: true)
         
         analyticsControler.logEvent(eventName: AnalyticsEvents().SHARE_APP, params: [:])
+    }
+    
+    private func setRefreshControl() {
+        rootView.refreshControl.run {
+            $0.addTarget(self, action: #selector(refreshNews(_:)), for: .valueChanged)
+            $0.tintColor = Palette.black
+        }
     }
     
     private func setInteractions() {
@@ -110,6 +118,8 @@ class NewsViewControllerNew: UIHostingController<NewsView>, ReKampStoreSubscribe
         var items: [NewsItem] = []
         
         if state.status == .idle {
+            rootView.refreshControl.endRefreshing()
+            
             if feedbackController.shouldShowFeedbackCell() {
                 items.append(NewsItem.feedbackItem(NewsItem.FeedbackItem(feedbackController.feedUIModel)))
                 rootView.onFeedbackItemCallback = {
@@ -128,6 +138,11 @@ class NewsViewControllerNew: UIHostingController<NewsView>, ReKampStoreSubscribe
         
         items += news.mapToItems()
         rootView.news = items
+    }
+    
+    @objc private func refreshNews(_ sender: Any) {
+        analyticsControler.logEvent(eventName: AnalyticsEvents().NEWS_REFRESH, params: [:])
+        store.dispatch(action: NewsRequests.FetchNews(isInitiatedByUser: true))
     }
 }
 
