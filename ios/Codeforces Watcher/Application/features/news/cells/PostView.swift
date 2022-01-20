@@ -31,6 +31,7 @@ struct PostView: View {
             CommonText("Be the first to comment")
                 .font(.hintRegular)
                 .foregroundColor(Palette.darkGray.swiftUIColor)
+                .lineLimit(1)
             
             Spacer()
             

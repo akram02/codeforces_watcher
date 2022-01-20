@@ -94,6 +94,24 @@ fileprivate struct CommentView: View {
         .background(Color.clear)
     }
     
+    @ViewBuilder
+    private var CommentView: some View {
+        VStack(spacing: 4) {
+            CommentDetailView
+            
+            CommonText(commentContent)
+                .foregroundColor(Palette.black.swiftUIColor)
+                .lineLimit(2)
+                .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .font(.hintRegular)
+        .padding(.horizontal, 10)
+        .padding(.vertical, 6)
+        .background(Palette.accentGrayish.swiftUIColor)
+        .cornerRadius(15, corners: [.topRight, .bottomLeft, .bottomRight])
+    }
+    
+    @ViewBuilder
     private var CommentDetailView: some View {
         HStack(spacing: 0) {
             AttributedTextView(
@@ -107,5 +125,6 @@ fileprivate struct CommentView: View {
                 .foregroundColor(Palette.darkGray.swiftUIColor)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+        .lineLimit(1)
     }
 }

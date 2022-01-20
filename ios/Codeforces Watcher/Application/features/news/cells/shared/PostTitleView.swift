@@ -25,9 +25,11 @@ struct PostTitleView: View {
                 PostDetail
             }
             .frame(maxWidth: .infinity)
+            .lineLimit(1)
         }
     }
     
+    @ViewBuilder
     private var PostDetail: some View {
         HStack(spacing: 0) {
             AttributedTextView(

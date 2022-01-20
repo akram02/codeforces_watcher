@@ -47,6 +47,7 @@ fileprivate struct HiddenPinnedPostView: View {
         .frame(height: 60)
         .background(BackgroundView)
         .cornerRadius(20)
+        .environment(\.colorScheme, .light)
     }
     
     @ViewBuilder
@@ -54,9 +55,9 @@ fileprivate struct HiddenPinnedPostView: View {
         VStack(alignment: .leading, spacing: 0) {
             LinearGradient(
                 gradient: Gradient(colors: [
-                    GradientPalette.red.swiftUIColor,
-                    GradientPalette.yellow.swiftUIColor,
-                    GradientPalette.blue.swiftUIColor
+                    Palette.redGradient.swiftUIColor,
+                    Palette.yellowGradient.swiftUIColor,
+                    Palette.blueGradient.swiftUIColor
                 ]),
                 startPoint: .leading,
                 endPoint: .trailing
@@ -64,12 +65,14 @@ fileprivate struct HiddenPinnedPostView: View {
                 CommonText("Update 3.0: What’s New?")
                     .font(.midHeaderSemibold2)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .lineLimit(1)
             )
                 .frame(height: 18)
             
             CommonText("Click here to see more")
                 .font(.hintSemibold)
                 .foregroundColor(Palette.white.swiftUIColor)
+                .lineLimit(1)
         }
         .lineLimit(1)
         .frame(maxWidth: .infinity)
@@ -117,6 +120,7 @@ fileprivate struct VisiblePinnedPostView: View {
         .padding(12)
         .background(BackgroundView)
         .cornerRadius(20)
+        .environment(\.colorScheme, .light)
     }
     
     @ViewBuilder
@@ -135,12 +139,13 @@ fileprivate struct VisiblePinnedPostView: View {
         }
     }
     
+    @ViewBuilder
     private var TitleView: some View {
         LinearGradient(
             gradient: Gradient(colors: [
-                GradientPalette.red.swiftUIColor,
-                GradientPalette.yellow.swiftUIColor,
-                GradientPalette.blue.swiftUIColor
+                Palette.redGradient.swiftUIColor,
+                Palette.yellowGradient.swiftUIColor,
+                Palette.blueGradient.swiftUIColor
             ]),
             startPoint: .leading,
             endPoint: .trailing
@@ -154,6 +159,7 @@ fileprivate struct VisiblePinnedPostView: View {
             .frame(height: 72)
     }
     
+    @ViewBuilder
     private var SeeDetailsView: some View {
         HStack {
             CommonText("Huge redesign, mentors & more!")
