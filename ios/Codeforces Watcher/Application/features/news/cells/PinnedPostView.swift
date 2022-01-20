@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct PinnedPostViewNew: View {
+struct PinnedPostView: View {
     
     var post: NewsItem.PinnedItem
     var onNews: (_ title: String, _ link: String) -> Void = { _, _ in }

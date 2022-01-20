@@ -1,7 +1,7 @@
 import SwiftUI
 import common
 
-class NewsViewControllerNew: UIHostingController<NewsView>, ReKampStoreSubscriber {
+class NewsViewController: UIHostingController<NewsView>, ReKampStoreSubscriber {
     
     private lazy var fabButton = FabButtonViewController(name: "newsShareIcon")
     

@@ -1,7 +1,7 @@
 import SwiftUI
 import SDWebImageSwiftUI
 
-struct VideoView: View {
+struct PostVideoView: View {
     
     var post: NewsItem.VideoItem
     var onNews: (

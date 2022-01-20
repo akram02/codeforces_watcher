@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct FeedbackViewNew: View {
+struct FeedbackView: View {
     
     var post: NewsItem.FeedbackItem
     var callback: () -> Void = {}

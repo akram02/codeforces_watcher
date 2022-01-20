@@ -34,15 +34,15 @@ struct NewsView: View {
                 ForEach(news.indices, id: \.self) { index in
                     switch (news[index]) {
                     case .postWithCommentItem(let item):
-                        PostWithCommentViewNew(post: item, onNews: onPostWithCommentItem)
+                        PostWithCommentView(post: item, onNews: onPostWithCommentItem)
                     case .postItem(let item):
                         PostView(post: item, onNews: onPostItem)
                     case .pinnedItem(let item):
-                        PinnedPostViewNew(post: item, onNews: onPinnedPostItem)
+                        PinnedPostView(post: item, onNews: onPinnedPostItem)
                     case .feedbackItem(let item):
-                        FeedbackViewNew(post: item, callback: onFeedbackItemCallback)
+                        FeedbackView(post: item, callback: onFeedbackItemCallback)
                     case .videoItem(let item):
-                        VideoView(post: item, onNews: onVideoItem)
+                        PostVideoView(post: item, onNews: onVideoItem)
                     }
                 }
             }

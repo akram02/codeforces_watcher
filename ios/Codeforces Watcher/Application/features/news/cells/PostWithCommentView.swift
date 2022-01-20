@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct PostWithCommentViewNew: View {
+struct PostWithCommentView: View {
     
     var post: NewsItem.PostWithCommentItem
     var onNews: (
