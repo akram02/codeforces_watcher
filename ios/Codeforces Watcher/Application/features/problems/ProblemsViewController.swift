@@ -5,7 +5,6 @@ import FirebaseAnalytics
 class ProblemsViewController: UIHostingController<ProblemsView>, ReKampStoreSubscriber {
     
     private lazy var fabButton = FabButtonViewController(name: "infinityIcon")
-    private let refreshControl = UIRefreshControl()
     
     init() {
         super.init(rootView: ProblemsView())
@@ -27,9 +26,9 @@ class ProblemsViewController: UIHostingController<ProblemsView>, ReKampStoreSubs
 
         store.subscribe(subscriber: self) { subscription in
             subscription.skipRepeats { oldState, newState in
-                return KotlinBoolean(bool: oldState.problems == newState.problems)
+                KotlinBoolean(bool: oldState.problems == newState.problems)
             }.select { state in
-                return state.problems
+                state.problems
             }
         }
     }
@@ -45,13 +44,10 @@ class ProblemsViewController: UIHostingController<ProblemsView>, ReKampStoreSubs
     private func setFabButton() {
         tabBarController?.tabBar.addSubview(fabButton.view)
         fabButton.setView()
-        fabButton.setButtonAction(action: { self.onFabButton() })
     }
     
     private func setRefreshControl() {
-        rootView.refreshControl = refreshControl
-        
-        refreshControl.run {
+        rootView.refreshControl.run {
             $0.addTarget(self, action: #selector(refreshProblems(_:)), for: .valueChanged)
             $0.tintColor = Palette.black
         }
@@ -61,12 +57,21 @@ class ProblemsViewController: UIHostingController<ProblemsView>, ReKampStoreSubs
         let state = state as! ProblemsState
         
         if state.status == .idle {
-            refreshControl.endRefreshing()
+            rootView.refreshControl.endRefreshing()
         }
         
         updateFabButton(state.isFavourite)
         
         rootView.problems = state.filteredProblems
+            .map {
+                .init(
+                    id: $0.id,
+                    title: $0.title,
+                    subtitle: $0.subtitle,
+                    isFavourite: $0.isFavourite,
+                    link: $0.link
+                )
+            }
         rootView.noProblemsExplanation = state.isFavourite ? "no_favourite_problems_explanation" : "problems_explanation"
     }
     
@@ -91,6 +96,10 @@ class ProblemsViewController: UIHostingController<ProblemsView>, ReKampStoreSubs
                 AnalyticsEvents().PROBLEM_SHARED
             )
             self.presentModal(webViewController)
+        }
+        
+        rootView.onStar = { id in
+            store.dispatch(action: ProblemsRequests.ChangeStatusFavourite(id: id))
         }
     }
     

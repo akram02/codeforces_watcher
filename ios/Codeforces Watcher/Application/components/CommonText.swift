@@ -5,7 +5,7 @@ struct CommonText: View {
     let text: String
     let isUnderlined: Bool
     
-    let kerning = CGFloat(-1)
+    let kerning = CGFloat(-1.5)
     
     init(
         _ text: String,

@@ -1,23 +1,23 @@
 {
   "images" : [
     {
-      "idiom" : "universal",
       "filename" : "hackerEarth.png",
+      "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "HackerEarth-2.png",
       "idiom" : "universal",
-      "filename" : "hackerEarth@2x.png",
       "scale" : "2x"
     },
     {
+      "filename" : "HackerEarth-3.png",
       "idiom" : "universal",
-      "filename" : "hackerEarth@3x.png",
       "scale" : "3x"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }

@@ -20,6 +20,9 @@ WHERE id = ?;
 insert:
 INSERT INTO DbProblem(id, title, subtitle, platform, link, createdAtMillis, tags, isFavourite) VALUES(?,?,?,?,?,?,?,?);
 
+getById:
+SELECT * FROM DbProblem WHERE id = ?;
+
 deleteAll:
 DELETE FROM DbProblem;
 

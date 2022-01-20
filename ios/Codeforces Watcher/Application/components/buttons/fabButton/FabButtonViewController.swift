@@ -4,9 +4,7 @@ class FabButtonViewController: UIHostingController<FabButtonView> {
     
     var action: () -> Void = {}
     
-    init(
-        name: String
-    ) {
+    init(name: String) {
         super.init(rootView: FabButtonView(name: name))
     }
     
@@ -37,6 +35,7 @@ class FabButtonViewController: UIHostingController<FabButtonView> {
     }
     
     func hide() {
+        self.removeFromParent()
         self.view.isHidden = true
     }
     

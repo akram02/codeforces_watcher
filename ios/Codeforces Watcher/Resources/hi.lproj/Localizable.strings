@@ -71,6 +71,7 @@
 "chart_info" = " = %@ (%@) \n पद: %@ \n %@ \n %@ ";
 
 "contest_date_format" = "HH:mm MMM d, EEEE";
+"contest_date_month_format" = "LLLL";
 "user_date_format" = "MMM d, yyyy";
 
 "be_the_first_to_comment" = "टिप्पणी करने वाला पहला व्यक्ति बनें";

@@ -1,5 +1,6 @@
 package io.xorum.codeforceswatcher.features.problems.redux
 
+import io.xorum.codeforceswatcher.ProblemQueries
 import io.xorum.codeforceswatcher.db.DatabaseQueries
 import io.xorum.codeforceswatcher.features.problems.ProblemsRepository
 import io.xorum.codeforceswatcher.features.problems.models.Problem
@@ -65,10 +66,13 @@ class ProblemsRequests {
         data class Failure(override val message: Message) : ToastAction
     }
 
-    class ChangeStatusFavourite(private val problem: Problem) : Request() {
+    class ChangeStatusFavourite(private val id: String) : Request() {
 
         override suspend fun execute() {
-            val newProblem = problem.copy(isFavourite = !problem.isFavourite)
+            val problem = DatabaseQueries.Problems.getById(id)
+            val newProblem = problem.copy(
+                isFavourite = !problem.isFavourite
+            )
             DatabaseQueries.Problems.update(newProblem)
             store.dispatch(Success(newProblem))
         }
