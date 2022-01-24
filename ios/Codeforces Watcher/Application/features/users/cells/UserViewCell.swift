@@ -4,6 +4,8 @@ struct UserViewCell: View {
     
     var user: UserItem.UserItem
     
+    var onUser: (_ handle: String) -> Void = { _ in }
+    
     var body: some View {
         HStack(spacing: 0) {
             CircleImageViewNew(
@@ -53,6 +55,9 @@ struct UserViewCell: View {
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 10)
+        .onTapGesture {
+            onUser(user.handle)
+        }
     }
 }
 

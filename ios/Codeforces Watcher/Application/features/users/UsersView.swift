@@ -5,6 +5,7 @@ struct UsersView: View {
     var users: [UserItem] = []
     
     var onUserAccount: (_ handle: String) -> Void = { _ in }
+    var onUser: (_ Handle: String) -> Void = { _ in }
     
     let refreshControl = UIRefreshControl()
     
@@ -31,7 +32,7 @@ struct UsersView: View {
                     case .userAccount(let item):
                         UserAccountViewCell(user: UserAccountViewCell.UIModel(item), onViewProfile: onUserAccount)
                     case .userItem(let item):
-                        UserViewCell(user: item)
+                        UserViewCell(user: item, onUser: onUser)
                     case .sectionTitle(let title):
                         TitleSectionViewCell(title: title)
                     }

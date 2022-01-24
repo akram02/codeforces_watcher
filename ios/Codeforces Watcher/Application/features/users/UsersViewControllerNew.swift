@@ -48,8 +48,14 @@ class UsersViewControllerNew: UIHostingController<UsersView>, ReKampStoreSubscri
     private func onFabButton() { }
     
     private func setInteractions() {
+//        rootView
+        
         rootView.onUserAccount = { handle in
             self.presentModal(UserViewController(handle, isUserAccount: true))
+        }
+        
+        rootView.onUser = { handle in
+            self.presentModal(UserViewController(handle, isUserAccount: false))
         }
     }
     
