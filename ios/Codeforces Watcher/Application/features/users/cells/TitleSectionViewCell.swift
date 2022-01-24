@@ -1,8 +1,8 @@
 import SwiftUI
 
-struct TitleSectionViewTableViewCell: View {
+struct TitleSectionViewCell: View {
     
-    var title = "".localized
+    var title: String
     
     var body: some View {
         CommonText(title)
@@ -15,8 +15,8 @@ struct TitleSectionViewTableViewCell: View {
     }
 }
 
-struct TitleSectionViewTableViewCell_Previews: PreviewProvider {
+struct TitleSectionViewCell_Previews: PreviewProvider {
     static var previews: some View {
-        TitleSectionViewTableViewCell(title: "Section")
+        TitleSectionViewCell(title: "Section")
     }
 }
