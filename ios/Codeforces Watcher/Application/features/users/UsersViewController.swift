@@ -15,7 +15,7 @@ import PKHUD
 class UsersViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
     
     private let tableView = UITableView()
-    private let tableAdapter = UsersTableViewAdapter()
+//    private let tableAdapter = UsersTableViewAdapter()
     private let refreshControl = UIRefreshControl()
     
     private let sortTextField = UITextField().apply {
@@ -163,25 +163,23 @@ class UsersViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
     
     private func setupTableView() {
         tableView.run {
-            $0.delegate = tableAdapter
-            $0.dataSource = tableAdapter
+//            $0.delegate = tableAdapter
+//            $0.dataSource = tableAdapter
             $0.separatorStyle = .none
             $0.refreshControl = refreshControl
         }
         
-        tableAdapter.run {
-            $0.onUserTap = { handle in
-                self.presentModal(UserViewController(handle, isUserAccount: false))
-            }
-            $0.onUserAccountTap = { handle in
-                self.presentModal(UserViewController(handle, isUserAccount: true))
-            }
-            $0.onVerifyCellTap = {
-                self.showLogOutAlert()
-            }
-        }
-
-        [UserTableViewCell.self, NoItemsTableViewCell.self, TitleSectionTableViewCell.self].forEach(tableView.registerForReuse(cellType:))
+//        tableAdapter.run {
+//            $0.onUserTap = { handle in
+//                self.presentModal(UserViewController(handle, isUserAccount: false))
+//            }
+//            $0.onUserAccountTap = { handle in
+//                self.presentModal(UserViewController(handle, isUserAccount: true))
+//            }
+//            $0.onVerifyCellTap = {
+//                self.showLogOutAlert()
+//            }
+//        }
 
         refreshControl.run {
             $0.addTarget(self, action: #selector(refreshUsers), for: .valueChanged)
@@ -294,25 +292,25 @@ class UsersViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
                 self.presentModal(SignInViewController())
                 analyticsControler.logEvent(eventName: AnalyticsEvents().SIGN_IN_OPENED, params: [:])
             }
-            tableAdapter.users =
-                [.loginItem(onLogin)] +
-                [.sectionTitle("followed_users".localized)] +
-                sortedUsers.mapToItems()
+//            tableAdapter.users =
+//                [.loginItem(onLogin)] +
+//                [.sectionTitle("followed_users".localized)] +
+//                sortedUsers.mapToItems()
         case .signedIn:
             let onVerify = {
                 self.presentModal(VerifyViewController())
                 analyticsControler.logEvent(eventName: AnalyticsEvents().VERIFY_OPENED, params: [:])
             }
-            tableAdapter.users =
-                [.verifyItem(onVerify)] +
-                [.sectionTitle("followed_users".localized)] +
-                sortedUsers.mapToItems()
+//            tableAdapter.users =
+//                [.verifyItem(onVerify)] +
+//                [.sectionTitle("followed_users".localized)] +
+//                sortedUsers.mapToItems()
         case .verified:
             guard let codeforcesUser = userState.userAccount?.codeforcesUser else { fatalError() }
-            tableAdapter.users =
-                [.userAccount(UserItem.UserAccountItem(codeforcesUser))] +
-                [.sectionTitle("followed_users".localized)] +
-                sortedUsers.mapToItems()
+//            tableAdapter.users =
+//                [.userAccount(UserItem.UserAccountItem(codeforcesUser))] +
+//                [.sectionTitle("followed_users".localized)] +
+//                sortedUsers.mapToItems()
         default:
             break
         }

@@ -31,9 +31,9 @@ struct UsersView: View {
                     case .userAccount(let item):
                         UserAccountViewCell(user: UserAccountViewCell.UIModel(item), onViewProfile: onUserAccount)
                     case .userItem(let item):
-                        CommonText("User Item")
+                        UserViewCell(user: item)
                     case .sectionTitle(let title):
-                        CommonText("Section Title")
+                        TitleSectionViewCell(title: title)
                     }
                 }
             }
