@@ -4,6 +4,8 @@ struct UsersView: View {
     
     var users: [UserItem] = []
     
+    var onUserAccount: (_ handle: String) -> Void = { _ in }
+    
     let refreshControl = UIRefreshControl()
     
     var body: some View {
@@ -23,11 +25,11 @@ struct UsersView: View {
                 ForEach(users.indices, id: \.self) { index in
                     switch users[index] {
                     case .loginItem(let onLogin):
-                        CommonText("Login Item")
+                        LoginViewCell(onLogin: onLogin)
                     case .verifyItem(let onVerify):
-                        CommonText("Verify Item")
+                        VerifyViewCell(onVerify: onVerify)
                     case .userAccount(let item):
-                        CommonText("UserAccount Item")
+                        UserAccountViewCell(user: UserAccountViewCell.UIModel(item), onViewProfile: onUserAccount)
                     case .userItem(let item):
                         CommonText("User Item")
                     case .sectionTitle(let title):

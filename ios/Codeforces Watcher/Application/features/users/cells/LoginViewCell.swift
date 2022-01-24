@@ -1,20 +1,19 @@
 import SwiftUI
 
-struct VerifyViewTableViewCell: View {
+struct LoginViewCell: View {
     
-    var onVerify: () -> Void = {}
+    var onLogin: () -> Void = {}
     
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
             Image("avatar")
             
-            CommonText("verify_account".localized)
+            CommonText("who_are_you".localized)
                 .font(.subHeaderMedium2)
                 .foregroundColor(Palette.black.swiftUIColor)
             
-            
             HStack(alignment: .bottom, spacing: 0) {
-                CommonText("verify_account_prompt".localized)
+                CommonText("login_to_identify".localized)
                     .font(.hintRegular)
                     .foregroundColor(Palette.darkGray.swiftUIColor)
                 
@@ -22,9 +21,9 @@ struct VerifyViewTableViewCell: View {
                     .frame(width: 48)
                 
                 CommonSmallButton(
-                    label: "verify".localized.uppercased(),
+                    label: "login".localized.uppercased(),
                     action: {
-                        self.onVerify()
+                        self.onLogin()
                     },
                     foregroundColor: Palette.black.swiftUIColor,
                     backgroundColor: Color.clear,
@@ -41,8 +40,8 @@ struct VerifyViewTableViewCell: View {
     }
 }
 
-struct VerifyViewTableViewCell_Previews: PreviewProvider {
+struct LoginViewCell_Previews: PreviewProvider {
     static var previews: some View {
-        VerifyViewTableViewCell()
+        LoginViewCell()
     }
 }

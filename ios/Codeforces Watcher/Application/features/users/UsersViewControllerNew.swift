@@ -8,6 +8,8 @@ class UsersViewControllerNew: UIHostingController<UsersView>, ReKampStoreSubscri
     
     init() {
         super.init(rootView: UsersView())
+        
+        setInteractions()
     }
     
     @objc required init?(coder aDecoder: NSCoder) {
@@ -44,6 +46,12 @@ class UsersViewControllerNew: UIHostingController<UsersView>, ReKampStoreSubscri
     }
     
     private func onFabButton() { }
+    
+    private func setInteractions() {
+        rootView.onUserAccount = { handle in
+            self.presentModal(UserViewController(handle, isUserAccount: true))
+        }
+    }
     
     func onNewState(state: Any) {
         let state = state as! AppState
