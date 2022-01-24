@@ -40,8 +40,7 @@ fileprivate struct HiddenPinnedPostView: View {
     
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
-            Image("logo")
-                .frame(width: 32, height: 32)
+            LogoView()
             
             TitleView
         }
@@ -69,6 +68,10 @@ fileprivate struct HiddenPinnedPostView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
             )
                 .frame(height: 18)
+                .shadow(
+                    color: Palette.black.swiftUIColor.opacity(0.25),
+                    radius: 10
+                )
             
             CommonText("Click here to see more")
                 .font(.hintSemibold)
@@ -126,8 +129,7 @@ fileprivate struct VisiblePinnedPostView: View {
     @ViewBuilder
     private var HeaderView: some View {
         HStack {
-            Image("logo")
-                .frame(width: 32, height: 32)
+            LogoView()
             
             Spacer()
             
@@ -157,6 +159,10 @@ fileprivate struct VisiblePinnedPostView: View {
                     .lineLimit(2)
         )
             .frame(height: 72)
+            .shadow(
+                color: Palette.black.swiftUIColor.opacity(0.25),
+                radius: 20
+            )
     }
     
     @ViewBuilder
@@ -197,5 +203,17 @@ fileprivate struct VisiblePinnedPostView: View {
                     .scaledToFill()
             )
         }
+    }
+}
+
+fileprivate struct LogoView: View {
+    
+    var body: some View {
+        Image("logo")
+            .frame(width: 32, height: 32)
+            .shadow(
+                color: Palette.black.swiftUIColor.opacity(0.35),
+                radius: 20
+            )
     }
 }
