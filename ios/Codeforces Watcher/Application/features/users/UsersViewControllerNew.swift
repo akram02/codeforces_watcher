@@ -10,6 +10,7 @@ class UsersViewControllerNew: UIHostingController<UsersView>, ReKampStoreSubscri
         super.init(rootView: UsersView())
         
         setInteractions()
+        setPicker()
     }
     
     @objc required init?(coder aDecoder: NSCoder) {
@@ -48,8 +49,6 @@ class UsersViewControllerNew: UIHostingController<UsersView>, ReKampStoreSubscri
     private func onFabButton() { }
     
     private func setInteractions() {
-//        rootView
-        
         rootView.onUserAccount = { handle in
             self.presentModal(UserViewController(handle, isUserAccount: true))
         }
@@ -57,6 +56,16 @@ class UsersViewControllerNew: UIHostingController<UsersView>, ReKampStoreSubscri
         rootView.onUser = { handle in
             self.presentModal(UserViewController(handle, isUserAccount: false))
         }
+    }
+    
+    private func setPicker() {
+        rootView.pickerOptions = ["default", "rating_up", "rating_down", "update_up", "update_down"].map {
+            $0.localized
+        }
+        
+        rootView.onOptionSelected = { position in
+            let sortType = UsersState.SortTypeCompanion().getSortType(sortType: position)
+            store.dispatch(action: UsersActions.Sort(sortType: sortType))}
     }
     
     func onNewState(state: Any) {

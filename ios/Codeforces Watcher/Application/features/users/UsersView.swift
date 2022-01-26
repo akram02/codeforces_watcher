@@ -5,12 +5,21 @@ struct UsersView: View {
     var users: [UserItem] = []
     
     var onUserAccount: (_ handle: String) -> Void = { _ in }
-    var onUser: (_ Handle: String) -> Void = { _ in }
+    var onUser: (_ handle: String) -> Void = { _ in }
+    
+    var pickerOptions: [String] = []
+    var onOptionSelected: (_ option: Int32) -> Void = { _ in }
     
     let refreshControl = UIRefreshControl()
     
     var body: some View {
         VStack(spacing: 0) {
+            UsersNavigationBar(
+                title: "Users".localized,
+                pickerOptions: pickerOptions,
+                onOptionSelected: onOptionSelected
+            )
+            
             RefreshableScrollView(content: {
                 UsersList
             }, refreshControl: refreshControl)
