@@ -37,7 +37,7 @@ struct NewsView: View {
         ScrollView {
             LazyVStack(spacing: 12) {
                 ForEach(news.indices, id: \.self) { index in
-                    switch (news[index]) {
+                    switch news[index] {
                     case .feedbackItem(let item):
                         FeedbackView(post: item, callback: onFeedbackItemCallback)
                     case .pinnedItem(let item):

@@ -9,15 +9,12 @@ struct FeedbackView: View {
         VStack(alignment: .leading, spacing: 20) {
             HStack(alignment: .top) {
                 TitleView
-                
                 Spacer()
-                
                 CloseButtonView
             }
             
             HStack(spacing: 20) {
                 PositiveButtonView
-                
                 NegativeButtonView
             }
         }

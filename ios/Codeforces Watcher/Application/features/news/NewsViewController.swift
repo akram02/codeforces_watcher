@@ -47,8 +47,10 @@ class NewsViewController: UIHostingController<NewsView>, ReKampStoreSubscriber {
     }
     
     private func onFabButton() {
-        let activityController = UIActivityViewController(activityItems: ["share_cw_message".localized],
-                                                          applicationActivities: nil).apply {
+        let activityController = UIActivityViewController(
+            activityItems: ["share_cw_message".localized],
+            applicationActivities: nil
+        ).apply {
             $0.popoverPresentationController?.run {
                 $0.sourceView = self.view
                 $0.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.height, width: 0, height: 0)
@@ -110,7 +112,7 @@ class NewsViewController: UIHostingController<NewsView>, ReKampStoreSubscriber {
             onOpenEvent,
             onShareEvent
         )
-        self.presentModal(webViewController)
+        presentModal(webViewController)
     }
     
     func onNewState(state: Any) {

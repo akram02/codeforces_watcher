@@ -66,14 +66,13 @@ fileprivate struct HiddenPinnedPostView: View {
                 CommonText(title)
                     .font(.midHeaderSemibold2)
                     .frame(maxWidth: .infinity, alignment: .leading)
+            ).frame(height: 18)
+            .shadow(
+                color: Palette.black.swiftUIColor.opacity(0.25),
+                radius: 10
             )
-                .frame(height: 18)
-                .shadow(
-                    color: Palette.black.swiftUIColor.opacity(0.25),
-                    radius: 10
-                )
             
-            CommonText("Click here to see more")
+            CommonText("Click to see details".localized)
                 .font(.hintSemibold)
                 .foregroundColor(Palette.white.swiftUIColor)
         }
@@ -151,24 +150,22 @@ fileprivate struct VisiblePinnedPostView: View {
             ]),
             startPoint: .leading,
             endPoint: .trailing
+        ).mask(
+            CommonText(post.title)
+                .font(SwiftUI.Font.system(size: 30, weight: .semibold, design: .monospaced))
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .lineLimit(2)
+        ).frame(height: 72)
+        .shadow(
+            color: Palette.black.swiftUIColor.opacity(0.25),
+            radius: 20
         )
-            .mask(
-                CommonText(post.title)
-                    .font(SwiftUI.Font.system(size: 30, weight: .semibold, design: .monospaced))
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .lineLimit(2)
-        )
-            .frame(height: 72)
-            .shadow(
-                color: Palette.black.swiftUIColor.opacity(0.25),
-                radius: 20
-            )
     }
     
     @ViewBuilder
     private var SeeDetailsView: some View {
         HStack {
-            CommonText("Huge redesign, mentors & more!")
+            CommonText("update_explanation".localized)
                 .font(.bodySemibold)
                 .foregroundColor(Palette.white.swiftUIColor)
                 .lineLimit(2)
@@ -176,7 +173,7 @@ fileprivate struct VisiblePinnedPostView: View {
             Spacer()
             
             CommonSmallButton(
-                label: "See details",
+                label: "see_details".localized,
                 action: {
                     onNews(post.title, post.link)
                 },
