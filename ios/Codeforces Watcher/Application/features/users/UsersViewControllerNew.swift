@@ -13,6 +13,7 @@ class UsersViewControllerNew: UIHostingController<UsersView>, ReKampStoreSubscri
         super.init(rootView: UsersView())
         
         setInteractions()
+        setRefreshControl()
         setPicker()
     }
     
@@ -75,8 +76,11 @@ class UsersViewControllerNew: UIHostingController<UsersView>, ReKampStoreSubscri
         }
     }
     
-    private func addUserCardToggle() {
-        rootView.isAddUserCardDisplayed.toggle()
+    private func setRefreshControl() {
+        rootView.refreshControl.run {
+            $0.addTarget(self, action: #selector(refreshUsers(_:)), for: .valueChanged)
+            $0.tintColor = Palette.black
+        }
     }
     
     private func setPicker() {
@@ -98,6 +102,10 @@ class UsersViewControllerNew: UIHostingController<UsersView>, ReKampStoreSubscri
         
         followedUsers = userState.followedUsers
         let sortedUsers = sortUsers(userState.sortType)
+        
+        if userState.status == .idle {
+            rootView.refreshControl.endRefreshing()
+        }
         
         switch authState.authStage {
         case .notSignedIn:
@@ -141,6 +149,10 @@ class UsersViewControllerNew: UIHostingController<UsersView>, ReKampStoreSubscri
         }
     }
     
+    private func addUserCardToggle() {
+        rootView.isAddUserCardDisplayed.toggle()
+    }
+    
     private func showLoading() {
         PKHUD.sharedHUD.userInteractionOnUnderlyingViewsEnabled = false
         HUD.show(.progress, onView: UIApplication.shared.windows.last)
@@ -177,6 +189,11 @@ class UsersViewControllerNew: UIHostingController<UsersView>, ReKampStoreSubscri
         }
         
         return sortedUsers
+    }
+    
+    @objc private func refreshUsers(_ sender: Any) {
+        store.dispatch(action: UsersRequests.FetchUserData(fetchUserDataType: FetchUserDataType.refresh, isInitiatedByUser: true))
+        analyticsControler.logEvent(eventName: AnalyticsEvents().USERS_REFRESH, params: [:])
     }
 }
 
