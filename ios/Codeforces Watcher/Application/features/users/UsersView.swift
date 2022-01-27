@@ -10,23 +10,44 @@ struct UsersView: View {
     var pickerOptions: [String] = []
     var onOptionSelected: (_ option: Int32) -> Void = { _ in }
     
+    var isAddUserCardDisplayed = false
+    var addUserCardToggle: () -> Void = {}
+    var tabBarToggle: (_ isAddUserCardDisplayed: Bool) -> Void = { _ in }
+    var onAddUser: (_ handle: String) -> Void = { _ in }
+    
     let refreshControl = UIRefreshControl()
     
     var body: some View {
-        VStack(spacing: 0) {
-            UsersNavigationBar(
-                title: "Users".localized,
-                pickerOptions: pickerOptions,
-                onOptionSelected: onOptionSelected
-            )
+        ZStack(alignment: .bottom) {
+            VStack(spacing: 0) {
+                UsersNavigationBar(
+                    title: "Users".localized,
+                    pickerOptions: pickerOptions,
+                    onOptionSelected: onOptionSelected
+                )
+                
+                RefreshableScrollView(content: {
+                    UsersList
+                }, refreshControl: refreshControl)
+                    .background(Palette.white.swiftUIColor)
+                    .cornerRadius(30, corners: [.topLeft, .topRight])
+            }
+            .background(Palette.accentGrayish.swiftUIColor.edgesIgnoringSafeArea(.top))
+            .disabled(isAddUserCardDisplayed)
             
-            RefreshableScrollView(content: {
-                UsersList
-            }, refreshControl: refreshControl)
-                .background(Palette.white.swiftUIColor)
-                .cornerRadius(30, corners: [.topLeft, .topRight])
+            if isAddUserCardDisplayed {
+                Palette.black.swiftUIColor.opacity(0.5)
+                    .edgesIgnoringSafeArea(.all)
+                    .onTapGesture {
+                        addUserCardToggle()
+                    }
+                
+                AddUserCardViewNew(onAddUser: onAddUser)
+            }
         }
-        .background(Palette.accentGrayish.swiftUIColor.edgesIgnoringSafeArea(.top))
+        .onChange(of: isAddUserCardDisplayed) { newValue in
+            tabBarToggle(newValue)
+        }
     }
     
     private var UsersList: some View {

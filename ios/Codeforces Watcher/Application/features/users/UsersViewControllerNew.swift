@@ -1,9 +1,12 @@
 import SwiftUI
+import PKHUD
 import common
 
 class UsersViewControllerNew: UIHostingController<UsersView>, ReKampStoreSubscriber {
     
-    private lazy var fabButton = FabButtonViewController(name: "plusIcon")
+    private lazy var fabButton = FabButtonViewController(name: "plusIcon").apply {
+        $0.setButtonAction(action: { self.onFabButton() } )
+    }
     private var followedUsers: [User] = []
     
     init() {
@@ -46,7 +49,9 @@ class UsersViewControllerNew: UIHostingController<UsersView>, ReKampStoreSubscri
         fabButton.setView()
     }
     
-    private func onFabButton() { }
+    private func onFabButton() {
+        addUserCardToggle()
+    }
     
     private func setInteractions() {
         rootView.onUserAccount = { handle in
@@ -56,6 +61,22 @@ class UsersViewControllerNew: UIHostingController<UsersView>, ReKampStoreSubscri
         rootView.onUser = { handle in
             self.presentModal(UserViewController(handle, isUserAccount: false))
         }
+        
+        rootView.addUserCardToggle = {
+            self.addUserCardToggle()
+        }
+        
+        rootView.tabBarToggle = { isAddUserCardDisplayed in
+            self.tabBarController?.tabBar.items?.forEach { $0.isEnabled = !isAddUserCardDisplayed }
+        }
+        
+        rootView.onAddUser = { handle in
+            store.dispatch(action: UsersRequests.AddUser(handle: handle))
+        }
+    }
+    
+    private func addUserCardToggle() {
+        rootView.isAddUserCardDisplayed.toggle()
     }
     
     private func setPicker() {
@@ -65,7 +86,8 @@ class UsersViewControllerNew: UIHostingController<UsersView>, ReKampStoreSubscri
         
         rootView.onOptionSelected = { position in
             let sortType = UsersState.SortTypeCompanion().getSortType(sortType: position)
-            store.dispatch(action: UsersActions.Sort(sortType: sortType))}
+            store.dispatch(action: UsersActions.Sort(sortType: sortType))
+        }
     }
     
     func onNewState(state: Any) {
@@ -105,6 +127,27 @@ class UsersViewControllerNew: UIHostingController<UsersView>, ReKampStoreSubscri
         default:
             break
         }
+        
+        switch userState.addUserStatus {
+        case .done:
+            hideLoading()
+            store.dispatch(action: UsersActions.ClearAddUserState())
+        case .pending:
+            showLoading()
+        case .idle:
+            hideLoading()
+        default:
+            break
+        }
+    }
+    
+    private func showLoading() {
+        PKHUD.sharedHUD.userInteractionOnUnderlyingViewsEnabled = false
+        HUD.show(.progress, onView: UIApplication.shared.windows.last)
+    }
+    
+    private func hideLoading() {
+        HUD.hide(afterDelay: 0)
     }
     
     private func sortUsers(_ sortType: UsersState.SortType) -> [User] {
