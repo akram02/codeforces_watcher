@@ -42,7 +42,7 @@ struct UsersView: View {
                         addUserCardToggle()
                     }
                 
-                AddUserCardViewNew(onAddUser: onAddUser)
+                AddUserCardView(onAddUser: onAddUser)
             }
         }
         .onChange(of: isAddUserCardDisplayed) { newValue in

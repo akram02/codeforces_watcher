@@ -12,7 +12,7 @@ import MaterialComponents.MDCButton
 
 class MainViewController: UITabBarController {
     private let controllers = [
-        UsersViewControllerNew().apply(title: "Users", iconNamed: "usersIcon", isTitleVisible: false),
+        UsersViewController().apply(title: "Users", iconNamed: "usersIcon", isTitleVisible: false),
         ContestsViewController().apply(title: "Contests", iconNamed: "contestsIcon"),
         UIViewController(),
         NewsViewController().apply(title: "News", iconNamed: "newsIcon"),

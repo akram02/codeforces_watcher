@@ -1,86 +1,42 @@
-//
-//  AddUserCardView.swift
-//  Codeforces Watcher
-//
-//  Created by Den Matyash on 4/15/20.
-//  Copyright © 2020 xorum.io. All rights reserved.
-//
+import SwiftUI
 
-import Foundation
-import UIKit
-import MaterialComponents.MDCButton
+struct AddUserCardView: View {
+    
+    var onAddUser: (_ handle: String) -> Void = { _ in }
+    
+    @State var handle = ""
+    
+    var body: some View {
+        VStack(spacing: 20) {
+            TextInputLayoutView(
+                text: $handle,
+                hint: "codeforces_handle".localized,
+                placeholder: "codeforces_handle".localized,
+                contentType: .text,
+                tag: 0
+            )
+            
+            HStack {
+                Spacer()
+                
+                CommonSmallButton(
+                    label: "Add user".localized.uppercased(),
+                    action: {
+                        onAddUser(handle)
+                    },
+                    foregroundColor: Palette.white.swiftUIColor,
+                    backgroundColor: Palette.black.swiftUIColor
+                )
+            }
+        }
+        .padding(20)
+        .background(Palette.white.swiftUIColor)
+        .cornerRadius(30, corners: [.topLeft, .topRight])
+    }
+}
 
-class AddUserCardView: UIView, UITextFieldDelegate {
-    
-    private let whiteView = CardView()
-    
-    private let explanationLabel = SubheadingBigLabel().apply {
-        $0.text = "Enter user handle".localized
-    }
-    
-    lazy var textField = CommonTextField().apply {
-        $0.delegate = self
-    }
-    
-    private let button = CommonButton().apply {
-        $0.backgroundColor = Palette.colorPrimary
-        $0.setTitle("Add user".localized.uppercased(), for: .normal)
-    }
-    
-    var shouldMoveFurther: (() -> ())?
-    
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupView()
-    }
-    
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setupView()
-    }
-    
-    private func setupView() {
-        buildViewTree()
-        setConstraints()
-        setInteractions()
-    }
-    
-    private func buildViewTree() {
-        addSubview(whiteView)
-        
-        [explanationLabel, textField, button].forEach(whiteView.addSubview)
-    }
-    
-    private func setConstraints() {
-        whiteView.edgesToSuperview()
-
-        explanationLabel.run {
-            $0.topToSuperview(offset: 16)
-            $0.leadingToSuperview(offset: 16)
-        }
-        
-        textField.run {
-            $0.leadingToSuperview(offset: 16)
-            $0.trailingToSuperview(offset: 16)
-            $0.topToBottom(of: explanationLabel, offset: 16)
-        }
-        
-        button.run {
-            $0.trailingToSuperview(offset: 16)
-            $0.bottomToSuperview(offset: -16)
-        }
-    }
-    
-    private func setInteractions() {
-        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-    }
-    
-    @objc func buttonTapped() {
-        shouldMoveFurther?()
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        shouldMoveFurther?()
-        return true
+struct AddUserCardView_Previews: PreviewProvider {
+    static var previews: some View {
+        AddUserCardView()
     }
 }
