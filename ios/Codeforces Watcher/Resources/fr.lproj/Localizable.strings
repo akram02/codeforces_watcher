@@ -6,8 +6,8 @@
 "Problems" = "Problèmes";
 
 "Commented by" = "Commenté par";
-"ago" = " - %@";
-"post_ago" = " - %@ %@";
+"ago" = " · %@";
+"post_ago" = " · %@ %@";
 
 "news_explanation" = "Informations récentes en cours de téléchargement...";
 

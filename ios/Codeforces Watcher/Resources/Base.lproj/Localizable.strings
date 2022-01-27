@@ -6,9 +6,10 @@
 "Problems" = "Problems";
 
 "Commented by" = "Commented by";
-"ago" = " - %@ ago";
-"post_ago" = " - %@ %@ ago";
+"ago" = " · %@ ago";
+"post_ago" = " · %@ %@ ago";
 
+"update_explanation" = "Huge redesign, mentors & more!";
 "news_explanation" = "Recent news are on the way to your device...";
 
 "problems_explanation" = "Problems are on the way to your device...";
@@ -30,7 +31,8 @@
 
 "User already added" = "User already added";
 
-"Click to see details" = "Click to see details";
+"Click to see details" = "Click to see more";
+"see_details" = "See details";
 "Users" = "Users";
 "followed_users" = "Followed users";
 "no_favourite_problems_explanation" = "You don’t have any favourite problems yet.\nAdd the first one using «∞» at the bottom of the screen.";
