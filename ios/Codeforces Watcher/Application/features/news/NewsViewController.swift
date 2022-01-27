@@ -1,102 +1,130 @@
-//
-//  NewsViewController.swift
-//  Codeforces Watcher
-//
-//  Created by Den Matyash on 12/31/19.
-//  Copyright © 2019 xorum.io. All rights reserved.
-//
-
-import UIKit
-import TinyConstraints
-import WebKit
+import SwiftUI
 import common
-import FirebaseAnalytics
 
-class NewsViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
-
-    private let tableView = UITableView()
-    private let tableAdapter = NewsTableViewAdapter()
-    private let refreshControl = UIRefreshControl()
+class NewsViewController: UIHostingController<NewsView>, ReKampStoreSubscriber {
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        setupView()
-        setupTableView()
+    private lazy var fabButton = FabButtonViewController(name: "newsShareIcon")
+    
+    init() {
+        super.init(rootView: NewsView())
+        
+        setRefreshControl()
+        setInteractions()
     }
-
+    
+    @objc required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        
+        hideNavigationBar()
+        setFabButton()
+        fabButton.show()
+        
         store.subscribe(subscriber: self) { subscription in
             subscription.skipRepeats { oldState, newState in
-                return KotlinBoolean(bool: oldState.news == newState.news)
+                KotlinBoolean(bool: oldState.news == newState.news)
             }.select { state in
-                return state.news
+                state.news
             }
         }
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
+        fabButton.hide()
+        
         store.unsubscribe(subscriber: self)
     }
-
-    private func setupView() {
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-        view.backgroundColor = .white
-
-        buildViewTree()
-        setConstraints()
-        setFabImage(named: "shareImage")
+    
+    private func setFabButton() {
+        tabBarController?.tabBar.addSubview(fabButton.view)
+        fabButton.setView()
+        fabButton.setButtonAction(action: { self.onFabButton() })
     }
-
-    private func buildViewTree() {
-        view.addSubview(tableView)
-    }
-
-    private func setConstraints() {
-        tableView.edgesToSuperview()
-    }
-
-    private func setupTableView() {
-        tableView.run {
-            $0.delegate = tableAdapter
-            $0.dataSource = tableAdapter
-            $0.separatorStyle = .none
+    
+    private func onFabButton() {
+        let activityController = UIActivityViewController(
+            activityItems: ["share_cw_message".localized],
+            applicationActivities: nil
+        ).apply {
+            $0.popoverPresentationController?.run {
+                $0.sourceView = self.view
+                $0.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.height, width: 0, height: 0)
+            }
         }
-
-        [PostWithCommentTableViewCell.self, PostTableViewCell.self, NoItemsTableViewCell.self,
-         PinnedPostTableViewCell.self, FeedbackTableViewCell.self, VideoTableViewCell.self].forEach(tableView.registerForReuse(cellType:))
-
-        tableAdapter.onNewsClick = { link, title, onOpenEvent, onShareEvent in
-            let webViewController = WebViewController(
-                link,
-                title,
-                onOpenEvent,
-                onShareEvent
-            )
-            self.presentModal(webViewController)
-        }
-
-        tableView.refreshControl = refreshControl
-
-        refreshControl.run {
+        
+        present(activityController, animated: true)
+        
+        analyticsControler.logEvent(eventName: AnalyticsEvents().SHARE_APP, params: [:])
+    }
+    
+    private func setRefreshControl() {
+        rootView.refreshControl.run {
             $0.addTarget(self, action: #selector(refreshNews(_:)), for: .valueChanged)
-            $0.tintColor = Palette.colorPrimaryDark
+            $0.tintColor = Palette.black
         }
     }
-
+    
+    private func setInteractions() {
+        rootView.onPinnedPostItem = { title, link in
+            let onOpenEvent = AnalyticsEvents().PINNED_POST_OPENED
+            let onShareEvent = AnalyticsEvents().NEWS_SHARED
+            
+            self.openWebViewController(link, title, onOpenEvent, onShareEvent)
+        }
+        
+        rootView.onPostItem = { title, link in
+            let onOpenEvent = AnalyticsEvents().POST_OPENED
+            let onShareEvent = AnalyticsEvents().NEWS_SHARED
+            
+            self.openWebViewController(link, title, onOpenEvent, onShareEvent)
+        }
+        
+        rootView.onPostWithCommentItem = { title, link in
+            let title = buildShareText(title, link)
+            let onOpenEvent = AnalyticsEvents().POST_OPENED
+            let onShareEvent = AnalyticsEvents().NEWS_SHARED
+            
+            self.openWebViewController(link, title, onOpenEvent, onShareEvent)
+        }
+        
+        rootView.onVideoItem = { title, link in
+            let onOpenEvent = AnalyticsEvents().VIDEO_OPENED
+            let onShareEvent = AnalyticsEvents().VIDEO_SHARED
+            
+            self.openWebViewController(link, title, onOpenEvent, onShareEvent)
+        }
+    }
+    
+    private func openWebViewController(
+        _ link: String,
+        _ title: String,
+        _ onOpenEvent: String,
+        _ onShareEvent: String
+    ) {
+        let webViewController = WebViewController(
+            link,
+            title,
+            onOpenEvent,
+            onShareEvent
+        )
+        presentModal(webViewController)
+    }
+    
     func onNewState(state: Any) {
         let state = state as! NewsState
         var items: [NewsItem] = []
         
-        if (state.status == .idle) {
-            refreshControl.endRefreshing()
+        if state.status == .idle {
+            rootView.refreshControl.endRefreshing()
             
-            if (feedbackController.shouldShowFeedbackCell()) {
+            if feedbackController.shouldShowFeedbackCell() {
                 items.append(NewsItem.feedbackItem(NewsItem.FeedbackItem(feedbackController.feedUIModel)))
-                tableAdapter.callback = {
+                rootView.onFeedbackItemCallback = {
                     self.onNewState(state: state)
                 }
             }
@@ -111,29 +139,15 @@ class NewsViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
         }
         
         items += news.mapToItems()
-        tableAdapter.news = items
-
-        tableView.reloadData()
+        rootView.news = items
     }
     
-    override func fabButtonTapped() {
-        let activityController = UIActivityViewController(activityItems: ["share_cw_message".localized], applicationActivities: nil).apply {
-            $0.popoverPresentationController?.run {
-                $0.sourceView = self.view
-                $0.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.height, width: 0, height: 0)
-            }
-        }
-        
-        present(activityController, animated: true)
-        
-        analyticsControler.logEvent(eventName: AnalyticsEvents().SHARE_APP, params: [:])
-    }
-
     @objc private func refreshNews(_ sender: Any) {
         analyticsControler.logEvent(eventName: AnalyticsEvents().NEWS_REFRESH, params: [:])
         store.dispatch(action: NewsRequests.FetchNews(isInitiatedByUser: true))
     }
 }
+
 
 fileprivate extension Array where Element == News {
     func mapToItems() -> [NewsItem] {
