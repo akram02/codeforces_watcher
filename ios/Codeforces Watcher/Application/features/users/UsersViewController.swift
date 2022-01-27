@@ -67,10 +67,6 @@ class UsersViewController: UIHostingController<UsersView>, ReKampStoreSubscriber
             self.addUserCardToggle()
         }
         
-        rootView.tabBarToggle = { isAddUserCardDisplayed in
-            self.tabBarController?.tabBar.items?.forEach { $0.isEnabled = !isAddUserCardDisplayed }
-        }
-        
         rootView.onAddUser = { handle in
             store.dispatch(action: UsersRequests.AddUser(handle: handle))
         }
@@ -151,6 +147,7 @@ class UsersViewController: UIHostingController<UsersView>, ReKampStoreSubscriber
     
     private func addUserCardToggle() {
         rootView.isAddUserCardDisplayed.toggle()
+        self.tabBarController?.tabBar.items?.forEach { $0.isEnabled = !rootView.isAddUserCardDisplayed }
     }
     
     private func showLoading() {

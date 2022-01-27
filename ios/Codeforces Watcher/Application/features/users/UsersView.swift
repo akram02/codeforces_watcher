@@ -12,7 +12,6 @@ struct UsersView: View {
     
     var isAddUserCardDisplayed = false
     var addUserCardToggle: () -> Void = {}
-    var tabBarToggle: (_ isAddUserCardDisplayed: Bool) -> Void = { _ in }
     var onAddUser: (_ handle: String) -> Void = { _ in }
     
     let refreshControl = UIRefreshControl()
@@ -44,9 +43,6 @@ struct UsersView: View {
                 
                 AddUserCardView(onAddUser: onAddUser)
             }
-        }
-        .onChange(of: isAddUserCardDisplayed) { newValue in
-            tabBarToggle(newValue)
         }
     }
     
