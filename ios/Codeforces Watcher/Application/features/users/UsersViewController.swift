@@ -14,7 +14,6 @@ class UsersViewController: UIHostingController<UsersView>, ReKampStoreSubscriber
         
         setInteractions()
         setRefreshControl()
-        setPicker()
     }
     
     @objc required init?(coder aDecoder: NSCoder) {
@@ -43,6 +42,12 @@ class UsersViewController: UIHostingController<UsersView>, ReKampStoreSubscriber
         fabButton.hide()
         
         store.unsubscribe(subscriber: self)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setPicker()
     }
     
     private func setFabButton() {
@@ -83,6 +88,8 @@ class UsersViewController: UIHostingController<UsersView>, ReKampStoreSubscriber
         rootView.pickerOptions = ["default", "rating_up", "rating_down", "update_up", "update_down"].map {
             $0.localized
         }
+        
+        rootView.pickerSelectedPosition = Int(store.state.users.sortType.position)
         
         rootView.onOptionSelected = { position in
             let sortType = UsersState.SortTypeCompanion().getSortType(sortType: position)

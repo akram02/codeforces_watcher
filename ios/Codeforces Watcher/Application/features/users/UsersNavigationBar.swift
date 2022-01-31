@@ -5,6 +5,7 @@ struct UsersNavigationBar: View {
     var title: String
     
     var pickerOptions: [String] = []
+    var pickerSelectedPosition: Int = 0
     var onOptionSelected: (_ option: Int32) -> Void = { _ in }
     
     var body: some View {
@@ -13,6 +14,7 @@ struct UsersNavigationBar: View {
             Spacer()
             RightButtonView(
                 pickerOptions: pickerOptions,
+                pickerSelectedPosition: pickerSelectedPosition,
                 onOptionSelected: onOptionSelected
             )
         }
@@ -58,12 +60,12 @@ fileprivate struct RightButtonView: View {
     
     init(
         pickerOptions: [String],
+        pickerSelectedPosition: Int,
         onOptionSelected: @escaping (Int32) -> Void
     ) {
         self.pickerOptions = pickerOptions
+        self.selectedOption = pickerOptions[pickerSelectedPosition]
         self.onOptionSelected = onOptionSelected
-        
-        self.selectedOption = pickerOptions.last ?? ""
     }
     
     var body: some View {
@@ -74,23 +76,17 @@ fileprivate struct RightButtonView: View {
                 }
             }, label: {
                 LabelView
-            }).onChange(of: selectedOption) { newValue in
-                onOptionSelected(Int32(pickerOptions.firstIndex(of: newValue) ?? 0))
-            }
+            })
         }, label: {
             LabelView
-        })
+        }).onChange(of: selectedOption) { newValue in
+            onOptionSelected(Int32(pickerOptions.firstIndex(of: newValue) ?? 0))
+        }
     }
     
     @ViewBuilder
     private var LabelView: some View {
         Image("filterIcon")
             .renderingMode(.original)
-    }
-}
-
-struct UsersNavigationBar_Previews: PreviewProvider {
-    static var previews: some View {
-        UsersNavigationBar(title: "Users")
     }
 }

@@ -8,6 +8,7 @@ struct UsersView: View {
     var onUser: (_ handle: String) -> Void = { _ in }
     
     var pickerOptions: [String] = []
+    var pickerSelectedPosition: Int = 0
     var onOptionSelected: (_ option: Int32) -> Void = { _ in }
     
     var isAddUserCardDisplayed = false
@@ -22,6 +23,7 @@ struct UsersView: View {
                 UsersNavigationBar(
                     title: "Users".localized,
                     pickerOptions: pickerOptions,
+                    pickerSelectedPosition: pickerSelectedPosition,
                     onOptionSelected: onOptionSelected
                 )
                 
