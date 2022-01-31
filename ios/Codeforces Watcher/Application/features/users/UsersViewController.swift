@@ -23,6 +23,7 @@ class UsersViewController: UIHostingController<UsersView>, ReKampStoreSubscriber
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        setPicker()
         hideNavigationBar()
         setFabButton()
         fabButton.show()
@@ -42,12 +43,6 @@ class UsersViewController: UIHostingController<UsersView>, ReKampStoreSubscriber
         fabButton.hide()
         
         store.unsubscribe(subscriber: self)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        setPicker()
     }
     
     private func setFabButton() {
