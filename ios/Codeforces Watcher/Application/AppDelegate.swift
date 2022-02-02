@@ -106,7 +106,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         window = UIWindow(frame: UIScreen.main.bounds)
-        window!.rootViewController = rootViewController
+        window!.rootViewController = MainViewControllerNew()
         window!.makeKeyAndVisible()
 
         window?.overrideUserInterfaceStyle = .unspecified
