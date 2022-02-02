@@ -14,6 +14,10 @@ struct MainView: View {
             Spacer()
             ButtonItem(index: 3, title: "Problems", iconName: "problemsIcon")
         }
+        .frame(height: 60)
+        .background(Palette.accentGrayish.swiftUIColor)
+        .cornerRadius(30, corners: [.topLeft, .topRight])
+        .shadow(color: Palette.white.swiftUIColor, radius: 40, x: 0, y: -20)
     }
     
     @ViewBuilder
@@ -46,9 +50,9 @@ fileprivate struct ColorScheme: ViewModifier {
         if isSelected {
             LinearGradient(
                 gradient: Gradient(stops: [
-                    .init(color: PalleteGradient.redGradient.swiftUIColor, location: 0.06),
-                    .init(color: PalleteGradient.yellowGradient.swiftUIColor, location: 0.55),
-                    .init(color: PalleteGradient.blueGradient.swiftUIColor, location: 0.92)
+                    .init(color: Palette.redGradient.swiftUIColor, location: 0.06),
+                    .init(color: Palette.yellowGradient.swiftUIColor, location: 0.55),
+                    .init(color: Palette.blueGradient.swiftUIColor, location: 0.92)
                 ]),
                 startPoint: .topTrailing,
                 endPoint: .bottomLeading
@@ -58,13 +62,6 @@ fileprivate struct ColorScheme: ViewModifier {
                 .foregroundColor(Palette.darkGray.swiftUIColor)
         }
     }
-}
-
-fileprivate class PalleteGradient {
-    
-    public static let redGradient = UIColor(rgb: 0xC60706)
-    public static let yellowGradient = UIColor(rgb: 0xFFCA00)
-    public static let blueGradient = UIColor(rgb: 0x1289CE)
 }
 
 struct MainView_Previews: PreviewProvider {
