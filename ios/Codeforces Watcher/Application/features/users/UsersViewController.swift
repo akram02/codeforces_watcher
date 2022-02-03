@@ -4,9 +4,6 @@ import common
 
 class UsersViewController: UIHostingController<UsersView>, ReKampStoreSubscriber {
     
-    private lazy var fabButton = FabButtonViewController(name: "plusIcon").apply {
-        $0.setButtonAction(action: { self.onFabButton() } )
-    }
     private var followedUsers: [User] = []
     
     init() {
@@ -25,8 +22,6 @@ class UsersViewController: UIHostingController<UsersView>, ReKampStoreSubscriber
         
         setPicker()
         hideNavigationBar()
-        setFabButton()
-        fabButton.show()
         
         store.subscribe(subscriber: self) { subscription in
             subscription.skipRepeats { oldState, newState in
@@ -40,14 +35,7 @@ class UsersViewController: UIHostingController<UsersView>, ReKampStoreSubscriber
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        fabButton.hide()
-        
         store.unsubscribe(subscriber: self)
-    }
-    
-    private func setFabButton() {
-        tabBarController?.tabBar.addSubview(fabButton.view)
-        fabButton.setView()
     }
     
     private func onFabButton() {

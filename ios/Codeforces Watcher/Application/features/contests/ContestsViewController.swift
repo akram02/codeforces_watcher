@@ -4,10 +4,6 @@ import common
 
 class ContestsViewController: UIHostingController<ContestsView>, ReKampStoreSubscriber {
     
-    private lazy var fabButton = FabButtonViewController(name: "eyeIcon").apply {
-        $0.setButtonAction(action: { self.onFabButton() } )
-    }
-    
     init() {
         super.init(rootView: ContestsView())
         
@@ -23,8 +19,6 @@ class ContestsViewController: UIHostingController<ContestsView>, ReKampStoreSubs
         super.viewWillAppear(animated)
         
         hideNavigationBar()
-        setFabButton()
-        fabButton.show()
         
         store.subscribe(subscriber: self) { subscription in
             subscription.skipRepeats { oldState, newState in
@@ -38,14 +32,7 @@ class ContestsViewController: UIHostingController<ContestsView>, ReKampStoreSubs
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        fabButton.hide()
-        
         store.unsubscribe(subscriber: self)
-    }
-    
-    private func setFabButton() {
-        tabBarController?.tabBar.addSubview(fabButton.view)
-        fabButton.setView()
     }
     
     private func onFabButton() {

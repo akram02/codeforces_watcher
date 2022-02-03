@@ -20,7 +20,7 @@ let analyticsControler = AppStoreKt.analyticsController
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    let rootViewController = MainViewController()
+    let rootViewController = MainViewControllerNew()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         initDatabase()
@@ -106,7 +106,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         window = UIWindow(frame: UIScreen.main.bounds)
-        window!.rootViewController = MainViewControllerNew()
+        window!.rootViewController = rootViewController
         window!.makeKeyAndVisible()
 
         window?.overrideUserInterfaceStyle = .unspecified

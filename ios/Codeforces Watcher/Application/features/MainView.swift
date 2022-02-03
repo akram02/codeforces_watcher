@@ -2,22 +2,29 @@ import SwiftUI
 
 struct MainView: View {
     
-    @State private var selectedIndex = 0
+    var selectedIndex: Int = 0
+    var container: ViewControllerContainer
+    
+    var onTabItem: (_ index: Int) -> Void = { _ in }
     
     var body: some View {
-        HStack {
-            ButtonItem(index: 0, title: "Contests", iconName: "contestsIcon")
-            Spacer()
-            ButtonItem(index: 1, title: "Users", iconName: "usersIcon")
-            Spacer()
-            ButtonItem(index: 2, title: "News", iconName: "newsIcon")
-            Spacer()
-            ButtonItem(index: 3, title: "Problems", iconName: "problemsIcon")
+        VStack(spacing: 0) {
+            container
+            
+            HStack {
+                ButtonItem(index: 0, title: "Contests", iconName: "contestsIcon")
+                Spacer()
+                ButtonItem(index: 1, title: "Users", iconName: "usersIcon")
+                Spacer()
+                ButtonItem(index: 2, title: "News", iconName: "newsIcon")
+                Spacer()
+                ButtonItem(index: 3, title: "Problems", iconName: "problemsIcon")
+            }
+            .frame(height: 60)
+            .background(Palette.accentGrayish.swiftUIColor)
+            .cornerRadius(30, corners: [.topLeft, .topRight])
+            .shadow(color: Palette.white.swiftUIColor, radius: 40, x: 0, y: -20)
         }
-        .frame(height: 60)
-        .background(Palette.accentGrayish.swiftUIColor)
-        .cornerRadius(30, corners: [.topLeft, .topRight])
-        .shadow(color: Palette.white.swiftUIColor, radius: 40, x: 0, y: -20)
     }
     
     @ViewBuilder
@@ -37,7 +44,7 @@ struct MainView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onTapGesture {
-            selectedIndex = index
+            onTabItem(index)
         }
     }
 }
@@ -61,11 +68,5 @@ fileprivate struct ColorScheme: ViewModifier {
             content
                 .foregroundColor(Palette.darkGray.swiftUIColor)
         }
-    }
-}
-
-struct MainView_Previews: PreviewProvider {
-    static var previews: some View {
-        MainView()
     }
 }
