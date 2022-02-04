@@ -62,7 +62,7 @@ class ProblemsViewController: UIHostingController<ProblemsView>, ReKampStoreSubs
         rootView.noProblemsExplanation = state.isFavourite ? "no_favourite_problems_explanation" : "problems_explanation"
     }
     
-    private func onFabButton() {
+    func onFabButton() {
         store.dispatch(action: ProblemsActions.ChangeTypeProblems(isFavourite: !store.state.problems.isFavourite))
     }
     

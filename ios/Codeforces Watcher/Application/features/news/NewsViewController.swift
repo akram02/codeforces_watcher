@@ -34,7 +34,7 @@ class NewsViewController: UIHostingController<NewsView>, ReKampStoreSubscriber {
         store.unsubscribe(subscriber: self)
     }
     
-    private func onFabButton() {
+    func onFabButton() {
         let activityController = UIActivityViewController(
             activityItems: ["share_cw_message".localized],
             applicationActivities: nil

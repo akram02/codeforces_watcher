@@ -3,28 +3,49 @@ import SwiftUI
 struct MainView: View {
     
     var selectedIndex: Int = 0
+    
     var container: ViewControllerContainer
     
+    var fabButtonIconName: String = ""
+    var onFabButton: () -> Void = {}
+    
     var onTabItem: (_ index: Int) -> Void = { _ in }
+    
+    @State private var geometryHeight: CGFloat = 0
     
     var body: some View {
         VStack(spacing: 0) {
             container
             
-            HStack {
-                ButtonItem(index: 0, title: "Contests", iconName: "contestsIcon")
-                Spacer()
-                ButtonItem(index: 1, title: "Users", iconName: "usersIcon")
-                Spacer()
-                ButtonItem(index: 2, title: "News", iconName: "newsIcon")
-                Spacer()
-                ButtonItem(index: 3, title: "Problems", iconName: "problemsIcon")
+            GeometryReader { geometry in
+                ZStack {
+                    HStack(alignment: .bottom) {
+                        ButtonItem(index: 0, title: "Contests", iconName: "contestsIcon")
+                        Spacer()
+                        ButtonItem(index: 1, title: "Users", iconName: "usersIcon")
+                        Spacer()
+                            .frame(width: geometry.size.width * 0.15)
+                        ButtonItem(index: 2, title: "News", iconName: "newsIcon")
+                        Spacer()
+                        ButtonItem(index: 3, title: "Problems", iconName: "problemsIcon")
+                    }
+                    .frame(height: 60)
+                    .background(Palette.accentGrayish.swiftUIColor)
+                    .cornerRadius(30, corners: [.topLeft, .topRight])
+                    .shadow(color: Palette.white.swiftUIColor, radius: 40, x: 0, y: -20)
+                    .background(GeometryReader { g -> Color in
+                        DispatchQueue.main.async {
+                            self.geometryHeight = g.size.height
+                        }
+                        return Color.clear
+                    })
+                    
+                    FabButtonView()
+                }
             }
-            .frame(height: 60)
-            .background(Palette.accentGrayish.swiftUIColor)
-            .cornerRadius(30, corners: [.topLeft, .topRight])
-            .shadow(color: Palette.white.swiftUIColor, radius: 40, x: 0, y: -20)
+            .frame(height: geometryHeight)
         }
+        .edgesIgnoringSafeArea(.top)
     }
     
     @ViewBuilder
@@ -46,6 +67,16 @@ struct MainView: View {
         .onTapGesture {
             onTabItem(index)
         }
+    }
+    
+    @ViewBuilder
+    private func FabButtonView() -> some View {
+        Button(action: {
+            onFabButton()
+        }, label: {
+            Image(fabButtonIconName)
+                .renderingMode(.original)
+        }).offset(y: -16)
     }
 }
 

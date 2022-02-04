@@ -30,6 +30,7 @@ class MainViewControllerNew: UIHostingController<MainView> {
             addChild($0)
             $0.didMove(toParent: self)
         }
+        updateFabButton()
     }
     
     private func removeChildViewController() {
@@ -44,10 +45,41 @@ class MainViewControllerNew: UIHostingController<MainView> {
             guard let childController = self?.controllers[index] else { return }
             
             self?.rootView.selectedIndex = index
-            
             self?.removeChildViewController()
             self?.rootView.container.viewController = childController
             self?.addChildViewController()
+        }
+    }
+    
+    private func updateFabButton() {
+        switch rootView.selectedIndex {
+        case 0:
+            rootView.fabButtonIconName = "eyeIcon"
+            rootView.onFabButton = { [weak self] in
+                let viewController = self?.controllers[0] as! ContestsViewController
+                viewController.onFabButton()
+            }
+        case 1:
+            rootView.fabButtonIconName = "plusIcon"
+            rootView.onFabButton = { [weak self] in
+                let viewController = self?.controllers[1] as! UsersViewController
+                viewController.onFabButton()
+            }
+        case 2:
+            rootView.fabButtonIconName = "newsShareIcon"
+            rootView.onFabButton = { [weak self] in
+                let viewController = self?.controllers[2] as! NewsViewController
+                viewController.onFabButton()
+            }
+        case 3:
+            rootView.fabButtonIconName = store.state.problems.isFavourite ? "starProblemsIcon" : "infinityIcon"
+            rootView.onFabButton = { [weak self] in
+                let viewController = self?.controllers[3] as! ProblemsViewController
+                viewController.onFabButton()
+                self?.updateFabButton()
+            }
+        default:
+            break
         }
     }
 }

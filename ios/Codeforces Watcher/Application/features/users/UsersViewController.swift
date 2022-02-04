@@ -38,7 +38,7 @@ class UsersViewController: UIHostingController<UsersView>, ReKampStoreSubscriber
         store.unsubscribe(subscriber: self)
     }
     
-    private func onFabButton() {
+    func onFabButton() {
         addUserCardToggle()
     }
     

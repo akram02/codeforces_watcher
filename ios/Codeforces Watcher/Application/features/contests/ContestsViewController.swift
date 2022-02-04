@@ -35,7 +35,7 @@ class ContestsViewController: UIHostingController<ContestsView>, ReKampStoreSubs
         store.unsubscribe(subscriber: self)
     }
     
-    private func onFabButton() {
+    func onFabButton() {
         let contestsLink = "https://clist.by/"
         let webViewController = WebViewController(contestsLink, "upcoming_contests".localized)
         presentModal(webViewController)
