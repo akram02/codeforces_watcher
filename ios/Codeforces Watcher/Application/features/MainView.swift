@@ -56,7 +56,7 @@ struct MainView: View {
     ) -> some View {
         VStack(spacing: 2) {
             Image(iconName)
-                .modifier(ColorScheme(isSelected: selectedIndex == index))
+                .modifier(ColorScheme(title: title, isSelected: selectedIndex == index))
                 .frame(width: 24, height: 24)
             
             Text(title)
@@ -82,15 +82,23 @@ struct MainView: View {
 
 fileprivate struct ColorScheme: ViewModifier {
     
+    var title: String
     var isSelected: Bool
+    
+    private let gradientLocations: [String : [CGFloat]] = [
+        "Contests": [0.2, 0.55, 0.80],
+        "Users": [0.2, 0.55, 0.85],
+        "News": [0.07, 0.55, 0.8],
+        "Problems": [0.2, 0.53, 0.70]
+    ]
     
     func body(content: Content) -> some View {
         if isSelected {
             LinearGradient(
                 gradient: Gradient(stops: [
-                    .init(color: Palette.redGradient.swiftUIColor, location: 0.06),
-                    .init(color: Palette.yellowGradient.swiftUIColor, location: 0.55),
-                    .init(color: Palette.blueGradient.swiftUIColor, location: 0.92)
+                    .init(color: Palette.redGradient.swiftUIColor, location: gradientLocations[title]![0]),
+                    .init(color: Palette.yellowGradient.swiftUIColor, location: gradientLocations[title]![1]),
+                    .init(color: Palette.blueGradient.swiftUIColor, location: gradientLocations[title]![2])
                 ]),
                 startPoint: .topTrailing,
                 endPoint: .bottomLeading
