@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "FAB-13.png",
+      "filename" : "ic_eye_light@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -12,12 +12,12 @@
           "value" : "dark"
         }
       ],
-      "filename" : "FAB-16.png",
+      "filename" : "ic_eye_dark@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "FAB-14.png",
+      "filename" : "ic_eye_light@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
@@ -28,12 +28,12 @@
           "value" : "dark"
         }
       ],
-      "filename" : "FAB-17.png",
+      "filename" : "ic_eye_dark@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "FAB-15.png",
+      "filename" : "ic_eye_light@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     },
@@ -44,7 +44,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "FAB-18.png",
+      "filename" : "ic_eye_dark@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

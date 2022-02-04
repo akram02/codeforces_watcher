@@ -1,17 +1,50 @@
 {
   "images" : [
     {
-      "filename" : "ic_arrow.png",
+      "filename" : "ic_arrow_light@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "ic_arrow@2x.png",
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "ic_arrow_dark@1x.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "ic_arrow_light@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "ic_arrow@3x.png",
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "ic_arrow_dark@2x.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "ic_arrow_light@3x.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "ic_arrow_dark@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

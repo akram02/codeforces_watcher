@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "Path.png",
+      "filename" : "ic_star_light@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -12,12 +12,12 @@
           "value" : "dark"
         }
       ],
-      "filename" : "Path-3.png",
+      "filename" : "ic_star_dark@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Path-1.png",
+      "filename" : "ic_star_light@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
@@ -28,12 +28,12 @@
           "value" : "dark"
         }
       ],
-      "filename" : "Path-4.png",
+      "filename" : "ic_star_dark@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Path-2.png",
+      "filename" : "ic_star_light@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     },
@@ -44,7 +44,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "Path-5.png",
+      "filename" : "ic_star_dark@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

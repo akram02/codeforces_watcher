@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "hackerEarth.png",
+      "filename" : "ic_hackerEarth@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "HackerEarth-2.png",
+      "filename" : "ic_hackerEarth@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "HackerEarth-3.png",
+      "filename" : "ic_hackerEarth@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

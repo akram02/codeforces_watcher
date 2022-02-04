@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "Codeforces Secondary.png",
+      "filename" : "ic_codeforces_light@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -12,12 +12,12 @@
           "value" : "dark"
         }
       ],
-      "filename" : "Codeforces.png",
+      "filename" : "ic_codeforces_dark@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Codeforces Secondary-2.png",
+      "filename" : "ic_codeforces_light@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
@@ -28,12 +28,12 @@
           "value" : "dark"
         }
       ],
-      "filename" : "Codeforces-2.png",
+      "filename" : "ic_codeforces_dark@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Codeforces Secondary-3.png",
+      "filename" : "ic_codeforces_light@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     },
@@ -44,7 +44,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "Codeforces-3.png",
+      "filename" : "ic_codeforces_dark@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
