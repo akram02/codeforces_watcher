@@ -1,6 +1,6 @@
 import SwiftUI
 
-class MainViewControllerNew: UIHostingController<MainView> {
+class MainViewController: UIHostingController<MainView> {
     
     private let controllers = [
         ContestsViewController(),

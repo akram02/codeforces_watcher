@@ -41,6 +41,7 @@ struct MainView: View {
                     })
                     
                     FabButtonView()
+                        .frame(width: 56, height: 56)
                 }
             }
             .frame(height: geometryHeight)

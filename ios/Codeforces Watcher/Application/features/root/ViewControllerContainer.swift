@@ -7,6 +7,7 @@ struct ViewControllerContainer: UIViewRepresentable {
 
     func makeUIView(context: Context) -> UIView {
         uiView.addSubview(viewController.view)
+        
         viewController.view.run {
             $0.widthToSuperview()
             $0.heightToSuperview()
@@ -18,6 +19,7 @@ struct ViewControllerContainer: UIViewRepresentable {
     func updateUIView(_ uiView: UIView, context: Context) {
         self.uiView.subviews.last?.removeFromSuperview()
         self.uiView.addSubview(viewController.view)
+        
         viewController.view.run {
             $0.widthToSuperview()
             $0.heightToSuperview()
