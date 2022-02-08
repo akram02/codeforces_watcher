@@ -20,19 +20,19 @@ struct MainView: View {
             GeometryReader { geometry in
                 ZStack {
                     HStack(alignment: .bottom) {
-                        ButtonItem(index: 0, title: "Contests", iconName: "contestsIcon")
+                        ButtonItemView(index: 0, title: "Contests", iconName: "contestsIcon")
                         Spacer()
-                        ButtonItem(index: 1, title: "Users", iconName: "usersIcon")
+                        ButtonItemView(index: 1, title: "Users", iconName: "usersIcon")
                         Spacer()
                             .frame(width: geometry.size.width * 0.15)
-                        ButtonItem(index: 2, title: "News", iconName: "newsIcon")
+                        ButtonItemView(index: 2, title: "News", iconName: "newsIcon")
                         Spacer()
-                        ButtonItem(index: 3, title: "Problems", iconName: "problemsIcon")
+                        ButtonItemView(index: 3, title: "Problems", iconName: "problemsIcon")
                     }
                     .frame(height: 60)
                     .background(Palette.accentGrayish.swiftUIColor)
                     .cornerRadius(30, corners: [.topLeft, .topRight])
-                    .shadow(color: Palette.white.swiftUIColor, radius: 40, x: 0, y: -20)
+                    .shadow(color: Palette.white.swiftUIColor, radius: 20)
                     .background(GeometryReader { g -> Color in
                         DispatchQueue.main.async {
                             self.geometryHeight = g.size.height
@@ -45,12 +45,15 @@ struct MainView: View {
                 }
             }
             .frame(height: geometryHeight)
+            
+            Palette.accentGrayish.swiftUIColor
+                .frame(height: 20)
         }
-        .edgesIgnoringSafeArea(.top)
+        .edgesIgnoringSafeArea(.all)
     }
     
     @ViewBuilder
-    private func ButtonItem(
+    private func ButtonItemView(
         index: Int,
         title: String,
         iconName: String
