@@ -67,7 +67,7 @@ class ProblemsAdapter(
 
                 onClickListener = { itemClickListener(this) }
                 onFavouriteClickListener = {
-                    store.dispatch(ProblemsRequests.ChangeStatusFavourite(this.copy()))
+                    store.dispatch(ProblemsRequests.ChangeStatusFavourite(this.id))
                     when (isFavouriteStatus) {
                         false -> notifyItemChanged(adapterPosition).also { changeProblem(this) }
                         true -> notifyItemRemoved(adapterPosition).also { removeProblem(this) }

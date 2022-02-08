@@ -19,6 +19,7 @@ import com.bogdan.codeforceswatcher.features.contests.ContestsFragment
 import com.bogdan.codeforceswatcher.features.news.NewsFragment
 import com.bogdan.codeforceswatcher.features.problems.ProblemsFragment
 import com.bogdan.codeforceswatcher.features.users.UsersFragment
+import com.bogdan.codeforceswatcher.features.problems.ProblemsFragmentNew
 import com.bogdan.codeforceswatcher.util.FeedbackController
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import io.xorum.codeforceswatcher.features.problems.redux.ProblemsActions
@@ -71,7 +72,7 @@ class MainActivity : AppCompatActivity() {
                 currentTabFragment as? NewsFragment ?: NewsFragment()
             }
             HomeTab.PROBLEMS -> {
-                currentTabFragment as? ProblemsFragment ?: ProblemsFragment()
+                currentTabFragment as? ProblemsFragmentNew ?: ProblemsFragmentNew()
             }
         }
 
