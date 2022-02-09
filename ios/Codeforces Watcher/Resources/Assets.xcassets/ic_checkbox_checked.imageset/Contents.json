@@ -1,6 +1,7 @@
 {
   "images" : [
     {
+      "filename" : "ic_checkbox_checked_light@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -11,10 +12,12 @@
           "value" : "dark"
         }
       ],
+      "filename" : "ic_checkbox_checked_dark@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "ic_checkbox_checked_light@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
@@ -25,11 +28,12 @@
           "value" : "dark"
         }
       ],
+      "filename" : "ic_checkbox_checked_dark@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Prop1=White Enabled (2).png",
+      "filename" : "ic_checkbox_checked_light@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     },
@@ -40,7 +44,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "Prop1=Black Enabled (2).png",
+      "filename" : "ic_checkbox_checked_dark@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

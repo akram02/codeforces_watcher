@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "TopCoder Secondary.png",
+      "filename" : "ic_TopCoder_light@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -12,12 +12,12 @@
           "value" : "dark"
         }
       ],
-      "filename" : "topcoder.png",
+      "filename" : "ic_TopCoder_dark@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "TopCoder Secondary-2.png",
+      "filename" : "ic_TopCoder_light@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
@@ -28,12 +28,12 @@
           "value" : "dark"
         }
       ],
-      "filename" : "TopCoder-2.png",
+      "filename" : "ic_TopCoder_dark@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "TopCoder Secondary-3.png",
+      "filename" : "ic_TopCoder_light@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     },
@@ -44,7 +44,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "TopCoder-3.png",
+      "filename" : "ic_TopCoder_dark@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

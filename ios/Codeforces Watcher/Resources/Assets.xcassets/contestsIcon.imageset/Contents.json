@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Contests.png",
+      "filename" : "ic_contests@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Contests-1.png",
+      "filename" : "ic_contests@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Contests-2.png",
+      "filename" : "ic_contests@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "HackerRank.png",
+      "filename" : "ic_hackerRank@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "HackerRank-2.png",
+      "filename" : "ic_hackerRank@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "HackerRank-3.png",
+      "filename" : "ic_hackerRank@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

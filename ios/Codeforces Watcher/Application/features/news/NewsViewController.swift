@@ -3,8 +3,6 @@ import common
 
 class NewsViewController: UIHostingController<NewsView>, ReKampStoreSubscriber {
     
-    private lazy var fabButton = FabButtonViewController(name: "newsShareIcon")
-    
     init() {
         super.init(rootView: NewsView())
         
@@ -20,8 +18,6 @@ class NewsViewController: UIHostingController<NewsView>, ReKampStoreSubscriber {
         super.viewWillAppear(animated)
         
         hideNavigationBar()
-        setFabButton()
-        fabButton.show()
         
         store.subscribe(subscriber: self) { subscription in
             subscription.skipRepeats { oldState, newState in
@@ -35,18 +31,10 @@ class NewsViewController: UIHostingController<NewsView>, ReKampStoreSubscriber {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        fabButton.hide()
-        
         store.unsubscribe(subscriber: self)
     }
     
-    private func setFabButton() {
-        tabBarController?.tabBar.addSubview(fabButton.view)
-        fabButton.setView()
-        fabButton.setButtonAction(action: { self.onFabButton() })
-    }
-    
-    private func onFabButton() {
+    func onFabButton() {
         let activityController = UIActivityViewController(
             activityItems: ["share_cw_message".localized],
             applicationActivities: nil

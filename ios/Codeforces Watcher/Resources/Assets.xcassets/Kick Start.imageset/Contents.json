@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Google Kickstart.png",
+      "filename" : "ic_googleKickstart@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Google Kickstart-2.png",
+      "filename" : "ic_googleKickstart@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Google Kickstart-3.png",
+      "filename" : "ic_googleKickstart@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

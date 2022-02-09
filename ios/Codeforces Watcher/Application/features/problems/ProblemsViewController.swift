@@ -4,8 +4,6 @@ import FirebaseAnalytics
 
 class ProblemsViewController: UIHostingController<ProblemsView>, ReKampStoreSubscriber {
     
-    private lazy var fabButton = FabButtonViewController(name: "infinityIcon")
-    
     init() {
         super.init(rootView: ProblemsView())
         
@@ -21,8 +19,6 @@ class ProblemsViewController: UIHostingController<ProblemsView>, ReKampStoreSubs
         super.viewWillAppear(animated)
         
         hideNavigationBar()
-        setFabButton()
-        fabButton.show()
 
         store.subscribe(subscriber: self) { subscription in
             subscription.skipRepeats { oldState, newState in
@@ -36,14 +32,7 @@ class ProblemsViewController: UIHostingController<ProblemsView>, ReKampStoreSubs
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        fabButton.hide()
-        
         store.unsubscribe(subscriber: self)
-    }
-    
-    private func setFabButton() {
-        tabBarController?.tabBar.addSubview(fabButton.view)
-        fabButton.setView()
     }
     
     private func setRefreshControl() {
@@ -60,8 +49,6 @@ class ProblemsViewController: UIHostingController<ProblemsView>, ReKampStoreSubs
             rootView.refreshControl.endRefreshing()
         }
         
-        updateFabButton(state.isFavourite)
-        
         rootView.problems = state.filteredProblems
             .map {
                 .init(
@@ -75,11 +62,7 @@ class ProblemsViewController: UIHostingController<ProblemsView>, ReKampStoreSubs
         rootView.noProblemsExplanation = state.isFavourite ? "no_favourite_problems_explanation" : "problems_explanation"
     }
     
-    private func updateFabButton(_ isFavourite: Bool) {
-        fabButton.updateImage(name: isFavourite ? "starProblemsIcon" : "infinityIcon")
-    }
-    
-    private func onFabButton() {
+    func onFabButton() {
         store.dispatch(action: ProblemsActions.ChangeTypeProblems(isFavourite: !store.state.problems.isFavourite))
     }
     

@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "LeetCode Secondary.png",
+      "filename" : "ic_LeetCode_light@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -12,12 +12,12 @@
           "value" : "dark"
         }
       ],
-      "filename" : "LeetCode.png",
+      "filename" : "ic_LeetCode_dark@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "LeetCode Secondary-2.png",
+      "filename" : "ic_LeetCode_light@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
@@ -28,12 +28,12 @@
           "value" : "dark"
         }
       ],
-      "filename" : "LeetCode-2.png",
+      "filename" : "ic_LeetCode_dark@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "LeetCode Secondary-3.png",
+      "filename" : "ic_LeetCode_light@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     },
@@ -44,7 +44,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "LeetCode-3.png",
+      "filename" : "ic_LeetCode_dark@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

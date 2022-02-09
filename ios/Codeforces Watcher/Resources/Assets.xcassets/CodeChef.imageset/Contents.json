@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "CodeChef.png",
+      "filename" : "ic_codechef@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "CodeChef-2.png",
+      "filename" : "ic_codechef@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "CodeChef-3.png",
+      "filename" : "ic_codechef@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "TopH Secondary.png",
+      "filename" : "ic_TopH_light@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -12,12 +12,12 @@
           "value" : "dark"
         }
       ],
-      "filename" : "toph.png",
+      "filename" : "ic_TopH_dark@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "TopH Secondary-2.png",
+      "filename" : "ic_TopH_light@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
@@ -28,12 +28,12 @@
           "value" : "dark"
         }
       ],
-      "filename" : "TopH-2.png",
+      "filename" : "ic_TopH_dark@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "TopH Secondary-3.png",
+      "filename" : "ic_TopH_light@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     },
@@ -44,7 +44,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "TopH-3.png",
+      "filename" : "ic_TopH_dark@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
