@@ -99,6 +99,8 @@ class MainActivity : AppCompatActivity() {
         ivFilter.visibility = View.GONE
         searchViewItem?.isVisible = false
 
+        supportActionBar?.show()
+
         fab.setOnClickListener {
             AddUserBottomSheet().show(supportFragmentManager, null)
         }
@@ -109,6 +111,8 @@ class MainActivity : AppCompatActivity() {
         llSorting.visibility = View.GONE
         ivFilter.visibility = View.VISIBLE
         searchViewItem?.isVisible = false
+
+        supportActionBar?.show()
 
         fab.setOnClickListener {
             startActivity(
@@ -130,6 +134,8 @@ class MainActivity : AppCompatActivity() {
         ivFilter.visibility = View.GONE
         searchViewItem?.isVisible = false
 
+        supportActionBar?.show()
+
         fab.setOnClickListener {
             showShareDialog()
             analyticsController.logEvent(AnalyticsEvents.SHARE_APP)
@@ -141,6 +147,8 @@ class MainActivity : AppCompatActivity() {
         llSorting.visibility = View.GONE
         ivFilter.visibility = View.GONE
         searchViewItem?.isVisible = true
+
+        supportActionBar?.hide()
 
         var problemsIsFavourite = store.state.problems.isFavourite
         updateProblemsFAB(problemsIsFavourite)

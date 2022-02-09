@@ -8,7 +8,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 
-class ProblemsFragmentNew: Fragment() {
+class ProblemsFragmentNew : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
