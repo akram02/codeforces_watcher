@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import com.bogdan.codeforceswatcher.components.WebViewActivity
 import io.xorum.codeforceswatcher.util.AnalyticsEvents
 import com.bogdan.codeforceswatcher.R
+import io.xorum.codeforceswatcher.features.problems.redux.ProblemsRequests
 
 class ProblemsFragmentNew : Fragment(), StoreSubscriber<ProblemsState> {
 
@@ -46,6 +47,9 @@ class ProblemsFragmentNew : Fragment(), StoreSubscriber<ProblemsState> {
                     problemsState = problemsState,
                     onProblem = { link, title ->
                         onProblem(link, title)
+                    },
+                    onStar = { id ->
+                        onStar(id)
                     }
                 )
             }
@@ -93,12 +97,17 @@ class ProblemsFragmentNew : Fragment(), StoreSubscriber<ProblemsState> {
             )
         )
     }
+
+    private fun onStar(id: String) {
+        store.dispatch(ProblemsRequests.ChangeStatusFavourite(id))
+    }
 }
 
 @Composable
 private fun ProblemsView(
     problemsState: State<List<ProblemUIModel>>,
-    onProblem: (String, String) -> Unit
+    onProblem: (String, String) -> Unit,
+    onStar: (String) -> Unit
 ) {
     Box {
         Box(
@@ -116,7 +125,8 @@ private fun ProblemsView(
             items(problemsState.value) { problem ->
                 ProblemView(
                     problem = problem,
-                    onProblem = onProblem
+                    onProblem = onProblem,
+                    onStar = onStar
                 )
             }
         }
@@ -126,7 +136,8 @@ private fun ProblemsView(
 @Composable
 private fun ProblemView(
     problem: ProblemUIModel,
-    onProblem: (String, String) -> Unit
+    onProblem: (String, String) -> Unit,
+    onStar: (String) -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -159,6 +170,7 @@ private fun ProblemView(
             tint = colorResource(if (problem.isFavourite) R.color.colorAccent else R.color.black),
             modifier = Modifier
                 .size(24.dp)
+                .clickable { onStar(problem.id) }
         )
     }
 }
