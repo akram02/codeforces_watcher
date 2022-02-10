@@ -3,6 +3,7 @@ package com.bogdan.codeforceswatcher.features.problems
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.compose.foundation.Image
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
@@ -27,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bogdan.codeforceswatcher.components.WebViewActivity
 import io.xorum.codeforceswatcher.util.AnalyticsEvents
@@ -116,18 +118,22 @@ private fun ProblemsView(
                 .background(MaterialTheme.colors.primaryVariant)
         )
 
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .clip(RoundedCornerShape(30.dp, 30.dp, 0.dp, 0.dp))
-                .background(MaterialTheme.colors.primary)
-        ) {
-            items(problemsState.value) { problem ->
-                ProblemView(
-                    problem = problem,
-                    onProblem = onProblem,
-                    onStar = onStar
-                )
+        Column {
+            NavigationBar()
+
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clip(RoundedCornerShape(30.dp, 30.dp, 0.dp, 0.dp))
+                    .background(MaterialTheme.colors.primary)
+            ) {
+                items(problemsState.value) { problem ->
+                    ProblemView(
+                        problem = problem,
+                        onProblem = onProblem,
+                        onStar = onStar
+                    )
+                }
             }
         }
     }
@@ -167,12 +173,42 @@ private fun ProblemView(
 
         Icon(
             painter = painterResource(R.drawable.ic_star),
-            contentDescription = null,
+            contentDescription = "star",
             tint = colorResource(if (problem.isFavourite) R.color.colorAccent else R.color.black),
             modifier = Modifier
                 .size(24.dp)
                 .clickable { onStar(problem.id) }
         )
+    }
+}
+
+@Composable
+private fun NavigationBar() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(56.dp)
+            .padding(horizontal = 20.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = "Problems",
+            style = MaterialTheme.typography.h6,
+            color = MaterialTheme.colors.secondary,
+            modifier = Modifier.weight(1f)
+        )
+
+        Row(horizontalArrangement = Arrangement.spacedBy(20.dp)) {
+            Image(
+                painter = painterResource(R.drawable.ic_search_icon),
+                contentDescription = null
+            )
+
+            Image(
+                painter = painterResource(R.drawable.ic_filter_icon),
+                contentDescription = null
+            )
+        }
     }
 }
 
