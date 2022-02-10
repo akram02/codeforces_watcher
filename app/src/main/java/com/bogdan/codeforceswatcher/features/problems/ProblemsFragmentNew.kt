@@ -11,8 +11,6 @@ import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 import io.xorum.codeforceswatcher.features.problems.redux.ProblemsState
 import io.xorum.codeforceswatcher.redux.store
 import tw.geothings.rekotlin.StoreSubscriber
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -22,23 +20,26 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bogdan.codeforceswatcher.components.WebViewActivity
 import io.xorum.codeforceswatcher.util.AnalyticsEvents
 import com.bogdan.codeforceswatcher.R
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.SwipeRefreshState
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import io.xorum.codeforceswatcher.features.problems.redux.ProblemsRequests
+import io.xorum.codeforceswatcher.redux.analyticsController
 
 class ProblemsFragmentNew : Fragment(), StoreSubscriber<ProblemsState> {
 
     private var problemsState: MutableState<List<UIModel>> = mutableStateOf(emptyList())
+    private var isRefreshState: SwipeRefreshState = SwipeRefreshState(false)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,12 +49,14 @@ class ProblemsFragmentNew : Fragment(), StoreSubscriber<ProblemsState> {
             AlgoismeTheme {
                 ProblemsView(
                     problemsState = problemsState,
+                    isRefreshState = isRefreshState,
                     onProblem = { link, title ->
                         onProblem(link, title)
                     },
                     onStar = { id ->
                         onStar(id)
                     },
+                    onRefresh = { onRefresh() },
                     onFilter = { onFilter() }
                 )
             }
@@ -79,6 +82,10 @@ class ProblemsFragmentNew : Fragment(), StoreSubscriber<ProblemsState> {
     }
 
     override fun onNewState(state: ProblemsState) {
+        if (state.status == ProblemsState.Status.IDLE) {
+            isRefreshState.isRefreshing = false
+        }
+
         problemsState.value = state.filteredProblems.map {
             UIModel(
                 it.id,
@@ -106,6 +113,11 @@ class ProblemsFragmentNew : Fragment(), StoreSubscriber<ProblemsState> {
         store.dispatch(ProblemsRequests.ChangeStatusFavourite(id))
     }
 
+    private fun onRefresh() {
+        store.dispatch(ProblemsRequests.FetchProblems(true))
+        analyticsController.logEvent(AnalyticsEvents.PROBLEMS_REFRESH)
+    }
+
     private fun onFilter() {
         startActivity(Intent(activity, ProblemsFiltersActivity::class.java))
     }
@@ -114,10 +126,14 @@ class ProblemsFragmentNew : Fragment(), StoreSubscriber<ProblemsState> {
 @Composable
 private fun ProblemsView(
     problemsState: State<List<UIModel>>,
+    isRefreshState: SwipeRefreshState,
     onProblem: (String, String) -> Unit,
     onStar: (String) -> Unit,
+    onRefresh: () -> Unit,
     onFilter: () -> Unit
 ) {
+    val swipeRefreshState = rememberSwipeRefreshState(isRefreshState.isRefreshing)
+
     Box {
         Box(
             modifier = Modifier
@@ -128,18 +144,26 @@ private fun ProblemsView(
         Column {
             NavigationBar(onFilter)
 
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .clip(RoundedCornerShape(30.dp, 30.dp, 0.dp, 0.dp))
-                    .background(MaterialTheme.colors.primary)
+            SwipeRefresh(
+                state = swipeRefreshState,
+                onRefresh = {
+                    onRefresh()
+                    isRefreshState.isRefreshing = true
+                }
             ) {
-                items(problemsState.value) { problem ->
-                    ProblemView(
-                        problem = problem,
-                        onProblem = onProblem,
-                        onStar = onStar
-                    )
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .clip(RoundedCornerShape(30.dp, 30.dp, 0.dp, 0.dp))
+                        .background(MaterialTheme.colors.primary)
+                ) {
+                    items(problemsState.value) { problem ->
+                        ProblemView(
+                            problem = problem,
+                            onProblem = onProblem,
+                            onStar = onStar
+                        )
+                    }
                 }
             }
         }
