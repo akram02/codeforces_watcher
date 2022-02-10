@@ -1,5 +1,6 @@
 package com.bogdan.codeforceswatcher.features.problems
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -52,7 +53,8 @@ class ProblemsFragmentNew : Fragment(), StoreSubscriber<ProblemsState> {
                     },
                     onStar = { id ->
                         onStar(id)
-                    }
+                    },
+                    onFilter = { onFilter() }
                 )
             }
         }
@@ -103,13 +105,18 @@ class ProblemsFragmentNew : Fragment(), StoreSubscriber<ProblemsState> {
     private fun onStar(id: String) {
         store.dispatch(ProblemsRequests.ChangeStatusFavourite(id))
     }
+
+    private fun onFilter() {
+        startActivity(Intent(activity, ProblemsFiltersActivity::class.java))
+    }
 }
 
 @Composable
 private fun ProblemsView(
     problemsState: State<List<UIModel>>,
     onProblem: (String, String) -> Unit,
-    onStar: (String) -> Unit
+    onStar: (String) -> Unit,
+    onFilter: () -> Unit
 ) {
     Box {
         Box(
@@ -119,7 +126,7 @@ private fun ProblemsView(
         )
 
         Column {
-            NavigationBar()
+            NavigationBar(onFilter)
 
             LazyColumn(
                 modifier = Modifier
@@ -183,7 +190,9 @@ private fun ProblemView(
 }
 
 @Composable
-private fun NavigationBar() {
+private fun NavigationBar(
+    onFilter: () -> Unit
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -206,7 +215,8 @@ private fun NavigationBar() {
 
             Image(
                 painter = painterResource(R.drawable.ic_filter_icon),
-                contentDescription = null
+                contentDescription = null,
+                modifier = Modifier.clickable { onFilter() }
             )
         }
     }
