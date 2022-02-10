@@ -35,7 +35,7 @@ import io.xorum.codeforceswatcher.features.problems.redux.ProblemsRequests
 
 class ProblemsFragmentNew : Fragment(), StoreSubscriber<ProblemsState> {
 
-    private var problemsState: MutableState<List<ProblemUIModel>> = mutableStateOf(emptyList())
+    private var problemsState: MutableState<List<UIModel>> = mutableStateOf(emptyList())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -76,7 +76,7 @@ class ProblemsFragmentNew : Fragment(), StoreSubscriber<ProblemsState> {
 
     override fun onNewState(state: ProblemsState) {
         problemsState.value = state.filteredProblems.map {
-            ProblemUIModel(
+            UIModel(
                 it.id,
                 it.title,
                 it.subtitle,
@@ -105,7 +105,7 @@ class ProblemsFragmentNew : Fragment(), StoreSubscriber<ProblemsState> {
 
 @Composable
 private fun ProblemsView(
-    problemsState: State<List<ProblemUIModel>>,
+    problemsState: State<List<UIModel>>,
     onProblem: (String, String) -> Unit,
     onStar: (String) -> Unit
 ) {
@@ -135,7 +135,7 @@ private fun ProblemsView(
 
 @Composable
 private fun ProblemView(
-    problem: ProblemUIModel,
+    problem: UIModel,
     onProblem: (String, String) -> Unit,
     onStar: (String) -> Unit
 ) {
@@ -143,11 +143,12 @@ private fun ProblemView(
         modifier = Modifier
             .fillMaxWidth()
             .padding(20.dp, 20.dp, 20.dp, 0.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Column(
-            modifier = Modifier.clickable { onProblem(problem.link, problem.title) }
+            modifier = Modifier
+                .weight(1f)
+                .clickable { onProblem(problem.link, problem.title) }
         ) {
             Text(
                 text = problem.title,
@@ -175,7 +176,7 @@ private fun ProblemView(
     }
 }
 
-private data class ProblemUIModel(
+private data class UIModel(
     val id: String,
     val title: String,
     val subtitle: String,
