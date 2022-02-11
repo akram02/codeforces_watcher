@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.view.animation.Animation
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
@@ -31,23 +30,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.toIntRect
 import com.bogdan.codeforceswatcher.components.WebViewActivity
 import io.xorum.codeforceswatcher.util.AnalyticsEvents
 import com.bogdan.codeforceswatcher.R
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import io.ktor.network.selector.SelectInterest.Companion.size
 import io.xorum.codeforceswatcher.features.problems.redux.ProblemsRequests
 import io.xorum.codeforceswatcher.redux.analyticsController
 
@@ -166,21 +161,33 @@ private fun ProblemsView(
                     isRefreshState.isRefreshing = true
                 }
             ) {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clip(RoundedCornerShape(30.dp, 30.dp, 0.dp, 0.dp))
-                        .background(MaterialTheme.colors.primary)
-                ) {
-                    items(problemsState.value) { problem ->
-                        ProblemView(
-                            problem = problem,
-                            onProblem = onProblem,
-                            onStar = onStar
-                        )
-                    }
-                }
+                ProblemsList(
+                    problemsState = problemsState,
+                    onProblem = onProblem,
+                    onStar = onStar
+                )
             }
+        }
+    }
+}
+
+@Composable
+private fun ProblemsList(
+    problemsState: State<List<UIModel>>,
+    onProblem: (String, String) -> Unit,
+    onStar: (String) -> Unit,
+) = LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .clip(RoundedCornerShape(30.dp, 30.dp, 0.dp, 0.dp))
+            .background(MaterialTheme.colors.primary)
+    ) {
+        items(problemsState.value) { problem ->
+            ProblemView(
+                problem = problem,
+                onProblem = onProblem,
+                onStar = onStar
+            )
         }
     }
 }
@@ -190,42 +197,40 @@ private fun ProblemView(
     problem: UIModel,
     onProblem: (String, String) -> Unit,
     onStar: (String) -> Unit
+) = Row(
+    modifier = Modifier
+        .fillMaxWidth()
+        .padding(20.dp, 20.dp, 20.dp, 0.dp),
+    verticalAlignment = Alignment.CenterVertically
 ) {
-    Row(
+    Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(20.dp, 20.dp, 20.dp, 0.dp),
-        verticalAlignment = Alignment.CenterVertically
+            .weight(1f)
+            .clickable { onProblem(problem.link, problem.title) }
     ) {
-        Column(
-            modifier = Modifier
-                .weight(1f)
-                .clickable { onProblem(problem.link, problem.title) }
-        ) {
-            Text(
-                text = problem.title,
-                style = MaterialTheme.typography.subtitle2,
-                color = MaterialTheme.colors.secondary,
-                modifier = Modifier.height(20.dp)
-            )
+        Text(
+            text = problem.title,
+            style = MaterialTheme.typography.subtitle2,
+            color = MaterialTheme.colors.secondary,
+            modifier = Modifier.height(20.dp)
+        )
 
-            Text(
-                text = problem.subtitle,
-                style = MaterialTheme.typography.body1,
-                color = MaterialTheme.colors.secondaryVariant,
-                modifier = Modifier.height(16.dp)
-            )
-        }
-
-        Icon(
-            painter = painterResource(R.drawable.ic_star),
-            contentDescription = null,
-            tint = colorResource(if (problem.isFavourite) R.color.colorAccent else R.color.black),
-            modifier = Modifier
-                .size(24.dp)
-                .clickable { onStar(problem.id) }
+        Text(
+            text = problem.subtitle,
+            style = MaterialTheme.typography.body1,
+            color = MaterialTheme.colors.secondaryVariant,
+            modifier = Modifier.height(16.dp)
         )
     }
+
+    Icon(
+        painter = painterResource(R.drawable.ic_star),
+        contentDescription = null,
+        tint = colorResource(if (problem.isFavourite) R.color.colorAccent else R.color.black),
+        modifier = Modifier
+            .size(24.dp)
+            .clickable { onStar(problem.id) }
+    )
 }
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -281,8 +286,7 @@ private fun NavigationBar(
                             keyboardActions = KeyboardActions(
                                 onDone = { localFocusManager.clearFocus() }
                             ),
-                            onValueChange = {},
-                            onSearchIcon = { isShownSearchTextFieldState = true }
+                            onValueChange = {}
                         )
                     }
                 }
@@ -330,8 +334,7 @@ private fun SearchTextField(
     modifier: Modifier = Modifier,
     keyboardOptions: KeyboardOptions,
     keyboardActions: KeyboardActions,
-    onValueChange: (String) -> Unit,
-    onSearchIcon: () -> Unit
+    onValueChange: (String) -> Unit
 ) {
     var value by remember { mutableStateOf("") }
 
@@ -350,19 +353,7 @@ private fun SearchTextField(
         singleLine = true,
         cursorBrush = SolidColor(MaterialTheme.colors.onBackground),
         keyboardOptions = keyboardOptions,
-        keyboardActions = keyboardActions,
-//        decorationBox = { innerTextField ->
-//            Image(
-//                painter = painterResource(R.drawable.ic_search_icon),
-//                contentDescription = null,
-//                modifier = Modifier
-//                    .size(30.dp)
-//                    .clickable { onSearchIcon() },
-//                alignment = Alignment.TopEnd
-//            )
-//            innerTextField()
-//        },
-        visualTransformation = VisualTransformation.None
+        keyboardActions = keyboardActions
     )
 }
 
