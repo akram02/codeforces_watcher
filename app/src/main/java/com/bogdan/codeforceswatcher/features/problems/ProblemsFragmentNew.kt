@@ -4,6 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.Animation
+import androidx.compose.animation.*
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
@@ -17,6 +20,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -24,22 +30,31 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.toIntRect
 import com.bogdan.codeforceswatcher.components.WebViewActivity
 import io.xorum.codeforceswatcher.util.AnalyticsEvents
 import com.bogdan.codeforceswatcher.R
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import io.ktor.network.selector.SelectInterest.Companion.size
 import io.xorum.codeforceswatcher.features.problems.redux.ProblemsRequests
 import io.xorum.codeforceswatcher.redux.analyticsController
 
 class ProblemsFragmentNew : Fragment(), StoreSubscriber<ProblemsState> {
 
-    private var problemsState: MutableState<List<UIModel>> = mutableStateOf(emptyList())
-    private var isRefreshState: SwipeRefreshState = SwipeRefreshState(false)
+    private val problemsState: MutableState<List<UIModel>> = mutableStateOf(emptyList())
+    private val isRefreshState: SwipeRefreshState = SwipeRefreshState(false)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -204,7 +219,7 @@ private fun ProblemView(
 
         Icon(
             painter = painterResource(R.drawable.ic_star),
-            contentDescription = "star",
+            contentDescription = null,
             tint = colorResource(if (problem.isFavourite) R.color.colorAccent else R.color.black),
             modifier = Modifier
                 .size(24.dp)
@@ -213,10 +228,14 @@ private fun ProblemView(
     }
 }
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 private fun NavigationBar(
     onFilter: () -> Unit
 ) {
+    val localFocusManager = LocalFocusManager.current
+    var isShownSearchTextFieldState by remember { mutableStateOf(false) }
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -224,26 +243,127 @@ private fun NavigationBar(
             .padding(horizontal = 20.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(
-            text = "Problems",
-            style = MaterialTheme.typography.h6,
-            color = MaterialTheme.colors.secondary,
+        AnimatedVisibility(
+            visible = isShownSearchTextFieldState.not(),
+            enter = fadeIn(),
             modifier = Modifier.weight(1f)
-        )
-
-        Row(horizontalArrangement = Arrangement.spacedBy(20.dp)) {
-            Image(
-                painter = painterResource(R.drawable.ic_search_icon),
-                contentDescription = null
-            )
-
-            Image(
-                painter = painterResource(R.drawable.ic_filter_icon),
-                contentDescription = null,
-                modifier = Modifier.clickable { onFilter() }
+        ) {
+            Text(
+                text = "Problems",
+                style = MaterialTheme.typography.h6,
+                color = MaterialTheme.colors.secondary
             )
         }
+
+        Row(horizontalArrangement = Arrangement.spacedBy(20.dp)) {
+            Box(
+                modifier = if (isShownSearchTextFieldState) Modifier.weight(1f) else Modifier.width(30.dp),
+                contentAlignment = Alignment.CenterEnd
+            ) {
+                Row {
+                    AnimatedVisibility(
+                        visible = isShownSearchTextFieldState,
+                        enter = expandIn(
+                            expandFrom = Alignment.TopEnd,
+                            initialSize = { IntSize(30, 30) } ,
+                            animationSpec = tween(
+                                durationMillis = 150,
+                                easing = LinearEasing
+                            )
+                        )
+                    ) {
+                        SearchTextField(
+                        modifier = if (isShownSearchTextFieldState) Modifier.fillMaxWidth(1f) else Modifier.width(30.dp),
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Ascii,
+                                imeAction = ImeAction.Done
+                            ),
+                            keyboardActions = KeyboardActions(
+                                onDone = { localFocusManager.clearFocus() }
+                            ),
+                            onValueChange = {},
+                            onSearchIcon = { isShownSearchTextFieldState = true }
+                        )
+                    }
+                }
+
+                Image(
+                    painter = painterResource(R.drawable.ic_search_icon),
+                    contentDescription = null,
+                    modifier = Modifier.clickable { isShownSearchTextFieldState = true }
+                )
+            }
+
+            if (isShownSearchTextFieldState) {
+                CrossButton(
+                    onCross = { isShownSearchTextFieldState = false}
+                )
+            } else {
+                FilterButton(
+                    onFilter = onFilter
+                )
+            }
+        }
     }
+}
+
+@Composable
+private fun CrossButton(
+    onCross: () -> Unit
+) = Image(
+    painter = painterResource(R.drawable.ic_cross_icon),
+    contentDescription = null,
+    modifier = Modifier.clickable { onCross() }
+)
+
+@Composable
+private fun FilterButton(
+    onFilter: () -> Unit
+) = Image(
+    painter = painterResource(R.drawable.ic_filter_icon),
+    contentDescription = null,
+    modifier = Modifier.clickable { onFilter() }
+)
+
+@Composable
+private fun SearchTextField(
+    modifier: Modifier = Modifier,
+    keyboardOptions: KeyboardOptions,
+    keyboardActions: KeyboardActions,
+    onValueChange: (String) -> Unit,
+    onSearchIcon: () -> Unit
+) {
+    var value by remember { mutableStateOf("") }
+
+    BasicTextField(
+        value = value,
+        onValueChange = {
+            value = it
+            onValueChange(it)
+        },
+        modifier = modifier
+            .height(30.dp)
+            .clip(RoundedCornerShape(20.dp))
+            .background(MaterialTheme.colors.primary)
+            .padding(10.dp, 4.dp, 0.dp, 0.dp),
+        textStyle = MaterialTheme.typography.subtitle1.copy(color = MaterialTheme.colors.onBackground),
+        singleLine = true,
+        cursorBrush = SolidColor(MaterialTheme.colors.onBackground),
+        keyboardOptions = keyboardOptions,
+        keyboardActions = keyboardActions,
+//        decorationBox = { innerTextField ->
+//            Image(
+//                painter = painterResource(R.drawable.ic_search_icon),
+//                contentDescription = null,
+//                modifier = Modifier
+//                    .size(30.dp)
+//                    .clickable { onSearchIcon() },
+//                alignment = Alignment.TopEnd
+//            )
+//            innerTextField()
+//        },
+        visualTransformation = VisualTransformation.None
+    )
 }
 
 private data class UIModel(
