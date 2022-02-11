@@ -177,18 +177,17 @@ private fun ProblemsList(
     onProblem: (String, String) -> Unit,
     onStar: (String) -> Unit,
 ) = LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .clip(RoundedCornerShape(30.dp, 30.dp, 0.dp, 0.dp))
-            .background(MaterialTheme.colors.primary)
-    ) {
-        items(problemsState.value) { problem ->
-            ProblemView(
-                problem = problem,
-                onProblem = onProblem,
-                onStar = onStar
-            )
-        }
+    modifier = Modifier
+        .fillMaxSize()
+        .clip(RoundedCornerShape(30.dp, 30.dp, 0.dp, 0.dp))
+        .background(MaterialTheme.colors.primary)
+) {
+    items(problemsState.value) { problem ->
+        ProblemView(
+            problem = problem,
+            onProblem = onProblem,
+            onStar = onStar
+        )
     }
 }
 
