@@ -1,110 +1,84 @@
 package com.bogdan.codeforceswatcher.features.problems
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.view.*
-import android.view.inputmethod.EditorInfo
-import android.widget.EditText
-import androidx.appcompat.widget.SearchView
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.compose.animation.*
+import androidx.compose.animation.core.*
+import androidx.compose.foundation.Image
+import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.components.WebViewActivity
-import io.xorum.codeforceswatcher.features.problems.redux.ProblemsRequests
+import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 import io.xorum.codeforceswatcher.features.problems.redux.ProblemsState
-import io.xorum.codeforceswatcher.redux.analyticsController
 import io.xorum.codeforceswatcher.redux.store
-import io.xorum.codeforceswatcher.util.AnalyticsEvents
-import kotlinx.android.synthetic.main.fragment_problems.*
 import tw.geothings.rekotlin.StoreSubscriber
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.IntSize
+import androidx.compose.ui.unit.dp
+import com.bogdan.codeforceswatcher.components.WebViewActivity
+import io.xorum.codeforceswatcher.util.AnalyticsEvents
+import com.bogdan.codeforceswatcher.R
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.SwipeRefreshState
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import io.xorum.codeforceswatcher.features.problems.redux.ProblemsRequests
+import io.xorum.codeforceswatcher.redux.analyticsController
 
-class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState>,
-    SwipeRefreshLayout.OnRefreshListener {
+class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState> {
 
-    private lateinit var problemsAdapter: ProblemsAdapter
-    var searchView: SearchView? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
+    private val problemsState: MutableState<List<UIModel>> = mutableStateOf(emptyList())
+    private val isRefreshState: SwipeRefreshState = SwipeRefreshState(false)
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = inflater.inflate(R.layout.fragment_problems, container, false)
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initViews()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_problems, menu)
-        val searchItem = menu.findItem(R.id.action_search)
-        searchView = searchItem?.actionView as? SearchView
-
-        adjustSearchViewHint()
-
-        searchView?.imeOptions = EditorInfo.IME_ACTION_DONE
-        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?) = false
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                store.dispatch(ProblemsRequests.SetQuery(newText.orEmpty()))
-                return false
-            }
-        })
-
-        val query = store.state.problems.query
-        if (query.isNotEmpty()) {
-            searchItem?.expandActionView()
-            searchView?.setQuery(query, false)
-        }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.action_filter) {
-            startActivity(Intent(activity, ProblemsFiltersActivity::class.java))
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-    private fun adjustSearchViewHint() {
-        val textSearch =
-            searchView?.findViewById<View>(androidx.appcompat.R.id.search_src_text) as EditText?
-        textSearch?.apply {
-            hint = resources.getString(R.string.search_for_problems)
-            setHintTextColor(Color.WHITE)
-            setTextColor(Color.WHITE)
-        }
-    }
-
-    private fun initViews() {
-        swipeRefreshLayout.setOnRefreshListener(this)
-        problemsAdapter = ProblemsAdapter(requireContext()) { problem ->
-            startActivity(
-                WebViewActivity.newIntent(
-                    requireContext(),
-                    problem.link,
-                    problem.title,
-                    AnalyticsEvents.PROBLEM_OPENED,
-                    AnalyticsEvents.PROBLEM_SHARED
+    ) = ComposeView(requireContext()).apply {
+        setContent {
+            AlgoismeTheme {
+                ProblemsView(
+                    problemsState = problemsState,
+                    isRefreshState = isRefreshState,
+                    onProblem = { link, title ->
+                        onProblem(link, title)
+                    },
+                    onStar = { id ->
+                        onStar(id)
+                    },
+                    onRefresh = { onRefresh() },
+                    onFilter = { onFilter() },
+                    problemsRequest = { query ->
+                        problemsRequest(query)
+                    }
                 )
-            )
+            }
         }
-        recyclerView.adapter = problemsAdapter
-    }
-
-    override fun onRefresh() {
-        store.dispatch(ProblemsRequests.FetchProblems(true))
-        analyticsController.logEvent(AnalyticsEvents.PROBLEMS_REFRESH)
     }
 
     override fun onStart() {
         super.onStart()
+
         store.subscribe(this) { state ->
             state.skipRepeats { oldState, newState ->
                 oldState.problems.status == newState.problems.status
@@ -116,11 +90,301 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState>,
 
     override fun onStop() {
         super.onStop()
+
         store.unsubscribe(this)
     }
 
     override fun onNewState(state: ProblemsState) {
-        swipeRefreshLayout.isRefreshing = (state.status == ProblemsState.Status.PENDING)
-        problemsAdapter.setItems(state.filteredProblems, state.isFavourite)
+        if (state.status == ProblemsState.Status.IDLE) {
+            isRefreshState.isRefreshing = false
+        }
+
+        problemsState.value = state.filteredProblems.map {
+            UIModel(
+                it.id,
+                it.title,
+                it.subtitle,
+                it.link,
+                it.isFavourite
+            )
+        }
+    }
+
+    private fun onProblem(link: String, title: String) {
+        startActivity(
+            WebViewActivity.newIntent(
+                requireContext(),
+                link,
+                title,
+                AnalyticsEvents.PROBLEM_OPENED,
+                AnalyticsEvents.PROBLEM_SHARED
+            )
+        )
+    }
+
+    private fun onStar(id: String) {
+        store.dispatch(ProblemsRequests.ChangeStatusFavourite(id))
+    }
+
+    private fun onRefresh() {
+        store.dispatch(ProblemsRequests.FetchProblems(true))
+        analyticsController.logEvent(AnalyticsEvents.PROBLEMS_REFRESH)
+    }
+
+    private fun onFilter() {
+        startActivity(Intent(activity, ProblemsFiltersActivity::class.java))
+    }
+
+    private fun problemsRequest(query: String) {
+        store.dispatch(ProblemsRequests.SetQuery(query))
     }
 }
+
+@Composable
+private fun ProblemsView(
+    problemsState: State<List<UIModel>>,
+    isRefreshState: SwipeRefreshState,
+    onProblem: (String, String) -> Unit,
+    onStar: (String) -> Unit,
+    onRefresh: () -> Unit,
+    onFilter: () -> Unit,
+    problemsRequest: (String) -> Unit
+) {
+    val swipeRefreshState = rememberSwipeRefreshState(isRefreshState.isRefreshing)
+
+    Box {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colors.primaryVariant)
+        )
+
+        Column {
+            NavigationBar(
+                onFilter = onFilter,
+                problemsRequest = problemsRequest
+            )
+
+            SwipeRefresh(
+                state = swipeRefreshState,
+                onRefresh = {
+                    onRefresh()
+                    isRefreshState.isRefreshing = true
+                }
+            ) {
+                ProblemsList(
+                    problemsState = problemsState,
+                    onProblem = onProblem,
+                    onStar = onStar
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun ProblemsList(
+    problemsState: State<List<UIModel>>,
+    onProblem: (String, String) -> Unit,
+    onStar: (String) -> Unit,
+) = LazyColumn(
+    modifier = Modifier
+        .fillMaxSize()
+        .clip(RoundedCornerShape(30.dp, 30.dp, 0.dp, 0.dp))
+        .background(MaterialTheme.colors.primary)
+) {
+    items(problemsState.value) { problem ->
+        ProblemView(
+            problem = problem,
+            onProblem = onProblem,
+            onStar = onStar
+        )
+    }
+}
+
+@Composable
+private fun ProblemView(
+    problem: UIModel,
+    onProblem: (String, String) -> Unit,
+    onStar: (String) -> Unit
+) = Row(
+    modifier = Modifier
+        .fillMaxWidth()
+        .padding(20.dp, 20.dp, 20.dp, 0.dp),
+    verticalAlignment = Alignment.CenterVertically
+) {
+    Column(
+        modifier = Modifier
+            .weight(1f)
+            .clickable { onProblem(problem.link, problem.title) }
+    ) {
+        Text(
+            text = problem.title,
+            style = MaterialTheme.typography.subtitle2,
+            color = MaterialTheme.colors.secondary,
+            modifier = Modifier.height(20.dp)
+        )
+
+        Text(
+            text = problem.subtitle,
+            style = MaterialTheme.typography.body1,
+            color = MaterialTheme.colors.secondaryVariant,
+            modifier = Modifier.height(16.dp)
+        )
+    }
+
+    Icon(
+        painter = painterResource(R.drawable.ic_star),
+        contentDescription = null,
+        tint = colorResource(if (problem.isFavourite) R.color.colorAccent else R.color.black),
+        modifier = Modifier
+            .size(24.dp)
+            .clickable { onStar(problem.id) }
+    )
+}
+
+@OptIn(ExperimentalAnimationApi::class)
+@Composable
+private fun NavigationBar(
+    onFilter: () -> Unit,
+    problemsRequest: (String) -> Unit
+) {
+    val localFocusManager = LocalFocusManager.current
+    var isShownSearchTextFieldState by remember { mutableStateOf(false) }
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(56.dp)
+            .padding(horizontal = 20.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        AnimatedVisibility(
+            visible = isShownSearchTextFieldState.not(),
+            enter = fadeIn(),
+            modifier = Modifier.weight(1f)
+        ) {
+            Text(
+                text = "Problems",
+                style = MaterialTheme.typography.h6,
+                color = MaterialTheme.colors.secondary
+            )
+        }
+
+        Row(horizontalArrangement = Arrangement.spacedBy(20.dp)) {
+            Box(
+                modifier = if (isShownSearchTextFieldState) Modifier.weight(1f) else Modifier.width(30.dp),
+                contentAlignment = Alignment.CenterEnd
+            ) {
+                this@Row.AnimatedVisibility(
+                    visible = isShownSearchTextFieldState,
+                    enter = expandIn(
+                        expandFrom = Alignment.TopEnd,
+                        initialSize = { IntSize(30, 30) },
+                        animationSpec = tween(
+                            durationMillis = 150,
+                            easing = LinearEasing
+                        )
+                    )
+                ) {
+                    SearchTextField(
+                        modifier = Modifier.fillMaxWidth(1f),
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Ascii,
+                            imeAction = ImeAction.Done
+                        ),
+                        keyboardActions = KeyboardActions(
+                            onDone = { localFocusManager.clearFocus() }
+                        ),
+                        onValueChange = { query ->
+                            problemsRequest(query)
+                        }
+                    )
+                }
+
+                Image(
+                    painter = painterResource(R.drawable.ic_search_icon),
+                    contentDescription = null,
+                    modifier = Modifier.clickable { isShownSearchTextFieldState = true }
+                )
+            }
+
+            if (isShownSearchTextFieldState) {
+                CrossButton(
+                    onCross = {
+                        isShownSearchTextFieldState = false
+                        problemsRequest("")
+                    }
+                )
+            } else {
+                FilterButton(
+                    onFilter = onFilter
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun CrossButton(
+    onCross: () -> Unit
+) = Image(
+    painter = painterResource(R.drawable.ic_cross_icon),
+    contentDescription = null,
+    modifier = Modifier.clickable { onCross() }
+)
+
+@Composable
+private fun FilterButton(
+    onFilter: () -> Unit
+) = Image(
+    painter = painterResource(R.drawable.ic_filter_icon),
+    contentDescription = null,
+    modifier = Modifier.clickable { onFilter() }
+)
+
+@Composable
+private fun SearchTextField(
+    modifier: Modifier = Modifier,
+    keyboardOptions: KeyboardOptions,
+    keyboardActions: KeyboardActions,
+    onValueChange: (String) -> Unit
+) {
+    var value by remember { mutableStateOf("") }
+
+    BasicTextField(
+        value = value,
+        onValueChange = {
+            value = it
+            onValueChange(it)
+        },
+        modifier = modifier
+            .height(30.dp)
+            .clip(RoundedCornerShape(20.dp))
+            .background(MaterialTheme.colors.primary)
+            .padding(10.dp, 4.dp, 0.dp, 0.dp),
+        textStyle = MaterialTheme.typography.subtitle1.copy(color = MaterialTheme.colors.onBackground),
+        singleLine = true,
+        cursorBrush = SolidColor(MaterialTheme.colors.onBackground),
+        decorationBox = { innerTextField ->
+            if (value.isEmpty()) {
+                Text(
+                    text = "Search problems for...",
+                    style = MaterialTheme.typography.subtitle1,
+                    color = MaterialTheme.colors.secondaryVariant
+                )
+            }
+            innerTextField()
+        },
+        keyboardOptions = keyboardOptions,
+        keyboardActions = keyboardActions
+    )
+}
+
+private data class UIModel(
+    val id: String,
+    val title: String,
+    val subtitle: String,
+    val link: String,
+    val isFavourite: Boolean
+)

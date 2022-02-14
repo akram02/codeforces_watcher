@@ -17,9 +17,8 @@ import com.bogdan.codeforceswatcher.components.WebViewActivity
 import com.bogdan.codeforceswatcher.features.contests.ContestsFiltersActivity
 import com.bogdan.codeforceswatcher.features.contests.ContestsFragment
 import com.bogdan.codeforceswatcher.features.news.NewsFragment
-import com.bogdan.codeforceswatcher.features.problems.ProblemsFragment
 import com.bogdan.codeforceswatcher.features.users.UsersFragment
-import com.bogdan.codeforceswatcher.features.problems.ProblemsFragmentNew
+import com.bogdan.codeforceswatcher.features.problems.ProblemsFragment
 import com.bogdan.codeforceswatcher.util.FeedbackController
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import io.xorum.codeforceswatcher.features.problems.redux.ProblemsActions
@@ -48,8 +47,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateFragment() {
-        (currentTabFragment as? ProblemsFragment)?.searchView?.setOnQueryTextListener(null)
-
         val bottomNavSelectedItemId = selectedHomeTab.menuItemId
 
         tvPageTitle.text = getString(selectedHomeTab.titleId)
@@ -72,7 +69,7 @@ class MainActivity : AppCompatActivity() {
                 currentTabFragment as? NewsFragment ?: NewsFragment()
             }
             HomeTab.PROBLEMS -> {
-                currentTabFragment as? ProblemsFragmentNew ?: ProblemsFragmentNew()
+                currentTabFragment as? ProblemsFragment ?: ProblemsFragment()
             }
         }
 
