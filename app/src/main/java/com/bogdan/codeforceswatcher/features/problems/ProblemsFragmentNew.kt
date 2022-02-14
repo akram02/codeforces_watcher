@@ -35,6 +35,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.bogdan.codeforceswatcher.components.WebViewActivity
@@ -45,6 +46,7 @@ import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import io.xorum.codeforceswatcher.features.problems.redux.ProblemsRequests
 import io.xorum.codeforceswatcher.redux.analyticsController
+import kotlinx.coroutines.delay
 
 class ProblemsFragmentNew : Fragment(), StoreSubscriber<ProblemsState> {
 
@@ -264,30 +266,28 @@ private fun NavigationBar(
                 modifier = if (isShownSearchTextFieldState) Modifier.weight(1f) else Modifier.width(30.dp),
                 contentAlignment = Alignment.CenterEnd
             ) {
-                Row {
-                    AnimatedVisibility(
-                        visible = isShownSearchTextFieldState,
-                        enter = expandIn(
-                            expandFrom = Alignment.TopEnd,
-                            initialSize = { IntSize(30, 30) } ,
-                            animationSpec = tween(
-                                durationMillis = 150,
-                                easing = LinearEasing
-                            )
+                this@Row.AnimatedVisibility(
+                    visible = isShownSearchTextFieldState,
+                    enter = expandIn(
+                        expandFrom = Alignment.TopEnd,
+                        initialSize = { IntSize(30, 30) },
+                        animationSpec = tween(
+                            durationMillis = 150,
+                            easing = LinearEasing
                         )
-                    ) {
-                        SearchTextField(
-                        modifier = if (isShownSearchTextFieldState) Modifier.fillMaxWidth(1f) else Modifier.width(30.dp),
-                            keyboardOptions = KeyboardOptions(
-                                keyboardType = KeyboardType.Ascii,
-                                imeAction = ImeAction.Done
-                            ),
-                            keyboardActions = KeyboardActions(
-                                onDone = { localFocusManager.clearFocus() }
-                            ),
-                            onValueChange = {}
-                        )
-                    }
+                    )
+                ) {
+                    SearchTextField(
+                        modifier = Modifier.fillMaxWidth(1f),
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Ascii,
+                            imeAction = ImeAction.Done
+                        ),
+                        keyboardActions = KeyboardActions(
+                            onDone = { localFocusManager.clearFocus() }
+                        ),
+                        onValueChange = {}
+                    )
                 }
 
                 Image(
@@ -351,6 +351,16 @@ private fun SearchTextField(
         textStyle = MaterialTheme.typography.subtitle1.copy(color = MaterialTheme.colors.onBackground),
         singleLine = true,
         cursorBrush = SolidColor(MaterialTheme.colors.onBackground),
+        decorationBox = { innerTextField ->
+            if (value.isEmpty()) {
+                Text(
+                    text = "Search problems for...",
+                    style = MaterialTheme.typography.subtitle1,
+                    color = MaterialTheme.colors.secondaryVariant
+                )
+            }
+            innerTextField()
+        },
         keyboardOptions = keyboardOptions,
         keyboardActions = keyboardActions
     )
