@@ -69,7 +69,10 @@ class ProblemsFragmentNew : Fragment(), StoreSubscriber<ProblemsState> {
                         onStar(id)
                     },
                     onRefresh = { onRefresh() },
-                    onFilter = { onFilter() }
+                    onFilter = { onFilter() },
+                    problemsRequest = { query ->
+                        problemsRequest(query)
+                    }
                 )
             }
         }
@@ -133,6 +136,10 @@ class ProblemsFragmentNew : Fragment(), StoreSubscriber<ProblemsState> {
     private fun onFilter() {
         startActivity(Intent(activity, ProblemsFiltersActivity::class.java))
     }
+
+    private fun problemsRequest(query: String) {
+        store.dispatch(ProblemsRequests.SetQuery(query))
+    }
 }
 
 @Composable
@@ -142,7 +149,8 @@ private fun ProblemsView(
     onProblem: (String, String) -> Unit,
     onStar: (String) -> Unit,
     onRefresh: () -> Unit,
-    onFilter: () -> Unit
+    onFilter: () -> Unit,
+    problemsRequest: (String) -> Unit
 ) {
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshState.isRefreshing)
 
@@ -154,7 +162,10 @@ private fun ProblemsView(
         )
 
         Column {
-            NavigationBar(onFilter)
+            NavigationBar(
+                onFilter = onFilter,
+                problemsRequest = problemsRequest
+            )
 
             SwipeRefresh(
                 state = swipeRefreshState,
@@ -237,7 +248,8 @@ private fun ProblemView(
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 private fun NavigationBar(
-    onFilter: () -> Unit
+    onFilter: () -> Unit,
+    problemsRequest: (String) -> Unit
 ) {
     val localFocusManager = LocalFocusManager.current
     var isShownSearchTextFieldState by remember { mutableStateOf(false) }
@@ -286,7 +298,9 @@ private fun NavigationBar(
                         keyboardActions = KeyboardActions(
                             onDone = { localFocusManager.clearFocus() }
                         ),
-                        onValueChange = {}
+                        onValueChange = { query ->
+                            problemsRequest(query)
+                        }
                     )
                 }
 
@@ -299,7 +313,10 @@ private fun NavigationBar(
 
             if (isShownSearchTextFieldState) {
                 CrossButton(
-                    onCross = { isShownSearchTextFieldState = false}
+                    onCross = {
+                        isShownSearchTextFieldState = false
+                        problemsRequest("")
+                    }
                 )
             } else {
                 FilterButton(
