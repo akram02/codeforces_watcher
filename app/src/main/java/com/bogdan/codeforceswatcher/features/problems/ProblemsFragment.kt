@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
@@ -30,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -40,6 +42,7 @@ import androidx.compose.ui.unit.dp
 import com.bogdan.codeforceswatcher.components.WebViewActivity
 import io.xorum.codeforceswatcher.util.AnalyticsEvents
 import com.bogdan.codeforceswatcher.R
+import com.bogdan.codeforceswatcher.components.compose.theme.palette
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
@@ -236,7 +239,7 @@ private fun ProblemView(
     Icon(
         painter = painterResource(R.drawable.ic_star),
         contentDescription = null,
-        tint = colorResource(if (problem.isFavourite) R.color.colorAccent else R.color.black),
+        tint = if (problem.isFavourite) MaterialTheme.palette.yellow else MaterialTheme.palette.secondary,
         modifier = Modifier
             .size(24.dp)
             .clickable { onStar(problem.id) }
