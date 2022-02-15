@@ -36,7 +36,7 @@
         android:name=".features.contests.ContestsFiltersActivity"
         android:theme="@style/AppTheme.NoActionBar" />
     <activity
-        android:name=".features.problems.ProblemsFiltersActivity"
+        android:name=".features.problems.ProblemsFiltersActivityNew"
         android:theme="@style/AppTheme.NoActionBar" />
     <activity android:name=".features.users.UserActivity" />
     <activity

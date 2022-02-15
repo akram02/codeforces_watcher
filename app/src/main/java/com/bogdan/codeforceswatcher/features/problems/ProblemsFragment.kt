@@ -135,7 +135,7 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState> {
     }
 
     private fun onFilter() {
-        startActivity(Intent(activity, ProblemsFiltersActivity::class.java))
+        startActivity(Intent(activity, ProblemsFiltersActivityNew::class.java))
     }
 
     private fun problemsRequest(query: String) {
