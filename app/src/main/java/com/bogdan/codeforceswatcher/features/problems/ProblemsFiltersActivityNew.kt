@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -19,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
+import com.bogdan.codeforceswatcher.components.compose.NavigationBar
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
@@ -38,30 +40,30 @@ class ProblemsFiltersActivityNew : AppCompatActivity() {
     private fun ProblemsFilters() {
         val swipeRefreshState = rememberSwipeRefreshState(false)
 
-        Box {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(MaterialTheme.colors.primaryVariant)
-            )
-
-            Column {
-                SwipeRefresh(
-                    state = swipeRefreshState,
-                    onRefresh = { }
-                ) {
-                    FiltersList()
-                }
+        Scaffold(
+            modifier = Modifier.fillMaxSize(),
+            topBar = { TopBar() },
+            backgroundColor = MaterialTheme.colors.primary
+        ) {
+            SwipeRefresh(
+                state = swipeRefreshState,
+                onRefresh = { }
+            ) {
+                FiltersList()
             }
         }
     }
 
     @Composable
+    private fun TopBar() = NavigationBar(
+        backgroundColor = MaterialTheme.colors.primaryVariant,
+        title = "Filters",
+        onClick = { finish() }
+    )
+
+    @Composable
     private fun FiltersList() = LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .clip(RoundedCornerShape(30.dp, 30.dp, 0.dp, 0.dp))
-            .background(MaterialTheme.colors.primary)
+        modifier = Modifier.fillMaxSize()
     ) {
         items(100) {
             FilterView()
