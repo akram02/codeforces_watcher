@@ -43,7 +43,10 @@ class ProblemsFiltersActivityNew : AppCompatActivity(), StoreSubscriber<Problems
         setContent {
             AlgoismeTheme {
                 ProblemsFilters(
-                    filtersState = filtersState
+                    filtersState = filtersState,
+                    onFilter = { title, isChecked ->
+                        onFilter(title = title, isChecked = isChecked)
+                    }
                 )
             }
         }
@@ -80,9 +83,14 @@ class ProblemsFiltersActivityNew : AppCompatActivity(), StoreSubscriber<Problems
         }
     }
 
+    private fun onFilter(title: String, isChecked: Boolean) {
+        store.dispatch(ProblemsRequests.ChangeTagCheckStatus(title, isChecked))
+    }
+
     @Composable
     private fun ProblemsFilters(
-        filtersState: State<List<FilterItem>>
+        filtersState: State<List<FilterItem>>,
+        onFilter: (String, Boolean) -> Unit
     ) {
         val swipeRefreshState = rememberSwipeRefreshState(false)
 
@@ -95,7 +103,10 @@ class ProblemsFiltersActivityNew : AppCompatActivity(), StoreSubscriber<Problems
                 state = swipeRefreshState,
                 onRefresh = { }
             ) {
-                FiltersList(filtersState)
+                FiltersList(
+                    filtersState = filtersState,
+                    onFilter = onFilter
+                )
             }
         }
     }
@@ -109,18 +120,20 @@ class ProblemsFiltersActivityNew : AppCompatActivity(), StoreSubscriber<Problems
 
     @Composable
     private fun FiltersList(
-        filtersState: State<List<FilterItem>>
+        filtersState: State<List<FilterItem>>,
+        onFilter: (String, Boolean) -> Unit
     ) = LazyColumn(
         modifier = Modifier.fillMaxSize()
     ) {
         items(filtersState.value) { filterItem ->
-            FilterView(filterItem)
+            FilterView(filterItem, onFilter)
         }
     }
 
     @Composable
     private fun FilterView(
-        filterItem: FilterItem
+        filterItem: FilterItem,
+        onFilter: (String, Boolean) -> Unit
     ) = Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -136,7 +149,9 @@ class ProblemsFiltersActivityNew : AppCompatActivity(), StoreSubscriber<Problems
         Icon(
             painter = painterResource(id = if (filterItem.isChecked) R.drawable.ic_checkbox else R.drawable.ic_checkbox_disabled),
             contentDescription = null,
-            modifier = Modifier.clickable { }
+            modifier = Modifier.clickable {
+                onFilter(filterItem.title, !filterItem.isChecked)
+            }
         )
     }
 }
