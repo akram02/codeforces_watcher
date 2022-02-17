@@ -13,7 +13,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.bogdan.codeforceswatcher.R
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
@@ -123,21 +122,21 @@ private val LocalAlgoismeTypography = staticCompositionLocalOf { commonAlgoismeT
 
 private val commonAlgoismeTypography = AlgoismeTypography(
     headerSmallMedium = TextStyle(
-        fontWeight = FontWeight(500),
+        fontWeight = FontWeight.W500,
         fontStyle = FontStyle.Normal,
         fontFamily = FontFamily.Monospace,
         fontSize = 18.sp,
         letterSpacing = (-1).sp
     ),
     headerMiddleMedium = TextStyle(
-        fontWeight = FontWeight(500),
+        fontWeight = FontWeight.W500,
         fontStyle = FontStyle.Normal,
         fontFamily = FontFamily.Monospace,
         fontSize = 28.sp,
         letterSpacing = (-1).sp
     ),
     headerBigMedium = TextStyle(
-        fontWeight = FontWeight(500),
+        fontWeight = FontWeight.W500,
         fontStyle = FontStyle.Normal,
         fontFamily = FontFamily.Monospace,
         fontSize = 40.sp,
@@ -146,14 +145,14 @@ private val commonAlgoismeTypography = AlgoismeTypography(
     ),
 
     hintRegular = TextStyle(
-        fontWeight = FontWeight(400),
+        fontWeight = FontWeight.W400,
         fontStyle = FontStyle.Normal,
         fontFamily = FontFamily.Monospace,
         fontSize = 13.sp,
         letterSpacing = (-1).sp,
     ),
     hintSemiBold = TextStyle(
-        fontWeight = FontWeight(600),
+        fontWeight = FontWeight.W600,
         fontStyle = FontStyle.Normal,
         fontFamily = FontFamily.Monospace,
         fontSize = 13.sp,
@@ -161,7 +160,7 @@ private val commonAlgoismeTypography = AlgoismeTypography(
     ),
 
     primaryRegular = TextStyle(
-        fontWeight = FontWeight(400),
+        fontWeight = FontWeight.W400,
         fontStyle = FontStyle.Normal,
         fontFamily = FontFamily.Monospace,
         fontSize = 16.sp,
@@ -169,7 +168,7 @@ private val commonAlgoismeTypography = AlgoismeTypography(
     ),
 
     primarySemiBold = TextStyle(
-        fontWeight = FontWeight(600),
+        fontWeight = FontWeight.W600,
         fontStyle = FontStyle.Normal,
         fontFamily = FontFamily.Monospace,
         fontSize = 16.sp,
@@ -177,7 +176,7 @@ private val commonAlgoismeTypography = AlgoismeTypography(
     ),
 
     buttonSemiBold = TextStyle(
-        fontWeight = FontWeight(600),
+        fontWeight = FontWeight.W600,
         fontStyle = FontStyle.Normal,
         fontFamily = FontFamily.Monospace,
         fontSize = 16.sp,
