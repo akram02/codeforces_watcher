@@ -100,7 +100,7 @@ class RestorePasswordComposeActivity : ComponentActivity(), StoreSubscriber<Auth
             Text(
                 text = getString(R.string.you_will_get_an_email_with_instructions_for_account_recovery),
                 modifier = Modifier.fillMaxWidth(),
-                style = AlgoismeTheme.typography.hintSemiBold.copy(fontSize = 14.sp),
+                style = AlgoismeTheme.typography.hintRegular.copy(fontSize = 14.sp),
                 color = AlgoismeTheme.colors.onBackground,
                 textAlign = TextAlign.Start
             )

@@ -2,19 +2,18 @@ package com.bogdan.codeforceswatcher.components.compose.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.bogdan.codeforceswatcher.R
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
@@ -22,6 +21,11 @@ fun AlgoismeTheme(
     isDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
+    val systemUiController = rememberSystemUiController()
+    val systemBarColor = if (isDarkTheme) darkAlgoismeColors.primaryVariant else lightAlgoismeColors.primaryVariant
+
+    systemUiController.setSystemBarsColor(systemBarColor, !isDarkTheme)
+
     CompositionLocalProvider(
         LocalAlgoismeColors provides if (isDarkTheme) darkAlgoismeColors else lightAlgoismeColors,
         LocalAlgoismeTypography provides commonAlgoismeTypography,
@@ -104,18 +108,21 @@ val commonAlgoismeTypography = AlgoismeTypography(
     headerSmallMedium = TextStyle(
         fontWeight = FontWeight(500),
         fontStyle = FontStyle.Normal,
+        fontFamily = FontFamily.Monospace,
         fontSize = 18.sp,
         letterSpacing = (-1).sp
     ),
     headerMiddleMedium = TextStyle(
         fontWeight = FontWeight(500),
         fontStyle = FontStyle.Normal,
+        fontFamily = FontFamily.Monospace,
         fontSize = 28.sp,
         letterSpacing = (-1).sp
     ),
     headerBigMedium = TextStyle(
         fontWeight = FontWeight(500),
         fontStyle = FontStyle.Normal,
+        fontFamily = FontFamily.Monospace,
         fontSize = 40.sp,
         letterSpacing = (-1).sp,
         textAlign = TextAlign.Start
@@ -124,12 +131,14 @@ val commonAlgoismeTypography = AlgoismeTypography(
     hintRegular = TextStyle(
         fontWeight = FontWeight(400),
         fontStyle = FontStyle.Normal,
+        fontFamily = FontFamily.Monospace,
         fontSize = 13.sp,
         letterSpacing = (-1).sp,
     ),
     hintSemiBold = TextStyle(
         fontWeight = FontWeight(600),
         fontStyle = FontStyle.Normal,
+        fontFamily = FontFamily.Monospace,
         fontSize = 13.sp,
         letterSpacing = (-1).sp
     ),
@@ -137,6 +146,7 @@ val commonAlgoismeTypography = AlgoismeTypography(
     primaryRegular = TextStyle(
         fontWeight = FontWeight(400),
         fontStyle = FontStyle.Normal,
+        fontFamily = FontFamily.Monospace,
         fontSize = 16.sp,
         letterSpacing = (-1).sp
     ),
@@ -144,6 +154,7 @@ val commonAlgoismeTypography = AlgoismeTypography(
     primarySemiBold = TextStyle(
         fontWeight = FontWeight(600),
         fontStyle = FontStyle.Normal,
+        fontFamily = FontFamily.Monospace,
         fontSize = 16.sp,
         letterSpacing = (-1).sp
     ),
@@ -151,6 +162,7 @@ val commonAlgoismeTypography = AlgoismeTypography(
     buttonSemiBold = TextStyle(
         fontWeight = FontWeight(600),
         fontStyle = FontStyle.Normal,
+        fontFamily = FontFamily.Monospace,
         fontSize = 16.sp,
         letterSpacing = (-1).sp,
         textAlign = TextAlign.Center
@@ -164,30 +176,3 @@ val commonAlgoismeShapes = AlgoismeShapes(
     medium = RoundedCornerShape(20.dp),
     large = RoundedCornerShape(0.dp)
 )
-
-//private val LocalColors = staticCompositionLocalOf { lightAlgoismeColors }
-
-//@Composable
-//fun AlgoismeTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
-//    val systemUiController = rememberSystemUiController()
-//    val systemBarColor =
-//        if (darkTheme) darkAlgoismeColor.primaryVariant else lightAlgoismeColors.primaryVariant
-//    val useDarkIcons = MaterialTheme.colors.isLight
-//
-//    systemUiController.setSystemBarsColor(systemBarColor, useDarkIcons)
-//
-//    val colors = if (darkTheme) {
-//        darkAlgoismeColor
-//    } else {
-//        lightAlgoismeColors
-//    }
-//
-//    CompositionLocalProvider(LocalColors provides colors) {
-//        MaterialTheme(
-//            colors = colors,
-//            typography = Typography,
-//            shapes = Shapes,
-//            content = content
-//        )
-//    }
-//}

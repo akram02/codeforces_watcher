@@ -45,6 +45,7 @@ fun IdentifyView(
             Text(
                 text = stringResource(R.string.who_are_you),
                 style = AlgoismeTheme.typography.headerMiddleMedium,
+                color = AlgoismeTheme.colors.secondary,
                 textAlign = TextAlign.Start
             )
 
@@ -56,6 +57,7 @@ fun IdentifyView(
                 Text(
                     text = stringResource(R.string.login_to_identify_explanation),
                     style = AlgoismeTheme.typography.hintRegular,
+                    color = AlgoismeTheme.colors.secondaryVariant,
                     textAlign = TextAlign.Start,
                     modifier = Modifier.widthIn(max = 220.dp)
                 )

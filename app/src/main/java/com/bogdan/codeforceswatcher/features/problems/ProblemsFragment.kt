@@ -31,6 +31,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.IntSize
@@ -263,7 +264,7 @@ private fun NavigationBar(
             modifier = Modifier.weight(1f)
         ) {
             Text(
-                text = "Problems",
+                text = stringResource(R.string.problems),
                 style = AlgoismeTheme.typography.headerSmallMedium,
                 color = AlgoismeTheme.colors.secondary
             )
