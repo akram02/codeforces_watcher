@@ -18,5 +18,12 @@ data class AlgoismeColors(
     val onSurface: Color,
     val onError: Color,
 
+    val white: Color,
+    val black: Color,
+    val accentGrayish: Color,
+    val mineShaft: Color,
+    val red: Color,
+    val green: Color,
+
     val onStar: Color
 )

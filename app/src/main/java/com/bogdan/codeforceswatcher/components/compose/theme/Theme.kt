@@ -49,6 +49,8 @@ object AlgoismeTheme {
         get() = LocalAlgoismeShapes.current
 }
 
+// Colors
+
 private val LocalAlgoismeColors = staticCompositionLocalOf { commonAlgoismeColors }
 
 private val commonAlgoismeColors = AlgoismeColors(
@@ -65,46 +67,61 @@ private val commonAlgoismeColors = AlgoismeColors(
     onSurface = Color.Unspecified,
     onError = Color.Unspecified,
 
-    onStar = Yellow
+    white = Color(0xFFFFFFFF),
+    black = Color(0xFF000000),
+    accentGrayish = Color(0xFFEEEEEE),
+    mineShaft = Color(0xFF303030),
+    red = Color(0xFFFF0000),
+    green = Color(0xFF05D200),
+
+    onStar = Color(0xFFFFCA00)
 )
 
 private val lightAlgoismeColors = with(commonAlgoismeColors) {
     copy(
-        primary = White,
-        primaryVariant = Gallery,
-        secondary = Black,
-        secondaryVariant = DoveGray,
-        background = White,
-        error = Red,
-        surface = Gallery,
-        onPrimary = Black,
-        onSecondary = White,
-        onBackground = Black,
-        onError = Black,
-        onSurface = Black
+        primary = white,
+        primaryVariant = accentGrayish,
+
+        secondaryVariant = Color(0xFF636363),
+        secondary = black,
+
+        background = white,
+        surface = accentGrayish,
+        error = red,
+
+        onPrimary = black,
+        onSecondary = white,
+        onBackground = black,
+        onSurface = black,
+        onError = black
     )
 }
 
 private val darkAlgoismeColors = with(commonAlgoismeColors) {
     copy(
-        primary = CodGray,
-        primaryVariant = MineShaft,
-        secondary = White,
-        secondaryVariant = SilverChalice,
-        background = CodGray,
-        error = Red,
-        surface = MineShaft,
-        onPrimary = White,
-        onSecondary = CodGray,
-        onBackground = White,
-        onError = White,
-        onSurface = White,
+        primary = black,
+        primaryVariant = mineShaft,
+
+        secondary = white,
+        secondaryVariant = Color(0xFFAAAAAA),
+
+        background = accentGrayish,
+        surface = mineShaft,
+        error = red,
+
+        onPrimary = white,
+        onSecondary = black,
+        onBackground = white,
+        onSurface = white,
+        onError = white
     )
 }
 
+// Fonts
+
 private val LocalAlgoismeTypography = staticCompositionLocalOf { commonAlgoismeTypography }
 
-val commonAlgoismeTypography = AlgoismeTypography(
+private val commonAlgoismeTypography = AlgoismeTypography(
     headerSmallMedium = TextStyle(
         fontWeight = FontWeight(500),
         fontStyle = FontStyle.Normal,
@@ -169,9 +186,11 @@ val commonAlgoismeTypography = AlgoismeTypography(
     ),
 )
 
+// Shapes
+
 private val LocalAlgoismeShapes = staticCompositionLocalOf { commonAlgoismeShapes }
 
-val commonAlgoismeShapes = AlgoismeShapes(
+private val commonAlgoismeShapes = AlgoismeShapes(
     small = RoundedCornerShape(100),
     medium = RoundedCornerShape(20.dp),
     large = RoundedCornerShape(0.dp)
