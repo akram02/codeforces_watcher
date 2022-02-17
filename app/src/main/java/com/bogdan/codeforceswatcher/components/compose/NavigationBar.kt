@@ -22,7 +22,8 @@ fun NavigationBar(
         title = {
             Text(
                 text = title,
-                style = AlgoismeTheme.typography.headerSmallMedium
+                style = AlgoismeTheme.typography.headerSmallMedium,
+                color = AlgoismeTheme.colors.secondary
             )
         },
         navigationIcon = {
@@ -31,7 +32,8 @@ fun NavigationBar(
             ) {
                 Icon(
                     painter = painterResource(navigationIcon),
-                    contentDescription = navigationIconDescription
+                    contentDescription = navigationIconDescription,
+                    tint = AlgoismeTheme.colors.secondary
                 )
             }
         },

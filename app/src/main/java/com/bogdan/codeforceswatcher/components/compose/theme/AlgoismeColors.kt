@@ -7,15 +7,15 @@ import androidx.compose.ui.graphics.Color
 data class AlgoismeColors(
     val primary: Color,
     val primaryVariant: Color,
+
     val secondary: Color,
     val secondaryVariant: Color,
+
     val background: Color,
     val surface: Color,
     val error: Color,
-    val onPrimary: Color,
-    val onSecondary: Color,
+
     val onBackground: Color,
-    val onSurface: Color,
     val onError: Color,
 
     val white: Color,
@@ -23,7 +23,6 @@ data class AlgoismeColors(
     val accentGrayish: Color,
     val mineShaft: Color,
     val red: Color,
-    val green: Color,
 
     val onStar: Color
 )
