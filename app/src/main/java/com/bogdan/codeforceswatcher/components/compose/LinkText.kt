@@ -1,11 +1,11 @@
 package com.bogdan.codeforceswatcher.components.compose
 
 import androidx.compose.foundation.text.ClickableText
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.*
 import androidx.compose.ui.text.style.TextDecoration
+import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 
 data class LinkTextData(
     val text: String,
@@ -18,8 +18,8 @@ data class LinkTextData(
 fun LinkText(
     linkTextData: List<LinkTextData>,
     modifier: Modifier = Modifier,
-    textStyle: TextStyle = MaterialTheme.typography.body1,
-    clickableTextStyle: TextStyle = MaterialTheme.typography.body2,
+    textStyle: TextStyle = AlgoismeTheme.typography.hintRegular,
+    clickableTextStyle: TextStyle = AlgoismeTheme.typography.hintSemiBold,
     paragraphStyle: ParagraphStyle = ParagraphStyle()
 ) {
     val annotatedString = createAnnotatedString(

@@ -1,10 +1,10 @@
 package com.bogdan.codeforceswatcher.components.compose
 
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shadow
+import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 
 @Composable
 fun ErrorView(
@@ -13,10 +13,10 @@ fun ErrorView(
 ) {
     Text(
         text = message,
-        color = MaterialTheme.colors.onError,
-        style = MaterialTheme.typography.button.copy(
+        color = AlgoismeTheme.colors.onError,
+        style = AlgoismeTheme.typography.buttonSemiBold.copy(
             shadow = Shadow(
-                color = MaterialTheme.colors.error,
+                color = AlgoismeTheme.colors.error,
                 blurRadius = 40f
             )
         ),

@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -20,6 +19,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.compose.buttons.SmallButton
+import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 import com.bogdan.codeforceswatcher.components.compose.theme.White
 import com.bogdan.codeforceswatcher.features.users.*
 import io.xorum.codeforceswatcher.features.users.models.User
@@ -101,15 +101,15 @@ private fun RatingDataItem(
         Icon(
             painter = painterResource(icon),
             contentDescription = description,
-            tint = MaterialTheme.colors.onBackground
+            tint = AlgoismeTheme.colors.onBackground
         )
 
         Spacer(Modifier.width(5.dp))
 
         Text(
             text = caption,
-            style = MaterialTheme.typography.caption,
-            color = MaterialTheme.colors.onBackground
+            style = AlgoismeTheme.typography.hintRegular,
+            color = AlgoismeTheme.colors.onBackground
         )
     }
 }
@@ -124,7 +124,7 @@ private fun Rank(
 
     Text(
         text = label,
-        style = MaterialTheme.typography.h6.copy(
+        style = AlgoismeTheme.typography.headerSmallMedium.copy(
             shadow = Shadow(
                 color = adjustColor(colorResource(getColorByUserRank(rank)).toArgb(), 0.2f),
                 blurRadius = 30f
@@ -144,16 +144,16 @@ private fun Username(
     Box(modifier.height(56.dp)) {
         Text(
             text = handle,
-            style = MaterialTheme.typography.h5,
-            color = MaterialTheme.colors.onBackground,
+            style = AlgoismeTheme.typography.headerMiddleMedium,
+            color = AlgoismeTheme.colors.onBackground,
             maxLines = 1,
             modifier = Modifier.align(Alignment.TopStart)
         )
 
         Text(
             text = name,
-            style = MaterialTheme.typography.body2,
-            color = MaterialTheme.colors.secondaryVariant,
+            style = AlgoismeTheme.typography.hintSemiBold,
+            color = AlgoismeTheme.colors.secondaryVariant,
             maxLines = 1,
             modifier = Modifier.align(Alignment.BottomStart)
         )

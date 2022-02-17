@@ -9,7 +9,6 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
@@ -19,6 +18,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.core.content.ContextCompat
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
+import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 import com.bogdan.codeforceswatcher.components.compose.theme.Green
 import com.bogdan.codeforceswatcher.components.compose.theme.Red
 import com.bogdan.codeforceswatcher.util.CustomMarkerView
@@ -272,7 +272,7 @@ fun User.buildContributionNew() = buildAnnotatedString {
             color = when {
                 contribution > 0 -> Green
                 contribution < 0 -> Red
-                else -> MaterialTheme.colors.secondaryVariant
+                else -> AlgoismeTheme.colors.secondaryVariant
             }
         )
     ) {

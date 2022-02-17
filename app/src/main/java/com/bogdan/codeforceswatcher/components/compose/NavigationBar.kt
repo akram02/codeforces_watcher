@@ -7,11 +7,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.bogdan.codeforceswatcher.R
+import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 
 @Composable
 fun NavigationBar(
     modifier: Modifier = Modifier,
-    backgroundColor: Color = MaterialTheme.colors.primary,
+    backgroundColor: Color = AlgoismeTheme.colors.primary,
     title: String = "",
     navigationIcon: Int = R.drawable.ic_path,
     navigationIconDescription: String? = null,
@@ -21,7 +22,7 @@ fun NavigationBar(
         title = {
             Text(
                 text = title,
-                style = MaterialTheme.typography.h6
+                style = AlgoismeTheme.typography.headerSmallMedium
             )
         },
         navigationIcon = {

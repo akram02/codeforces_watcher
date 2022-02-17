@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -93,7 +92,7 @@ class ProblemsFiltersActivity : AppCompatActivity(), StoreSubscriber<ProblemsSta
         Scaffold(
             modifier = Modifier.fillMaxSize(),
             topBar = { TopBar() },
-            backgroundColor = MaterialTheme.colors.primary
+            backgroundColor = AlgoismeTheme.colors.primary
         ) {
             SwipeRefresh(
                 state = swipeRefreshState,
@@ -109,7 +108,7 @@ class ProblemsFiltersActivity : AppCompatActivity(), StoreSubscriber<ProblemsSta
 
     @Composable
     private fun TopBar() = NavigationBar(
-        backgroundColor = MaterialTheme.colors.primaryVariant,
+        backgroundColor = AlgoismeTheme.colors.primaryVariant,
         title = getString(R.string.filters),
         onClick = { finish() }
     )
@@ -138,8 +137,8 @@ class ProblemsFiltersActivity : AppCompatActivity(), StoreSubscriber<ProblemsSta
     ) {
         Text(
             text = filterItem.title,
-            style = MaterialTheme.typography.subtitle1,
-            color = MaterialTheme.colors.secondary
+            style = AlgoismeTheme.typography.primaryRegular,
+            color = AlgoismeTheme.colors.secondary
         )
 
         Icon(
@@ -148,7 +147,7 @@ class ProblemsFiltersActivity : AppCompatActivity(), StoreSubscriber<ProblemsSta
             modifier = Modifier.clickable {
                 onFilter(filterItem.title, !filterItem.isChecked)
             },
-            tint = if (filterItem.isChecked) MaterialTheme.colors.onBackground else MaterialTheme.colors.secondaryVariant
+            tint = if (filterItem.isChecked) AlgoismeTheme.colors.onBackground else AlgoismeTheme.colors.secondaryVariant
         )
     }
 }

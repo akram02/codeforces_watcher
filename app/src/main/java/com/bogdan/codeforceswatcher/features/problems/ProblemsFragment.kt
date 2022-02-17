@@ -23,7 +23,6 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -39,7 +38,6 @@ import androidx.compose.ui.unit.dp
 import com.bogdan.codeforceswatcher.components.WebViewActivity
 import io.xorum.codeforceswatcher.util.AnalyticsEvents
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.components.compose.theme.palette
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
@@ -156,7 +154,7 @@ private fun ProblemsView(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colors.primaryVariant)
+                .background(AlgoismeTheme.colors.primaryVariant)
         )
 
         Column {
@@ -191,7 +189,7 @@ private fun ProblemsList(
     modifier = Modifier
         .fillMaxSize()
         .clip(RoundedCornerShape(30.dp, 30.dp, 0.dp, 0.dp))
-        .background(MaterialTheme.colors.primary)
+        .background(AlgoismeTheme.colors.primary)
 ) {
     items(problemsState.value) { problem ->
         ProblemView(
@@ -220,15 +218,15 @@ private fun ProblemView(
     ) {
         Text(
             text = problem.title,
-            style = MaterialTheme.typography.subtitle2,
-            color = MaterialTheme.colors.secondary,
+            style = AlgoismeTheme.typography.primarySemiBold,
+            color = AlgoismeTheme.colors.secondary,
             modifier = Modifier.height(20.dp)
         )
 
         Text(
             text = problem.subtitle,
-            style = MaterialTheme.typography.body1,
-            color = MaterialTheme.colors.secondaryVariant,
+            style = AlgoismeTheme.typography.hintRegular,
+            color = AlgoismeTheme.colors.secondaryVariant,
             modifier = Modifier.height(16.dp)
         )
     }
@@ -236,7 +234,7 @@ private fun ProblemView(
     Icon(
         painter = painterResource(R.drawable.ic_star),
         contentDescription = null,
-        tint = if (problem.isFavourite) MaterialTheme.palette.yellow else MaterialTheme.palette.secondary,
+        tint = if (problem.isFavourite) AlgoismeTheme.colors.onStar else AlgoismeTheme.colors.secondary,
         modifier = Modifier
             .size(24.dp)
             .clickable { onStar(problem.id) }
@@ -266,8 +264,8 @@ private fun NavigationBar(
         ) {
             Text(
                 text = "Problems",
-                style = MaterialTheme.typography.h6,
-                color = MaterialTheme.colors.secondary
+                style = AlgoismeTheme.typography.headerSmallMedium,
+                color = AlgoismeTheme.colors.secondary
             )
         }
 
@@ -361,17 +359,17 @@ private fun SearchTextField(
         modifier = modifier
             .height(30.dp)
             .clip(RoundedCornerShape(20.dp))
-            .background(MaterialTheme.colors.primary)
+            .background(AlgoismeTheme.colors.primary)
             .padding(10.dp, 4.dp, 0.dp, 0.dp),
-        textStyle = MaterialTheme.typography.subtitle1.copy(color = MaterialTheme.colors.onBackground),
+        textStyle = AlgoismeTheme.typography.primaryRegular.copy(color = AlgoismeTheme.colors.onBackground),
         singleLine = true,
-        cursorBrush = SolidColor(MaterialTheme.colors.onBackground),
+        cursorBrush = SolidColor(AlgoismeTheme.colors.onBackground),
         decorationBox = { innerTextField ->
             if (value.isEmpty()) {
                 Text(
                     text = "Search problems for...",
-                    style = MaterialTheme.typography.subtitle1,
-                    color = MaterialTheme.colors.secondaryVariant
+                    style = AlgoismeTheme.typography.primaryRegular,
+                    color = AlgoismeTheme.colors.secondaryVariant
                 )
             }
             innerTextField()
