@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -55,7 +54,7 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
             modifier = Modifier.fillMaxSize(),
             topBar = { TopBar() },
             bottomBar = { BottomBar() },
-            backgroundColor = MaterialTheme.colors.background
+            backgroundColor = AlgoismeTheme.colors.background
         ) {
             Content()
         }
@@ -74,13 +73,13 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 20.dp, end = 20.dp, bottom = 45.dp),
-            textStyle = MaterialTheme.typography.body1.copy(
+            textStyle = AlgoismeTheme.typography.hintRegular.copy(
                 fontSize = 14.sp,
-                color = MaterialTheme.colors.secondaryVariant
+                color = AlgoismeTheme.colors.secondaryVariant
             ),
-            clickableTextStyle = MaterialTheme.typography.body2.copy(
+            clickableTextStyle = AlgoismeTheme.typography.hintSemiBold.copy(
                 fontSize = 14.sp,
-                color = MaterialTheme.colors.onBackground,
+                color = AlgoismeTheme.colors.onBackground,
                 textDecoration = TextDecoration.Underline
             ),
             paragraphStyle = ParagraphStyle(textAlign = TextAlign.Center)
@@ -126,8 +125,8 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
                         startRestorePasswordActivity()
                     }
                 ),
-                clickableTextStyle = MaterialTheme.typography.body2.copy(
-                    color = MaterialTheme.colors.onBackground
+                clickableTextStyle = AlgoismeTheme.typography.hintSemiBold.copy(
+                    color = AlgoismeTheme.colors.onBackground
                 )
             )
         }

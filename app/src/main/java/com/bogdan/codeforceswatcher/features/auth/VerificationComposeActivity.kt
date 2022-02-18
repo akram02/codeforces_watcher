@@ -8,7 +8,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.ClickableText
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -61,7 +60,7 @@ class VerificationComposeActivity : ComponentActivity(), StoreSubscriber<Verific
         Scaffold(
             modifier = Modifier.fillMaxSize(),
             topBar = { TopBar() },
-            backgroundColor = MaterialTheme.colors.background
+            backgroundColor = AlgoismeTheme.colors.background
         ) {
             Content()
         }
@@ -96,7 +95,7 @@ class VerificationComposeActivity : ComponentActivity(), StoreSubscriber<Verific
                     withStyle(
                         SpanStyle(
                             fontWeight = FontWeight.SemiBold,
-                            color = MaterialTheme.colors.onBackground,
+                            color = AlgoismeTheme.colors.onBackground,
                             letterSpacing = (-1).sp
                         )
                     ) {
@@ -105,8 +104,8 @@ class VerificationComposeActivity : ComponentActivity(), StoreSubscriber<Verific
                     append(getString(R.string.to_verify_please_change_your_last_name_end))
                 },
                 modifier = Modifier.fillMaxWidth(),
-                style = MaterialTheme.typography.body1.copy(fontSize = 14.sp),
-                color = MaterialTheme.colors.secondaryVariant,
+                style = AlgoismeTheme.typography.hintRegular.copy(fontSize = 14.sp),
+                color = AlgoismeTheme.colors.secondaryVariant,
                 textAlign = TextAlign.Start,
                 letterSpacing = (-1.5).sp
             )
@@ -117,10 +116,10 @@ class VerificationComposeActivity : ComponentActivity(), StoreSubscriber<Verific
                 text = buildAnnotatedString {
                     append(verificationState?.verificationCode.orEmpty())
                 },
-                style = MaterialTheme.typography.body1.copy(
+                style = AlgoismeTheme.typography.hintRegular.copy(
                     fontSize = 24.sp,
                     fontWeight = FontWeight.SemiBold,
-                    color = MaterialTheme.colors.onBackground,
+                    color = AlgoismeTheme.colors.onBackground,
                     textAlign = TextAlign.Center
                 ),
                 onClick = {
@@ -134,8 +133,8 @@ class VerificationComposeActivity : ComponentActivity(), StoreSubscriber<Verific
             Text(
                 text = getString(R.string.after_successful_login_you_can_change_it_back),
                 modifier = Modifier.fillMaxWidth(),
-                style = MaterialTheme.typography.body1.copy(fontSize = 14.sp),
-                color = MaterialTheme.colors.secondaryVariant,
+                style = AlgoismeTheme.typography.hintRegular.copy(fontSize = 14.sp),
+                color = AlgoismeTheme.colors.secondaryVariant,
                 textAlign = TextAlign.Start,
                 letterSpacing = (-1.5).sp
             )

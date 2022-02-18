@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -16,6 +15,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 
 @Composable
 fun AuthTextField(
@@ -31,8 +31,8 @@ fun AuthTextField(
     Column {
         Text(
             text = if (value.isNotEmpty()) label else "",
-            style = MaterialTheme.typography.caption,
-            color = MaterialTheme.colors.secondaryVariant
+            style = AlgoismeTheme.typography.hintRegular,
+            color = AlgoismeTheme.colors.secondaryVariant
         )
         BasicTextField(
             value = value,
@@ -41,15 +41,15 @@ fun AuthTextField(
                 onValueChange(it)
             },
             modifier = modifier.fillMaxWidth(),
-            textStyle = MaterialTheme.typography.subtitle1.copy(color = MaterialTheme.colors.onBackground),
+            textStyle = AlgoismeTheme.typography.primaryRegular.copy(color = AlgoismeTheme.colors.onBackground),
             singleLine = true,
-            cursorBrush = SolidColor(MaterialTheme.colors.onBackground),
+            cursorBrush = SolidColor(AlgoismeTheme.colors.onBackground),
             decorationBox = { innerTextField ->
                 if (value.isEmpty()) {
                     Text(
                         text = label,
-                        style = MaterialTheme.typography.subtitle1,
-                        color = MaterialTheme.colors.secondaryVariant,
+                        style = AlgoismeTheme.typography.primaryRegular,
+                        color = AlgoismeTheme.colors.secondaryVariant,
                     )
                 }
                 innerTextField()
@@ -62,7 +62,7 @@ fun AuthTextField(
         Spacer(Modifier.height(2.dp))
 
         val lineColor =
-            if (value.isEmpty()) MaterialTheme.colors.secondaryVariant else MaterialTheme.colors.onBackground
+            if (value.isEmpty()) AlgoismeTheme.colors.secondaryVariant else AlgoismeTheme.colors.onBackground
         Canvas(modifier.fillMaxWidth()) {
             val canvasWidth = size.width
             val canvasHeight = size.height
