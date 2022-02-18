@@ -21,8 +21,6 @@ import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 import com.bogdan.codeforceswatcher.components.compose.NavigationBar
 import com.bogdan.codeforceswatcher.features.filters.models.FilterItem
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import io.xorum.codeforceswatcher.features.problems.redux.ProblemsRequests
 import io.xorum.codeforceswatcher.features.problems.redux.ProblemsState
 import io.xorum.codeforceswatcher.redux.store
@@ -40,7 +38,10 @@ class ProblemsFiltersActivity : AppCompatActivity(), StoreSubscriber<ProblemsSta
                 ProblemsFilters(
                     filtersState = filtersState,
                     onFilter = { title, isChecked ->
-                        onFilter(title = title, isChecked = isChecked)
+                        onFilter(title, isChecked)
+                    },
+                    closeActivity = {
+                        closeActivity()
                     }
                 )
             }
@@ -82,44 +83,37 @@ class ProblemsFiltersActivity : AppCompatActivity(), StoreSubscriber<ProblemsSta
         store.dispatch(ProblemsRequests.ChangeTagCheckStatus(title, isChecked))
     }
 
-    @Composable
-    private fun ProblemsFilters(
-        filtersState: State<List<FilterItem>>,
-        onFilter: (String, Boolean) -> Unit
-    ) {
-        val swipeRefreshState = rememberSwipeRefreshState(false)
-
-        Scaffold(
-            modifier = Modifier.fillMaxSize(),
-            topBar = { TopBar() },
-            backgroundColor = AlgoismeTheme.colors.primary
-        ) {
-            SwipeRefresh(
-                state = swipeRefreshState,
-                onRefresh = { }
-            ) {
-                FiltersList(
-                    filtersState = filtersState,
-                    onFilter = onFilter
-                )
-            }
-        }
+    private fun closeActivity() {
+        finish()
     }
 
     @Composable
-    private fun TopBar() = NavigationBar(
+    private fun ProblemsFilters(
+        filtersState: State<List<FilterItem>>,
+        onFilter: (String, Boolean) -> Unit,
+        closeActivity: () -> Unit
+    ) = Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        topBar = { TopBar(closeActivity) },
+        backgroundColor = AlgoismeTheme.colors.primary
+    ) {
+        FiltersList(filtersState, onFilter)
+    }
+
+    @Composable
+    private fun TopBar(
+        closeActivity: () -> Unit
+    ) = NavigationBar(
         backgroundColor = AlgoismeTheme.colors.primaryVariant,
         title = getString(R.string.filters),
-        onClick = { finish() }
+        onClick = { closeActivity() }
     )
 
     @Composable
     private fun FiltersList(
         filtersState: State<List<FilterItem>>,
         onFilter: (String, Boolean) -> Unit
-    ) = LazyColumn(
-        modifier = Modifier.fillMaxSize()
-    ) {
+    ) = LazyColumn(modifier = Modifier.fillMaxSize()) {
         items(filtersState.value) { filterItem ->
             FilterView(filterItem, onFilter)
         }
