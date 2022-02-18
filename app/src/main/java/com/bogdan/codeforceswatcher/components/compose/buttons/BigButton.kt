@@ -2,11 +2,11 @@ package com.bogdan.codeforceswatcher.components.compose.buttons
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.defaultMinSize
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 
 @Composable
 fun BigButton(
@@ -18,9 +18,10 @@ fun BigButton(
     CommonButton(
         label = label,
         modifier = modifier.defaultMinSize(minWidth = 250.dp, minHeight = 40.dp),
-        textStyle = MaterialTheme.typography.button,
-        backgroundColor = if (isInverted) Color.Transparent else MaterialTheme.colors.secondary,
-        borderStroke = if (isInverted) BorderStroke(2.dp, MaterialTheme.colors.secondary) else null
+        textStyle = AlgoismeTheme.typography.buttonSemiBold,
+        backgroundColor = if (isInverted) Color.Transparent else AlgoismeTheme.colors.secondary,
+        labelColor = if (isInverted) AlgoismeTheme.colors.secondary else AlgoismeTheme.colors.primary,
+        borderStroke = if (isInverted) BorderStroke(2.dp, AlgoismeTheme.colors.secondary) else null
     ) {
         action()
     }

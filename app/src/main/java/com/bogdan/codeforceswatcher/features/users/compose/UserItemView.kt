@@ -3,7 +3,6 @@ package com.bogdan.codeforceswatcher.features.users.compose
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -13,8 +12,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.bogdan.codeforceswatcher.components.compose.theme.Green
-import com.bogdan.codeforceswatcher.components.compose.theme.Red
+import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 import com.bogdan.codeforceswatcher.features.users.*
 
 @Composable
@@ -40,7 +38,7 @@ fun UserItemView(
             ) {
                 Text(
                     text = colorTextByUserRankNew(userItem.handle.toString(), userItem.rank),
-                    style = MaterialTheme.typography.subtitle2,
+                    style = AlgoismeTheme.typography.primarySemiBold,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.fillMaxWidth(0.85f)
@@ -48,7 +46,7 @@ fun UserItemView(
 
                 Text(
                     text = colorTextByUserRankNew(userItem.rating.toString(), userItem.rank),
-                    style = MaterialTheme.typography.subtitle2,
+                    style = AlgoismeTheme.typography.primarySemiBold,
                     textAlign = TextAlign.End,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -60,8 +58,8 @@ fun UserItemView(
             ) {
                 Text(
                     text = userItem.dateOfLastRatingUpdate,
-                    style = MaterialTheme.typography.caption,
-                    color = MaterialTheme.colors.secondaryVariant,
+                    style = AlgoismeTheme.typography.hintRegular,
+                    color = AlgoismeTheme.colors.secondaryVariant,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.fillMaxWidth(0.85f)
@@ -73,11 +71,11 @@ fun UserItemView(
                         Update.DECREASE -> "▼ " + userItem.lastRatingUpdate
                         else -> ""
                     },
-                    style = MaterialTheme.typography.subtitle2.copy(fontSize = 13.sp),
+                    style = AlgoismeTheme.typography.primarySemiBold.copy(fontSize = 13.sp),
                     color = when (userItem.update) {
-                        Update.INCREASE -> Green
-                        Update.DECREASE -> Red
-                        else -> MaterialTheme.colors.secondaryVariant
+                        Update.INCREASE -> AlgoismeTheme.colors.green
+                        Update.DECREASE -> AlgoismeTheme.colors.red
+                        else -> AlgoismeTheme.colors.secondaryVariant
                     },
                     textAlign = TextAlign.End,
                     modifier = Modifier.fillMaxWidth()

@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -17,6 +16,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.compose.buttons.SmallButton
+import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 
 @Composable
 fun VerifyView(
@@ -32,15 +32,15 @@ fun VerifyView(
             Icon(
                 painter = painterResource(R.drawable.ic_no_avatar),
                 contentDescription = null,
-                tint = MaterialTheme.colors.onBackground,
+                tint = AlgoismeTheme.colors.onBackground,
                 modifier = Modifier
                     .clip(CircleShape)
-                    .background(MaterialTheme.colors.primary)
+                    .background(AlgoismeTheme.colors.primary)
             )
 
             Text(
                 text = stringResource(R.string.verify_account),
-                style = MaterialTheme.typography.h5,
+                style = AlgoismeTheme.typography.headerMiddleMedium,
                 textAlign = TextAlign.Start
             )
 
@@ -51,7 +51,7 @@ fun VerifyView(
             ) {
                 Text(
                     text = stringResource(R.string.pass_quick_verification),
-                    style = MaterialTheme.typography.body1,
+                    style = AlgoismeTheme.typography.hintRegular,
                     textAlign = TextAlign.Start,
                     modifier = Modifier.widthIn(max = 220.dp)
                 )

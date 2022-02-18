@@ -9,7 +9,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
@@ -63,7 +62,7 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
             modifier = Modifier.fillMaxSize(),
             topBar = { TopBar() },
             bottomBar = { BottomBar() },
-            backgroundColor = MaterialTheme.colors.background
+            backgroundColor = AlgoismeTheme.colors.background
         ) {
             Content()
         }
@@ -84,13 +83,13 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 20.dp, end = 20.dp, bottom = 45.dp),
-            textStyle = MaterialTheme.typography.body1.copy(
+            textStyle = AlgoismeTheme.typography.hintRegular.copy(
                 fontSize = 14.sp,
-                color = MaterialTheme.colors.secondaryVariant
+                color = AlgoismeTheme.colors.secondaryVariant
             ),
-            clickableTextStyle = MaterialTheme.typography.body2.copy(
+            clickableTextStyle = AlgoismeTheme.typography.hintSemiBold.copy(
                 fontSize = 14.sp,
-                color = MaterialTheme.colors.onBackground,
+                color = AlgoismeTheme.colors.onBackground,
                 textDecoration = TextDecoration.Underline
             ),
             paragraphStyle = ParagraphStyle(textAlign = TextAlign.Center)
@@ -133,8 +132,8 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
             PrivacyPolicyChecker(
                 modifier = Modifier.padding(horizontal = 21.dp),
                 isAccepted = isPrivacyPolicyAccepted,
-                textStyle = MaterialTheme.typography.body1.copy(
-                    color = MaterialTheme.colors.onBackground
+                textStyle = AlgoismeTheme.typography.hintRegular.copy(
+                    color = AlgoismeTheme.colors.onBackground
                 )
             ) {
                 isPrivacyPolicyAccepted = !isPrivacyPolicyAccepted
@@ -150,7 +149,7 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
                 label = getString(R.string.sign_up).uppercase(),
                 modifier = Modifier.border(
                     width = 2.dp,
-                    color = MaterialTheme.colors.secondary,
+                    color = AlgoismeTheme.colors.secondary,
                     shape = RoundedCornerShape(100)
                 ),
                 isInverted = !isPrivacyPolicyAccepted
@@ -165,8 +164,8 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
     private fun PrivacyPolicyChecker(
         modifier: Modifier = Modifier,
         isAccepted: Boolean = false,
-        textStyle: TextStyle = MaterialTheme.typography.body1,
-        clickableTextStyle: TextStyle = MaterialTheme.typography.body2,
+        textStyle: TextStyle = AlgoismeTheme.typography.hintRegular,
+        clickableTextStyle: TextStyle = AlgoismeTheme.typography.hintSemiBold,
         paragraphStyle: ParagraphStyle = ParagraphStyle(),
         onCheckboxClick: () -> Unit
     ) {
@@ -181,7 +180,7 @@ class SignUpComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
                 painter = painterResource(id = checkboxIcon),
                 contentDescription = "Checkbox",
                 modifier = Modifier.clickable { onCheckboxClick() },
-                tint = if (isAccepted) MaterialTheme.colors.onBackground else MaterialTheme.colors.secondaryVariant
+                tint = if (isAccepted) AlgoismeTheme.colors.onBackground else AlgoismeTheme.colors.secondaryVariant
             )
 
             Spacer(Modifier.width(12.dp))

@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -55,7 +54,7 @@ class RestorePasswordComposeActivity : ComponentActivity(), StoreSubscriber<Auth
             modifier = Modifier.fillMaxSize(),
             topBar = { TopBar() },
             bottomBar = { BottomBar() },
-            backgroundColor = MaterialTheme.colors.background
+            backgroundColor = AlgoismeTheme.colors.background
         ) {
             Content()
         }
@@ -74,9 +73,9 @@ class RestorePasswordComposeActivity : ComponentActivity(), StoreSubscriber<Auth
                 .fillMaxWidth()
                 .padding(start = 20.dp, end = 20.dp, bottom = 45.dp)
                 .alpha(0f),
-            clickableTextStyle = MaterialTheme.typography.body2.copy(
+            clickableTextStyle = AlgoismeTheme.typography.hintSemiBold.copy(
                 fontSize = 14.sp,
-                color = MaterialTheme.colors.secondaryVariant,
+                color = AlgoismeTheme.colors.secondaryVariant,
                 textDecoration = TextDecoration.Underline
             ),
             paragraphStyle = ParagraphStyle(textAlign = TextAlign.Center)
@@ -101,8 +100,8 @@ class RestorePasswordComposeActivity : ComponentActivity(), StoreSubscriber<Auth
             Text(
                 text = getString(R.string.you_will_get_an_email_with_instructions_for_account_recovery),
                 modifier = Modifier.fillMaxWidth(),
-                style = MaterialTheme.typography.body1.copy(fontSize = 14.sp),
-                color = MaterialTheme.colors.onBackground,
+                style = AlgoismeTheme.typography.hintRegular.copy(fontSize = 14.sp),
+                color = AlgoismeTheme.colors.onBackground,
                 textAlign = TextAlign.Start
             )
 
