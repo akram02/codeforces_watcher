@@ -16,6 +16,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
@@ -41,7 +42,7 @@ class ProblemsFiltersActivity : AppCompatActivity(), StoreSubscriber<ProblemsSta
                         onFilter(title, isChecked)
                     },
                     closeActivity = {
-                        closeActivity()
+                        finish()
                     }
                 )
             }
@@ -82,66 +83,62 @@ class ProblemsFiltersActivity : AppCompatActivity(), StoreSubscriber<ProblemsSta
     private fun onFilter(title: String, isChecked: Boolean) {
         store.dispatch(ProblemsRequests.ChangeTagCheckStatus(title, isChecked))
     }
+}
 
-    private fun closeActivity() {
-        finish()
+@Composable
+private fun ProblemsFilters(
+    filtersState: State<List<FilterItem>>,
+    onFilter: (String, Boolean) -> Unit,
+    closeActivity: () -> Unit
+) = Scaffold(
+    modifier = Modifier.fillMaxSize(),
+    topBar = { TopBar(closeActivity) },
+    backgroundColor = AlgoismeTheme.colors.primary
+) {
+    FiltersList(filtersState, onFilter)
+}
+
+@Composable
+private fun TopBar(
+    closeActivity: () -> Unit
+) = NavigationBar(
+    backgroundColor = AlgoismeTheme.colors.primaryVariant,
+    title = stringResource(R.string.filters),
+    onClick = { closeActivity() }
+)
+
+@Composable
+private fun FiltersList(
+    filtersState: State<List<FilterItem>>,
+    onFilter: (String, Boolean) -> Unit
+) = LazyColumn(modifier = Modifier.fillMaxSize()) {
+    items(filtersState.value) { filterItem ->
+        FilterView(filterItem, onFilter)
     }
+}
 
-    @Composable
-    private fun ProblemsFilters(
-        filtersState: State<List<FilterItem>>,
-        onFilter: (String, Boolean) -> Unit,
-        closeActivity: () -> Unit
-    ) = Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        topBar = { TopBar(closeActivity) },
-        backgroundColor = AlgoismeTheme.colors.primary
-    ) {
-        FiltersList(filtersState, onFilter)
-    }
-
-    @Composable
-    private fun TopBar(
-        closeActivity: () -> Unit
-    ) = NavigationBar(
-        backgroundColor = AlgoismeTheme.colors.primaryVariant,
-        title = getString(R.string.filters),
-        onClick = { closeActivity() }
+@Composable
+private fun FilterView(
+    filterItem: FilterItem,
+    onFilter: (String, Boolean) -> Unit
+) = Row(
+    modifier = Modifier
+        .fillMaxWidth()
+        .padding(20.dp, 20.dp, 20.dp, 0.dp),
+    horizontalArrangement = Arrangement.SpaceBetween
+) {
+    Text(
+        text = filterItem.title,
+        style = AlgoismeTheme.typography.primaryRegular,
+        color = AlgoismeTheme.colors.secondary
     )
 
-    @Composable
-    private fun FiltersList(
-        filtersState: State<List<FilterItem>>,
-        onFilter: (String, Boolean) -> Unit
-    ) = LazyColumn(modifier = Modifier.fillMaxSize()) {
-        items(filtersState.value) { filterItem ->
-            FilterView(filterItem, onFilter)
-        }
-    }
-
-    @Composable
-    private fun FilterView(
-        filterItem: FilterItem,
-        onFilter: (String, Boolean) -> Unit
-    ) = Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(20.dp, 20.dp, 20.dp, 0.dp),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Text(
-            text = filterItem.title,
-            style = AlgoismeTheme.typography.primaryRegular,
-            color = AlgoismeTheme.colors.secondary
-        )
-
-        Icon(
-            painter = painterResource(id = if (filterItem.isChecked) R.drawable.ic_checkbox else R.drawable.ic_checkbox_disabled),
-            contentDescription = null,
-            modifier = Modifier.clickable {
-                onFilter(filterItem.title, !filterItem.isChecked)
-            },
-            tint = if (filterItem.isChecked) AlgoismeTheme.colors.onBackground else AlgoismeTheme.colors.secondaryVariant
-        )
-    }
+    Icon(
+        painter = painterResource(id = if (filterItem.isChecked) R.drawable.ic_checkbox else R.drawable.ic_checkbox_disabled),
+        contentDescription = null,
+        modifier = Modifier.clickable {
+            onFilter(filterItem.title, !filterItem.isChecked)
+        },
+        tint = if (filterItem.isChecked) AlgoismeTheme.colors.onBackground else AlgoismeTheme.colors.secondaryVariant
+    )
 }
