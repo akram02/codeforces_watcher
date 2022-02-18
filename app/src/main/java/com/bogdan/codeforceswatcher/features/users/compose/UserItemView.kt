@@ -13,8 +13,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
-import com.bogdan.codeforceswatcher.components.compose.theme.Green
-import com.bogdan.codeforceswatcher.components.compose.theme.Red
 import com.bogdan.codeforceswatcher.features.users.*
 
 @Composable
@@ -75,8 +73,8 @@ fun UserItemView(
                     },
                     style = AlgoismeTheme.typography.primarySemiBold.copy(fontSize = 13.sp),
                     color = when (userItem.update) {
-                        Update.INCREASE -> Green
-                        Update.DECREASE -> Red
+                        Update.INCREASE -> AlgoismeTheme.colors.green
+                        Update.DECREASE -> AlgoismeTheme.colors.red
                         else -> AlgoismeTheme.colors.secondaryVariant
                     },
                     textAlign = TextAlign.End,

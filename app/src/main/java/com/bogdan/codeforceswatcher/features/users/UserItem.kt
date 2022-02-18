@@ -16,7 +16,7 @@ import androidx.core.graphics.red
 import androidx.core.text.HtmlCompat
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.components.compose.theme.Black
+import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 import com.bogdan.codeforceswatcher.features.users.compose.AvatarView
 import com.bogdan.codeforceswatcher.features.users.compose.DefaultAvatarView
 import com.bogdan.codeforceswatcher.util.colorSubstring
@@ -124,7 +124,7 @@ fun colorTextByUserRank(text: String, rank: String?) =
 @Composable
 fun colorTextByUserRankNew(text: String, rank: String?) = buildAnnotatedString {
     if (listOf("legendary grandmaster", "легендарный гроссмейстер").contains(rank)) {
-        withStyle(SpanStyle(color = Black)) { append(text[0]) }
+        withStyle(SpanStyle(color = AlgoismeTheme.colors.black)) { append(text[0]) }
         withStyle(SpanStyle(color = colorResource(getColorByUserRank(rank)))) {
             append(text.substring(1, text.length))
         }

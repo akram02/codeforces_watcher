@@ -68,6 +68,7 @@ private val commonAlgoismeColors = AlgoismeColors(
     accentGrayish = Color(0xFFEEEEEE),
     mineShaft = Color(0xFF303030),
     red = Color(0xFFFF0000),
+    green = Color(0xFF05D200),
 
     onStar = Color(0xFFFFCA00)
 )

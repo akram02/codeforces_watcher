@@ -23,6 +23,7 @@ data class AlgoismeColors(
     val accentGrayish: Color,
     val mineShaft: Color,
     val red: Color,
+    val green: Color,
 
     val onStar: Color
 )

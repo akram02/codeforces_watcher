@@ -20,7 +20,6 @@ import androidx.compose.ui.unit.dp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.compose.buttons.SmallButton
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
-import com.bogdan.codeforceswatcher.components.compose.theme.White
 import com.bogdan.codeforceswatcher.features.users.*
 import io.xorum.codeforceswatcher.features.users.models.User
 
@@ -130,7 +129,7 @@ private fun Rank(
                 blurRadius = 30f
             ),
         ),
-        color = if (isDark) White else colorResource(getColorByUserRank(rank)),
+        color = if (isDark) AlgoismeTheme.colors.white else colorResource(getColorByUserRank(rank)),
         modifier = modifier
     )
 }
