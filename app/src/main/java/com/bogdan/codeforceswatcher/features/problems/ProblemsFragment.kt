@@ -23,6 +23,7 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -56,7 +57,7 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState> {
     ) = ComposeView(requireContext()).apply {
         setContent {
             AlgoismeTheme {
-                ProblemsView(
+                ContentView(
                     problemsState = problemsState,
                     isRefreshState = isRefreshState,
                     onProblem = { link, title ->
@@ -67,8 +68,8 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState> {
                     },
                     onRefresh = { onRefresh() },
                     onFilter = { onFilter() },
-                    problemsRequest = { query ->
-                        problemsRequest(query)
+                    onSearch = { query ->
+                        onSearch(query)
                     }
                 )
             }
@@ -126,6 +127,8 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState> {
     }
 
     private fun onRefresh() {
+        isRefreshState.isRefreshing = true
+
         store.dispatch(ProblemsRequests.FetchProblems(true))
         analyticsController.logEvent(AnalyticsEvents.PROBLEMS_REFRESH)
     }
@@ -134,119 +137,42 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState> {
         startActivity(Intent(activity, ProblemsFiltersActivity::class.java))
     }
 
-    private fun problemsRequest(query: String) {
+    private fun onSearch(query: String) {
         store.dispatch(ProblemsRequests.SetQuery(query))
     }
 }
 
 @Composable
-private fun ProblemsView(
+private fun ContentView(
     problemsState: State<List<UIModel>>,
     isRefreshState: SwipeRefreshState,
     onProblem: (String, String) -> Unit,
     onStar: (String) -> Unit,
     onRefresh: () -> Unit,
     onFilter: () -> Unit,
-    problemsRequest: (String) -> Unit
+    onSearch: (String) -> Unit
+) = Scaffold(
+    modifier = Modifier.fillMaxWidth(),
+    topBar = { NavigationBar(onFilter, onSearch) },
+    backgroundColor = AlgoismeTheme.colors.primaryVariant
 ) {
-    val swipeRefreshState = rememberSwipeRefreshState(isRefreshState.isRefreshing)
-
-    Box {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(AlgoismeTheme.colors.primaryVariant)
-        )
-
-        Column {
-            NavigationBar(
-                onFilter = onFilter,
-                problemsRequest = problemsRequest
-            )
-
-            SwipeRefresh(
-                state = swipeRefreshState,
-                onRefresh = {
-                    onRefresh()
-                    isRefreshState.isRefreshing = true
-                }
-            ) {
-                ProblemsList(
-                    problemsState = problemsState,
-                    onProblem = onProblem,
-                    onStar = onStar
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun ProblemsList(
-    problemsState: State<List<UIModel>>,
-    onProblem: (String, String) -> Unit,
-    onStar: (String) -> Unit,
-) = LazyColumn(
-    modifier = Modifier
-        .fillMaxSize()
-        .clip(RoundedCornerShape(30.dp, 30.dp, 0.dp, 0.dp))
-        .background(AlgoismeTheme.colors.primary)
-) {
-    items(problemsState.value) { problem ->
-        ProblemView(
-            problem = problem,
+    SwipeRefresh(
+        state = rememberSwipeRefreshState(isRefreshState.isRefreshing),
+        onRefresh = { onRefresh() }
+    ) {
+        ProblemsList(
+            problemsState = problemsState,
             onProblem = onProblem,
             onStar = onStar
         )
     }
 }
 
-@Composable
-private fun ProblemView(
-    problem: UIModel,
-    onProblem: (String, String) -> Unit,
-    onStar: (String) -> Unit
-) = Row(
-    modifier = Modifier
-        .fillMaxWidth()
-        .padding(20.dp, 20.dp, 20.dp, 0.dp),
-    verticalAlignment = Alignment.CenterVertically
-) {
-    Column(
-        modifier = Modifier
-            .weight(1f)
-            .clickable { onProblem(problem.link, problem.title) }
-    ) {
-        Text(
-            text = problem.title,
-            style = AlgoismeTheme.typography.primarySemiBold,
-            color = AlgoismeTheme.colors.secondary,
-            modifier = Modifier.height(20.dp)
-        )
-
-        Text(
-            text = problem.subtitle,
-            style = AlgoismeTheme.typography.hintRegular,
-            color = AlgoismeTheme.colors.secondaryVariant,
-            modifier = Modifier.height(16.dp)
-        )
-    }
-
-    Icon(
-        painter = painterResource(R.drawable.ic_star),
-        contentDescription = null,
-        tint = if (problem.isFavourite) AlgoismeTheme.colors.onStar else AlgoismeTheme.colors.secondary,
-        modifier = Modifier
-            .size(24.dp)
-            .clickable { onStar(problem.id) }
-    )
-}
-
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 private fun NavigationBar(
     onFilter: () -> Unit,
-    problemsRequest: (String) -> Unit
+    onSearch: (String) -> Unit
 ) {
     val localFocusManager = LocalFocusManager.current
     var isShownSearchTextFieldState by remember { mutableStateOf(false) }
@@ -259,7 +185,7 @@ private fun NavigationBar(
         verticalAlignment = Alignment.CenterVertically
     ) {
         AnimatedVisibility(
-            visible = isShownSearchTextFieldState.not(),
+            visible = !isShownSearchTextFieldState,
             enter = fadeIn(),
             modifier = Modifier.weight(1f)
         ) {
@@ -296,7 +222,7 @@ private fun NavigationBar(
                             onDone = { localFocusManager.clearFocus() }
                         ),
                         onValueChange = { query ->
-                            problemsRequest(query)
+                            onSearch(query)
                         }
                     )
                 }
@@ -309,16 +235,12 @@ private fun NavigationBar(
             }
 
             if (isShownSearchTextFieldState) {
-                CrossButton(
-                    onCross = {
-                        isShownSearchTextFieldState = false
-                        problemsRequest("")
-                    }
-                )
+                CrossButton {
+                    isShownSearchTextFieldState = false
+                    onSearch("")
+                }
             } else {
-                FilterButton(
-                    onFilter = onFilter
-                )
+                FilterButton { onFilter() }
             }
         }
     }
@@ -361,14 +283,14 @@ private fun SearchTextField(
             .height(30.dp)
             .clip(RoundedCornerShape(20.dp))
             .background(AlgoismeTheme.colors.primary)
-            .padding(10.dp, 4.dp, 0.dp, 0.dp),
+            .padding(start = 10.dp, top = 4.dp, end = 0.dp, bottom = 0.dp),
         textStyle = AlgoismeTheme.typography.primaryRegular.copy(color = AlgoismeTheme.colors.onBackground),
         singleLine = true,
         cursorBrush = SolidColor(AlgoismeTheme.colors.onBackground),
         decorationBox = { innerTextField ->
             if (value.isEmpty()) {
                 Text(
-                    text = "Search problems for...",
+                    text = stringResource(R.string.search_for_problems),
                     style = AlgoismeTheme.typography.primaryRegular,
                     color = AlgoismeTheme.colors.secondaryVariant
                 )
@@ -377,6 +299,74 @@ private fun SearchTextField(
         },
         keyboardOptions = keyboardOptions,
         keyboardActions = keyboardActions
+    )
+}
+
+@Composable
+private fun ProblemsList(
+    problemsState: State<List<UIModel>>,
+    onProblem: (String, String) -> Unit,
+    onStar: (String) -> Unit,
+) = LazyColumn(
+    modifier = Modifier
+        .fillMaxSize()
+        .clip(
+            RoundedCornerShape(
+                topStart = 30.dp,
+                topEnd = 30.dp,
+                bottomStart = 0.dp,
+                bottomEnd = 0.dp
+            )
+        )
+        .background(AlgoismeTheme.colors.primary)
+) {
+    items(problemsState.value) { problem ->
+        ProblemView(
+            problem = problem,
+            onProblem = onProblem,
+            onStar = onStar
+        )
+    }
+}
+
+@Composable
+private fun ProblemView(
+    problem: UIModel,
+    onProblem: (String, String) -> Unit,
+    onStar: (String) -> Unit
+) = Row(
+    modifier = Modifier
+        .fillMaxWidth()
+        .padding(start = 20.dp, top = 20.dp, end = 20.dp, bottom = 0.dp),
+    verticalAlignment = Alignment.CenterVertically
+) {
+    Column(
+        modifier = Modifier
+            .weight(1f)
+            .clickable { onProblem(problem.link, problem.title) }
+    ) {
+        Text(
+            text = problem.title,
+            style = AlgoismeTheme.typography.primarySemiBold,
+            color = AlgoismeTheme.colors.secondary,
+            modifier = Modifier.height(20.dp)
+        )
+
+        Text(
+            text = problem.subtitle,
+            style = AlgoismeTheme.typography.hintRegular,
+            color = AlgoismeTheme.colors.secondaryVariant,
+            modifier = Modifier.height(16.dp)
+        )
+    }
+
+    Icon(
+        painter = painterResource(R.drawable.ic_star),
+        contentDescription = null,
+        tint = if (problem.isFavourite) AlgoismeTheme.colors.onStar else AlgoismeTheme.colors.secondary,
+        modifier = Modifier
+            .size(24.dp)
+            .clickable { onStar(problem.id) }
     )
 }
 

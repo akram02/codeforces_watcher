@@ -19,7 +19,7 @@ fun BigButton(
         label = label,
         modifier = modifier.defaultMinSize(minWidth = 250.dp, minHeight = 40.dp),
         textStyle = AlgoismeTheme.typography.buttonSemiBold,
-        backgroundColor = if (isInverted) Color.Transparent else AlgoismeTheme.colors.secondary,
+        backgroundColor = if (isInverted) AlgoismeTheme.colors.transparent else AlgoismeTheme.colors.secondary,
         labelColor = if (isInverted) AlgoismeTheme.colors.secondary else AlgoismeTheme.colors.primary,
         borderStroke = if (isInverted) BorderStroke(2.dp, AlgoismeTheme.colors.secondary) else null
     ) {

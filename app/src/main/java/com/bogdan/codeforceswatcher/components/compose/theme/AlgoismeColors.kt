@@ -25,5 +25,7 @@ data class AlgoismeColors(
     val red: Color,
     val green: Color,
 
-    val onStar: Color
+    val onStar: Color,
+
+    val transparent: Color
 )

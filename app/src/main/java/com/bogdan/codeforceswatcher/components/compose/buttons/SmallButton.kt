@@ -20,7 +20,7 @@ fun SmallButton(
         label = label,
         modifier = modifier.defaultMinSize(minWidth = 80.dp, minHeight = 32.dp),
         textStyle = AlgoismeTheme.typography.buttonSemiBold.copy(fontSize = 13.sp),
-        backgroundColor = if (isInverted) Color.Transparent else AlgoismeTheme.colors.secondary,
+        backgroundColor = if (isInverted) AlgoismeTheme.colors.transparent else AlgoismeTheme.colors.secondary,
         labelColor = if (isInverted) AlgoismeTheme.colors.secondary else AlgoismeTheme.colors.primary,
         borderStroke = if (isInverted) BorderStroke(1.6.dp, AlgoismeTheme.colors.secondary) else null
     ) {

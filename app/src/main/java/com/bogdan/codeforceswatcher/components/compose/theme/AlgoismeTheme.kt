@@ -70,7 +70,9 @@ private val commonAlgoismeColors = AlgoismeColors(
     red = Color(0xFFFF0000),
     green = Color(0xFF05D200),
 
-    onStar = Color(0xFFFFCA00)
+    onStar = Color(0xFFFFCA00),
+
+    transparent = Color.Transparent
 )
 
 private val lightAlgoismeColors = with(commonAlgoismeColors) {
