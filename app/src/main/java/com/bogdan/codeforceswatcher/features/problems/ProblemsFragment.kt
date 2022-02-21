@@ -41,15 +41,14 @@ import com.bogdan.codeforceswatcher.components.WebViewActivity
 import io.xorum.codeforceswatcher.util.AnalyticsEvents
 import com.bogdan.codeforceswatcher.R
 import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import io.xorum.codeforceswatcher.features.problems.models.Problem
 import io.xorum.codeforceswatcher.features.problems.redux.ProblemsRequests
 import io.xorum.codeforceswatcher.redux.analyticsController
 
 class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState> {
 
-    private val problemsState: MutableState<List<UIModel>> = mutableStateOf(emptyList())
-    private val isRefreshState: SwipeRefreshState = SwipeRefreshState(false)
+    private val problemsState: MutableState<ProblemsState?> = mutableStateOf(null)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,18 +58,11 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState> {
             AlgoismeTheme {
                 ContentView(
                     problemsState = problemsState,
-                    isRefreshState = isRefreshState,
-                    onProblem = { link, title ->
-                        onProblem(link, title)
-                    },
-                    onStar = { id ->
-                        onStar(id)
-                    },
+                    onProblem = { link, title -> onProblem(link, title) },
+                    onStar = { id -> onStar(id) },
                     onRefresh = { onRefresh() },
                     onFilter = { onFilter() },
-                    onSearch = { query ->
-                        onSearch(query)
-                    }
+                    onSearch = { query -> onSearch(query) }
                 )
             }
         }
@@ -95,19 +87,7 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState> {
     }
 
     override fun onNewState(state: ProblemsState) {
-        if (state.status == ProblemsState.Status.IDLE) {
-            isRefreshState.isRefreshing = false
-        }
-
-        problemsState.value = state.filteredProblems.map {
-            UIModel(
-                it.id,
-                it.title,
-                it.subtitle,
-                it.link,
-                it.isFavourite
-            )
-        }
+        problemsState.value = state
     }
 
     private fun onProblem(link: String, title: String) {
@@ -127,8 +107,6 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState> {
     }
 
     private fun onRefresh() {
-        isRefreshState.isRefreshing = true
-
         store.dispatch(ProblemsRequests.FetchProblems(true))
         analyticsController.logEvent(AnalyticsEvents.PROBLEMS_REFRESH)
     }
@@ -144,8 +122,7 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState> {
 
 @Composable
 private fun ContentView(
-    problemsState: State<List<UIModel>>,
-    isRefreshState: SwipeRefreshState,
+    problemsState: State<ProblemsState?>,
     onProblem: (String, String) -> Unit,
     onStar: (String) -> Unit,
     onRefresh: () -> Unit,
@@ -156,12 +133,14 @@ private fun ContentView(
     topBar = { NavigationBar(onFilter, onSearch) },
     backgroundColor = AlgoismeTheme.colors.primaryVariant
 ) {
+    if (problemsState.value == null) return@Scaffold
+
     SwipeRefresh(
-        state = rememberSwipeRefreshState(isRefreshState.isRefreshing),
+        state = rememberSwipeRefreshState(problemsState.value!!.status != ProblemsState.Status.IDLE),
         onRefresh = { onRefresh() }
     ) {
         ProblemsList(
-            problemsState = problemsState,
+            problemsState = problemsState as State<ProblemsState>,
             onProblem = onProblem,
             onStar = onStar
         )
@@ -304,7 +283,7 @@ private fun SearchTextField(
 
 @Composable
 private fun ProblemsList(
-    problemsState: State<List<UIModel>>,
+    problemsState: State<ProblemsState>,
     onProblem: (String, String) -> Unit,
     onStar: (String) -> Unit,
 ) = LazyColumn(
@@ -320,7 +299,7 @@ private fun ProblemsList(
         )
         .background(AlgoismeTheme.colors.primary)
 ) {
-    items(problemsState.value) { problem ->
+    items(problemsState.value.filteredProblems) { problem ->
         ProblemView(
             problem = problem,
             onProblem = onProblem,
@@ -331,7 +310,7 @@ private fun ProblemsList(
 
 @Composable
 private fun ProblemView(
-    problem: UIModel,
+    problem: Problem,
     onProblem: (String, String) -> Unit,
     onStar: (String) -> Unit
 ) = Row(
@@ -369,11 +348,3 @@ private fun ProblemView(
             .clickable { onStar(problem.id) }
     )
 }
-
-private data class UIModel(
-    val id: String,
-    val title: String,
-    val subtitle: String,
-    val link: String,
-    val isFavourite: Boolean
-)
