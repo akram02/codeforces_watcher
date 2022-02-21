@@ -17,8 +17,8 @@ import com.bogdan.codeforceswatcher.components.WebViewActivity
 import com.bogdan.codeforceswatcher.features.contests.ContestsFiltersActivity
 import com.bogdan.codeforceswatcher.features.contests.ContestsFragment
 import com.bogdan.codeforceswatcher.features.news.NewsFragment
-import com.bogdan.codeforceswatcher.features.problems.ProblemsFragment
 import com.bogdan.codeforceswatcher.features.users.UsersFragment
+import com.bogdan.codeforceswatcher.features.problems.ProblemsFragment
 import com.bogdan.codeforceswatcher.util.FeedbackController
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import io.xorum.codeforceswatcher.features.problems.redux.ProblemsActions
@@ -47,8 +47,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateFragment() {
-        (currentTabFragment as? ProblemsFragment)?.searchView?.setOnQueryTextListener(null)
-
         val bottomNavSelectedItemId = selectedHomeTab.menuItemId
 
         tvPageTitle.text = getString(selectedHomeTab.titleId)
@@ -98,6 +96,8 @@ class MainActivity : AppCompatActivity() {
         ivFilter.visibility = View.GONE
         searchViewItem?.isVisible = false
 
+        supportActionBar?.show()
+
         fab.setOnClickListener {
             AddUserBottomSheet().show(supportFragmentManager, null)
         }
@@ -108,6 +108,8 @@ class MainActivity : AppCompatActivity() {
         llSorting.visibility = View.GONE
         ivFilter.visibility = View.VISIBLE
         searchViewItem?.isVisible = false
+
+        supportActionBar?.show()
 
         fab.setOnClickListener {
             startActivity(
@@ -129,6 +131,8 @@ class MainActivity : AppCompatActivity() {
         ivFilter.visibility = View.GONE
         searchViewItem?.isVisible = false
 
+        supportActionBar?.show()
+
         fab.setOnClickListener {
             showShareDialog()
             analyticsController.logEvent(AnalyticsEvents.SHARE_APP)
@@ -140,6 +144,8 @@ class MainActivity : AppCompatActivity() {
         llSorting.visibility = View.GONE
         ivFilter.visibility = View.GONE
         searchViewItem?.isVisible = true
+
+        supportActionBar?.hide()
 
         var problemsIsFavourite = store.state.problems.isFavourite
         updateProblemsFAB(problemsIsFavourite)

@@ -10,7 +10,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -43,7 +42,7 @@ class RestorePasswordMailSentComposeActivity : ComponentActivity() {
             modifier = Modifier.fillMaxSize(),
             topBar = { TopBar() },
             bottomBar = { BottomBar() },
-            backgroundColor = MaterialTheme.colors.background
+            backgroundColor = AlgoismeTheme.colors.background
         ) {
             Content()
         }
@@ -59,9 +58,9 @@ class RestorePasswordMailSentComposeActivity : ComponentActivity() {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 20.dp, end = 20.dp, bottom = 45.dp),
-            style = MaterialTheme.typography.body1,
+            style = AlgoismeTheme.typography.hintRegular,
             fontSize = 14.sp,
-            color = MaterialTheme.colors.secondaryVariant,
+            color = AlgoismeTheme.colors.secondaryVariant,
             textAlign = TextAlign.Center
         )
     }
@@ -76,7 +75,7 @@ class RestorePasswordMailSentComposeActivity : ComponentActivity() {
 
             Title(
                 title = getString(R.string.check_your_box),
-                style = MaterialTheme.typography.h3.copy(
+                style = AlgoismeTheme.typography.headerBigMedium.copy(
                     fontSize = 36.sp,
                     textAlign = TextAlign.Center
                 )
@@ -86,7 +85,7 @@ class RestorePasswordMailSentComposeActivity : ComponentActivity() {
 
             Title(
                 title = getString(R.string.open_mail_hint),
-                style = MaterialTheme.typography.h6.copy(textAlign = TextAlign.Center)
+                style = AlgoismeTheme.typography.headerSmallMedium.copy(textAlign = TextAlign.Center)
             )
 
             Spacer(Modifier.height(72.dp))
@@ -94,7 +93,7 @@ class RestorePasswordMailSentComposeActivity : ComponentActivity() {
             Icon(
                 painter = painterResource(id = R.drawable.ic_email),
                 contentDescription = "Email",
-                tint = MaterialTheme.colors.onBackground
+                tint = AlgoismeTheme.colors.onBackground
             )
 
             Spacer(Modifier.height(72.dp))
@@ -109,7 +108,7 @@ class RestorePasswordMailSentComposeActivity : ComponentActivity() {
                 label = getString(R.string.back_to_sign_in),
                 modifier = Modifier.border(
                     width = 2.dp,
-                    color = MaterialTheme.colors.secondary,
+                    color = AlgoismeTheme.colors.secondary,
                     shape = RoundedCornerShape(100)
                 ),
                 isInverted = true
