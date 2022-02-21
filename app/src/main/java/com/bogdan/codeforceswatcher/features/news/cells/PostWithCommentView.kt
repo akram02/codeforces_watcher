@@ -7,7 +7,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
@@ -15,37 +14,26 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
-import com.bogdan.codeforceswatcher.features.news.shared.PostInfo
+import com.bogdan.codeforceswatcher.features.news.shared.PostContentView
+import com.bogdan.codeforceswatcher.features.news.shared.SeeAllCommentsView
 
 @Composable
 fun PostWithCommentView() = Column(
     modifier = Modifier
-        .padding(start = 20.dp, top = 20.dp, end = 20.dp, bottom = 20.dp)
-        .clip(RoundedCornerShape(50f))
+        .padding(horizontal = 20.dp)
+        .clip(RoundedCornerShape(20.dp))
         .background(AlgoismeTheme.colors.lightGray),
     verticalArrangement = Arrangement.spacedBy(10.dp)
 ) {
-    PostView()
+    PostContentView()
     CommentView()
-    SeeAllCommentsView()
-}
-
-@Composable
-private fun PostView() = Column(
-    modifier = Modifier
-        .fillMaxWidth()
-        .clip(AlgoismeTheme.shapes.medium)
-        .background(AlgoismeTheme.colors.primaryVariant)
-        .padding(12.dp)
-) {
-    PostInfo()
-
-    Text(
-        text = "A left-leaning red–black (LLRB) tree is a type of self-balancing binary search tree. It is a variant of the red–black tree and guarantees the same guarantees the same...",
-        style = AlgoismeTheme.typography.hintRegular,
-        color = AlgoismeTheme.colors.secondary,
-        overflow = TextOverflow.Ellipsis,
-        maxLines = 4
+    SeeAllCommentsView(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(AlgoismeTheme.shapes.medium)
+            .background(AlgoismeTheme.colors.primaryVariant)
+            .padding(horizontal = 12.dp)
+            .height(32.dp)
     )
 }
 
@@ -92,28 +80,4 @@ private fun CommentView() = Row(
             maxLines = 2
         )
     }
-}
-
-@Composable
-private fun SeeAllCommentsView() = Row(
-    modifier = Modifier
-        .fillMaxWidth()
-        .clip(AlgoismeTheme.shapes.medium)
-        .background(AlgoismeTheme.colors.primaryVariant)
-        .padding(horizontal = 12.dp)
-        .height(32.dp),
-    horizontalArrangement = Arrangement.SpaceBetween,
-    verticalAlignment = Alignment.CenterVertically
-) {
-    Text(
-        text = "See all comments",
-        style = AlgoismeTheme.typography.hintRegular,
-        color = AlgoismeTheme.colors.secondaryVariant,
-    )
-
-    Icon(
-        painter = painterResource(R.drawable.ic_arrow),
-        contentDescription = null,
-        tint = AlgoismeTheme.colors.secondaryVariant
-    )
 }
