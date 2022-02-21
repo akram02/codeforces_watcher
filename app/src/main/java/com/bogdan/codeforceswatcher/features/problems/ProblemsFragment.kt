@@ -134,10 +134,10 @@ private fun ContentView(
     topBar = { NavigationBar(onFilter, onSearch) },
     backgroundColor = AlgoismeTheme.colors.primaryVariant
 ) {
-    if (problemsState.value == null) return@Scaffold
+    val state = problemsState.value ?: return@Scaffold
 
     SwipeRefresh(
-        state = rememberSwipeRefreshState(problemsState.value!!.status != ProblemsState.Status.IDLE),
+        state = rememberSwipeRefreshState(state.status != ProblemsState.Status.IDLE),
         onRefresh = { onRefresh() },
         modifier = Modifier
             .fillMaxSize()
@@ -151,14 +151,14 @@ private fun ContentView(
             )
             .background(AlgoismeTheme.colors.primary)
     ) {
-        if (problemsState.value!!.filteredProblems.isEmpty()) {
+        if (state.filteredProblems.isEmpty()) {
             NoItemsView(
                 iconId = R.drawable.ic_no_problems,
                 titleId = R.string.problems_on_the_way
             )
         } else {
             ProblemsList(
-                problemsState = problemsState as State<ProblemsState>,
+                problemsState = state,
                 onProblem = onProblem,
                 onStar = onStar
             )
@@ -302,11 +302,11 @@ private fun FilterButton(
 
 @Composable
 private fun ProblemsList(
-    problemsState: State<ProblemsState>,
+    problemsState: ProblemsState,
     onProblem: (String, String) -> Unit,
     onStar: (String) -> Unit,
 ) = LazyColumn {
-    items(problemsState.value.filteredProblems) { problem ->
+    items(problemsState.filteredProblems) { problem ->
         ProblemView(
             problem = problem,
             onProblem = onProblem,
