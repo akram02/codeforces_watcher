@@ -16,7 +16,7 @@ import com.bogdan.codeforceswatcher.components.AddUserBottomSheet
 import com.bogdan.codeforceswatcher.components.WebViewActivity
 import com.bogdan.codeforceswatcher.features.contests.ContestsFiltersActivity
 import com.bogdan.codeforceswatcher.features.contests.ContestsFragment
-import com.bogdan.codeforceswatcher.features.news.NewsFragment
+import com.bogdan.codeforceswatcher.features.news.NewsFragmentNew
 import com.bogdan.codeforceswatcher.features.users.UsersFragment
 import com.bogdan.codeforceswatcher.features.problems.ProblemsFragment
 import com.bogdan.codeforceswatcher.util.FeedbackController
@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
                 currentTabFragment as? ContestsFragment ?: ContestsFragment()
             }
             HomeTab.NEWS -> {
-                currentTabFragment as? NewsFragment ?: NewsFragment()
+                currentTabFragment as? NewsFragmentNew ?: NewsFragmentNew()
             }
             HomeTab.PROBLEMS -> {
                 currentTabFragment as? ProblemsFragment ?: ProblemsFragment()
@@ -131,7 +131,7 @@ class MainActivity : AppCompatActivity() {
         ivFilter.visibility = View.GONE
         searchViewItem?.isVisible = false
 
-        supportActionBar?.show()
+        supportActionBar?.hide()
 
         fab.setOnClickListener {
             showShareDialog()

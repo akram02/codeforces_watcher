@@ -63,6 +63,8 @@ private val commonAlgoismeColors = AlgoismeColors(
     onBackground = Color.Unspecified,
     onError = Color.Unspecified,
 
+    lightGray = Color.Unspecified,
+
     white = Color(0xFFFFFFFF),
     black = Color(0xFF000000),
     accentGrayish = Color(0xFFEEEEEE),
@@ -80,15 +82,17 @@ private val lightAlgoismeColors = with(commonAlgoismeColors) {
         primary = white,
         primaryVariant = accentGrayish,
 
-        secondaryVariant = Color(0xFF636363),
         secondary = black,
+        secondaryVariant = Color(0xFF636363),
 
         background = white,
         surface = accentGrayish,
         error = red,
 
         onBackground = black,
-        onError = black
+        onError = black,
+
+        lightGray = Color(0xFFF5F5F5)
     )
 }
 
@@ -105,7 +109,9 @@ private val darkAlgoismeColors = with(commonAlgoismeColors) {
         error = red,
 
         onBackground = white,
-        onError = white
+        onError = white,
+
+        lightGray = Color(0xFF222222)
     )
 }
 
