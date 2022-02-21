@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import com.bogdan.codeforceswatcher.components.WebViewActivity
 import io.xorum.codeforceswatcher.util.AnalyticsEvents
 import com.bogdan.codeforceswatcher.R
+import com.bogdan.codeforceswatcher.components.compose.NoItemsView
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import io.xorum.codeforceswatcher.features.problems.models.Problem
@@ -137,13 +138,31 @@ private fun ContentView(
 
     SwipeRefresh(
         state = rememberSwipeRefreshState(problemsState.value!!.status != ProblemsState.Status.IDLE),
-        onRefresh = { onRefresh() }
+        onRefresh = { onRefresh() },
+        modifier = Modifier
+            .fillMaxSize()
+            .clip(
+                RoundedCornerShape(
+                    topStart = 30.dp,
+                    topEnd = 30.dp,
+                    bottomStart = 0.dp,
+                    bottomEnd = 0.dp
+                )
+            )
+            .background(AlgoismeTheme.colors.primary)
     ) {
-        ProblemsList(
-            problemsState = problemsState as State<ProblemsState>,
-            onProblem = onProblem,
-            onStar = onStar
-        )
+        if (problemsState.value!!.filteredProblems.isEmpty()) {
+            NoItemsView(
+                iconId = R.drawable.ic_no_problems,
+                titleId = R.string.problems_on_the_way
+            )
+        } else {
+            ProblemsList(
+                problemsState = problemsState as State<ProblemsState>,
+                onProblem = onProblem,
+                onStar = onStar
+            )
+        }
     }
 }
 
@@ -226,24 +245,6 @@ private fun NavigationBar(
 }
 
 @Composable
-private fun CrossButton(
-    onCross: () -> Unit
-) = Image(
-    painter = painterResource(R.drawable.ic_cross_icon),
-    contentDescription = null,
-    modifier = Modifier.clickable { onCross() }
-)
-
-@Composable
-private fun FilterButton(
-    onFilter: () -> Unit
-) = Image(
-    painter = painterResource(R.drawable.ic_filter_icon),
-    contentDescription = null,
-    modifier = Modifier.clickable { onFilter() }
-)
-
-@Composable
 private fun SearchTextField(
     modifier: Modifier = Modifier,
     keyboardOptions: KeyboardOptions,
@@ -282,23 +283,29 @@ private fun SearchTextField(
 }
 
 @Composable
+private fun CrossButton(
+    onCross: () -> Unit
+) = Image(
+    painter = painterResource(R.drawable.ic_cross_icon),
+    contentDescription = null,
+    modifier = Modifier.clickable { onCross() }
+)
+
+@Composable
+private fun FilterButton(
+    onFilter: () -> Unit
+) = Image(
+    painter = painterResource(R.drawable.ic_filter_icon),
+    contentDescription = null,
+    modifier = Modifier.clickable { onFilter() }
+)
+
+@Composable
 private fun ProblemsList(
     problemsState: State<ProblemsState>,
     onProblem: (String, String) -> Unit,
     onStar: (String) -> Unit,
-) = LazyColumn(
-    modifier = Modifier
-        .fillMaxSize()
-        .clip(
-            RoundedCornerShape(
-                topStart = 30.dp,
-                topEnd = 30.dp,
-                bottomStart = 0.dp,
-                bottomEnd = 0.dp
-            )
-        )
-        .background(AlgoismeTheme.colors.primary)
-) {
+) = LazyColumn {
     items(problemsState.value.filteredProblems) { problem ->
         ProblemView(
             problem = problem,
