@@ -13,9 +13,10 @@ import io.xorum.codeforceswatcher.features.news.models.News
 
 @Composable
 fun PostContentView(
-    post: News.Post
+    post: News.Post,
+    modifier: Modifier = Modifier,
 ) = Column(
-    modifier = Modifier
+    modifier = modifier
         .fillMaxWidth()
         .clip(AlgoismeTheme.shapes.medium)
         .background(AlgoismeTheme.colors.primaryVariant)

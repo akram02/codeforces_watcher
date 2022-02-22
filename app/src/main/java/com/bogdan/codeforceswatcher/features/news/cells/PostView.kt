@@ -19,12 +19,12 @@ import io.xorum.codeforceswatcher.features.news.models.News
 @Composable
 fun PostView(
     post: News.Post,
-    onPostItem: (String, String) -> Unit
+    onPost: (String, String) -> Unit
 ) = Column(
     modifier = Modifier
         .clip(RoundedCornerShape(20.dp))
         .background(AlgoismeTheme.colors.lightGray)
-        .clickable { onPostItem(post.link, post.title) }
+        .clickable { onPost(post.link, post.title) }
 ) {
     PostContentView(post)
     SeeAllCommentsView(

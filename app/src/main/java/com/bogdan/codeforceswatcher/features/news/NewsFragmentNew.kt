@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment
 import com.bogdan.codeforceswatcher.components.WebViewActivity
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 import com.bogdan.codeforceswatcher.features.news.cells.PostView
+import com.bogdan.codeforceswatcher.features.news.cells.PostWithCommentView
 import io.xorum.codeforceswatcher.features.news.models.News
 import io.xorum.codeforceswatcher.features.news.redux.NewsState
 import io.xorum.codeforceswatcher.redux.store
@@ -38,7 +39,9 @@ class NewsFragmentNew : Fragment(), StoreSubscriber<NewsState> {
             AlgoismeTheme {
                 ContentView(
                     newsState = newsState,
-                    onPostItem = { link, title -> onPostItem(link, title) }
+                    onPostItem = { link, title ->
+                        openWebView(link, title, AnalyticsEvents.POST_OPENED, AnalyticsEvents.NEWS_SHARED)
+                    }
                 )
             }
         }
@@ -60,14 +63,14 @@ class NewsFragmentNew : Fragment(), StoreSubscriber<NewsState> {
         store.unsubscribe(this);
     }
 
-    private fun onPostItem(link: String, title: String) {
+    private fun openWebView(link: String, title: String, openEvent: String, shareEvent: String) {
         startActivity(
             WebViewActivity.newIntent(
                 requireContext(),
                 link,
                 title,
-                AnalyticsEvents.POST_OPENED,
-                AnalyticsEvents.NEWS_SHARED
+                openEvent,
+                shareEvent
             )
         )
     }
@@ -92,6 +95,7 @@ private fun ContentView(
     items(state.news) {
         when(it) {
             is News.Post -> PostView(it, onPostItem)
+            is News.PostWithComment -> PostWithCommentView(it, onPostItem)
             else -> Text("Another post")
         }
     }
