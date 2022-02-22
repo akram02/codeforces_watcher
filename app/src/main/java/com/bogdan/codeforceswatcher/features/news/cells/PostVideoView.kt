@@ -11,7 +11,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
-import com.bogdan.codeforceswatcher.features.news.shared.PostInfo
 
 @Composable
 fun PostVideoView() = Column(
@@ -23,7 +22,6 @@ fun PostVideoView() = Column(
         .padding(12.dp),
     verticalArrangement = Arrangement.spacedBy(12.dp)
 ) {
-    PostInfo()
     VideoView()
 }
 

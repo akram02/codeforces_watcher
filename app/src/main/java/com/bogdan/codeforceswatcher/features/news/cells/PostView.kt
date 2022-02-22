@@ -1,6 +1,7 @@
 package com.bogdan.codeforceswatcher.features.news.cells
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -13,14 +14,19 @@ import androidx.compose.ui.unit.dp
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 import com.bogdan.codeforceswatcher.features.news.shared.PostContentView
 import com.bogdan.codeforceswatcher.features.news.shared.SeeAllCommentsView
+import io.xorum.codeforceswatcher.features.news.models.News
 
 @Composable
-fun PostView() = Column(
+fun PostView(
+    post: News.Post,
+    onPostItem: (String, String) -> Unit
+) = Column(
     modifier = Modifier
         .clip(RoundedCornerShape(20.dp))
         .background(AlgoismeTheme.colors.lightGray)
+        .clickable { onPostItem(post.link, post.title) }
 ) {
-    PostContentView()
+    PostContentView(post)
     SeeAllCommentsView(
         modifier = Modifier
             .fillMaxWidth()

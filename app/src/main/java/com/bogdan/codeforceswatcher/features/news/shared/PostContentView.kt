@@ -9,9 +9,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
+import io.xorum.codeforceswatcher.features.news.models.News
 
 @Composable
-fun PostContentView() = Column(
+fun PostContentView(
+    post: News.Post
+) = Column(
     modifier = Modifier
         .fillMaxWidth()
         .clip(AlgoismeTheme.shapes.medium)
@@ -19,10 +22,15 @@ fun PostContentView() = Column(
         .padding(12.dp),
     verticalArrangement = Arrangement.spacedBy(12.dp)
 ) {
-    PostInfo()
+    PostInfo(
+        author = post.author,
+        title = post.title,
+        modifiedAt = post.modifiedAt,
+        isModified = post.isModified
+    )
 
     Text(
-        text = "A left-leaning red–black (LLRB) tree is a type of self-balancing binary search tree. It is a variant of the red–black tree and guarantees the same guarantees the same...",
+        text = post.content,
         style = AlgoismeTheme.typography.hintRegular,
         color = AlgoismeTheme.colors.secondary,
         overflow = TextOverflow.Ellipsis,

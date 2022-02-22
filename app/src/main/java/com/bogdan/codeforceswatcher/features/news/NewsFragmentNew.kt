@@ -3,23 +3,32 @@ package com.bogdan.codeforceswatcher.features.news
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
+import com.bogdan.codeforceswatcher.components.WebViewActivity
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
-import com.bogdan.codeforceswatcher.features.news.cells.PostFeedbackView
-import com.bogdan.codeforceswatcher.features.news.cells.PostVideoView
 import com.bogdan.codeforceswatcher.features.news.cells.PostView
-import com.bogdan.codeforceswatcher.features.news.cells.PostWithCommentView
+import io.xorum.codeforceswatcher.features.news.models.News
+import io.xorum.codeforceswatcher.features.news.redux.NewsState
+import io.xorum.codeforceswatcher.redux.store
+import io.xorum.codeforceswatcher.util.AnalyticsEvents
+import tw.geothings.rekotlin.StoreSubscriber
 
-class NewsFragmentNew : Fragment() {
+class NewsFragmentNew : Fragment(), StoreSubscriber<NewsState> {
+
+    private val newsState: MutableState<NewsState?> = mutableStateOf(null)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,22 +36,63 @@ class NewsFragmentNew : Fragment() {
     ) = ComposeView(requireContext()).apply {
         setContent {
             AlgoismeTheme {
-                ContentView()
+                ContentView(
+                    newsState = newsState,
+                    onPostItem = { link, title -> onPostItem(link, title) }
+                )
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        store.subscribe(this) { state ->
+            state.skipRepeats { oldState, newState ->
+                oldState.news == newState.news
+            }.select { it.news }
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        store.unsubscribe(this);
+    }
+
+    private fun onPostItem(link: String, title: String) {
+        startActivity(
+            WebViewActivity.newIntent(
+                requireContext(),
+                link,
+                title,
+                AnalyticsEvents.POST_OPENED,
+                AnalyticsEvents.NEWS_SHARED
+            )
+        )
+    }
+
+    override fun onNewState(state: NewsState) {
+        newsState.value = state
     }
 }
 
 @Composable
-private fun ContentView() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(start = 20.dp, top = 20.dp, end = 20.dp, bottom = 20.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
-    ) {
-        PostFeedbackView()
-        PostView()
-        PostVideoView()
+private fun ContentView(
+    newsState: State<NewsState?>,
+    onPostItem: (String, String) -> Unit
+) = LazyColumn(
+    modifier = Modifier
+        .fillMaxSize()
+        .padding(start = 20.dp, top = 20.dp, end = 20.dp, bottom = 0.dp),
+    verticalArrangement = Arrangement.spacedBy(12.dp),
+) {
+    val state = newsState.value ?: return@LazyColumn
+
+    items(state.news) {
+        when(it) {
+            is News.Post -> PostView(it, onPostItem)
+            else -> Text("Another post")
+        }
     }
 }

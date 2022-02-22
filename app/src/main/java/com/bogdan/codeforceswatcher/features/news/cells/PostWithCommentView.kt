@@ -14,7 +14,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
-import com.bogdan.codeforceswatcher.features.news.shared.PostContentView
 import com.bogdan.codeforceswatcher.features.news.shared.SeeAllCommentsView
 
 @Composable
@@ -24,7 +23,6 @@ fun PostWithCommentView() = Column(
         .background(AlgoismeTheme.colors.lightGray),
     verticalArrangement = Arrangement.spacedBy(10.dp)
 ) {
-    PostContentView()
     CommentView()
     SeeAllCommentsView(
         modifier = Modifier
