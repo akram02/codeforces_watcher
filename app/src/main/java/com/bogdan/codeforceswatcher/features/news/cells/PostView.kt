@@ -17,7 +17,6 @@ import com.bogdan.codeforceswatcher.features.news.shared.SeeAllCommentsView
 @Composable
 fun PostView() = Column(
     modifier = Modifier
-        .padding(horizontal = 20.dp)
         .clip(RoundedCornerShape(20.dp))
         .background(AlgoismeTheme.colors.lightGray)
 ) {

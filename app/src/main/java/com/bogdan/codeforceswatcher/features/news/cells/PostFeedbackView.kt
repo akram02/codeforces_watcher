@@ -3,7 +3,6 @@ package com.bogdan.codeforceswatcher.features.news.cells
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,9 +17,8 @@ import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.compose.buttons.SmallButton
 
 @Composable
-fun FeedbackView() = Column(
+fun PostFeedbackView() = Column(
     modifier = Modifier
-        .padding(horizontal = 20.dp)
         .clip(AlgoismeTheme.shapes.medium)
         .background(AlgoismeTheme.colors.primaryVariant)
         .padding(horizontal = 16.dp, vertical = 12.dp),
