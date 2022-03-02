@@ -19,9 +19,11 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import com.bogdan.codeforceswatcher.components.WebViewActivity
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
+import com.bogdan.codeforceswatcher.features.news.cells.PostFeedbackView
 import com.bogdan.codeforceswatcher.features.news.cells.PostView
 import com.bogdan.codeforceswatcher.features.news.cells.PostWithCommentView
 import com.bogdan.codeforceswatcher.features.news.models.NewsItem
+import com.bogdan.codeforceswatcher.util.FeedbackController
 import io.xorum.codeforceswatcher.features.news.models.News
 import io.xorum.codeforceswatcher.features.news.redux.NewsState
 import io.xorum.codeforceswatcher.redux.store
@@ -31,7 +33,13 @@ import tw.geothings.rekotlin.StoreSubscriber
 
 class NewsFragmentNew : Fragment(), StoreSubscriber<NewsState> {
 
-    private val newsState: MutableState<UIModel> = mutableStateOf(UIModel(emptyList(), false))
+    private val newsState: MutableState<UIModel> = mutableStateOf(
+        UIModel(
+            news = emptyList(),
+            feedbackCallback =  {},
+            isRefreshing = false
+        )
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -89,13 +97,24 @@ class NewsFragmentNew : Fragment(), StoreSubscriber<NewsState> {
     override fun onNewState(state: NewsState) {
         val items = mutableListOf<NewsItem>()
 
+        val feedbackController = FeedbackController.get()
+        var feedbackCallback: () -> Unit = {}
+
+        if (feedbackController.shouldShowFeedbackCell()) {
+            items.add(NewsItem.FeedbackItem(feedbackController.feedUIModel))
+            feedbackCallback = { onNewState(state) }
+        }
+
         val news = state.news.filter {
             return@filter if (it is News.PinnedPost) settings.readLastPinnedPostLink() != it.link else true
         }
 
         val newsItems = buildNewsItems(news)
-        newsState.value = newsState.value?.copy(
-            news = newsItems,
+        items.addAll(newsItems)
+
+        newsState.value = newsState.value.copy(
+            news = items,
+            feedbackCallback = feedbackCallback,
             isRefreshing = state.status == NewsState.Status.PENDING
         )
     }
@@ -103,7 +122,7 @@ class NewsFragmentNew : Fragment(), StoreSubscriber<NewsState> {
 
 @Composable
 private fun ContentView(
-    newsState: State<UIModel?>,
+    newsState: State<UIModel>,
     onPostItem: (String, String) -> Unit
 ) = LazyColumn(
     modifier = Modifier
@@ -111,10 +130,11 @@ private fun ContentView(
         .padding(start = 20.dp, top = 20.dp, end = 20.dp, bottom = 0.dp),
     verticalArrangement = Arrangement.spacedBy(12.dp),
 ) {
-    val state = newsState.value ?: return@LazyColumn
+    val state = newsState.value
 
     items(state.news) {
         when(it) {
+            is NewsItem.FeedbackItem -> PostFeedbackView(it, state.feedbackCallback)
             is NewsItem.PostItem -> PostView(it, onPostItem)
             is NewsItem.PostWithCommentItem -> PostWithCommentView(it, onPostItem)
             else -> Text("Another post")
@@ -125,5 +145,6 @@ private fun ContentView(
 
 private data class UIModel(
     val news: List<NewsItem>,
+    val feedbackCallback: () -> Unit,
     val isRefreshing: Boolean
 )

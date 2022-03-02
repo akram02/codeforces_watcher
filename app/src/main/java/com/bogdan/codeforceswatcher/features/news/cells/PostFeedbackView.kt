@@ -2,6 +2,7 @@ package com.bogdan.codeforceswatcher.features.news.cells
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -15,9 +16,13 @@ import androidx.compose.ui.unit.sp
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.compose.buttons.SmallButton
+import com.bogdan.codeforceswatcher.features.news.models.NewsItem
 
 @Composable
-fun PostFeedbackView() = Column(
+fun PostFeedbackView(
+    post: NewsItem.FeedbackItem,
+    callback: () -> Unit
+) = Column(
     modifier = Modifier
         .clip(AlgoismeTheme.shapes.medium)
         .background(AlgoismeTheme.colors.primaryVariant)
@@ -31,7 +36,7 @@ fun PostFeedbackView() = Column(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "Do you like algois.me?",
+            text = post.textTitle,
             style = AlgoismeTheme.typography.primaryRegular.copy(fontSize = 22.sp),
             color = AlgoismeTheme.colors.secondary
         )
@@ -50,14 +55,21 @@ fun PostFeedbackView() = Column(
         verticalAlignment = Alignment.CenterVertically
     ) {
         SmallButton(
-            label = "Yes!",
+            label = post.textPositiveButton,
             isInverted = false
-        ) { }
+        ) {
+            post.positiveButtonClick()
+            callback()
+        }
 
         Text(
-            text = "Not exactly",
+            text = post.textNegativeButton,
             style = AlgoismeTheme.typography.hintRegular.copy(fontWeight = FontWeight.W600),
-            color = AlgoismeTheme.colors.secondary
+            color = AlgoismeTheme.colors.secondary,
+            modifier = Modifier.clickable {
+                post.negativeButtonClick()
+                callback()
+            }
         )
     }
 }
