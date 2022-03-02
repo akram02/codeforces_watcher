@@ -12,21 +12,28 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
+import com.bogdan.codeforceswatcher.features.news.models.NewsItem
 import com.bogdan.codeforceswatcher.features.news.shared.PostContentView
 import com.bogdan.codeforceswatcher.features.news.shared.SeeAllCommentsView
-import io.xorum.codeforceswatcher.features.news.models.News
 
 @Composable
 fun PostView(
-    post: News.Post,
+    post: NewsItem.PostItem,
     onPost: (String, String) -> Unit
 ) = Column(
     modifier = Modifier
         .clip(RoundedCornerShape(20.dp))
         .background(AlgoismeTheme.colors.lightGray)
-        .clickable { onPost(post.link, post.title) }
+        .clickable { onPost(post.link, post.blogTitle) }
 ) {
-    PostContentView(post)
+    PostContentView(
+        title = post.blogTitle,
+        content = post.content,
+        authorAvatar = post.authorAvatar,
+        rankColor = post.rankColor,
+        agoText = post.agoText
+    )
+
     SeeAllCommentsView(
         modifier = Modifier
             .fillMaxWidth()

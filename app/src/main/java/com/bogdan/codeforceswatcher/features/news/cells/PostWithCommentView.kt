@@ -12,22 +12,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
+import com.bogdan.codeforceswatcher.features.news.models.NewsItem
 import com.bogdan.codeforceswatcher.features.news.shared.PostContentView
 import com.bogdan.codeforceswatcher.features.news.shared.SeeAllCommentsView
 import com.bogdan.codeforceswatcher.features.users.UserAvatar
-import com.bogdan.codeforceswatcher.features.users.colorTextByUserRankNew
-import com.bogdan.codeforceswatcher.features.users.getColorByUserRank
-import io.xorum.codeforceswatcher.features.news.models.News
-import org.ocpsoft.prettytime.PrettyTime
-import java.util.*
 
 @Composable
 fun PostWithCommentView(
-    post: News.PostWithComment,
+    post: NewsItem.PostWithCommentItem,
     onPost: (String, String) -> Unit
 ) = Column(
     modifier = Modifier
@@ -36,13 +31,20 @@ fun PostWithCommentView(
     verticalArrangement = Arrangement.spacedBy(10.dp)
 ) {
     PostContentView(
-        post = post.post,
-        modifier = Modifier.clickable { onPost(post.post.link, post.post.title) }
+        title = post.blogTitle,
+        content = post.postContent,
+        authorAvatar = post.postAuthorAvatar,
+        rankColor = post.postAuthorRankColor,
+        agoText = post.postAgoText,
+        modifier = Modifier.clickable { onPost(post.postLink, post.blogTitle) }
     )
 
     CommentView(
-        comment = post.comment,
-        modifier = Modifier.clickable { onPost(post.comment.link, post.post.title) }
+        content = post.commentContent,
+        authorAvatar = post.commentatorAvatar,
+        rankColor = post.commentatorRankColor,
+        agoText = post.commentAgoText,
+        modifier = Modifier.clickable { onPost(post.commentLink, post.blogTitle) }
     )
 
     SeeAllCommentsView(
@@ -52,13 +54,16 @@ fun PostWithCommentView(
             .background(AlgoismeTheme.colors.primaryVariant)
             .padding(horizontal = 12.dp)
             .height(32.dp)
-            .clickable { onPost(post.post.link, post.post.title) }
+            .clickable { onPost(post.postLink, post.blogTitle) }
     )
 }
 
 @Composable
 private fun CommentView(
-    comment: News.Comment,
+    content: String,
+    authorAvatar: String,
+    rankColor: Int,
+    agoText: CharSequence,
     modifier: Modifier = Modifier
 ) = Row(
     modifier = modifier
@@ -66,8 +71,8 @@ private fun CommentView(
     horizontalArrangement = Arrangement.spacedBy(6.dp),
 ) {
     UserAvatar(
-        avatar = comment.author.avatar,
-        modifier = Modifier.border(1.dp, colorResource(getColorByUserRank(comment.author.rank)), CircleShape)
+        avatar = authorAvatar,
+        modifier = Modifier.border(1.dp, colorResource(rankColor), CircleShape)
     )
 
     Column(
@@ -85,24 +90,17 @@ private fun CommentView(
             .padding(horizontal = 12.dp, vertical = 4.dp)
     ) {
         Text(
-            text = buildPostAgoText(comment.author, comment.createdAt),
+            text = AnnotatedString(agoText.toString()),
             style = AlgoismeTheme.typography.hintRegular,
             color = AlgoismeTheme.colors.secondaryVariant
         )
 
         Text(
-            text = comment.content,
+            text = content,
             style = AlgoismeTheme.typography.hintRegular,
             color = AlgoismeTheme.colors.secondary,
             overflow = TextOverflow.Ellipsis,
             maxLines = 2
         )
     }
-}
-
-@Composable
-private fun buildPostAgoText(user: News.User, time: Long) = buildAnnotatedString {
-    val handle = colorTextByUserRankNew(user.handle, user.rank)
-
-    return handle + AnnotatedString(" • ${PrettyTime().format(Date(time * 1000))}")
 }

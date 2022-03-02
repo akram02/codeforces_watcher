@@ -9,11 +9,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
-import io.xorum.codeforceswatcher.features.news.models.News
 
 @Composable
 fun PostContentView(
-    post: News.Post,
+    title: String,
+    content: String,
+    authorAvatar: String,
+    rankColor: Int,
+    agoText: CharSequence,
     modifier: Modifier = Modifier,
 ) = Column(
     modifier = modifier
@@ -24,14 +27,14 @@ fun PostContentView(
     verticalArrangement = Arrangement.spacedBy(12.dp)
 ) {
     PostInfo(
-        author = post.author,
-        title = post.title,
-        modifiedAt = post.modifiedAt,
-        isModified = post.isModified
+        title = title,
+        authorAvatar = authorAvatar,
+        rankColor = rankColor,
+        agoText = agoText
     )
 
     Text(
-        text = post.content,
+        text = content,
         style = AlgoismeTheme.typography.hintRegular,
         color = AlgoismeTheme.colors.secondary,
         overflow = TextOverflow.Ellipsis,

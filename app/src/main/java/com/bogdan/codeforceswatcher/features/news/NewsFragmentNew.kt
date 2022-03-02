@@ -21,15 +21,17 @@ import com.bogdan.codeforceswatcher.components.WebViewActivity
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 import com.bogdan.codeforceswatcher.features.news.cells.PostView
 import com.bogdan.codeforceswatcher.features.news.cells.PostWithCommentView
+import com.bogdan.codeforceswatcher.features.news.models.NewsItem
 import io.xorum.codeforceswatcher.features.news.models.News
 import io.xorum.codeforceswatcher.features.news.redux.NewsState
 import io.xorum.codeforceswatcher.redux.store
 import io.xorum.codeforceswatcher.util.AnalyticsEvents
+import io.xorum.codeforceswatcher.util.settings
 import tw.geothings.rekotlin.StoreSubscriber
 
 class NewsFragmentNew : Fragment(), StoreSubscriber<NewsState> {
 
-    private val newsState: MutableState<NewsState?> = mutableStateOf(null)
+    private val newsState: MutableState<UIModel> = mutableStateOf(UIModel(emptyList(), false))
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -75,14 +77,33 @@ class NewsFragmentNew : Fragment(), StoreSubscriber<NewsState> {
         )
     }
 
+    private fun buildNewsItems(news: List<News>) = news.map {
+        when (it) {
+            is News.Post -> NewsItem.PostItem(it)
+            is News.PinnedPost -> NewsItem.PinnedItem(it)
+            is News.PostWithComment -> NewsItem.PostWithCommentItem(it.post, it.comment)
+            is News.Video -> NewsItem.VideoItem(it)
+        }
+    }
+
     override fun onNewState(state: NewsState) {
-        newsState.value = state
+        val items = mutableListOf<NewsItem>()
+
+        val news = state.news.filter {
+            return@filter if (it is News.PinnedPost) settings.readLastPinnedPostLink() != it.link else true
+        }
+
+        val newsItems = buildNewsItems(news)
+        newsState.value = newsState.value?.copy(
+            news = newsItems,
+            isRefreshing = state.status == NewsState.Status.PENDING
+        )
     }
 }
 
 @Composable
 private fun ContentView(
-    newsState: State<NewsState?>,
+    newsState: State<UIModel?>,
     onPostItem: (String, String) -> Unit
 ) = LazyColumn(
     modifier = Modifier
@@ -94,9 +115,15 @@ private fun ContentView(
 
     items(state.news) {
         when(it) {
-            is News.Post -> PostView(it, onPostItem)
-            is News.PostWithComment -> PostWithCommentView(it, onPostItem)
+            is NewsItem.PostItem -> PostView(it, onPostItem)
+            is NewsItem.PostWithCommentItem -> PostWithCommentView(it, onPostItem)
             else -> Text("Another post")
         }
     }
 }
+
+
+private data class UIModel(
+    val news: List<NewsItem>,
+    val isRefreshing: Boolean
+)
