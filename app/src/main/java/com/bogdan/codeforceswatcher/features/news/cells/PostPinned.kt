@@ -10,10 +10,9 @@ import android.text.StaticLayout
 import android.text.TextDirectionHeuristics
 import android.text.TextPaint
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -33,20 +32,23 @@ import com.bogdan.codeforceswatcher.components.compose.buttons.CommonButton
 import com.bogdan.codeforceswatcher.components.compose.buttons.SmallButton
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun PostPinnedView() {
-    val visibleState by remember { mutableStateOf(false) }
+    var visibleState by remember { mutableStateOf(false) }
 
     if (visibleState) {
-        VisibleView()
+        VisibleView { visibleState = false }
     } else {
-        HiddenView()
+        HiddenView(modifier = Modifier.clickable { visibleState = true })
     }
 }
 
 @Composable
-private fun HiddenView() = Box(
-    modifier = Modifier
+private fun HiddenView(
+    modifier: Modifier
+) = Box(
+    modifier = modifier
         .height(60.dp)
         .clip(AlgoismeTheme.shapes.medium)
 ) {
@@ -109,7 +111,9 @@ private fun HiddenTitleView() = Column(
 }
 
 @Composable
-private fun VisibleView() = Box(
+private fun VisibleView(
+    onCross: () -> Unit
+) = Box(
     modifier = Modifier
         .height(230.dp)
         .clip(AlgoismeTheme.shapes.medium)
@@ -134,22 +138,7 @@ private fun VisibleView() = Box(
                 .fillMaxWidth()
                 .padding(12.dp)
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Image(
-                    painter = painterResource(R.drawable.ic_logo),
-                    contentDescription = null,
-                    modifier = Modifier.size(32.dp)
-                )
-
-                Image(
-                    painter = painterResource(R.drawable.ic_cross_icon),
-                    contentDescription = null,
-                    modifier = Modifier.size(24.dp)
-                )
-            }
+            VisibleHeaderView { onCross() }
 
             Spacer(modifier = Modifier.height(96.dp))
 
@@ -166,30 +155,55 @@ private fun VisibleView() = Box(
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.Bottom
-            ) {
-                Text(
-                    text = "Huge redesign, mentors & more!",
-                    style = AlgoismeTheme.typography.primarySemiBold,
-                    color = AlgoismeTheme.colors.white,
-                    modifier = Modifier.width(180.dp),
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis
-                )
-
-                CommonButton(
-                    label = "See details",
-                    modifier = Modifier.defaultMinSize(minWidth = 80.dp, minHeight = 32.dp),
-                    textStyle = AlgoismeTheme.typography.buttonSemiBold.copy(fontSize = 13.sp),
-                    backgroundColor = AlgoismeTheme.colors.primary,
-                    labelColor = AlgoismeTheme.colors.secondary
-                ) { }
-            }
+            VisibleFooterView()
         }
     }
+}
+
+@Composable
+private fun VisibleHeaderView(
+    onCross: () -> Unit
+) = Row(
+    modifier = Modifier.fillMaxWidth(),
+    horizontalArrangement = Arrangement.SpaceBetween
+) {
+    Image(
+        painter = painterResource(R.drawable.ic_logo),
+        contentDescription = null,
+        modifier = Modifier.size(32.dp)
+    )
+
+    Image(
+        painter = painterResource(R.drawable.ic_cross_icon),
+        contentDescription = null,
+        modifier = Modifier
+            .size(24.dp)
+            .clickable { onCross() }
+    )
+}
+
+@Composable
+private fun VisibleFooterView() = Row(
+    modifier = Modifier.fillMaxWidth(),
+    horizontalArrangement = Arrangement.SpaceBetween,
+    verticalAlignment = Alignment.Bottom
+) {
+    Text(
+        text = "Huge redesign, mentors & more!",
+        style = AlgoismeTheme.typography.primarySemiBold,
+        color = AlgoismeTheme.colors.white,
+        modifier = Modifier.width(180.dp),
+        maxLines = 2,
+        overflow = TextOverflow.Ellipsis
+    )
+
+    CommonButton(
+        label = "See details",
+        modifier = Modifier.defaultMinSize(minWidth = 80.dp, minHeight = 32.dp),
+        textStyle = AlgoismeTheme.typography.buttonSemiBold.copy(fontSize = 13.sp),
+        backgroundColor = AlgoismeTheme.colors.primary,
+        labelColor = AlgoismeTheme.colors.secondary
+    ) { }
 }
 
 @Composable
