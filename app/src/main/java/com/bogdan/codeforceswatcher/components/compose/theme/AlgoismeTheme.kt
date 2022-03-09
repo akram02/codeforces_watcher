@@ -70,9 +70,9 @@ private val commonAlgoismeColors = AlgoismeColors(
     accentGrayish = Color(0xFFEEEEEE),
     mineShaft = Color(0xFF303030),
     red = Color(0xFFFF0000),
+    yellow = Color(0xFFFFCA00),
+    blue = Color(0xFF0094FF),
     green = Color(0xFF05D200),
-
-    onStar = Color(0xFFFFCA00),
 
     transparent = Color.Transparent
 )

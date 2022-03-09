@@ -351,7 +351,7 @@ private fun ProblemView(
     Icon(
         painter = painterResource(R.drawable.ic_star),
         contentDescription = null,
-        tint = if (problem.isFavourite) AlgoismeTheme.colors.onStar else AlgoismeTheme.colors.secondary,
+        tint = if (problem.isFavourite) AlgoismeTheme.colors.yellow else AlgoismeTheme.colors.secondary,
         modifier = Modifier
             .size(24.dp)
             .clickable { onStar(problem.id) }

@@ -24,9 +24,9 @@ data class AlgoismeColors(
     val lightGray: Color,
     val mineShaft: Color,
     val red: Color,
+    val yellow: Color,
+    val blue: Color,
     val green: Color,
-
-    val onStar: Color,
 
     val transparent: Color
 )

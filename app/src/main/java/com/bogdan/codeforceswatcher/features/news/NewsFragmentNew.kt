@@ -19,10 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import com.bogdan.codeforceswatcher.components.WebViewActivity
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
-import com.bogdan.codeforceswatcher.features.news.cells.PostFeedbackView
-import com.bogdan.codeforceswatcher.features.news.cells.PostVideoView
-import com.bogdan.codeforceswatcher.features.news.cells.PostView
-import com.bogdan.codeforceswatcher.features.news.cells.PostWithCommentView
+import com.bogdan.codeforceswatcher.features.news.cells.*
 import com.bogdan.codeforceswatcher.features.news.models.NewsItem
 import com.bogdan.codeforceswatcher.util.FeedbackController
 import io.xorum.codeforceswatcher.features.news.models.News
@@ -136,10 +133,10 @@ private fun ContentView(
     items(state.news) {
         when(it) {
             is NewsItem.FeedbackItem -> PostFeedbackView(it, state.feedbackCallback)
+            is NewsItem.PinnedItem -> PostPinnedView()
             is NewsItem.PostItem -> PostView(it, onPostItem)
             is NewsItem.PostWithCommentItem -> PostWithCommentView(it, onPostItem)
             is NewsItem.VideoItem -> PostVideoView(it)
-            else -> Text("Another post")
         }
     }
 }
