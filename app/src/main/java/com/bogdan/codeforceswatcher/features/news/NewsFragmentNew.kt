@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
@@ -47,6 +46,9 @@ class NewsFragmentNew : Fragment(), StoreSubscriber<NewsState> {
             AlgoismeTheme {
                 ContentView(
                     newsState = newsState,
+                    onPostPinnedItem = { link, title ->
+                        openWebView(link, title, AnalyticsEvents.PINNED_POST_OPENED, AnalyticsEvents.NEWS_SHARED)
+                    },
                     onPostItem = { link, title ->
                         openWebView(link, title, AnalyticsEvents.POST_OPENED, AnalyticsEvents.NEWS_SHARED)
                     }
@@ -121,6 +123,7 @@ class NewsFragmentNew : Fragment(), StoreSubscriber<NewsState> {
 @Composable
 private fun ContentView(
     newsState: State<UIModel>,
+    onPostPinnedItem: (String, String) -> Unit,
     onPostItem: (String, String) -> Unit
 ) = LazyColumn(
     modifier = Modifier
@@ -133,7 +136,7 @@ private fun ContentView(
     items(state.news) {
         when(it) {
             is NewsItem.FeedbackItem -> PostFeedbackView(it, state.feedbackCallback)
-            is NewsItem.PinnedItem -> PostPinnedView()
+            is NewsItem.PinnedItem -> PostPinnedView(it, onPostPinnedItem)
             is NewsItem.PostItem -> PostView(it, onPostItem)
             is NewsItem.PostWithCommentItem -> PostWithCommentView(it, onPostItem)
             is NewsItem.VideoItem -> PostVideoView(it)
