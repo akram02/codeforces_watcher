@@ -25,6 +25,7 @@ fun PostVideoView(
 ) = Column(
     modifier = Modifier
         .fillMaxWidth()
+        .padding(top = 20.dp)
         .wrapContentHeight()
         .clip(AlgoismeTheme.shapes.medium)
         .background(AlgoismeTheme.colors.primaryVariant)

@@ -3,16 +3,20 @@ package com.bogdan.codeforceswatcher.features.news
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
@@ -21,8 +25,12 @@ import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 import com.bogdan.codeforceswatcher.features.news.cells.*
 import com.bogdan.codeforceswatcher.features.news.models.NewsItem
 import com.bogdan.codeforceswatcher.util.FeedbackController
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import io.xorum.codeforceswatcher.features.news.models.News
+import io.xorum.codeforceswatcher.features.news.redux.NewsRequests
 import io.xorum.codeforceswatcher.features.news.redux.NewsState
+import io.xorum.codeforceswatcher.redux.analyticsController
 import io.xorum.codeforceswatcher.redux.store
 import io.xorum.codeforceswatcher.util.AnalyticsEvents
 import io.xorum.codeforceswatcher.util.settings
@@ -46,6 +54,7 @@ class NewsFragmentNew : Fragment(), StoreSubscriber<NewsState> {
             AlgoismeTheme {
                 ContentView(
                     newsState = newsState,
+                    onRefresh = { onRefresh() },
                     onPostPinnedItem = { link, title ->
                         openWebView(link, title, AnalyticsEvents.PINNED_POST_OPENED, AnalyticsEvents.NEWS_SHARED)
                     },
@@ -73,7 +82,12 @@ class NewsFragmentNew : Fragment(), StoreSubscriber<NewsState> {
     override fun onStop() {
         super.onStop()
 
-        store.unsubscribe(this);
+        store.unsubscribe(this)
+    }
+
+    private fun onRefresh() {
+        store.dispatch(NewsRequests.FetchNews(true))
+        analyticsController.logEvent(AnalyticsEvents.NEWS_REFRESH)
     }
 
     private fun openWebView(link: String, title: String, openEvent: String, shareEvent: String) {
@@ -126,20 +140,66 @@ class NewsFragmentNew : Fragment(), StoreSubscriber<NewsState> {
 @Composable
 private fun ContentView(
     newsState: State<UIModel>,
+    onRefresh: () -> Unit,
+    onPostPinnedItem: (String, String) -> Unit,
+    onPostItem: (String, String) -> Unit,
+    onPostVideoItem: (String, String) -> Unit
+) = Scaffold(
+    modifier = Modifier.fillMaxWidth(),
+    topBar = { NavigationBar() },
+    backgroundColor = AlgoismeTheme.colors.primaryVariant
+) {
+    val state = newsState.value
+
+    SwipeRefresh(
+        state = rememberSwipeRefreshState(state.isRefreshing),
+        onRefresh = { onRefresh() },
+        modifier = Modifier
+            .fillMaxSize()
+            .clip(
+                RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp, bottomStart = 0.dp, bottomEnd = 0.dp)
+            )
+            .background(AlgoismeTheme.colors.primary)
+    ) {
+        NewsList(
+            news = state.news,
+            feedbackCallback = state.feedbackCallback,
+            onPostPinnedItem = onPostPinnedItem,
+            onPostItem = onPostItem,
+            onPostVideoItem = onPostVideoItem
+        )
+    }
+}
+
+@Composable
+private fun NavigationBar() = Row(
+    modifier = Modifier
+        .fillMaxWidth()
+        .height(56.dp)
+        .padding(horizontal = 20.dp),
+    horizontalArrangement = Arrangement.Start,
+    verticalAlignment = Alignment.CenterVertically
+) {
+    Text(
+        text = "News",
+        style = AlgoismeTheme.typography.headerSmallMedium,
+        color = AlgoismeTheme.colors.secondary
+    )
+}
+
+@Composable
+private fun NewsList(
+    news: List<NewsItem>,
+    feedbackCallback: () -> Unit,
     onPostPinnedItem: (String, String) -> Unit,
     onPostItem: (String, String) -> Unit,
     onPostVideoItem: (String, String) -> Unit
 ) = LazyColumn(
-    modifier = Modifier
-        .fillMaxSize()
-        .padding(start = 20.dp, top = 20.dp, end = 20.dp, bottom = 0.dp),
-    verticalArrangement = Arrangement.spacedBy(12.dp),
+    modifier = Modifier.padding(start = 20.dp, top = 0.dp, end = 20.dp, bottom = 20.dp)
 ) {
-    val state = newsState.value
-
-    items(state.news) {
-        when(it) {
-            is NewsItem.FeedbackItem -> PostFeedbackView(it, state.feedbackCallback)
+    items(news) {
+        when (it) {
+            is NewsItem.FeedbackItem -> PostFeedbackView(it, feedbackCallback)
             is NewsItem.PinnedItem -> PostPinnedView(it, onPostPinnedItem)
             is NewsItem.PostItem -> PostView(it, onPostItem)
             is NewsItem.PostWithCommentItem -> PostWithCommentView(it, onPostItem)
@@ -147,7 +207,6 @@ private fun ContentView(
         }
     }
 }
-
 
 private data class UIModel(
     val news: List<NewsItem>,

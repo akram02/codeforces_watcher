@@ -51,6 +51,7 @@ private fun VisibleView(
     onCross: () -> Unit
 ) = Box(
     modifier = Modifier
+        .padding(top = 20.dp)
         .height(230.dp)
         .clip(AlgoismeTheme.shapes.medium)
 ) {
@@ -151,6 +152,7 @@ private fun HiddenView(
     modifier: Modifier
 ) = Box(
     modifier = modifier
+        .padding(top = 20.dp)
         .height(60.dp)
         .clip(AlgoismeTheme.shapes.medium)
 ) {

@@ -24,6 +24,7 @@ fun PostFeedbackView(
     callback: () -> Unit
 ) = Column(
     modifier = Modifier
+        .padding(top = 20.dp)
         .clip(AlgoismeTheme.shapes.medium)
         .background(AlgoismeTheme.colors.primaryVariant)
         .padding(horizontal = 16.dp, vertical = 12.dp),

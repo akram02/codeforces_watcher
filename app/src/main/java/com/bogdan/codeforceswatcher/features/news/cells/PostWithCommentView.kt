@@ -33,6 +33,7 @@ fun PostWithCommentView(
     onPost: (String, String) -> Unit
 ) = Column(
     modifier = Modifier
+        .padding(top = 20.dp)
         .clip(RoundedCornerShape(20.dp))
         .background(AlgoismeTheme.colors.lightGray),
     verticalArrangement = Arrangement.spacedBy(10.dp)
