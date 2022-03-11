@@ -142,8 +142,8 @@ private fun VisibleFooterView(
         label = stringResource(R.string.see_details),
         modifier = Modifier.defaultMinSize(minWidth = 80.dp, minHeight = 32.dp),
         textStyle = AlgoismeTheme.typography.buttonSemiBold.copy(fontSize = 13.sp),
-        backgroundColor = AlgoismeTheme.colors.primary,
-        labelColor = AlgoismeTheme.colors.secondary
+        backgroundColor = AlgoismeTheme.colors.white,
+        labelColor = AlgoismeTheme.colors.black
     ) { onSeeDetails() }
 }
 
@@ -208,7 +208,7 @@ private fun HiddenTitleView(
     Text(
         text = stringResource(R.string.click_to_see_details),
         style = AlgoismeTheme.typography.hintSemiBold,
-        color = AlgoismeTheme.colors.primary,
+        color = AlgoismeTheme.colors.white,
         maxLines = 1,
         overflow = TextOverflow.Ellipsis
     )

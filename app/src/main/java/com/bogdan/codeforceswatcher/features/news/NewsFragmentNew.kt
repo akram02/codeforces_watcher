@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.WebViewActivity
+import com.bogdan.codeforceswatcher.components.compose.NoItemsView
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 import com.bogdan.codeforceswatcher.features.news.cells.*
 import com.bogdan.codeforceswatcher.features.news.models.NewsItem
@@ -167,13 +168,17 @@ private fun ContentView(
             )
             .background(AlgoismeTheme.colors.primary)
     ) {
-        NewsList(
-            news = state.news,
-            onPostFeedbackItem = state.feedbackCallback,
-            onPostPinnedItem = onPostPinnedItem,
-            onPostItem = onPostItem,
-            onPostVideoItem = onPostVideoItem
-        )
+        if (state.news.isEmpty()) {
+            NoItemsView(R.drawable.ic_no_items_news, R.string.news_on_the_way)
+        } else {
+            NewsList(
+                news = state.news,
+                onPostFeedbackItem = state.feedbackCallback,
+                onPostPinnedItem = onPostPinnedItem,
+                onPostItem = onPostItem,
+                onPostVideoItem = onPostVideoItem
+            )
+        }
     }
 }
 
