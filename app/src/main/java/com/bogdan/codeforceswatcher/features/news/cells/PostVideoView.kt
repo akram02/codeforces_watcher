@@ -2,6 +2,7 @@ package com.bogdan.codeforceswatcher.features.news.cells
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -19,21 +20,24 @@ import com.bogdan.codeforceswatcher.features.news.shared.PostInfo
 
 @Composable
 fun PostVideoView(
-    post: NewsItem.VideoItem
+    post: NewsItem.VideoItem,
+    onPost: (String, String) -> Unit
 ) = Column(
     modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight()
         .clip(AlgoismeTheme.shapes.medium)
         .background(AlgoismeTheme.colors.primaryVariant)
-        .padding(12.dp),
+        .padding(12.dp)
+        .clickable { onPost(post.title, post.link) },
     verticalArrangement = Arrangement.spacedBy(12.dp)
 ) {
     PostInfo(
         title = post.title,
-        authorAvatar = post.authorAvatar,
-        rankColor = post.rankColor,
-        agoText = post.agoText
+        handle = post.authorHandle,
+        avatar = post.authorAvatar,
+        rank = post.authorRank,
+        modifiedAt = post.createdAt
     )
 
     VideoView(post.thumbnailLink)

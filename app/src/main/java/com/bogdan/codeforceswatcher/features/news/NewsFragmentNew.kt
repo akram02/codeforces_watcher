@@ -51,6 +51,9 @@ class NewsFragmentNew : Fragment(), StoreSubscriber<NewsState> {
                     },
                     onPostItem = { link, title ->
                         openWebView(link, title, AnalyticsEvents.POST_OPENED, AnalyticsEvents.NEWS_SHARED)
+                    },
+                    onPostVideoItem = { link, title ->
+                        openWebView(link, title, AnalyticsEvents.VIDEO_OPENED, AnalyticsEvents.VIDEO_SHARED)
                     }
                 )
             }
@@ -124,7 +127,8 @@ class NewsFragmentNew : Fragment(), StoreSubscriber<NewsState> {
 private fun ContentView(
     newsState: State<UIModel>,
     onPostPinnedItem: (String, String) -> Unit,
-    onPostItem: (String, String) -> Unit
+    onPostItem: (String, String) -> Unit,
+    onPostVideoItem: (String, String) -> Unit
 ) = LazyColumn(
     modifier = Modifier
         .fillMaxSize()
@@ -139,7 +143,7 @@ private fun ContentView(
             is NewsItem.PinnedItem -> PostPinnedView(it, onPostPinnedItem)
             is NewsItem.PostItem -> PostView(it, onPostItem)
             is NewsItem.PostWithCommentItem -> PostWithCommentView(it, onPostItem)
-            is NewsItem.VideoItem -> PostVideoView(it)
+            is NewsItem.VideoItem -> PostVideoView(it, onPostVideoItem)
         }
     }
 }

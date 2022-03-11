@@ -29,9 +29,11 @@ fun PostView(
     PostContentView(
         title = post.blogTitle,
         content = post.content,
-        authorAvatar = post.authorAvatar,
-        rankColor = post.rankColor,
-        agoText = post.agoText
+        handle = post.authorHandle,
+        avatar = post.authorAvatar,
+        rank = post.authorRank,
+        modifiedAt = post.modifiedAt,
+        isModified = post.isModified
     )
 
     SeeAllCommentsView(

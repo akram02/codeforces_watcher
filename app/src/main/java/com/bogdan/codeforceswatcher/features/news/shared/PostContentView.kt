@@ -14,9 +14,11 @@ import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 fun PostContentView(
     title: String,
     content: String,
-    authorAvatar: String,
-    rankColor: Int,
-    agoText: CharSequence,
+    handle: String,
+    avatar: String,
+    rank: String?,
+    modifiedAt: Long,
+    isModified: Boolean,
     modifier: Modifier = Modifier,
 ) = Column(
     modifier = modifier
@@ -28,9 +30,11 @@ fun PostContentView(
 ) {
     PostInfo(
         title = title,
-        authorAvatar = authorAvatar,
-        rankColor = rankColor,
-        agoText = agoText
+        handle = handle,
+        avatar = avatar,
+        rank = rank,
+        modifiedAt = modifiedAt,
+        isModified = isModified
     )
 
     Text(
