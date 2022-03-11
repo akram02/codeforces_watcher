@@ -54,6 +54,8 @@ Download it now on Google Play - https://play.google.com/store/apps/details?id=c
   <string name="filters">Filters</string>
   <string name="no_contests_found">No contests found</string>
   <string name="click_to_see_details">Click to see details</string>
+  <string name="see_details">See details</string>
+  <string name="update_explanation">Huge redesign, mentors &amp; more!</string>
 
   <string name="yes">YES!</string>
   <string name="rate_us_first_title">Enjoying our Codeforces WatchR App?</string>

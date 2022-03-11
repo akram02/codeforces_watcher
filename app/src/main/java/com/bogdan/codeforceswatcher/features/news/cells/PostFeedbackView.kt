@@ -21,7 +21,7 @@ import com.bogdan.codeforceswatcher.features.news.models.NewsItem
 @Composable
 fun PostFeedbackView(
     post: NewsItem.FeedbackItem,
-    callback: () -> Unit
+    onPost: () -> Unit
 ) = Column(
     modifier = Modifier
         .padding(top = 20.dp)
@@ -60,7 +60,7 @@ fun PostFeedbackView(
             isInverted = false
         ) {
             post.positiveButtonClick()
-            callback()
+            onPost()
         }
 
         Text(
@@ -69,7 +69,7 @@ fun PostFeedbackView(
             color = AlgoismeTheme.colors.secondary,
             modifier = Modifier.clickable {
                 post.negativeButtonClick()
-                callback()
+                onPost()
             }
         )
     }

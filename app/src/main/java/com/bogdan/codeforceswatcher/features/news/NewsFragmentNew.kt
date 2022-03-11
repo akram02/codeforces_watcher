@@ -18,8 +18,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
+import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.WebViewActivity
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 import com.bogdan.codeforceswatcher.features.news.cells.*
@@ -41,7 +43,7 @@ class NewsFragmentNew : Fragment(), StoreSubscriber<NewsState> {
     private val newsState: MutableState<UIModel> = mutableStateOf(
         UIModel(
             news = emptyList(),
-            feedbackCallback =  {},
+            feedbackCallback = {},
             isRefreshing = false
         )
     )
@@ -125,7 +127,6 @@ class NewsFragmentNew : Fragment(), StoreSubscriber<NewsState> {
         val news = state.news.filter {
             return@filter if (it is News.PinnedPost) settings.readLastPinnedPostLink() != it.link else true
         }
-
         val newsItems = buildNewsItems(news)
         items.addAll(newsItems)
 
@@ -157,13 +158,18 @@ private fun ContentView(
         modifier = Modifier
             .fillMaxSize()
             .clip(
-                RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp, bottomStart = 0.dp, bottomEnd = 0.dp)
+                RoundedCornerShape(
+                    topStart = 30.dp,
+                    topEnd = 30.dp,
+                    bottomStart = 0.dp,
+                    bottomEnd = 0.dp
+                )
             )
             .background(AlgoismeTheme.colors.primary)
     ) {
         NewsList(
             news = state.news,
-            feedbackCallback = state.feedbackCallback,
+            onPostFeedbackItem = state.feedbackCallback,
             onPostPinnedItem = onPostPinnedItem,
             onPostItem = onPostItem,
             onPostVideoItem = onPostVideoItem
@@ -176,12 +182,12 @@ private fun NavigationBar() = Row(
     modifier = Modifier
         .fillMaxWidth()
         .height(56.dp)
-        .padding(horizontal = 20.dp),
+        .padding(horizontal = 25.dp),
     horizontalArrangement = Arrangement.Start,
     verticalAlignment = Alignment.CenterVertically
 ) {
     Text(
-        text = "News",
+        text = stringResource(R.string.news),
         style = AlgoismeTheme.typography.headerSmallMedium,
         color = AlgoismeTheme.colors.secondary
     )
@@ -190,16 +196,16 @@ private fun NavigationBar() = Row(
 @Composable
 private fun NewsList(
     news: List<NewsItem>,
-    feedbackCallback: () -> Unit,
+    onPostFeedbackItem: () -> Unit,
     onPostPinnedItem: (String, String) -> Unit,
     onPostItem: (String, String) -> Unit,
     onPostVideoItem: (String, String) -> Unit
 ) = LazyColumn(
-    modifier = Modifier.padding(start = 20.dp, top = 0.dp, end = 20.dp, bottom = 20.dp)
+    modifier = Modifier.padding(horizontal = 20.dp)
 ) {
     items(news) {
         when (it) {
-            is NewsItem.FeedbackItem -> PostFeedbackView(it, feedbackCallback)
+            is NewsItem.FeedbackItem -> PostFeedbackView(it, onPostFeedbackItem)
             is NewsItem.PinnedItem -> PostPinnedView(it, onPostPinnedItem)
             is NewsItem.PostItem -> PostView(it, onPostItem)
             is NewsItem.PostWithCommentItem -> PostWithCommentView(it, onPostItem)

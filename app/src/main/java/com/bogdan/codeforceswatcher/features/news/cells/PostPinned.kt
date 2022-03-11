@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -129,16 +130,16 @@ private fun VisibleFooterView(
     verticalAlignment = Alignment.Bottom
 ) {
     Text(
-        text = "Huge redesign, mentors & more!",
+        text = stringResource(R.string.update_explanation),
         style = AlgoismeTheme.typography.primarySemiBold,
         color = AlgoismeTheme.colors.white,
-        modifier = Modifier.width(180.dp),
+        modifier = Modifier.fillMaxWidth(0.6f),
         maxLines = 2,
         overflow = TextOverflow.Ellipsis
     )
 
     CommonButton(
-        label = "See details",
+        label = stringResource(R.string.see_details),
         modifier = Modifier.defaultMinSize(minWidth = 80.dp, minHeight = 32.dp),
         textStyle = AlgoismeTheme.typography.buttonSemiBold.copy(fontSize = 13.sp),
         backgroundColor = AlgoismeTheme.colors.primary,
@@ -205,7 +206,7 @@ private fun HiddenTitleView(
     )
 
     Text(
-        text = "Click here to see more",
+        text = stringResource(R.string.click_to_see_details),
         style = AlgoismeTheme.typography.hintSemiBold,
         color = AlgoismeTheme.colors.primary,
         maxLines = 1,
