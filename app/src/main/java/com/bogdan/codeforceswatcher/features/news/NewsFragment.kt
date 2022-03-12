@@ -39,7 +39,7 @@ import io.xorum.codeforceswatcher.util.AnalyticsEvents
 import io.xorum.codeforceswatcher.util.settings
 import tw.geothings.rekotlin.StoreSubscriber
 
-class NewsFragmentNew : Fragment(), StoreSubscriber<NewsState> {
+class NewsFragment : Fragment(), StoreSubscriber<NewsState> {
 
     private val newsState: MutableState<UIModel> = mutableStateOf(
         UIModel(

@@ -45,12 +45,14 @@ fun PostInfo(
             text = title,
             style = AlgoismeTheme.typography.primarySemiBold,
             color = AlgoismeTheme.colors.secondary,
-            maxLines = 1
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
         )
 
         Text(
             text = buildPostAgoText(handle, rank, modifiedAt, isModified),
             style = AlgoismeTheme.typography.hintRegular,
+            color = AlgoismeTheme.colors.secondaryVariant,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier.offset(y = (-2).dp)
