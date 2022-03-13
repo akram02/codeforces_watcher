@@ -32,7 +32,10 @@ import androidx.fragment.app.Fragment
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.WebViewActivity
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import io.xorum.codeforceswatcher.features.contests.models.Contest
+import io.xorum.codeforceswatcher.features.contests.redux.ContestsRequests
 import io.xorum.codeforceswatcher.features.contests.redux.ContestsState
 import io.xorum.codeforceswatcher.redux.analyticsController
 import io.xorum.codeforceswatcher.redux.store
@@ -54,6 +57,7 @@ class ContestsFragmentNew : Fragment(), StoreSubscriber<ContestsState> {
             AlgoismeTheme {
                 ContentView(
                     contestsState = contestsState,
+                    onRefresh = { onRefresh() },
                     onContest = { contest -> onContest(contest) },
                     onCalendar = { contest -> addContestToCalendar(contest) },
                     onFilter = { onFilter() }
@@ -76,6 +80,11 @@ class ContestsFragmentNew : Fragment(), StoreSubscriber<ContestsState> {
         super.onStop()
 
         store.unsubscribe(this)
+    }
+
+    private fun onRefresh() {
+        store.dispatch(ContestsRequests.FetchContests(isInitiatedByUser = true))
+        analyticsController.logEvent(AnalyticsEvents.CONTESTS_REFRESH)
     }
 
     private fun onContest(contest: Contest) {
@@ -137,6 +146,7 @@ class ContestsFragmentNew : Fragment(), StoreSubscriber<ContestsState> {
 @Composable
 private fun ContentView(
     contestsState: State<ContestsState?>,
+    onRefresh: () -> Unit,
     onContest: (Contest) -> Unit,
     onCalendar: (Contest) -> Unit,
     onFilter: () -> Unit
@@ -149,27 +159,11 @@ private fun ContentView(
         .sortedBy(Contest::startDateInMillis)
         .filter { state.filters.contains(it.platform) }
 
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .clip(
-                RoundedCornerShape(
-                    topStart = 30.dp,
-                    topEnd = 30.dp,
-                    bottomStart = 0.dp,
-                    bottomEnd = 0.dp
-                )
-            )
-            .background(AlgoismeTheme.colors.primary)
-            .padding(horizontal = 20.dp)
+    SwipeRefresh(
+        state = rememberSwipeRefreshState(state.status == ContestsState.Status.PENDING),
+        onRefresh = onRefresh
     ) {
-        items(contests) {
-            ContestView(
-                contest = it,
-                onCalendar = onCalendar,
-                modifier = Modifier.clickable { onContest(it) }
-            )
-        }
+        ContestsList(contests, onContest , onCalendar)
     }
 }
 
@@ -195,6 +189,34 @@ private fun NavigationBar(
         contentDescription = null,
         modifier = Modifier.clickable { onFilter() }
     )
+}
+
+@Composable
+private fun ContestsList(
+    contests: List<Contest>,
+    onContest: (Contest) -> Unit,
+    onCalendar: (Contest) -> Unit
+) = LazyColumn(
+    modifier = Modifier
+        .fillMaxSize()
+        .clip(
+            RoundedCornerShape(
+                topStart = 30.dp,
+                topEnd = 30.dp,
+                bottomStart = 0.dp,
+                bottomEnd = 0.dp
+            )
+        )
+        .background(AlgoismeTheme.colors.primary)
+        .padding(horizontal = 20.dp)
+) {
+    items(contests) {
+        ContestView(
+            contest = it,
+            onCalendar = onCalendar,
+            modifier = Modifier.clickable { onContest(it) }
+        )
+    }
 }
 
 @Composable
