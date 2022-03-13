@@ -53,6 +53,7 @@ Download it now on Google Play - https://play.google.com/store/apps/details?id=c
   <string name="no_browser_has_been_found">No browser has been found, try to install one.</string>
   <string name="filters">Filters</string>
   <string name="no_contests_found">No contests found</string>
+  <string name="contests_explanation">Contests are on the way to your device...</string>
   <string name="click_to_see_details">Click to see details</string>
 
   <string name="yes">YES!</string>

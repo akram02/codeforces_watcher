@@ -50,6 +50,7 @@ Codeforces WatchR дає можливiсть:
     <string name="search_for_problems">Пошук задач…</string>
     <string name="no_browser_has_been_found">Не знайдено браузера, спробуйте встановити його.</string>
     <string name="filters">Фiльтри</string>
+    <string name="contests_explanation">Контести на шляху до вашого пристрою...</string>
     <string name="no_contests_found">Контестів не знайдено</string>
 
     <string name="click_to_see_details">Натисніть, щоб переглянути деталі…</string>

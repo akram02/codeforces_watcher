@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.WebViewActivity
+import com.bogdan.codeforceswatcher.components.compose.NoItemsView
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
@@ -161,9 +162,18 @@ private fun ContentView(
 
     SwipeRefresh(
         state = rememberSwipeRefreshState(state.status == ContestsState.Status.PENDING),
-        onRefresh = onRefresh
+        onRefresh = onRefresh,
+        modifier = Modifier
+            .fillMaxSize()
+            .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp, bottomStart = 0.dp, bottomEnd = 0.dp))
+            .background(AlgoismeTheme.colors.primary)
+            .padding(horizontal = 20.dp)
     ) {
-        ContestsList(contests, onContest , onCalendar)
+        if (contests.isEmpty()) {
+            NoItemsView(R.drawable.ic_no_items_contests, R.string.contests_explanation)
+        } else {
+            ContestsList(contests, onContest, onCalendar)
+        }
     }
 }
 
@@ -196,20 +206,7 @@ private fun ContestsList(
     contests: List<Contest>,
     onContest: (Contest) -> Unit,
     onCalendar: (Contest) -> Unit
-) = LazyColumn(
-    modifier = Modifier
-        .fillMaxSize()
-        .clip(
-            RoundedCornerShape(
-                topStart = 30.dp,
-                topEnd = 30.dp,
-                bottomStart = 0.dp,
-                bottomEnd = 0.dp
-            )
-        )
-        .background(AlgoismeTheme.colors.primary)
-        .padding(horizontal = 20.dp)
-) {
+) = LazyColumn {
     items(contests) {
         ContestView(
             contest = it,

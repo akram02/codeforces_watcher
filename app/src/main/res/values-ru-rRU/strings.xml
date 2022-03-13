@@ -51,6 +51,7 @@ Codeforces WatchR позволяет:
     <string name="no_browser_has_been_found">Браузер не найден, попробуйте установить его.</string>
     <string name="filters">Фильтры</string>
     <string name="no_contests_found">Контестов не найдено</string>
+    <string name="contests_explanation">Контесты на пути к вашему устройству...</string>
     <string name="click_to_see_details">Нажмите, чтобы увидеть детали</string>
 
     <string name="yes">Да!</string>

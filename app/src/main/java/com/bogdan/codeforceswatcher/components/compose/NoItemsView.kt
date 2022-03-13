@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 
@@ -33,6 +34,7 @@ fun NoItemsView(
     Text(
         text = stringResource(titleId),
         style = AlgoismeTheme.typography.headerSmallMedium.copy(fontWeight = FontWeight.W400),
-        color = AlgoismeTheme.colors.secondaryVariant
+        color = AlgoismeTheme.colors.secondaryVariant,
+        textAlign = TextAlign.Center
     )
 }
