@@ -1,13 +1,16 @@
 package com.bogdan.codeforceswatcher.features.contests
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -16,11 +19,11 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import com.bogdan.codeforceswatcher.R
@@ -43,7 +46,8 @@ class ContestsFragmentNew : Fragment(), StoreSubscriber<ContestsState> {
         setContent {
             AlgoismeTheme {
                 ContentView(
-                    contestsState = contestsState
+                    contestsState = contestsState,
+                    onFilter = { onFilter() }
                 )
             }
         }
@@ -65,6 +69,10 @@ class ContestsFragmentNew : Fragment(), StoreSubscriber<ContestsState> {
         store.unsubscribe(this)
     }
 
+    private fun onFilter() {
+        startActivity(Intent(activity, ContestsFiltersActivity::class.java))
+    }
+
     override fun onNewState(state: ContestsState) {
         contestsState.value = state
     }
@@ -72,22 +80,59 @@ class ContestsFragmentNew : Fragment(), StoreSubscriber<ContestsState> {
 
 @Composable
 private fun ContentView(
-    contestsState: State<ContestsState?>
+    contestsState: State<ContestsState?>,
+    onFilter: () -> Unit
 ) = Scaffold(
-    modifier = Modifier
-        .background(AlgoismeTheme.colors.primary)
-        .padding(horizontal = 20.dp)
+    topBar = { NavigationBar(onFilter) },
+    backgroundColor = AlgoismeTheme.colors.primaryVariant
 ) {
     val state = contestsState.value ?: return@Scaffold
     val contests = state.contests.filter { it.phase == Contest.Phase.PENDING }
         .sortedBy(Contest::startDateInMillis)
         .filter { state.filters.contains(it.platform) }
 
-    LazyColumn {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .clip(
+                RoundedCornerShape(
+                    topStart = 30.dp,
+                    topEnd = 30.dp,
+                    bottomStart = 0.dp,
+                    bottomEnd = 0.dp
+                )
+            )
+            .background(AlgoismeTheme.colors.primary)
+            .padding(horizontal = 20.dp)
+    ) {
         items(contests) {
             ContestView(it)
         }
     }
+}
+
+@Composable
+private fun NavigationBar(
+    onFilter: () -> Unit
+) = Row(
+    modifier = Modifier
+        .fillMaxWidth()
+        .height(56.dp)
+        .padding(horizontal = 25.dp),
+    horizontalArrangement = Arrangement.SpaceBetween,
+    verticalAlignment = Alignment.CenterVertically
+) {
+    Text(
+        text = stringResource(R.string.contests),
+        style = AlgoismeTheme.typography.headerSmallMedium,
+        color = AlgoismeTheme.colors.secondary
+    )
+
+    Image(
+        painter = painterResource(R.drawable.ic_filter_icon),
+        contentDescription = null,
+        modifier = Modifier.clickable { onFilter() }
+    )
 }
 
 @Composable

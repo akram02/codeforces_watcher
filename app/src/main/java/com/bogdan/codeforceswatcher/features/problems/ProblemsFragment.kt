@@ -179,7 +179,7 @@ private fun NavigationBar(
         modifier = Modifier
             .fillMaxWidth()
             .height(56.dp)
-            .padding(horizontal = 20.dp),
+            .padding(horizontal = 25.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         AnimatedVisibility(
