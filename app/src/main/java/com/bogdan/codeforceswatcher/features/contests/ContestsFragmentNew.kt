@@ -1,9 +1,12 @@
 package com.bogdan.codeforceswatcher.features.contests
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -27,11 +30,15 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import com.bogdan.codeforceswatcher.R
+import com.bogdan.codeforceswatcher.components.WebViewActivity
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 import io.xorum.codeforceswatcher.features.contests.models.Contest
 import io.xorum.codeforceswatcher.features.contests.redux.ContestsState
+import io.xorum.codeforceswatcher.redux.analyticsController
 import io.xorum.codeforceswatcher.redux.store
+import io.xorum.codeforceswatcher.util.AnalyticsEvents
 import tw.geothings.rekotlin.StoreSubscriber
+import java.net.URLEncoder
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -47,6 +54,8 @@ class ContestsFragmentNew : Fragment(), StoreSubscriber<ContestsState> {
             AlgoismeTheme {
                 ContentView(
                     contestsState = contestsState,
+                    onContest = { contest -> onContest(contest) },
+                    onCalendar = { contest -> addContestToCalendar(contest) },
                     onFilter = { onFilter() }
                 )
             }
@@ -69,6 +78,49 @@ class ContestsFragmentNew : Fragment(), StoreSubscriber<ContestsState> {
         store.unsubscribe(this)
     }
 
+    private fun onContest(contest: Contest) {
+        startActivity(
+            WebViewActivity.newIntent(
+                requireContext(),
+                contest.link,
+                contest.title,
+                AnalyticsEvents.CONTEST_OPENED,
+                AnalyticsEvents.CONTEST_SHARED
+            )
+        )
+    }
+
+    private fun addContestToCalendar(contest: Contest) {
+        val timeStart = getCalendarTime(contest.startDateInMillis)
+        val timeEnd = getCalendarTime(contest.startDateInMillis + contest.durationInMillis)
+        val encodeName = URLEncoder.encode(contest.title, "utf-8")
+        val calendarEventLink =
+            "${CALENDAR_LINK}?action=TEMPLATE&text=$encodeName&dates=$timeStart/$timeEnd&details=${contest.link}"
+        val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(calendarEventLink))
+
+        try {
+            context?.startActivity(intent)
+        } catch (error: ActivityNotFoundException) {
+            Toast.makeText(
+                context,
+                context?.resources?.getString(R.string.google_calendar_not_found),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+        analyticsController.logEvent(
+            AnalyticsEvents.ADD_CONTEST_TO_CALENDAR,
+            mapOf(
+                "contest_platform" to contest.platform.toString(),
+                "contest_name" to contest.title
+            )
+        )
+    }
+
+    private fun getCalendarTime(time: Long): String {
+        val dateFormat = SimpleDateFormat("yyyyMMd'T'HHmmss", Locale.getDefault())
+        return dateFormat.format(Date(time)).toString()
+    }
+
     private fun onFilter() {
         startActivity(Intent(activity, ContestsFiltersActivity::class.java))
     }
@@ -76,11 +128,17 @@ class ContestsFragmentNew : Fragment(), StoreSubscriber<ContestsState> {
     override fun onNewState(state: ContestsState) {
         contestsState.value = state
     }
+
+    companion object {
+        private const val CALENDAR_LINK = "https://calendar.google.com/calendar/render"
+    }
 }
 
 @Composable
 private fun ContentView(
     contestsState: State<ContestsState?>,
+    onContest: (Contest) -> Unit,
+    onCalendar: (Contest) -> Unit,
     onFilter: () -> Unit
 ) = Scaffold(
     topBar = { NavigationBar(onFilter) },
@@ -106,7 +164,11 @@ private fun ContentView(
             .padding(horizontal = 20.dp)
     ) {
         items(contests) {
-            ContestView(it)
+            ContestView(
+                contest = it,
+                onCalendar = onCalendar,
+                modifier = Modifier.clickable { onContest(it) }
+            )
         }
     }
 }
@@ -137,9 +199,11 @@ private fun NavigationBar(
 
 @Composable
 private fun ContestView(
-    contest: Contest
+    contest: Contest,
+    onCalendar: (Contest) -> Unit,
+    modifier: Modifier = Modifier
 ) = Row(
-    modifier = Modifier
+    modifier = modifier
         .fillMaxWidth()
         .padding(top = 20.dp)
         .height(36.dp),
@@ -175,7 +239,8 @@ private fun ContestView(
 
     Image(
         painter = painterResource(R.drawable.ic_calendar),
-        contentDescription = null
+        contentDescription = null,
+        modifier = Modifier.clickable { onCalendar(contest) }
     )
 }
 
@@ -197,7 +262,6 @@ private fun platformIcon(
 
 @Composable
 private fun getDateTime(seconds: Long): String {
-    val dateFormat =
-        SimpleDateFormat(stringResource(R.string.contest_date_format), Locale.getDefault())
+    val dateFormat = SimpleDateFormat(stringResource(R.string.contest_date_format), Locale.getDefault())
     return dateFormat.format(Date(seconds)).toString()
 }
