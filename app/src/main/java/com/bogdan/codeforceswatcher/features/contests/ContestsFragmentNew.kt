@@ -3,16 +3,21 @@ package com.bogdan.codeforceswatcher.features.contests
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -26,8 +31,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.WebViewActivity
@@ -44,6 +51,7 @@ import io.xorum.codeforceswatcher.util.AnalyticsEvents
 import tw.geothings.rekotlin.StoreSubscriber
 import java.net.URLEncoder
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.*
 
 class ContestsFragmentNew : Fragment(), StoreSubscriber<ContestsState> {
@@ -207,11 +215,23 @@ private fun ContestsList(
     onContest: (Contest) -> Unit,
     onCalendar: (Contest) -> Unit
 ) = LazyColumn {
-    items(contests) {
+    itemsIndexed(contests) { index, contest ->
+        val isEqualMonth = if (index == 0) true else
+            getDateMonth(contest.startDateInMillis) != getDateMonth(contests[index - 1].startDateInMillis)
+
+        if (isEqualMonth) {
+            Text(
+                text = getDateMonth(contest.startDateInMillis).replaceFirstChar { it.uppercase() },
+                style = AlgoismeTheme.typography.hintSemiBold.copy(fontSize = 20.sp),
+                color = AlgoismeTheme.colors.secondary,
+                modifier = Modifier.padding(start = 0.dp, top = 15.dp, end = 0.dp, bottom = 5.dp)
+            )
+        }
+
         ContestView(
-            contest = it,
+            contest = contest,
             onCalendar = onCalendar,
-            modifier = Modifier.clickable { onContest(it) }
+            modifier = Modifier.clickable { onContest(contest) }
         )
     }
 }
@@ -224,7 +244,7 @@ private fun ContestView(
 ) = Row(
     modifier = modifier
         .fillMaxWidth()
-        .padding(top = 20.dp)
+        .padding(vertical = 10.dp)
         .height(36.dp),
     verticalAlignment = Alignment.CenterVertically
 ) {
@@ -282,5 +302,11 @@ private fun platformIcon(
 @Composable
 private fun getDateTime(seconds: Long): String {
     val dateFormat = SimpleDateFormat(stringResource(R.string.contest_date_format), Locale.getDefault())
-    return dateFormat.format(Date(seconds)).toString()
+    return dateFormat.format(seconds)
+}
+
+@Composable
+private fun getDateMonth(seconds: Long): String {
+    val dateFormat = SimpleDateFormat(stringResource(R.string.contest_month_format), Locale.getDefault())
+    return dateFormat.format(seconds)
 }
