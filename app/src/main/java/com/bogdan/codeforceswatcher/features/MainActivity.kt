@@ -15,7 +15,7 @@ import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.AddUserBottomSheet
 import com.bogdan.codeforceswatcher.components.WebViewActivity
 import com.bogdan.codeforceswatcher.features.contests.ContestsFiltersActivity
-import com.bogdan.codeforceswatcher.features.contests.ContestsFragmentNew
+import com.bogdan.codeforceswatcher.features.contests.ContestsFragment
 import com.bogdan.codeforceswatcher.features.news.NewsFragment
 import com.bogdan.codeforceswatcher.features.users.UsersFragment
 import com.bogdan.codeforceswatcher.features.problems.ProblemsFragment
@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
                 currentTabFragment as? UsersFragment ?: UsersFragment()
             }
             HomeTab.CONTESTS -> {
-                currentTabFragment as? ContestsFragmentNew ?: ContestsFragmentNew()
+                currentTabFragment as? ContestsFragment ?: ContestsFragment()
             }
             HomeTab.NEWS -> {
                 currentTabFragment as? NewsFragment ?: NewsFragment()
