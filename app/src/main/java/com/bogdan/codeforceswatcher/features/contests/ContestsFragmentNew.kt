@@ -69,7 +69,8 @@ class ContestsFragmentNew : Fragment(), StoreSubscriber<ContestsState> {
                     onRefresh = { onRefresh() },
                     onContest = { contest -> onContest(contest) },
                     onCalendar = { contest -> addContestToCalendar(contest) },
-                    onFilter = { onFilter() }
+                    onFilter = { onFilter() },
+                    modifier = Modifier.fillMaxSize()
                 )
             }
         }
@@ -158,7 +159,8 @@ private fun ContentView(
     onRefresh: () -> Unit,
     onContest: (Contest) -> Unit,
     onCalendar: (Contest) -> Unit,
-    onFilter: () -> Unit
+    onFilter: () -> Unit,
+    modifier: Modifier = Modifier
 ) = Scaffold(
     topBar = { NavigationBar(onFilter) },
     backgroundColor = AlgoismeTheme.colors.primaryVariant
@@ -171,8 +173,7 @@ private fun ContentView(
     SwipeRefresh(
         state = rememberSwipeRefreshState(state.status == ContestsState.Status.PENDING),
         onRefresh = onRefresh,
-        modifier = Modifier
-            .fillMaxSize()
+        modifier = modifier
             .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp, bottomStart = 0.dp, bottomEnd = 0.dp))
             .background(AlgoismeTheme.colors.primary)
             .padding(horizontal = 20.dp)
@@ -216,10 +217,10 @@ private fun ContestsList(
     onCalendar: (Contest) -> Unit
 ) = LazyColumn {
     itemsIndexed(contests) { index, contest ->
-        val isEqualMonth = if (index == 0) true else
+        val isDifferentMonth = if (index == 0) true else
             getDateMonth(contest.startDateInMillis) != getDateMonth(contests[index - 1].startDateInMillis)
 
-        if (isEqualMonth) {
+        if (isDifferentMonth) {
             Text(
                 text = getDateMonth(contest.startDateInMillis).replaceFirstChar { it.uppercase() },
                 style = AlgoismeTheme.typography.hintSemiBold.copy(fontSize = 20.sp),
