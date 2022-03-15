@@ -21,9 +21,10 @@ import com.bogdan.codeforceswatcher.features.news.models.NewsItem
 @Composable
 fun PostFeedbackView(
     post: NewsItem.FeedbackItem,
-    onPost: () -> Unit
+    onPost: () -> Unit,
+    modifier: Modifier = Modifier
 ) = Column(
-    modifier = Modifier
+    modifier = modifier
         .padding(top = 20.dp)
         .clip(AlgoismeTheme.shapes.medium)
         .background(AlgoismeTheme.colors.primaryVariant)

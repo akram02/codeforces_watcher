@@ -27,7 +27,8 @@ import com.bogdan.codeforceswatcher.features.news.models.NewsItem
 @Composable
 fun PostPinnedView(
     post: NewsItem.PinnedItem,
-    onPost: (String, String) -> Unit
+    onPost: (String, String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     var visibleState by remember { mutableStateOf(false) }
 
@@ -35,12 +36,13 @@ fun PostPinnedView(
         VisibleView(
             title = post.title,
             onSeeDetails = { onPost(post.title, post.link) },
-            onCross = { visibleState = false }
+            onCross = { visibleState = false },
+            modifier = modifier
         )
     } else {
         HiddenView(
             title = post.title,
-            modifier = Modifier.clickable { visibleState = true }
+            modifier = modifier.clickable { visibleState = true }
         )
     }
 }
@@ -49,9 +51,10 @@ fun PostPinnedView(
 private fun VisibleView(
     title: String,
     onSeeDetails: () -> Unit,
-    onCross: () -> Unit
+    onCross: () -> Unit,
+    modifier: Modifier = Modifier
 ) = Box(
-    modifier = Modifier
+    modifier = modifier
         .padding(top = 20.dp)
         .height(230.dp)
         .clip(AlgoismeTheme.shapes.medium)
@@ -64,13 +67,13 @@ private fun VisibleView(
     )
 
     Box(modifier = Modifier.background(
-        brush = Brush.radialGradient(
-            0.42f to AlgoismeTheme.colors.black.copy(alpha = 0f),
-            0.88f to AlgoismeTheme.colors.black.copy(alpha = 0.6f),
-            center = Offset(x = 800f, y = 200f),
-            radius = 600f
+            brush = Brush.radialGradient(
+                0.42f to AlgoismeTheme.colors.black.copy(alpha = 0f),
+                0.88f to AlgoismeTheme.colors.black.copy(alpha = 0.6f),
+                center = Offset(x = 800f, y = 200f),
+                radius = 600f
+            )
         )
-    )
     ) {
         Column(
             modifier = Modifier
@@ -252,7 +255,7 @@ private fun GradientText(
                 paint.maskFilter = null
                 canvas.nativeCanvas.drawText(name, origin.x, origin.y + lineHeight * index, paint)
                 paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.OVERLAY)
-                canvas.nativeCanvas.drawText(name, origin.x, origin.y +lineHeight * index, paint)
+                canvas.nativeCanvas.drawText(name, origin.x, origin.y + lineHeight * index, paint)
             }
         }
         paint.reset()

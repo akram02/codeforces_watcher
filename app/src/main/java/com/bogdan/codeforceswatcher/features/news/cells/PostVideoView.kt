@@ -21,9 +21,10 @@ import com.bogdan.codeforceswatcher.features.news.shared.PostInfo
 @Composable
 fun PostVideoView(
     post: NewsItem.VideoItem,
-    onPost: (String, String) -> Unit
+    onPost: (String, String) -> Unit,
+    modifier: Modifier = Modifier
 ) = Column(
-    modifier = Modifier
+    modifier = modifier
         .fillMaxWidth()
         .padding(top = 20.dp)
         .wrapContentHeight()

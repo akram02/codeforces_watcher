@@ -66,7 +66,8 @@ class NewsFragment : Fragment(), StoreSubscriber<NewsState> {
                     },
                     onPostVideoItem = { link, title ->
                         openWebView(link, title, AnalyticsEvents.VIDEO_OPENED, AnalyticsEvents.VIDEO_SHARED)
-                    }
+                    },
+                    modifier = Modifier.fillMaxSize()
                 )
             }
         }
@@ -89,7 +90,7 @@ class NewsFragment : Fragment(), StoreSubscriber<NewsState> {
     }
 
     private fun onRefresh() {
-        store.dispatch(NewsRequests.FetchNews(true))
+        store.dispatch(NewsRequests.FetchNews(isInitiatedByUser = true))
         analyticsController.logEvent(AnalyticsEvents.NEWS_REFRESH)
     }
 
@@ -145,9 +146,9 @@ private fun ContentView(
     onRefresh: () -> Unit,
     onPostPinnedItem: (String, String) -> Unit,
     onPostItem: (String, String) -> Unit,
-    onPostVideoItem: (String, String) -> Unit
+    onPostVideoItem: (String, String) -> Unit,
+    modifier: Modifier = Modifier
 ) = Scaffold(
-    modifier = Modifier.fillMaxWidth(),
     topBar = { NavigationBar() },
     backgroundColor = AlgoismeTheme.colors.primaryVariant
 ) {
@@ -156,16 +157,8 @@ private fun ContentView(
     SwipeRefresh(
         state = rememberSwipeRefreshState(state.isRefreshing),
         onRefresh = { onRefresh() },
-        modifier = Modifier
-            .fillMaxSize()
-            .clip(
-                RoundedCornerShape(
-                    topStart = 30.dp,
-                    topEnd = 30.dp,
-                    bottomStart = 0.dp,
-                    bottomEnd = 0.dp
-                )
-            )
+        modifier = modifier
+            .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp, bottomStart = 0.dp, bottomEnd = 0.dp))
             .background(AlgoismeTheme.colors.primary)
     ) {
         if (state.news.isEmpty()) {

@@ -19,9 +19,10 @@ import com.bogdan.codeforceswatcher.features.news.shared.SeeAllCommentsView
 @Composable
 fun PostView(
     post: NewsItem.PostItem,
-    onPost: (String, String) -> Unit
+    onPost: (String, String) -> Unit,
+    modifier: Modifier = Modifier
 ) = Column(
-    modifier = Modifier
+    modifier = modifier
         .padding(top = 20.dp)
         .clip(RoundedCornerShape(20.dp))
         .background(AlgoismeTheme.colors.lightGray)

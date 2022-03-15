@@ -30,9 +30,10 @@ import java.util.*
 @Composable
 fun PostWithCommentView(
     post: NewsItem.PostWithCommentItem,
-    onPost: (String, String) -> Unit
+    onPost: (String, String) -> Unit,
+    modifier: Modifier = Modifier
 ) = Column(
-    modifier = Modifier
+    modifier = modifier
         .padding(top = 20.dp)
         .clip(RoundedCornerShape(20.dp))
         .background(AlgoismeTheme.colors.lightGray),
@@ -78,26 +79,15 @@ private fun CommentView(
     createdAt: Long,
     modifier: Modifier = Modifier
 ) = Row(
-    modifier = modifier
-        .padding(horizontal = 12.dp),
+    modifier = modifier.padding(horizontal = 12.dp),
     horizontalArrangement = Arrangement.spacedBy(6.dp),
 ) {
-    UserAvatar(
-        avatar = avatar,
-        modifier = Modifier.border(1.dp, colorResource(getColorByUserRank(rank)), CircleShape)
-    )
+    UserAvatar(avatar, Modifier.border(1.dp, colorResource(getColorByUserRank(rank)), CircleShape))
 
     Column(
         modifier = Modifier
             .weight(1f)
-            .clip(
-                RoundedCornerShape(
-                    topStart = 0.dp,
-                    topEnd = 15.dp,
-                    bottomEnd = 15.dp,
-                    bottomStart = 15.dp
-                )
-            )
+            .clip(RoundedCornerShape(topStart = 0.dp, topEnd = 15.dp, bottomEnd = 15.dp, bottomStart = 15.dp))
             .background(AlgoismeTheme.colors.primaryVariant)
             .padding(horizontal = 12.dp, vertical = 4.dp)
     ) {
