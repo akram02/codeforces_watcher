@@ -22,11 +22,11 @@ import androidx.compose.ui.unit.sp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.compose.buttons.CommonButton
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
-import com.bogdan.codeforceswatcher.features.news.models.NewsItem
+import io.xorum.codeforceswatcher.features.news.models.News
 
 @Composable
 fun PostPinnedView(
-    post: NewsItem.PinnedItem,
+    post: News.PinnedPost,
     onPost: (String, String) -> Unit,
     modifier: Modifier = Modifier
 ) {

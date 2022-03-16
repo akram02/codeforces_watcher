@@ -12,13 +12,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
-import com.bogdan.codeforceswatcher.features.news.models.NewsItem
 import com.bogdan.codeforceswatcher.features.news.shared.PostContentView
 import com.bogdan.codeforceswatcher.features.news.shared.SeeAllCommentsView
+import io.xorum.codeforceswatcher.features.news.models.News
 
 @Composable
 fun PostView(
-    post: NewsItem.PostItem,
+    post: News.Post,
     onPost: (String, String) -> Unit,
     modifier: Modifier = Modifier
 ) = Column(
@@ -26,14 +26,14 @@ fun PostView(
         .padding(top = 20.dp)
         .clip(RoundedCornerShape(20.dp))
         .background(AlgoismeTheme.colors.lightGray)
-        .clickable { onPost(post.link, post.blogTitle) }
+        .clickable { onPost(post.link, post.title) }
 ) {
     PostContentView(
-        title = post.blogTitle,
+        title = post.title,
         content = post.content,
-        handle = post.authorHandle,
-        avatar = post.authorAvatar,
-        rank = post.authorRank,
+        handle = post.author.handle,
+        avatar = post.author.avatar,
+        rank = post.author.rank,
         modifiedAt = post.modifiedAt,
         isModified = post.isModified
     )

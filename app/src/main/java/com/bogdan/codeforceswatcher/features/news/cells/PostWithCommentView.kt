@@ -18,18 +18,19 @@ import androidx.compose.ui.unit.dp
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
-import com.bogdan.codeforceswatcher.features.news.models.NewsItem
 import com.bogdan.codeforceswatcher.features.news.shared.PostContentView
 import com.bogdan.codeforceswatcher.features.news.shared.SeeAllCommentsView
 import com.bogdan.codeforceswatcher.features.users.UserAvatar
 import com.bogdan.codeforceswatcher.features.users.colorTextByUserRankNew
 import com.bogdan.codeforceswatcher.features.users.getColorByUserRank
+import io.xorum.codeforceswatcher.features.news.models.News
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
 
 @Composable
 fun PostWithCommentView(
-    post: NewsItem.PostWithCommentItem,
+    post: News.Post,
+    comment: News.Comment,
     onPost: (String, String) -> Unit,
     modifier: Modifier = Modifier
 ) = Column(
@@ -40,23 +41,23 @@ fun PostWithCommentView(
     verticalArrangement = Arrangement.spacedBy(10.dp)
 ) {
     PostContentView(
-        title = post.blogTitle,
-        content = post.postContent,
-        handle = post.postAuthorHandle,
-        avatar = post.postAuthorAvatar,
-        rank = post.postAuthorRank,
-        modifiedAt = post.postModifiedAt,
-        isModified = post.postIsModified,
-        modifier = Modifier.clickable { onPost(post.postLink, post.blogTitle) }
+        title = post.title,
+        content = post.content,
+        handle = post.author.handle,
+        avatar = post.author.avatar,
+        rank = post.author.rank,
+        modifiedAt = post.modifiedAt,
+        isModified = post.isModified,
+        modifier = Modifier.clickable { onPost(post.link, post.title) }
     )
 
     CommentView(
-        content = post.commentContent,
-        handle = post.commentatorHandle,
-        avatar = post.commentatorAvatar,
-        rank = post.commentatorRank,
-        createdAt = post.commentCreatedAt,
-        modifier = Modifier.clickable { onPost(post.commentLink, post.blogTitle) }
+        content = comment.content,
+        handle = comment.author.handle,
+        avatar = comment.author.avatar,
+        rank = comment.author.rank,
+        createdAt = comment.createdAt,
+        modifier = Modifier.clickable { onPost(comment.link, post.title) }
     )
 
     SeeAllCommentsView(
@@ -66,7 +67,7 @@ fun PostWithCommentView(
             .background(AlgoismeTheme.colors.primaryVariant)
             .padding(horizontal = 12.dp)
             .height(32.dp)
-            .clickable { onPost(post.postLink, post.blogTitle) }
+            .clickable { onPost(post.link, post.title) }
     )
 }
 

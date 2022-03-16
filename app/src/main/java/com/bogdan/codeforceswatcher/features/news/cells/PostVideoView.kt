@@ -15,12 +15,12 @@ import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
-import com.bogdan.codeforceswatcher.features.news.models.NewsItem
 import com.bogdan.codeforceswatcher.features.news.shared.PostInfo
+import io.xorum.codeforceswatcher.features.news.models.News
 
 @Composable
 fun PostVideoView(
-    post: NewsItem.VideoItem,
+    post: News.Video,
     onPost: (String, String) -> Unit,
     modifier: Modifier = Modifier
 ) = Column(
@@ -36,9 +36,9 @@ fun PostVideoView(
 ) {
     PostInfo(
         title = post.title,
-        handle = post.authorHandle,
-        avatar = post.authorAvatar,
-        rank = post.authorRank,
+        handle = post.author.handle,
+        avatar = post.author.avatar,
+        rank = post.author.rank,
         modifiedAt = post.createdAt
     )
 

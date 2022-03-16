@@ -43,9 +43,8 @@ class NewsFragment : Fragment(), StoreSubscriber<NewsState> {
 
     private val newsState: MutableState<UIModel> = mutableStateOf(
         UIModel(
-            news = emptyList(),
-            feedbackCallback = {},
-            isRefreshing = false
+            newsState = null,
+            feedbackItem = null
         )
     )
 
@@ -58,6 +57,7 @@ class NewsFragment : Fragment(), StoreSubscriber<NewsState> {
                 ContentView(
                     newsState = newsState,
                     onRefresh = { onRefresh() },
+                    onPostFeedbackItem = { newsState.value.newsState?.let { onNewState(it) } },
                     onPostPinnedItem = { link, title ->
                         openWebView(link, title, AnalyticsEvents.PINNED_POST_OPENED, AnalyticsEvents.NEWS_SHARED)
                     },
@@ -106,36 +106,17 @@ class NewsFragment : Fragment(), StoreSubscriber<NewsState> {
         )
     }
 
-    private fun buildNewsItems(news: List<News>) = news.map {
-        when (it) {
-            is News.Post -> NewsItem.PostItem(it)
-            is News.PinnedPost -> NewsItem.PinnedItem(it)
-            is News.PostWithComment -> NewsItem.PostWithCommentItem(it.post, it.comment)
-            is News.Video -> NewsItem.VideoItem(it)
-        }
-    }
-
     override fun onNewState(state: NewsState) {
-        val items = mutableListOf<NewsItem>()
-
         val feedbackController = FeedbackController.get()
-        var feedbackCallback: () -> Unit = {}
+        var feedbackItem: NewsItem.FeedbackItem? = null
 
         if (feedbackController.shouldShowFeedbackCell()) {
-            items.add(NewsItem.FeedbackItem(feedbackController.feedUIModel))
-            feedbackCallback = { onNewState(state) }
+            feedbackItem = NewsItem.FeedbackItem(feedbackController.feedUIModel)
         }
-
-        val news = state.news.filter {
-            return@filter if (it is News.PinnedPost) settings.readLastPinnedPostLink() != it.link else true
-        }
-        val newsItems = buildNewsItems(news)
-        items.addAll(newsItems)
 
         newsState.value = newsState.value.copy(
-            news = items,
-            feedbackCallback = feedbackCallback,
-            isRefreshing = state.status == NewsState.Status.PENDING
+            newsState = state,
+            feedbackItem = feedbackItem
         )
     }
 }
@@ -144,6 +125,7 @@ class NewsFragment : Fragment(), StoreSubscriber<NewsState> {
 private fun ContentView(
     newsState: State<UIModel>,
     onRefresh: () -> Unit,
+    onPostFeedbackItem: () -> Unit,
     onPostPinnedItem: (String, String) -> Unit,
     onPostItem: (String, String) -> Unit,
     onPostVideoItem: (String, String) -> Unit,
@@ -152,10 +134,10 @@ private fun ContentView(
     topBar = { NavigationBar() },
     backgroundColor = AlgoismeTheme.colors.primaryVariant
 ) {
-    val state = newsState.value
+    val state = newsState.value.newsState ?: return@Scaffold
 
     SwipeRefresh(
-        state = rememberSwipeRefreshState(state.isRefreshing),
+        state = rememberSwipeRefreshState(state.status == NewsState.Status.PENDING),
         onRefresh = { onRefresh() },
         modifier = modifier
             .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp, bottomStart = 0.dp, bottomEnd = 0.dp))
@@ -165,8 +147,11 @@ private fun ContentView(
             NoItemsView(R.drawable.ic_no_items_news, R.string.news_on_the_way)
         } else {
             NewsList(
-                news = state.news,
-                onPostFeedbackItem = state.feedbackCallback,
+                news = state.news.filter {
+                    if (it is News.PinnedPost) settings.readLastPinnedPostLink() != it.link else true
+                },
+                feedbackItem = newsState.value.feedbackItem,
+                onPostFeedbackItem = onPostFeedbackItem,
                 onPostPinnedItem = onPostPinnedItem,
                 onPostItem = onPostItem,
                 onPostVideoItem = onPostVideoItem
@@ -193,7 +178,8 @@ private fun NavigationBar() = Row(
 
 @Composable
 private fun NewsList(
-    news: List<NewsItem>,
+    news: List<News>,
+    feedbackItem: NewsItem.FeedbackItem?,
     onPostFeedbackItem: () -> Unit,
     onPostPinnedItem: (String, String) -> Unit,
     onPostItem: (String, String) -> Unit,
@@ -201,19 +187,21 @@ private fun NewsList(
 ) = LazyColumn(
     modifier = Modifier.padding(horizontal = 20.dp)
 ) {
+    item {
+        if (feedbackItem != null) PostFeedbackView(feedbackItem, onPostFeedbackItem)
+    }
+
     items(news) {
         when (it) {
-            is NewsItem.FeedbackItem -> PostFeedbackView(it, onPostFeedbackItem)
-            is NewsItem.PinnedItem -> PostPinnedView(it, onPostPinnedItem)
-            is NewsItem.PostItem -> PostView(it, onPostItem)
-            is NewsItem.PostWithCommentItem -> PostWithCommentView(it, onPostItem)
-            is NewsItem.VideoItem -> PostVideoView(it, onPostVideoItem)
+            is News.PinnedPost -> PostPinnedView(it, onPostPinnedItem)
+            is News.Post -> PostView(it, onPostItem)
+            is News.PostWithComment -> PostWithCommentView(it.post, it.comment, onPostItem)
+            is News.Video -> PostVideoView(it, onPostVideoItem)
         }
     }
 }
 
 private data class UIModel(
-    val news: List<NewsItem>,
-    val feedbackCallback: () -> Unit,
-    val isRefreshing: Boolean
+    val newsState: NewsState?,
+    val feedbackItem: NewsItem.FeedbackItem?
 )
