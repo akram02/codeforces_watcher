@@ -28,31 +28,30 @@ fun PostFeedbackView(
         .padding(top = 20.dp)
         .clip(AlgoismeTheme.shapes.medium)
         .background(AlgoismeTheme.colors.primaryVariant)
-        .padding(horizontal = 16.dp, vertical = 12.dp),
+        .padding(16.dp),
     verticalArrangement = Arrangement.spacedBy(20.dp)
 ) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
+    Row(verticalAlignment = Alignment.Top) {
         Text(
             text = post.textTitle,
             style = AlgoismeTheme.typography.primaryRegular.copy(fontSize = 22.sp),
-            color = AlgoismeTheme.colors.secondary
+            color = AlgoismeTheme.colors.secondary,
+            modifier = Modifier
+                .weight(1f)
+                .offset(y = (-4).dp)
         )
 
         Image(
             painter = painterResource(R.drawable.ic_cross_icon),
             contentDescription = null,
-            modifier = Modifier.size(24.dp)
+            modifier = Modifier
+                .size(24.dp)
+                .clickable { post.neutralButtonClick() }
         )
     }
 
     Row(
-        modifier = Modifier
-            .fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(20.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
