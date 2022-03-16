@@ -53,6 +53,7 @@ Download it now on Google Play - https://play.google.com/store/apps/details?id=c
   <string name="no_browser_has_been_found">No browser has been found, try to install one.</string>
   <string name="filters">Filters</string>
   <string name="no_contests_found">No contests found</string>
+  <string name="contests_explanation">Contests are on the way to your device...</string>
   <string name="click_to_see_details">Click to see details</string>
 
   <string name="yes">YES!</string>
@@ -64,6 +65,7 @@ Download it now on Google Play - https://play.google.com/store/apps/details?id=c
 
   <string name="chart_info">" = %1$s (%2$s) \n Rank: %3$s \n %4$s \n %5$s "</string>
   <string name="contest_date_format">HH:mm MMM d, EEEE</string>
+  <string name="contest_month_format">LLLL</string>
   <string name="user_date_format">MMM d, yyyy</string>
 
   <string name="delete_user">Delete user</string>

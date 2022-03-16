@@ -159,7 +159,6 @@ private val commonAlgoismeTypography = AlgoismeTypography(
         fontSize = 16.sp,
         letterSpacing = (-1).sp
     ),
-
     primarySemiBold = TextStyle(
         fontWeight = FontWeight.W600,
         fontStyle = FontStyle.Normal,

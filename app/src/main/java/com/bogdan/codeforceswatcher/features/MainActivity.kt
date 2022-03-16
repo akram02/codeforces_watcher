@@ -109,7 +109,7 @@ class MainActivity : AppCompatActivity() {
         ivFilter.visibility = View.VISIBLE
         searchViewItem?.isVisible = false
 
-        supportActionBar?.show()
+        supportActionBar?.hide()
 
         fab.setOnClickListener {
             startActivity(
