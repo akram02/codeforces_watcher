@@ -36,9 +36,7 @@ fun PostVideoView(
 ) {
     PostInfo(
         title = post.title,
-        handle = post.author.handle,
-        avatar = post.author.avatar,
-        rank = post.author.rank,
+        author = post.author,
         modifiedAt = post.createdAt
     )
 

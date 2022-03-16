@@ -43,9 +43,7 @@ fun PostWithCommentView(
     PostContentView(
         title = post.title,
         content = post.content,
-        handle = post.author.handle,
-        avatar = post.author.avatar,
-        rank = post.author.rank,
+        author = post.author,
         modifiedAt = post.modifiedAt,
         isModified = post.isModified,
         modifier = Modifier.clickable { onPost(post.link, post.title) }
@@ -53,9 +51,7 @@ fun PostWithCommentView(
 
     CommentView(
         content = comment.content,
-        handle = comment.author.handle,
-        avatar = comment.author.avatar,
-        rank = comment.author.rank,
+        author = comment.author,
         createdAt = comment.createdAt,
         modifier = Modifier.clickable { onPost(comment.link, post.title) }
     )
@@ -74,28 +70,32 @@ fun PostWithCommentView(
 @Composable
 private fun CommentView(
     content: String,
-    handle: String,
-    avatar: String,
-    rank: String?,
+    author: News.User,
     createdAt: Long,
     modifier: Modifier = Modifier
 ) = Row(
     modifier = modifier.padding(horizontal = 12.dp),
     horizontalArrangement = Arrangement.spacedBy(6.dp),
 ) {
-    UserAvatar(avatar, Modifier.border(1.dp, colorResource(getColorByUserRank(rank)), CircleShape))
+    UserAvatar(
+        avatar = author.avatar,
+        modifier = Modifier.border(1.dp, colorResource(getColorByUserRank(author.rank)), CircleShape)
+    )
 
     Column(
         modifier = Modifier
             .weight(1f)
             .clip(RoundedCornerShape(topStart = 0.dp, topEnd = 15.dp, bottomEnd = 15.dp, bottomStart = 15.dp))
             .background(AlgoismeTheme.colors.primaryVariant)
-            .padding(horizontal = 12.dp, vertical = 4.dp)
+            .padding(horizontal = 12.dp, vertical = 4.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Text(
-            text = buildAgoText(handle, rank, createdAt),
+            text = buildAgoText(author, createdAt),
             style = AlgoismeTheme.typography.hintRegular,
-            color = AlgoismeTheme.colors.secondaryVariant
+            color = AlgoismeTheme.colors.secondaryVariant,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
         )
 
         Text(
@@ -109,8 +109,8 @@ private fun CommentView(
 }
 
 @Composable
-private fun buildAgoText(userHandle: String, userRank: String?, time: Long) = buildAnnotatedString {
-    val handle = colorTextByUserRankNew(userHandle, userRank)
+private fun buildAgoText(user: News.User, time: Long) = buildAnnotatedString {
+    val handle = colorTextByUserRankNew(user.handle, user.rank)
     val postState = CwApp.app.getString(R.string.created)
 
     return handle + AnnotatedString(" • $postState ${PrettyTime().format(Date(time * 1000))}")

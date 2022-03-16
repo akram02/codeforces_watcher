@@ -9,14 +9,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
+import io.xorum.codeforceswatcher.features.news.models.News
 
 @Composable
 fun PostContentView(
     title: String,
     content: String,
-    handle: String,
-    avatar: String,
-    rank: String?,
+    author: News.User,
     modifiedAt: Long,
     isModified: Boolean,
     modifier: Modifier = Modifier,
@@ -30,9 +29,7 @@ fun PostContentView(
 ) {
     PostInfo(
         title = title,
-        handle = handle,
-        avatar = avatar,
-        rank = rank,
+        author = author,
         modifiedAt = modifiedAt,
         isModified = isModified
     )

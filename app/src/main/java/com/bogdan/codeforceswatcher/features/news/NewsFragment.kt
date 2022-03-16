@@ -42,10 +42,7 @@ import tw.geothings.rekotlin.StoreSubscriber
 class NewsFragment : Fragment(), StoreSubscriber<NewsState> {
 
     private val newsState: MutableState<UIModel> = mutableStateOf(
-        UIModel(
-            newsState = null,
-            feedbackItem = null
-        )
+        UIModel(newsState = null, feedbackItem = null)
     )
 
     override fun onCreateView(
@@ -108,15 +105,11 @@ class NewsFragment : Fragment(), StoreSubscriber<NewsState> {
 
     override fun onNewState(state: NewsState) {
         val feedbackController = FeedbackController.get()
-        var feedbackItem: NewsItem.FeedbackItem? = null
-
-        if (feedbackController.shouldShowFeedbackCell()) {
-            feedbackItem = NewsItem.FeedbackItem(feedbackController.feedUIModel)
-        }
+        val shouldShowFeedbackCell = feedbackController.shouldShowFeedbackCell()
 
         newsState.value = newsState.value.copy(
             newsState = state,
-            feedbackItem = feedbackItem
+            feedbackItem = if (shouldShowFeedbackCell) NewsItem.FeedbackItem(feedbackController.feedUIModel) else null
         )
     }
 }
@@ -188,7 +181,7 @@ private fun NewsList(
     modifier = Modifier.padding(horizontal = 20.dp)
 ) {
     item {
-        if (feedbackItem != null) PostFeedbackView(feedbackItem, onPostFeedbackItem)
+        feedbackItem?.let { PostFeedbackView(it, onPostFeedbackItem) }
     }
 
     items(news) {

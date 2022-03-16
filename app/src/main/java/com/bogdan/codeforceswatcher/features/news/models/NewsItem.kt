@@ -13,6 +13,4 @@ sealed class NewsItem {
         val negativeButtonClick = feedUIModel.negativeButtonClick
         val neutralButtonClick = feedUIModel.neutralButtonClick
     }
-
-    object Stub : NewsItem()
 }

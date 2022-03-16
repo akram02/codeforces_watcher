@@ -18,15 +18,14 @@ import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 import com.bogdan.codeforceswatcher.features.users.UserAvatar
 import com.bogdan.codeforceswatcher.features.users.colorTextByUserRankNew
 import com.bogdan.codeforceswatcher.features.users.getColorByUserRank
+import io.xorum.codeforceswatcher.features.news.models.News
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
 
 @Composable
 fun PostInfo(
     title: String,
-    handle: String,
-    avatar: String,
-    rank: String?,
+    author: News.User,
     modifiedAt: Long,
     isModified: Boolean = false
 ) = Row(
@@ -34,8 +33,8 @@ fun PostInfo(
     verticalAlignment = Alignment.CenterVertically
 ) {
     UserAvatar(
-        avatar = avatar,
-        modifier = Modifier.border(1.dp, colorResource(getColorByUserRank(rank)), CircleShape)
+        avatar = author.avatar,
+        modifier = Modifier.border(1.dp, colorResource(getColorByUserRank(author.rank)), CircleShape)
     )
 
     Column(
@@ -50,7 +49,7 @@ fun PostInfo(
         )
 
         Text(
-            text = buildPostAgoText(handle, rank, modifiedAt, isModified),
+            text = buildPostAgoText(author, modifiedAt, isModified),
             style = AlgoismeTheme.typography.hintRegular,
             color = AlgoismeTheme.colors.secondaryVariant,
             maxLines = 1,
@@ -61,8 +60,8 @@ fun PostInfo(
 }
 
 @Composable
-private fun buildPostAgoText(userHandle: String, userRank: String?, time: Long, isModified: Boolean) = buildAnnotatedString {
-    val handle = colorTextByUserRankNew(userHandle, userRank)
+private fun buildPostAgoText(user: News.User, time: Long, isModified: Boolean) = buildAnnotatedString {
+    val handle = colorTextByUserRankNew(user.handle, user.rank)
     val postState = CwApp.app.getString(if (isModified) R.string.modified else R.string.created)
 
     return handle + AnnotatedString(" • $postState ${PrettyTime().format(Date(time * 1000))}")

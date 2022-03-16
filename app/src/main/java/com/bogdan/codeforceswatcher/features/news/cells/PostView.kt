@@ -31,9 +31,7 @@ fun PostView(
     PostContentView(
         title = post.title,
         content = post.content,
-        handle = post.author.handle,
-        avatar = post.author.avatar,
-        rank = post.author.rank,
+        author = post.author,
         modifiedAt = post.modifiedAt,
         isModified = post.isModified
     )
