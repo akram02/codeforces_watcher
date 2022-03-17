@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.compose.animation.*
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
@@ -62,7 +63,6 @@ class ContestsFragment : Fragment(), StoreSubscriber<ContestsState> {
                     onRefresh = { onRefresh() },
                     onContest = { contest -> onContest(contest) },
                     onCalendar = { contest -> addContestToCalendar(contest) },
-                    onFilter = { onFilter() },
                     modifier = Modifier.fillMaxSize()
                 )
             }
@@ -133,10 +133,6 @@ class ContestsFragment : Fragment(), StoreSubscriber<ContestsState> {
         return dateFormat.format(Date(time)).toString()
     }
 
-    private fun onFilter() {
-        startActivity(Intent(activity, ContestsFiltersActivity::class.java))
-    }
-
     override fun onNewState(state: ContestsState) {
         contestsState.value = state
     }
@@ -152,7 +148,6 @@ private fun ContentView(
     onRefresh: () -> Unit,
     onContest: (Contest) -> Unit,
     onCalendar: (Contest) -> Unit,
-    onFilter: () -> Unit,
     modifier: Modifier = Modifier
 ) = Scaffold(
     topBar = { TopBar() },
@@ -167,7 +162,14 @@ private fun ContentView(
         state = rememberSwipeRefreshState(state.status == ContestsState.Status.PENDING),
         onRefresh = onRefresh,
         modifier = modifier
-            .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp, bottomStart = 0.dp, bottomEnd = 0.dp))
+            .clip(
+                RoundedCornerShape(
+                    topStart = 30.dp,
+                    topEnd = 30.dp,
+                    bottomStart = 0.dp,
+                    bottomEnd = 0.dp
+                )
+            )
             .background(AlgoismeTheme.colors.primary)
             .padding(horizontal = 20.dp)
     ) {
@@ -182,13 +184,13 @@ private fun ContentView(
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 private fun TopBar() {
-    var filtersVisibleState by remember { mutableStateOf(false) }
+    var isFiltersVisible by remember { mutableStateOf(false) }
 
     Column(modifier = Modifier.padding(horizontal = 25.dp)) {
-        NavigationBar { filtersVisibleState = !filtersVisibleState }
+        NavigationBar(isFiltersVisible) { isFiltersVisible = !isFiltersVisible }
 
         AnimatedVisibility(
-            visible = filtersVisibleState,
+            visible = isFiltersVisible,
             enter = expandVertically(
                 animationSpec = tween(
                     durationMillis = 300,
@@ -209,6 +211,7 @@ private fun TopBar() {
 
 @Composable
 private fun NavigationBar(
+    isFiltersVisible: Boolean,
     onFilter: () -> Unit
 ) = Row(
     modifier = Modifier
@@ -217,16 +220,32 @@ private fun NavigationBar(
     horizontalArrangement = Arrangement.SpaceBetween,
     verticalAlignment = Alignment.CenterVertically
 ) {
-    Text(
-        text = stringResource(R.string.contests),
-        style = AlgoismeTheme.typography.headerSmallMedium,
-        color = AlgoismeTheme.colors.secondary
-    )
+    Box {
+        NavigationBarTitle(R.string.contests, !isFiltersVisible)
+        NavigationBarTitle(R.string.filters, isFiltersVisible)
+    }
 
     Image(
-        painter = painterResource(R.drawable.ic_filter_icon),
+        painter = painterResource(if (isFiltersVisible) R.drawable.ic_cross_icon else R.drawable.ic_filter_icon),
         contentDescription = null,
         modifier = Modifier.clickable { onFilter() }
+    )
+}
+
+@OptIn(ExperimentalAnimationApi::class)
+@Composable
+private fun NavigationBarTitle(
+    @StringRes id: Int,
+    isVisible: Boolean
+) = AnimatedVisibility(
+    visible = isVisible,
+    enter = fadeIn(),
+    exit = fadeOut()
+) {
+    Text(
+        text = stringResource(id),
+        style = AlgoismeTheme.typography.headerSmallMedium,
+        color = AlgoismeTheme.colors.secondary
     )
 }
 
