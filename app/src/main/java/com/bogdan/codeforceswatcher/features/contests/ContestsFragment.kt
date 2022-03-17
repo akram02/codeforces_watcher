@@ -7,6 +7,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.compose.animation.*
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -16,10 +19,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -155,7 +155,7 @@ private fun ContentView(
     onFilter: () -> Unit,
     modifier: Modifier = Modifier
 ) = Scaffold(
-    topBar = { NavigationBar(onFilter) },
+    topBar = { TopBar() },
     backgroundColor = AlgoismeTheme.colors.primaryVariant
 ) {
     val state = contestsState.value ?: return@Scaffold
@@ -179,14 +179,41 @@ private fun ContentView(
     }
 }
 
+@OptIn(ExperimentalAnimationApi::class)
+@Composable
+private fun TopBar() {
+    var filtersVisibleState by remember { mutableStateOf(false) }
+
+    Column(modifier = Modifier.padding(horizontal = 25.dp)) {
+        NavigationBar { filtersVisibleState = !filtersVisibleState }
+
+        AnimatedVisibility(
+            visible = filtersVisibleState,
+            enter = expandVertically(
+                animationSpec = tween(
+                    durationMillis = 300,
+                    easing = FastOutSlowInEasing
+                )
+            ),
+            exit = shrinkVertically(
+                animationSpec = tween(
+                    durationMillis = 300,
+                    easing = FastOutSlowInEasing
+                )
+            )
+        ) {
+            FiltersView()
+        }
+    }
+}
+
 @Composable
 private fun NavigationBar(
     onFilter: () -> Unit
 ) = Row(
     modifier = Modifier
         .fillMaxWidth()
-        .height(56.dp)
-        .padding(horizontal = 25.dp),
+        .height(56.dp),
     horizontalArrangement = Arrangement.SpaceBetween,
     verticalAlignment = Alignment.CenterVertically
 ) {
@@ -202,6 +229,33 @@ private fun NavigationBar(
         modifier = Modifier.clickable { onFilter() }
     )
 }
+
+@Composable
+private fun FiltersView() = Column(
+    modifier = Modifier.padding(top = 10.dp, bottom = 20.dp),
+    verticalArrangement = Arrangement.spacedBy(20.dp)
+) {
+    repeat(2) {
+        FiltersRowView()
+    }
+}
+
+@Composable
+private fun FiltersRowView() = Row(
+    modifier = Modifier.fillMaxWidth(),
+    horizontalArrangement = Arrangement.SpaceBetween
+) {
+    repeat(5) {
+        FilterView()
+    }
+}
+
+@Composable
+private fun FilterView() = Image(
+    painter = painterResource(R.drawable.ic_codeforces),
+    contentDescription = null,
+    modifier = Modifier.size(50.dp)
+)
 
 @Composable
 private fun ContestsList(
