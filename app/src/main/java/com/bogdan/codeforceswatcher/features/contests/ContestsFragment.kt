@@ -35,6 +35,7 @@ import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.WebViewActivity
 import com.bogdan.codeforceswatcher.components.compose.NoItemsView
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
+import com.bogdan.codeforceswatcher.features.filters.models.FilterItem
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import io.xorum.codeforceswatcher.features.contests.models.Contest
@@ -149,41 +150,39 @@ private fun ContentView(
     onContest: (Contest) -> Unit,
     onCalendar: (Contest) -> Unit,
     modifier: Modifier = Modifier
-) = Scaffold(
-    topBar = { TopBar() },
-    backgroundColor = AlgoismeTheme.colors.primaryVariant
 ) {
-    val state = contestsState.value ?: return@Scaffold
+    val state = contestsState.value ?: return
     val contests = state.contests.filter { it.phase == Contest.Phase.PENDING }
         .sortedBy(Contest::startDateInMillis)
         .filter { state.filters.contains(it.platform) }
+    val filters = buildFilterItems(state.filters)
 
-    SwipeRefresh(
-        state = rememberSwipeRefreshState(state.status == ContestsState.Status.PENDING),
-        onRefresh = onRefresh,
-        modifier = modifier
-            .clip(
-                RoundedCornerShape(
-                    topStart = 30.dp,
-                    topEnd = 30.dp,
-                    bottomStart = 0.dp,
-                    bottomEnd = 0.dp
-                )
-            )
-            .background(AlgoismeTheme.colors.primary)
-            .padding(horizontal = 20.dp)
+    Scaffold(
+        topBar = { TopBar(filters) },
+        backgroundColor = AlgoismeTheme.colors.primaryVariant
     ) {
-        if (contests.isEmpty()) {
-            NoItemsView(R.drawable.ic_no_items_contests, R.string.contests_explanation)
-        } else {
-            ContestsList(contests, onContest, onCalendar)
+        SwipeRefresh(
+            state = rememberSwipeRefreshState(state.status == ContestsState.Status.PENDING),
+            onRefresh = onRefresh,
+            modifier = modifier
+                .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
+                .background(AlgoismeTheme.colors.primary)
+                .padding(horizontal = 20.dp)
+        ) {
+            if (contests.isEmpty()) {
+                NoItemsView(R.drawable.ic_no_items_contests, R.string.contests_explanation)
+            } else {
+                ContestsList(contests, onContest, onCalendar)
+            }
         }
     }
 }
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-private fun TopBar() {
+private fun TopBar(
+    filters: List<FilterItem>
+) {
     var isFiltersVisible by remember { mutableStateOf(false) }
 
     Column(modifier = Modifier.padding(horizontal = 25.dp)) {
@@ -204,7 +203,7 @@ private fun TopBar() {
                 )
             )
         ) {
-            FiltersView()
+            FiltersView(filters)
         }
     }
 }
@@ -250,31 +249,39 @@ private fun NavigationBarTitle(
 }
 
 @Composable
-private fun FiltersView() = Column(
+private fun FiltersView(
+    filters: List<FilterItem>
+) = Column(
     modifier = Modifier.padding(top = 10.dp, bottom = 20.dp),
     verticalArrangement = Arrangement.spacedBy(20.dp)
 ) {
-    repeat(2) {
-        FiltersRowView()
+    filters.chunked(5).forEach {
+        FiltersRowView(it)
     }
 }
 
 @Composable
-private fun FiltersRowView() = Row(
+private fun FiltersRowView(
+    items: List<FilterItem>
+) = Row(
     modifier = Modifier.fillMaxWidth(),
     horizontalArrangement = Arrangement.SpaceBetween
 ) {
-    repeat(5) {
-        FilterView()
+    items.forEach {
+        FilterView(it)
     }
 }
 
 @Composable
-private fun FilterView() = Image(
-    painter = painterResource(R.drawable.ic_codeforces),
-    contentDescription = null,
-    modifier = Modifier.size(50.dp)
-)
+private fun FilterView(
+    filter: FilterItem
+) = filter.imageId?.let {
+    Image(
+        painter = painterResource(it),
+        contentDescription = null,
+        modifier = Modifier.size(50.dp)
+    )
+}
 
 @Composable
 private fun ContestsList(
@@ -347,6 +354,34 @@ private fun ContestView(
         painter = painterResource(R.drawable.ic_calendar),
         contentDescription = null,
         modifier = Modifier.clickable { onCalendar(contest) }
+    )
+}
+
+private fun buildFilterItems(
+    filters: Set<Contest.Platform>
+): List<FilterItem> {
+
+    fun filterItem(
+        title: String,
+        platform: Contest.Platform
+    ) = FilterItem(
+        imageId = platformIcon(platform),
+        title = title,
+        isChecked = filters.contains(platform)
+    )
+
+    return listOf(
+        filterItem("Codeforces", Contest.Platform.CODEFORCES),
+        filterItem( "Codeforces Gym", Contest.Platform.CODEFORCES_GYM),
+        filterItem("AtCoder", Contest.Platform.ATCODER),
+        filterItem("LeetCode", Contest.Platform.LEETCODE),
+        filterItem("TopCoder", Contest.Platform.TOPCODER),
+        filterItem("CS Academy", Contest.Platform.CS_ACADEMY),
+        filterItem("CodeChef", Contest.Platform.CODECHEF),
+        filterItem("HackerRank", Contest.Platform.HACKERRANK),
+        filterItem("HackerEarth", Contest.Platform.HACKEREARTH),
+        filterItem("Kick Start", Contest.Platform.KICK_START),
+        filterItem("Toph", Contest.Platform.TOPH)
     )
 }
 
