@@ -2,6 +2,7 @@ package com.bogdan.codeforceswatcher.features.contests
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.graphics.ColorMatrixColorFilter
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -24,6 +25,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -268,18 +271,28 @@ private fun FiltersRowView(
     horizontalArrangement = Arrangement.SpaceBetween
 ) {
     items.forEach {
-        FilterView(it)
+        with(it) {
+            FilterView(imageId, isChecked, onSwitchTap)
+        }
     }
 }
 
 @Composable
 private fun FilterView(
-    filter: FilterItem
-) = filter.imageId?.let {
+    imageId: Int?,
+    isChecked: Boolean,
+    onClick: (Boolean) -> Unit
+) {
+    val grayscaleMatrix = ColorMatrix().apply { setToSaturation(0f) }
+
     Image(
-        painter = painterResource(it),
+        painter = painterResource(imageId!!),
         contentDescription = null,
-        modifier = Modifier.size(50.dp)
+        modifier = Modifier
+            .size(50.dp)
+            .clickable { onClick(!isChecked) },
+        alpha = if (!isChecked) 0.5f else 1f,
+        colorFilter = ColorFilter.colorMatrix(if (!isChecked) grayscaleMatrix else ColorMatrix())
     )
 }
 
@@ -361,27 +374,30 @@ private fun buildFilterItems(
     filters: Set<Contest.Platform>
 ): List<FilterItem> {
 
-    fun filterItem(
+    fun buildFilterItem(
         title: String,
         platform: Contest.Platform
     ) = FilterItem(
         imageId = platformIcon(platform),
         title = title,
-        isChecked = filters.contains(platform)
+        isChecked = filters.contains(platform),
+        onSwitchTap = { isChecked ->
+            store.dispatch(ContestsRequests.ChangeFilterCheckStatus(platform, isChecked))
+        }
     )
 
     return listOf(
-        filterItem("Codeforces", Contest.Platform.CODEFORCES),
-        filterItem( "Codeforces Gym", Contest.Platform.CODEFORCES_GYM),
-        filterItem("AtCoder", Contest.Platform.ATCODER),
-        filterItem("LeetCode", Contest.Platform.LEETCODE),
-        filterItem("TopCoder", Contest.Platform.TOPCODER),
-        filterItem("CS Academy", Contest.Platform.CS_ACADEMY),
-        filterItem("CodeChef", Contest.Platform.CODECHEF),
-        filterItem("HackerRank", Contest.Platform.HACKERRANK),
-        filterItem("HackerEarth", Contest.Platform.HACKEREARTH),
-        filterItem("Kick Start", Contest.Platform.KICK_START),
-        filterItem("Toph", Contest.Platform.TOPH)
+        buildFilterItem("Codeforces", Contest.Platform.CODEFORCES),
+        buildFilterItem("Codeforces Gym", Contest.Platform.CODEFORCES_GYM),
+        buildFilterItem("AtCoder", Contest.Platform.ATCODER),
+        buildFilterItem("LeetCode", Contest.Platform.LEETCODE),
+        buildFilterItem("TopCoder", Contest.Platform.TOPCODER),
+        buildFilterItem("CS Academy", Contest.Platform.CS_ACADEMY),
+        buildFilterItem("CodeChef", Contest.Platform.CODECHEF),
+        buildFilterItem("HackerRank", Contest.Platform.HACKERRANK),
+        buildFilterItem("HackerEarth", Contest.Platform.HACKEREARTH),
+        buildFilterItem("Kick Start", Contest.Platform.KICK_START),
+        buildFilterItem("Toph", Contest.Platform.TOPH)
     )
 }
 
