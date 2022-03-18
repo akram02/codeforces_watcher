@@ -2,16 +2,11 @@ package com.bogdan.codeforceswatcher.features.contests
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.graphics.ColorMatrixColorFilter
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.annotation.StringRes
-import androidx.compose.animation.*
-import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -25,8 +20,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -161,7 +154,7 @@ private fun ContentView(
     val filters = buildFilterItems(state.filters)
 
     Scaffold(
-        topBar = { TopBar(filters) },
+        topBar = { ContestsTopBar(filters) },
         backgroundColor = AlgoismeTheme.colors.primaryVariant
     ) {
         SwipeRefresh(
@@ -181,121 +174,6 @@ private fun ContentView(
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
-@Composable
-private fun TopBar(
-    filters: List<FilterItem>
-) {
-    var isFiltersVisible by remember { mutableStateOf(false) }
-
-    Column(modifier = Modifier.padding(horizontal = 25.dp)) {
-        NavigationBar(isFiltersVisible) { isFiltersVisible = !isFiltersVisible }
-
-        AnimatedVisibility(
-            visible = isFiltersVisible,
-            enter = expandVertically(
-                animationSpec = tween(
-                    durationMillis = 300,
-                    easing = FastOutSlowInEasing
-                )
-            ),
-            exit = shrinkVertically(
-                animationSpec = tween(
-                    durationMillis = 300,
-                    easing = FastOutSlowInEasing
-                )
-            )
-        ) {
-            FiltersView(filters)
-        }
-    }
-}
-
-@Composable
-private fun NavigationBar(
-    isFiltersVisible: Boolean,
-    onFilter: () -> Unit
-) = Row(
-    modifier = Modifier
-        .fillMaxWidth()
-        .height(56.dp),
-    horizontalArrangement = Arrangement.SpaceBetween,
-    verticalAlignment = Alignment.CenterVertically
-) {
-    Box {
-        NavigationBarTitle(R.string.contests, !isFiltersVisible)
-        NavigationBarTitle(R.string.filters, isFiltersVisible)
-    }
-
-    Image(
-        painter = painterResource(if (isFiltersVisible) R.drawable.ic_cross_icon else R.drawable.ic_filter_icon),
-        contentDescription = null,
-        modifier = Modifier.clickable { onFilter() }
-    )
-}
-
-@OptIn(ExperimentalAnimationApi::class)
-@Composable
-private fun NavigationBarTitle(
-    @StringRes id: Int,
-    isVisible: Boolean
-) = AnimatedVisibility(
-    visible = isVisible,
-    enter = fadeIn(),
-    exit = fadeOut()
-) {
-    Text(
-        text = stringResource(id),
-        style = AlgoismeTheme.typography.headerSmallMedium,
-        color = AlgoismeTheme.colors.secondary
-    )
-}
-
-@Composable
-private fun FiltersView(
-    filters: List<FilterItem>
-) = Column(
-    modifier = Modifier.padding(top = 10.dp, bottom = 20.dp),
-    verticalArrangement = Arrangement.spacedBy(20.dp)
-) {
-    filters.chunked(5).forEach {
-        FiltersRowView(it)
-    }
-}
-
-@Composable
-private fun FiltersRowView(
-    items: List<FilterItem>
-) = Row(
-    modifier = Modifier.fillMaxWidth(),
-    horizontalArrangement = Arrangement.SpaceBetween
-) {
-    items.forEach {
-        with(it) {
-            FilterView(imageId, isChecked, onSwitchTap)
-        }
-    }
-}
-
-@Composable
-private fun FilterView(
-    imageId: Int?,
-    isChecked: Boolean,
-    onClick: (Boolean) -> Unit
-) {
-    val grayscaleMatrix = ColorMatrix().apply { setToSaturation(0f) }
-
-    Image(
-        painter = painterResource(imageId!!),
-        contentDescription = null,
-        modifier = Modifier
-            .size(50.dp)
-            .clickable { onClick(!isChecked) },
-        alpha = if (!isChecked) 0.5f else 1f,
-        colorFilter = ColorFilter.colorMatrix(if (!isChecked) grayscaleMatrix else ColorMatrix())
-    )
-}
-
 @Composable
 private fun ContestsList(
     contests: List<Contest>,
@@ -311,7 +189,7 @@ private fun ContestsList(
                 text = getDateMonth(contest.startDateInMillis).replaceFirstChar { it.uppercase() },
                 style = AlgoismeTheme.typography.hintSemiBold.copy(fontSize = 20.sp),
                 color = AlgoismeTheme.colors.secondary,
-                modifier = Modifier.padding(start = 0.dp, top = 15.dp, end = 0.dp, bottom = 5.dp)
+                modifier = Modifier.padding(top = 15.dp, bottom = 5.dp)
             )
         }
 
