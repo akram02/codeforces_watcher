@@ -8,17 +8,23 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
+import androidx.compose.material.darkColors
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
+import androidx.compose.ui.modifier.modifierLocalProvider
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 import com.bogdan.codeforceswatcher.features.filters.models.FilterItem
+import com.google.accompanist.drawablepainter.rememberDrawablePainter
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.google.android.material.tabs.TabLayout
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -93,12 +99,12 @@ private fun NavigationBarTitle(
 
 @Composable
 private fun FiltersView(
-    filters: List<FilterItem>
+    filterItems: List<FilterItem>
 ) = Column(
     modifier = Modifier.padding(top = 10.dp, bottom = 20.dp),
     verticalArrangement = Arrangement.spacedBy(20.dp)
 ) {
-    filters.chunked(5).forEach {
+    filterItems.chunked(5).forEach {
         FiltersRowView(it)
     }
 }

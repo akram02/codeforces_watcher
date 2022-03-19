@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -248,15 +249,10 @@ private fun ContestView(
     )
 }
 
-private fun buildFilterItems(
-    filters: Set<Contest.Platform>
-): List<FilterItem> {
+private fun buildFilterItems(filters: Set<Contest.Platform>): List<FilterItem> {
 
-    fun buildFilterItem(
-        title: String,
-        platform: Contest.Platform
-    ) = FilterItem(
-        imageId = platformIcon(platform),
+    fun buildFilterItem(title: String, platform: Contest.Platform, imageId: Int) = FilterItem(
+        imageId = imageId,
         title = title,
         isChecked = filters.contains(platform),
         onSwitchTap = { isChecked ->
@@ -265,34 +261,37 @@ private fun buildFilterItems(
     )
 
     return listOf(
-        buildFilterItem("Codeforces", Contest.Platform.CODEFORCES),
-        buildFilterItem("Codeforces Gym", Contest.Platform.CODEFORCES_GYM),
-        buildFilterItem("AtCoder", Contest.Platform.ATCODER),
-        buildFilterItem("LeetCode", Contest.Platform.LEETCODE),
-        buildFilterItem("TopCoder", Contest.Platform.TOPCODER),
-        buildFilterItem("CS Academy", Contest.Platform.CS_ACADEMY),
-        buildFilterItem("CodeChef", Contest.Platform.CODECHEF),
-        buildFilterItem("HackerRank", Contest.Platform.HACKERRANK),
-        buildFilterItem("HackerEarth", Contest.Platform.HACKEREARTH),
-        buildFilterItem("Kick Start", Contest.Platform.KICK_START),
-        buildFilterItem("Toph", Contest.Platform.TOPH)
+        buildFilterItem("Codeforces", Contest.Platform.CODEFORCES, R.drawable.dark_codeforces),
+        buildFilterItem("Codeforces Gym", Contest.Platform.CODEFORCES_GYM, R.drawable.dark_codeforcesgym),
+        buildFilterItem("AtCoder", Contest.Platform.ATCODER, R.drawable.dark_atcoder),
+        buildFilterItem("LeetCode", Contest.Platform.LEETCODE, R.drawable.dark_leetcode),
+        buildFilterItem("TopCoder", Contest.Platform.TOPCODER, R.drawable.dark_topcoder),
+        buildFilterItem("CS Academy", Contest.Platform.CS_ACADEMY, R.drawable.dark_csacademy),
+        buildFilterItem("CodeChef", Contest.Platform.CODECHEF, R.drawable.codechef),
+        buildFilterItem("HackerRank", Contest.Platform.HACKERRANK, R.drawable.hackerrank),
+        buildFilterItem("HackerEarth", Contest.Platform.HACKEREARTH, R.drawable.hackerearth),
+        buildFilterItem("Kick Start", Contest.Platform.KICK_START, R.drawable.kickstart),
+        buildFilterItem("Toph", Contest.Platform.TOPH, R.drawable.dark_toph)
     )
 }
 
+@Composable
 private fun platformIcon(
-    platform: Contest.Platform
+    platform: Contest.Platform,
+    isLightTheme: Boolean = !isSystemInDarkTheme()
 ) = when (platform) {
-    Contest.Platform.ATCODER -> R.drawable.ic_atcoder
-    Contest.Platform.TOPCODER -> R.drawable.ic_topcoder
-    Contest.Platform.CODEFORCES -> R.drawable.ic_codeforces
-    Contest.Platform.CODECHEF -> R.drawable.ic_codechef
-    Contest.Platform.CODEFORCES_GYM -> R.drawable.ic_codeforcesgym
-    Contest.Platform.LEETCODE -> R.drawable.ic_leetcode
-    Contest.Platform.KICK_START -> R.drawable.ic_kickstart
-    Contest.Platform.HACKEREARTH -> R.drawable.ic_hackerearth
-    Contest.Platform.HACKERRANK -> R.drawable.ic_hackerrank
-    Contest.Platform.CS_ACADEMY -> R.drawable.ic_csacademy
-    Contest.Platform.TOPH -> R.drawable.ic_toph
+        Contest.Platform.CODEFORCES -> if (isLightTheme) R.drawable.light_codeforces else R.drawable.dark_codeforces
+        Contest.Platform.CODEFORCES_GYM -> if (isLightTheme) R.drawable.light_codeforcesgym else R.drawable.dark_codeforcesgym
+        Contest.Platform.ATCODER -> if (isLightTheme) R.drawable.light_atcoder else R.drawable.dark_atcoder
+        Contest.Platform.LEETCODE -> if (isLightTheme) R.drawable.light_leetcode else R.drawable.dark_leetcode
+        Contest.Platform.TOPCODER -> if (isLightTheme) R.drawable.light_topcoder else R.drawable.dark_topcoder
+        Contest.Platform.CS_ACADEMY -> if (isLightTheme) R.drawable.light_csacademy else R.drawable.dark_csacademy
+        Contest.Platform.TOPH -> if (isLightTheme) R.drawable.light_toph else R.drawable.dark_toph
+        Contest.Platform.CODECHEF -> R.drawable.codechef
+        Contest.Platform.KICK_START -> R.drawable.kickstart
+        Contest.Platform.HACKEREARTH -> R.drawable.hackerearth
+        Contest.Platform.HACKERRANK -> R.drawable.hackerrank
+    }
 }
 
 @Composable
