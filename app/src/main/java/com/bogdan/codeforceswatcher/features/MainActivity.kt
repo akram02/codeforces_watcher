@@ -131,7 +131,7 @@ class MainActivity : AppCompatActivity() {
         ivFilter.visibility = View.GONE
         searchViewItem?.isVisible = false
 
-        supportActionBar?.show()
+        supportActionBar?.hide()
 
         fab.setOnClickListener {
             showShareDialog()

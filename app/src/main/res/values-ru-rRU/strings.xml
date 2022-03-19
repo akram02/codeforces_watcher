@@ -53,6 +53,8 @@ Codeforces WatchR позволяет:
     <string name="no_contests_found">Контестов не найдено</string>
     <string name="contests_explanation">Контесты на пути к вашему устройству...</string>
     <string name="click_to_see_details">Нажмите, чтобы увидеть детали</string>
+    <string name="see_details">Подробнее</string>
+    <string name="update_explanation">Большое обновление дизайна, наставники и многое другое!</string>
 
     <string name="yes">Да!</string>
     <string name="rate_us_first_title">Вам нравится Codeforces WatchR?</string>
