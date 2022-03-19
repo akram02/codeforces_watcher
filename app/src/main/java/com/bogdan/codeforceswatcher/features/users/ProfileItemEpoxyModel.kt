@@ -35,7 +35,6 @@ class ProfileItemEpoxyModel(
                 ProfileItemView(
                     userAccount = userAccount,
                     authStage = authStage,
-                    lastUpdate = buildLastUpdate(context),
                     onLoginButtonClick = { startSignInActivity(context) },
                     onVerifyButtonClick = { startVerifyActivity(context) },
                     onViewProfileButtonClick = { startUserAccountActivity(context) }
