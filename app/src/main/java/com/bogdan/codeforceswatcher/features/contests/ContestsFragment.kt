@@ -280,18 +280,17 @@ private fun platformIcon(
     platform: Contest.Platform,
     isLightTheme: Boolean = !isSystemInDarkTheme()
 ) = when (platform) {
-        Contest.Platform.CODEFORCES -> if (isLightTheme) R.drawable.light_codeforces else R.drawable.dark_codeforces
-        Contest.Platform.CODEFORCES_GYM -> if (isLightTheme) R.drawable.light_codeforcesgym else R.drawable.dark_codeforcesgym
-        Contest.Platform.ATCODER -> if (isLightTheme) R.drawable.light_atcoder else R.drawable.dark_atcoder
-        Contest.Platform.LEETCODE -> if (isLightTheme) R.drawable.light_leetcode else R.drawable.dark_leetcode
-        Contest.Platform.TOPCODER -> if (isLightTheme) R.drawable.light_topcoder else R.drawable.dark_topcoder
-        Contest.Platform.CS_ACADEMY -> if (isLightTheme) R.drawable.light_csacademy else R.drawable.dark_csacademy
-        Contest.Platform.TOPH -> if (isLightTheme) R.drawable.light_toph else R.drawable.dark_toph
-        Contest.Platform.CODECHEF -> R.drawable.codechef
-        Contest.Platform.KICK_START -> R.drawable.kickstart
-        Contest.Platform.HACKEREARTH -> R.drawable.hackerearth
-        Contest.Platform.HACKERRANK -> R.drawable.hackerrank
-    }
+    Contest.Platform.CODEFORCES -> if (isLightTheme) R.drawable.light_codeforces else R.drawable.dark_codeforces
+    Contest.Platform.CODEFORCES_GYM -> if (isLightTheme) R.drawable.light_codeforcesgym else R.drawable.dark_codeforcesgym
+    Contest.Platform.ATCODER -> if (isLightTheme) R.drawable.light_atcoder else R.drawable.dark_atcoder
+    Contest.Platform.LEETCODE -> if (isLightTheme) R.drawable.light_leetcode else R.drawable.dark_leetcode
+    Contest.Platform.TOPCODER -> if (isLightTheme) R.drawable.light_topcoder else R.drawable.dark_topcoder
+    Contest.Platform.CS_ACADEMY -> if (isLightTheme) R.drawable.light_csacademy else R.drawable.dark_csacademy
+    Contest.Platform.TOPH -> if (isLightTheme) R.drawable.light_toph else R.drawable.dark_toph
+    Contest.Platform.CODECHEF -> R.drawable.codechef
+    Contest.Platform.KICK_START -> R.drawable.kickstart
+    Contest.Platform.HACKEREARTH -> R.drawable.hackerearth
+    Contest.Platform.HACKERRANK -> R.drawable.hackerrank
 }
 
 @Composable
