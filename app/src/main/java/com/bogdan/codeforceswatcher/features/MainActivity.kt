@@ -14,7 +14,6 @@ import androidx.fragment.app.Fragment
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.AddUserBottomSheet
 import com.bogdan.codeforceswatcher.components.WebViewActivity
-import com.bogdan.codeforceswatcher.features.contests.ContestsFiltersActivity
 import com.bogdan.codeforceswatcher.features.contests.ContestsFragment
 import com.bogdan.codeforceswatcher.features.news.NewsFragment
 import com.bogdan.codeforceswatcher.features.users.UsersFragment
@@ -119,9 +118,6 @@ class MainActivity : AppCompatActivity() {
                     getString(R.string.upcoming_contests)
                 )
             )
-        }
-        ivFilter.setOnClickListener {
-            startActivity(Intent(this, ContestsFiltersActivity::class.java))
         }
         fab.setImageDrawable(getDrawable(R.drawable.ic_eye))
     }
