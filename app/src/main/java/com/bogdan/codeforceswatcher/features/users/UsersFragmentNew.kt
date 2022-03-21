@@ -33,7 +33,9 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import io.xorum.codeforceswatcher.features.auth.models.UserAccount
 import io.xorum.codeforceswatcher.features.users.models.User
+import io.xorum.codeforceswatcher.features.users.redux.FetchUserDataType
 import io.xorum.codeforceswatcher.features.users.redux.UsersActions
+import io.xorum.codeforceswatcher.features.users.redux.UsersRequests
 import io.xorum.codeforceswatcher.features.users.redux.UsersState
 import io.xorum.codeforceswatcher.redux.analyticsController
 import io.xorum.codeforceswatcher.redux.states.AppState
@@ -54,10 +56,11 @@ class UsersFragmentNew : Fragment(), StoreSubscriber<AppState> {
             AlgoismeTheme {
                 ContentView(
                     appState = appState,
-                    modifier = Modifier.fillMaxSize(),
+                    onRefresh = { onRefresh() },
                     onLoginButtonClick = { startSignInActivity() },
                     onVerifyButtonClick = { startVerifyActivity() },
                     onViewProfileButtonClick = { userAccount -> startUserAccountActivity(userAccount) },
+                    modifier = Modifier.fillMaxSize(),
                 )
             }
         }
@@ -75,7 +78,13 @@ class UsersFragmentNew : Fragment(), StoreSubscriber<AppState> {
 
     override fun onStop() {
         super.onStop()
+
         store.unsubscribe(this)
+    }
+
+    private fun onRefresh() {
+        store.dispatch(UsersRequests.FetchUserData(FetchUserDataType.REFRESH, isInitiatedByUser = true))
+        analyticsController.logEvent(AnalyticsEvents.USERS_REFRESH)
     }
 
     private fun startSignInActivity() {
@@ -106,10 +115,11 @@ class UsersFragmentNew : Fragment(), StoreSubscriber<AppState> {
 @Composable
 private fun ContentView(
     appState: State<AppState?>,
-    modifier: Modifier = Modifier,
+    onRefresh: () -> Unit,
     onLoginButtonClick: () -> Unit,
     onVerifyButtonClick: () -> Unit,
-    onViewProfileButtonClick: (UserAccount?) -> Unit
+    onViewProfileButtonClick: (UserAccount?) -> Unit,
+    modifier: Modifier = Modifier,
 ) = Scaffold(
     backgroundColor = AlgoismeTheme.colors.primaryVariant
 ) {
@@ -118,7 +128,7 @@ private fun ContentView(
 
     SwipeRefresh(
         state = rememberSwipeRefreshState(state.users.status != UsersState.Status.IDLE),
-        onRefresh = { },
+        onRefresh = onRefresh,
         modifier = modifier
             .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
             .background(AlgoismeTheme.colors.primary)
