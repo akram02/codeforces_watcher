@@ -10,6 +10,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -34,7 +35,6 @@ import com.bogdan.codeforceswatcher.features.users.compose.ProfileItemView
 import com.bogdan.codeforceswatcher.features.users.compose.UserItemView
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import io.xorum.codeforceswatcher.features.auth.models.UserAccount
 import io.xorum.codeforceswatcher.features.users.models.User
 import io.xorum.codeforceswatcher.features.users.redux.FetchUserDataType
 import io.xorum.codeforceswatcher.features.users.redux.UsersActions
@@ -63,7 +63,9 @@ class UsersFragmentNew : Fragment(), StoreSubscriber<AppState> {
                     onRefresh = { onRefresh() },
                     onLoginButtonClick = { startSignInActivity() },
                     onVerifyButtonClick = { startVerifyActivity() },
-                    onViewProfileButtonClick = { userAccount -> startUserAccountActivity(userAccount) },
+                    onUserClick = { handle, isUserAccount ->
+                        startUserAccountActivity(handle, isUserAccount)
+                    },
                     modifier = Modifier.fillMaxSize(),
                 )
             }
@@ -101,10 +103,8 @@ class UsersFragmentNew : Fragment(), StoreSubscriber<AppState> {
         analyticsController.logEvent(AnalyticsEvents.VERIFY_OPENED)
     }
 
-    private fun startUserAccountActivity(userAccount: UserAccount?) {
-        startActivity(context?.let {
-            UserActivity.newIntent(it, userAccount?.codeforcesUser?.handle!!, true)
-        })
+    private fun startUserAccountActivity(handle: String, isUserAccount: Boolean) {
+        startActivity(context?.let { UserActivity.newIntent(it, handle, isUserAccount) })
     }
 
     override fun onNewState(state: AppState) {
@@ -122,7 +122,7 @@ private fun ContentView(
     onRefresh: () -> Unit,
     onLoginButtonClick: () -> Unit,
     onVerifyButtonClick: () -> Unit,
-    onViewProfileButtonClick: (UserAccount?) -> Unit,
+    onUserClick: (String, Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) = Scaffold(
     topBar = { NavigationBar() },
@@ -138,14 +138,16 @@ private fun ContentView(
             .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
             .background(AlgoismeTheme.colors.primary)
     ) {
-        LazyColumn {
+        LazyColumn(
+            contentPadding = PaddingValues(horizontal = 20.dp)
+        ) {
             item {
                 ProfileItemView(
                     userAccount = state.users.userAccount,
                     authStage = state.auth.authStage,
                     onLoginButtonClick = onLoginButtonClick,
                     onVerifyButtonClick = onVerifyButtonClick,
-                    onViewProfileButtonClick = onViewProfileButtonClick,
+                    onViewProfileButtonClick = onUserClick,
                 )
             }
 
@@ -154,12 +156,17 @@ private fun ContentView(
                     text = stringResource(R.string.users),
                     style = AlgoismeTheme.typography.hintSemiBold.copy(fontSize = 20.sp),
                     color = AlgoismeTheme.colors.secondary,
-                    modifier = Modifier.padding(horizontal = 20.dp)
+                    modifier = Modifier.padding(top = 14.dp, bottom = 6.dp)
                 )
             }
 
             items(users) {
-                UserItemView(it, Modifier.padding(horizontal = 20.dp, vertical = 8.dp))
+                UserItemView(
+                    userItem = it,
+                    modifier = Modifier
+                        .padding(vertical = 8.dp)
+                        .clickable { onUserClick(it.handle.toString(), false) }
+                )
             }
         }
     }

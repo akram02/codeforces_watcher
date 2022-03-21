@@ -37,7 +37,7 @@ class ProfileItemEpoxyModel(
                     authStage = authStage,
                     onLoginButtonClick = { startSignInActivity(context) },
                     onVerifyButtonClick = { startVerifyActivity(context) },
-                    onViewProfileButtonClick = { startUserAccountActivity(context) }
+                    onViewProfileButtonClick = { _, _ -> startUserAccountActivity(context) }
                 )
             }
         }
@@ -67,8 +67,6 @@ class ProfileItemEpoxyModel(
     }
 
     private fun startUserAccountActivity(context: Context) {
-        context.startActivity(
-            UserActivity.newIntent(context, userAccount?.codeforcesUser?.handle!!, true)
-        )
+        context.startActivity(UserActivity.newIntent(context, userAccount?.codeforcesUser?.handle!!, true))
     }
 }

@@ -18,18 +18,20 @@ fun ProfileItemView(
     modifier: Modifier = Modifier,
     onLoginButtonClick: () -> Unit = { },
     onVerifyButtonClick: () -> Unit = { },
-    onViewProfileButtonClick: (UserAccount?) -> Unit = { },
+    onViewProfileButtonClick: (String, Boolean) -> Unit = { _, _ -> },
 ) {
     when (authStage) {
         AuthState.Stage.NOT_SIGNED_IN -> {
-            IdentifyView(modifier.padding(20.dp)) { onLoginButtonClick() }
+            IdentifyView(modifier.padding(top = 20.dp)) { onLoginButtonClick() }
         }
         AuthState.Stage.SIGNED_IN -> {
-            VerifyView(modifier.padding(20.dp)) { onVerifyButtonClick() }
+            VerifyView(modifier.padding(top = 20.dp)) { onVerifyButtonClick() }
         }
         AuthState.Stage.VERIFIED -> {
-            Column(modifier.padding(20.dp)) {
-                ProfileView(userAccount?.codeforcesUser!!) { onViewProfileButtonClick(userAccount) }
+            Column(modifier.padding(top = 20.dp)) {
+                ProfileView(userAccount?.codeforcesUser!!) {
+                    onViewProfileButtonClick(userAccount.codeforcesUser!!.handle, true)
+                }
 
                 Spacer(Modifier.height(6.dp))
 
