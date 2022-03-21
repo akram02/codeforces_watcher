@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.DropdownMenu
+import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -23,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -66,6 +69,7 @@ class UsersFragmentNew : Fragment(), StoreSubscriber<AppState> {
                     onUserClick = { handle, isUserAccount ->
                         startUserAccountActivity(handle, isUserAccount)
                     },
+                    onPickerSelected = { position -> onPicker(position) },
                     modifier = Modifier.fillMaxSize(),
                 )
             }
@@ -107,6 +111,10 @@ class UsersFragmentNew : Fragment(), StoreSubscriber<AppState> {
         startActivity(context?.let { UserActivity.newIntent(it, handle, isUserAccount) })
     }
 
+    private fun onPicker(position: Int) {
+        store.dispatch(UsersActions.Sort(UsersState.SortType.getSortType(position)))
+    }
+
     override fun onNewState(state: AppState) {
         appState.value = state
 
@@ -123,50 +131,56 @@ private fun ContentView(
     onLoginButtonClick: () -> Unit,
     onVerifyButtonClick: () -> Unit,
     onUserClick: (String, Boolean) -> Unit,
+    onPickerSelected: (Int) -> Unit,
     modifier: Modifier = Modifier,
-) = Scaffold(
-    topBar = { NavigationBar() },
-    backgroundColor = AlgoismeTheme.colors.primaryVariant
 ) {
-    val state = appState.value ?: return@Scaffold
+    val state = appState.value ?: return
     val users = state.users.followedUsers.sort(state.users.sortType).map { UserItem(it) }
 
-    SwipeRefresh(
-        state = rememberSwipeRefreshState(state.users.status != UsersState.Status.IDLE),
-        onRefresh = onRefresh,
-        modifier = modifier
-            .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
-            .background(AlgoismeTheme.colors.primary)
+    Scaffold(
+        topBar = { NavigationBar(
+            pickerOptions = R.array.array_sort,
+            pickerPosition = state.users.sortType.position,
+            pickerCallback = onPickerSelected
+        ) },
+        backgroundColor = AlgoismeTheme.colors.primaryVariant
     ) {
-        LazyColumn(
-            contentPadding = PaddingValues(horizontal = 20.dp)
+
+        SwipeRefresh(
+            state = rememberSwipeRefreshState(state.users.status != UsersState.Status.IDLE),
+            onRefresh = onRefresh,
+            modifier = modifier
+                .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
+                .background(AlgoismeTheme.colors.primary)
         ) {
-            item {
-                ProfileItemView(
-                    userAccount = state.users.userAccount,
-                    authStage = state.auth.authStage,
-                    onLoginButtonClick = onLoginButtonClick,
-                    onVerifyButtonClick = onVerifyButtonClick,
-                    onViewProfileButtonClick = onUserClick,
-                )
-            }
+            LazyColumn(contentPadding = PaddingValues(horizontal = 20.dp)) {
+                item {
+                    ProfileItemView(
+                        userAccount = state.users.userAccount,
+                        authStage = state.auth.authStage,
+                        onLoginButtonClick = onLoginButtonClick,
+                        onVerifyButtonClick = onVerifyButtonClick,
+                        onViewProfileButtonClick = onUserClick,
+                    )
+                }
 
-            item {
-                Text(
-                    text = stringResource(R.string.users),
-                    style = AlgoismeTheme.typography.hintSemiBold.copy(fontSize = 20.sp),
-                    color = AlgoismeTheme.colors.secondary,
-                    modifier = Modifier.padding(top = 14.dp, bottom = 6.dp)
-                )
-            }
+                item {
+                    Text(
+                        text = stringResource(R.string.users),
+                        style = AlgoismeTheme.typography.hintSemiBold.copy(fontSize = 20.sp),
+                        color = AlgoismeTheme.colors.secondary,
+                        modifier = Modifier.padding(top = 14.dp, bottom = 6.dp)
+                    )
+                }
 
-            items(users) {
-                UserItemView(
-                    userItem = it,
-                    modifier = Modifier
-                        .padding(vertical = 8.dp)
-                        .clickable { onUserClick(it.handle.toString(), false) }
-                )
+                items(users) {
+                    UserItemView(
+                        userItem = it,
+                        modifier = Modifier
+                            .padding(vertical = 8.dp)
+                            .clickable { onUserClick(it.handle.toString(), false) }
+                    )
+                }
             }
         }
     }
@@ -174,7 +188,11 @@ private fun ContentView(
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-private fun NavigationBar() = Row(
+private fun NavigationBar(
+    pickerOptions: Int,
+    pickerPosition: Int,
+    pickerCallback: (Int) -> Unit
+) = Row(
     modifier = Modifier
         .fillMaxWidth()
         .height(56.dp)
@@ -182,6 +200,14 @@ private fun NavigationBar() = Row(
     horizontalArrangement = Arrangement.SpaceBetween,
     verticalAlignment = Alignment.CenterVertically
 ) {
+    NavigationBarLeftContent()
+
+    NavigationBarRightContent(pickerOptions, pickerPosition, pickerCallback)
+}
+
+@OptIn(ExperimentalAnimationApi::class)
+@Composable
+private fun NavigationBarLeftContent() {
     var isVisibleTitle by remember { mutableStateOf(false) }
 
     LaunchedEffect(key1 = true) {
@@ -190,7 +216,7 @@ private fun NavigationBar() = Row(
     }
 
     Box {
-        this@Row.AnimatedVisibility(
+        AnimatedVisibility(
             visible = !isVisibleTitle,
             exit = fadeOut()
         ) {
@@ -200,7 +226,7 @@ private fun NavigationBar() = Row(
             )
         }
 
-        this@Row.AnimatedVisibility(
+        AnimatedVisibility(
             visible = isVisibleTitle,
             enter = fadeIn()
         ) {
@@ -211,11 +237,42 @@ private fun NavigationBar() = Row(
             )
         }
     }
+}
 
-    Image(
-        painter = painterResource(R.drawable.ic_filter_icon),
-        contentDescription = null
-    )
+@Composable
+private fun NavigationBarRightContent(
+    pickerOptions: Int,
+    pickerPosition: Int,
+    pickerCallback: (Int) -> Unit
+) {
+    var isDropDownVisible by remember { mutableStateOf(false) }
+    val options = stringArrayResource(pickerOptions)
+
+    Box {
+        Image(
+            painter = painterResource(R.drawable.ic_filter_icon),
+            contentDescription = null,
+            modifier = Modifier.clickable { isDropDownVisible = !isDropDownVisible }
+        )
+
+        DropdownMenu(
+            expanded = isDropDownVisible,
+            onDismissRequest = { isDropDownVisible = false }
+        ) {
+             options.forEachIndexed { index, label ->
+                DropdownMenuItem(onClick = {
+                        isDropDownVisible = false
+                        pickerCallback(index)
+                }) {
+                    Text(
+                        text = label,
+                        style = AlgoismeTheme.typography.primaryRegular,
+                        color = if (pickerPosition == index) AlgoismeTheme.colors.secondary else AlgoismeTheme.colors.secondaryVariant
+                    )
+                }
+            }
+        }
+    }
 }
 
 private fun List<User>.sort(sortType: UsersState.SortType) = when (sortType) {
