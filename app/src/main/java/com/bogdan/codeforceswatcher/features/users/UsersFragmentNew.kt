@@ -4,21 +4,24 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -41,6 +44,7 @@ import io.xorum.codeforceswatcher.redux.analyticsController
 import io.xorum.codeforceswatcher.redux.states.AppState
 import io.xorum.codeforceswatcher.redux.store
 import io.xorum.codeforceswatcher.util.AnalyticsEvents
+import kotlinx.coroutines.delay
 import tw.geothings.rekotlin.StoreSubscriber
 
 class UsersFragmentNew : Fragment(), StoreSubscriber<AppState> {
@@ -121,6 +125,7 @@ private fun ContentView(
     onViewProfileButtonClick: (UserAccount?) -> Unit,
     modifier: Modifier = Modifier,
 ) = Scaffold(
+    topBar = { NavigationBar() },
     backgroundColor = AlgoismeTheme.colors.primaryVariant
 ) {
     val state = appState.value ?: return@Scaffold
@@ -158,6 +163,52 @@ private fun ContentView(
             }
         }
     }
+}
+
+@OptIn(ExperimentalAnimationApi::class)
+@Composable
+private fun NavigationBar() = Row(
+    modifier = Modifier
+        .fillMaxWidth()
+        .height(56.dp)
+        .padding(horizontal = 25.dp),
+    horizontalArrangement = Arrangement.SpaceBetween,
+    verticalAlignment = Alignment.CenterVertically
+) {
+    var isVisibleTitle by remember { mutableStateOf(false) }
+
+    LaunchedEffect(key1 = true) {
+        delay(1000)
+        isVisibleTitle = true
+    }
+
+    Box {
+        this@Row.AnimatedVisibility(
+            visible = !isVisibleTitle,
+            exit = fadeOut()
+        ) {
+            Image(
+                painter = painterResource(R.drawable.ic_logo),
+                contentDescription = null
+            )
+        }
+
+        this@Row.AnimatedVisibility(
+            visible = isVisibleTitle,
+            enter = fadeIn()
+        ) {
+            Text(
+                text = stringResource(R.string.users),
+                style = AlgoismeTheme.typography.headerSmallMedium,
+                color = AlgoismeTheme.colors.secondary
+            )
+        }
+    }
+
+    Image(
+        painter = painterResource(R.drawable.ic_filter_icon),
+        contentDescription = null
+    )
 }
 
 private fun List<User>.sort(sortType: UsersState.SortType) = when (sortType) {
