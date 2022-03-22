@@ -17,7 +17,7 @@ import com.bogdan.codeforceswatcher.components.WebViewActivity
 import com.bogdan.codeforceswatcher.features.contests.ContestsFragment
 import com.bogdan.codeforceswatcher.features.news.NewsFragment
 import com.bogdan.codeforceswatcher.features.problems.ProblemsFragment
-import com.bogdan.codeforceswatcher.features.users.UsersFragmentNew
+import com.bogdan.codeforceswatcher.features.users.UsersFragment
 import com.bogdan.codeforceswatcher.util.FeedbackController
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import io.xorum.codeforceswatcher.features.problems.redux.ProblemsActions
@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
 
         val fragment: Fragment = when (selectedHomeTab) {
             HomeTab.USERS -> {
-                currentTabFragment as? UsersFragmentNew ?: UsersFragmentNew()
+                currentTabFragment as? UsersFragment ?: UsersFragment()
             }
             HomeTab.CONTESTS -> {
                 currentTabFragment as? ContestsFragment ?: ContestsFragment()
