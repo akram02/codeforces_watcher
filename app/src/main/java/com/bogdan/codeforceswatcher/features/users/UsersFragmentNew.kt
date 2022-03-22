@@ -4,28 +4,23 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -38,6 +33,8 @@ import com.bogdan.codeforceswatcher.features.users.compose.ProfileItemView
 import com.bogdan.codeforceswatcher.features.users.compose.UserItemView
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import io.xorum.codeforceswatcher.features.auth.models.UserAccount
+import io.xorum.codeforceswatcher.features.auth.redux.AuthState
 import io.xorum.codeforceswatcher.features.users.models.User
 import io.xorum.codeforceswatcher.features.users.redux.FetchUserDataType
 import io.xorum.codeforceswatcher.features.users.redux.UsersActions
@@ -47,7 +44,6 @@ import io.xorum.codeforceswatcher.redux.analyticsController
 import io.xorum.codeforceswatcher.redux.states.AppState
 import io.xorum.codeforceswatcher.redux.store
 import io.xorum.codeforceswatcher.util.AnalyticsEvents
-import kotlinx.coroutines.delay
 import tw.geothings.rekotlin.StoreSubscriber
 
 class UsersFragmentNew : Fragment(), StoreSubscriber<AppState> {
@@ -138,140 +134,67 @@ private fun ContentView(
     val users = state.users.followedUsers.sort(state.users.sortType).map { UserItem(it) }
 
     Scaffold(
-        topBar = { NavigationBar(
+        topBar = { UsersTopBar(
             pickerOptions = R.array.array_sort,
             pickerPosition = state.users.sortType.position,
             pickerCallback = onPickerSelected
-        ) },
+        )},
         backgroundColor = AlgoismeTheme.colors.primaryVariant
     ) {
-
         SwipeRefresh(
-            state = rememberSwipeRefreshState(state.users.status != UsersState.Status.IDLE),
+            state = rememberSwipeRefreshState(state.users.status == UsersState.Status.PENDING),
             onRefresh = onRefresh,
             modifier = modifier
                 .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
                 .background(AlgoismeTheme.colors.primary)
         ) {
-            LazyColumn(contentPadding = PaddingValues(horizontal = 20.dp)) {
-                item {
-                    ProfileItemView(
-                        userAccount = state.users.userAccount,
-                        authStage = state.auth.authStage,
-                        onLoginButtonClick = onLoginButtonClick,
-                        onVerifyButtonClick = onVerifyButtonClick,
-                        onViewProfileButtonClick = onUserClick,
-                    )
-                }
-
-                item {
-                    Text(
-                        text = stringResource(R.string.users),
-                        style = AlgoismeTheme.typography.hintSemiBold.copy(fontSize = 20.sp),
-                        color = AlgoismeTheme.colors.secondary,
-                        modifier = Modifier.padding(top = 14.dp, bottom = 6.dp)
-                    )
-                }
-
-                items(users) {
-                    UserItemView(
-                        userItem = it,
-                        modifier = Modifier
-                            .padding(vertical = 8.dp)
-                            .clickable { onUserClick(it.handle.toString(), false) }
-                    )
-                }
-            }
-        }
-    }
-}
-
-@OptIn(ExperimentalAnimationApi::class)
-@Composable
-private fun NavigationBar(
-    pickerOptions: Int,
-    pickerPosition: Int,
-    pickerCallback: (Int) -> Unit
-) = Row(
-    modifier = Modifier
-        .fillMaxWidth()
-        .height(56.dp)
-        .padding(horizontal = 25.dp),
-    horizontalArrangement = Arrangement.SpaceBetween,
-    verticalAlignment = Alignment.CenterVertically
-) {
-    NavigationBarLeftContent()
-
-    NavigationBarRightContent(pickerOptions, pickerPosition, pickerCallback)
-}
-
-@OptIn(ExperimentalAnimationApi::class)
-@Composable
-private fun NavigationBarLeftContent() {
-    var isVisibleTitle by remember { mutableStateOf(false) }
-
-    LaunchedEffect(key1 = true) {
-        delay(1000)
-        isVisibleTitle = true
-    }
-
-    Box {
-        AnimatedVisibility(
-            visible = !isVisibleTitle,
-            exit = fadeOut()
-        ) {
-            Image(
-                painter = painterResource(R.drawable.ic_logo),
-                contentDescription = null
-            )
-        }
-
-        AnimatedVisibility(
-            visible = isVisibleTitle,
-            enter = fadeIn()
-        ) {
-            Text(
-                text = stringResource(R.string.users),
-                style = AlgoismeTheme.typography.headerSmallMedium,
-                color = AlgoismeTheme.colors.secondary
+            LazyColumnContent(
+                userAccount = state.users.userAccount,
+                authStage = state.auth.authStage,
+                users = users,
+                onLoginButtonClick = onLoginButtonClick,
+                onVerifyButtonClick = onVerifyButtonClick,
+                onUserClick = onUserClick
             )
         }
     }
 }
 
 @Composable
-private fun NavigationBarRightContent(
-    pickerOptions: Int,
-    pickerPosition: Int,
-    pickerCallback: (Int) -> Unit
-) {
-    var isDropDownVisible by remember { mutableStateOf(false) }
-    val options = stringArrayResource(pickerOptions)
-
-    Box {
-        Image(
-            painter = painterResource(R.drawable.ic_filter_icon),
-            contentDescription = null,
-            modifier = Modifier.clickable { isDropDownVisible = !isDropDownVisible }
+private fun LazyColumnContent(
+    userAccount: UserAccount?,
+    authStage: AuthState.Stage,
+    users: List<UserItem>,
+    onLoginButtonClick: () -> Unit,
+    onVerifyButtonClick: () -> Unit,
+    onUserClick: (String, Boolean) -> Unit,
+) = LazyColumn(contentPadding = PaddingValues(horizontal = 20.dp)) {
+    item {
+        ProfileItemView(
+            userAccount = userAccount,
+            authStage = authStage,
+            onLoginButtonClick = onLoginButtonClick,
+            onVerifyButtonClick = onVerifyButtonClick,
+            onViewProfileButtonClick = onUserClick,
         )
+    }
 
-        DropdownMenu(
-            expanded = isDropDownVisible,
-            onDismissRequest = { isDropDownVisible = false }
-        ) {
-             options.forEachIndexed { index, label ->
-                DropdownMenuItem(onClick = {
-                        isDropDownVisible = false
-                        pickerCallback(index)
-                }) {
-                    Text(
-                        text = label,
-                        style = AlgoismeTheme.typography.primaryRegular,
-                        color = if (pickerPosition == index) AlgoismeTheme.colors.secondary else AlgoismeTheme.colors.secondaryVariant
-                    )
-                }
-            }
-        }
+    item {
+        Text(
+            text = stringResource(R.string.users),
+            style = AlgoismeTheme.typography.hintSemiBold.copy(fontSize = 20.sp),
+            color = AlgoismeTheme.colors.secondary,
+            modifier = Modifier.padding(top = 14.dp, bottom = 6.dp)
+        )
+    }
+
+    items(users) {
+        UserItemView(
+            userItem = it,
+            modifier = Modifier
+                .padding(vertical = 8.dp)
+                .clickable { onUserClick(it.handle.toString(), false) }
+        )
     }
 }
 
