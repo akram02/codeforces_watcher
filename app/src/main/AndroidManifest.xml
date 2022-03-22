@@ -33,9 +33,6 @@
         android:name=".features.auth.SignUpComposeActivity"
         android:screenOrientation="portrait"/>
     <activity
-        android:name=".features.contests.ContestsFiltersActivity"
-        android:theme="@style/AppTheme.NoActionBar" />
-    <activity
         android:name=".features.problems.ProblemsFiltersActivity"
         android:theme="@style/AppTheme.NoActionBar" />
     <activity android:name=".features.users.UserActivity" />
