@@ -59,14 +59,12 @@ class UsersFragment : Fragment(), StoreSubscriber<AppState> {
             AlgoismeTheme {
                 ContentView(
                     appState = appState,
-                    onRefresh = { onRefresh() },
-                    onLoginButtonClick = { startSignInActivity() },
-                    onVerifyButtonClick = { startVerifyActivity() },
-                    onUserClick = { handle, isUserAccount ->
-                        startUserAccountActivity(handle, isUserAccount)
-                    },
-                    onPickerSelected = { position -> onPicker(position) },
-                    modifier = Modifier.fillMaxSize(),
+                    onRefresh = ::onRefresh,
+                    onLoginButtonClick = ::startSignInActivity,
+                    onVerifyButtonClick = ::startVerifyActivity,
+                    onUserClick = ::startUserAccountActivity,
+                    onPickerSelected = ::onPicker,
+                    modifier = Modifier.fillMaxSize()
                 )
             }
         }
@@ -134,11 +132,13 @@ private fun ContentView(
     val users = state.users.followedUsers.sort(state.users.sortType).map { UserItem(it) }
 
     Scaffold(
-        topBar = { UsersTopBar(
-            pickerOptions = R.array.array_sort,
-            pickerPosition = state.users.sortType.position,
-            pickerCallback = onPickerSelected
-        )},
+        topBar = {
+            UsersTopBar(
+                pickerOptions = R.array.array_sort,
+                pickerPosition = state.users.sortType.position,
+                pickerCallback = onPickerSelected
+            )
+        },
         backgroundColor = AlgoismeTheme.colors.primaryVariant
     ) {
         SwipeRefresh(
