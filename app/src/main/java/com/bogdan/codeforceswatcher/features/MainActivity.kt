@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.AddUserBottomSheet
@@ -20,6 +21,7 @@ import com.bogdan.codeforceswatcher.features.problems.ProblemsFragment
 import com.bogdan.codeforceswatcher.features.users.UsersFragment
 import com.bogdan.codeforceswatcher.util.FeedbackController
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import io.xorum.codeforceswatcher.features.problems.redux.ProblemsActions
 import io.xorum.codeforceswatcher.redux.analyticsController
 import io.xorum.codeforceswatcher.redux.store
@@ -27,11 +29,6 @@ import io.xorum.codeforceswatcher.util.AnalyticsEvents
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-
-    private val currentTabFragment: Fragment?
-        get() = supportFragmentManager.fragments.lastOrNull()
-
-    private var selectedHomeTab = HomeTab.USERS
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,51 +40,16 @@ class MainActivity : AppCompatActivity() {
         initViews()
     }
 
-    private fun updateFragment() {
-        val bottomNavSelectedItemId = selectedHomeTab.menuItemId
-
-        if (bottomNavigation.selectedItemId != bottomNavSelectedItemId) {
-            bottomNavigation.selectedItemId = bottomNavSelectedItemId
-        }
-
-        onNewTabSelected()
-
-        val fragment: Fragment = when (selectedHomeTab) {
-            HomeTab.USERS -> {
-                currentTabFragment as? UsersFragment ?: UsersFragment()
-            }
-            HomeTab.CONTESTS -> {
-                currentTabFragment as? ContestsFragment ?: ContestsFragment()
-            }
-            HomeTab.NEWS -> {
-                currentTabFragment as? NewsFragment ?: NewsFragment()
-            }
-            HomeTab.PROBLEMS -> {
-                currentTabFragment as? ProblemsFragment ?: ProblemsFragment()
-            }
-        }
-
+    private fun updateFragment(fragment: Fragment) {
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.fragment_container, fragment)
             .commit()
     }
 
-    private fun onNewTabSelected() = when (selectedHomeTab) {
-        HomeTab.USERS -> onUsersTabSelected()
-        HomeTab.CONTESTS -> onContestsTabSelected()
-        HomeTab.NEWS -> onNewsTabSelected()
-        HomeTab.PROBLEMS -> onProblemsTabSelected()
-    }
-
-    private fun onUsersTabSelected() {
-        fab.setOnClickListener {
-            AddUserBottomSheet().show(supportFragmentManager, null)
-        }
-        fab.setImageDrawable(getDrawable(R.drawable.ic_plus))
-    }
-
     private fun onContestsTabSelected() {
+        updateFragment(ContestsFragment())
+
         fab.setOnClickListener {
             startActivity(
                 WebViewActivity.newIntent(
@@ -100,7 +62,18 @@ class MainActivity : AppCompatActivity() {
         fab.setImageDrawable(getDrawable(R.drawable.ic_eye))
     }
 
+    private fun onUsersTabSelected() {
+        updateFragment(UsersFragment())
+
+        fab.setOnClickListener {
+            AddUserBottomSheet().show(supportFragmentManager, null)
+        }
+        fab.setImageDrawable(getDrawable(R.drawable.ic_plus))
+    }
+
     private fun onNewsTabSelected() {
+        updateFragment(NewsFragment())
+
         fab.setOnClickListener {
             showShareDialog()
             analyticsController.logEvent(AnalyticsEvents.SHARE_APP)
@@ -109,6 +82,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onProblemsTabSelected() {
+        updateFragment(ProblemsFragment())
+
         var problemsIsFavourite = store.state.problems.isFavourite
         updateProblemsFAB(problemsIsFavourite)
 
@@ -120,15 +95,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateProblemsFAB(problemsIsFavourite: Boolean) {
+    private fun updateProblemsFAB(problemsIsFavourite: Boolean) =
         if (problemsIsFavourite) {
             fab.setImageDrawable(getDrawable(R.drawable.ic_all))
         } else {
             fab.setImageDrawable(getDrawable(R.drawable.ic_star))
         }
-    }
 
-    private fun showShareDialog() {
+    private fun showShareDialog() =
         AlertDialog.Builder(this)
             .setTitle(getString(R.string.share_cw))
             .setMessage(getString(R.string.help_cw_make_more_social))
@@ -140,7 +114,6 @@ class MainActivity : AppCompatActivity() {
             .setNegativeButton(getString(R.string.cancel), null)
             .create()
             .show()
-    }
 
     private fun share() = startActivity(Intent().apply {
         action = Intent.ACTION_SEND
@@ -149,18 +122,31 @@ class MainActivity : AppCompatActivity() {
     })
 
     private fun initViews() {
-        bottomNavigation.setOnNavigationItemSelectedListener { item ->
-            val homeTab = HomeTab.fromMenuItemId(item.itemId)
-            if (homeTab != selectedHomeTab) {
-                selectedHomeTab = homeTab
-                updateFragment()
+        bottom_navigation.setOnNavigationItemSelectedListener { item ->
+            when(item.itemId) {
+                R.id.navigation_contests -> {
+                    onContestsTabSelected()
+                    true
+                }
+                R.id.navigation_users -> {
+                    onUsersTabSelected()
+                    true
+                }
+                R.id.navigation_news -> {
+                    onNewsTabSelected()
+                    true
+                }
+                R.id.navigation_problems -> {
+                    onProblemsTabSelected()
+                    true
+                }
+                else -> false
             }
-            true
         }
 
-        updateFragment()
+        onContestsTabSelected()
 
-        val menuView = bottomNavigation.getChildAt(0) as? BottomNavigationMenuView ?: return
+        val menuView = bottom_navigation.getChildAt(0) as? BottomNavigationMenuView ?: return
 
         for (i in 0 until menuView.childCount) {
             val activeLabel = menuView.getChildAt(i).findViewById<View>(R.id.largeLabel)
@@ -172,19 +158,5 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val CONTESTS_LINK = "https://clist.by/"
-    }
-
-    enum class HomeTab(val titleId: Int, val menuItemId: Int) {
-
-        USERS(R.string.empty, R.id.navUsers),
-        CONTESTS(R.string.contests, R.id.navContests),
-        NEWS(R.string.news, R.id.navNews),
-        PROBLEMS(R.string.problems, R.id.navProblems);
-
-        companion object {
-
-            fun fromMenuItemId(menuItemId: Int): HomeTab =
-                enumValues<HomeTab>().find { it.menuItemId == menuItemId } ?: USERS
-        }
     }
 }
