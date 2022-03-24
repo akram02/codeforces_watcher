@@ -31,8 +31,6 @@ class MainActivity : AppCompatActivity() {
     private val currentTabFragment: Fragment?
         get() = supportFragmentManager.fragments.lastOrNull()
 
-    private var searchViewItem: MenuItem? = null
-
     private var selectedHomeTab = HomeTab.USERS
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,9 +45,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateFragment() {
         val bottomNavSelectedItemId = selectedHomeTab.menuItemId
-
-        tvPageTitle.text = getString(selectedHomeTab.titleId)
-        toolbar.collapseActionView()
 
         if (bottomNavigation.selectedItemId != bottomNavSelectedItemId) {
             bottomNavigation.selectedItemId = bottomNavSelectedItemId
@@ -85,18 +80,7 @@ class MainActivity : AppCompatActivity() {
         HomeTab.PROBLEMS -> onProblemsTabSelected()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        searchViewItem = menu?.findItem(R.id.action_search)
-        return super.onCreateOptionsMenu(menu)
-    }
-
     private fun onUsersTabSelected() {
-        llSorting.visibility = View.VISIBLE
-        ivFilter.visibility = View.GONE
-        searchViewItem?.isVisible = false
-
-        supportActionBar?.hide()
-
         fab.setOnClickListener {
             AddUserBottomSheet().show(supportFragmentManager, null)
         }
@@ -104,12 +88,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onContestsTabSelected() {
-        llSorting.visibility = View.GONE
-        ivFilter.visibility = View.VISIBLE
-        searchViewItem?.isVisible = false
-
-        supportActionBar?.hide()
-
         fab.setOnClickListener {
             startActivity(
                 WebViewActivity.newIntent(
@@ -123,12 +101,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onNewsTabSelected() {
-        llSorting.visibility = View.GONE
-        ivFilter.visibility = View.GONE
-        searchViewItem?.isVisible = false
-
-        supportActionBar?.hide()
-
         fab.setOnClickListener {
             showShareDialog()
             analyticsController.logEvent(AnalyticsEvents.SHARE_APP)
@@ -137,12 +109,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onProblemsTabSelected() {
-        llSorting.visibility = View.GONE
-        ivFilter.visibility = View.GONE
-        searchViewItem?.isVisible = true
-
-        supportActionBar?.hide()
-
         var problemsIsFavourite = store.state.problems.isFavourite
         updateProblemsFAB(problemsIsFavourite)
 
@@ -183,13 +149,6 @@ class MainActivity : AppCompatActivity() {
     })
 
     private fun initViews() {
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-        spSort.background.setColorFilter(
-            ContextCompat.getColor(this, R.color.white),
-            PorterDuff.Mode.SRC_ATOP
-        )
-
         bottomNavigation.setOnNavigationItemSelectedListener { item ->
             val homeTab = HomeTab.fromMenuItemId(item.itemId)
             if (homeTab != selectedHomeTab) {
