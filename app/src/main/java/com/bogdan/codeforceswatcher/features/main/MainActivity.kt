@@ -1,12 +1,12 @@
-package com.bogdan.codeforceswatcher.features
+package com.bogdan.codeforceswatcher.features.main
 
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.fragment.app.Fragment
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.AddUserBottomSheet
@@ -16,7 +16,6 @@ import com.bogdan.codeforceswatcher.features.news.NewsFragment
 import com.bogdan.codeforceswatcher.features.problems.ProblemsFragment
 import com.bogdan.codeforceswatcher.features.users.UsersFragment
 import com.bogdan.codeforceswatcher.util.FeedbackController
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import io.xorum.codeforceswatcher.features.problems.redux.ProblemsActions
 import io.xorum.codeforceswatcher.redux.analyticsController
 import io.xorum.codeforceswatcher.redux.store
@@ -24,6 +23,15 @@ import io.xorum.codeforceswatcher.util.AnalyticsEvents
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+
+    private val menuItems = listOf(
+        MenuItem(MenuItem.Tab.CONTESTS, R.drawable.ic_contests, R.drawable.ic_contests_gradient),
+        MenuItem(MenuItem.Tab.USERS, R.drawable.ic_users, R.drawable.ic_users_gradient),
+        MenuItem(MenuItem.Tab.NEWS, R.drawable.ic_news, R.drawable.ic_news_gradient),
+        MenuItem(MenuItem.Tab.PROBLEMS, R.drawable.ic_problems, R.drawable.ic_problems_gradient),
+    )
+
+    private var selectedTab: MutableState<MenuItem.Tab> = mutableStateOf(MenuItem.Tab.CONTESTS)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,24 +44,24 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        bottom_navigation.setOnNavigationItemSelectedListener { item ->
-            when(item.itemId) {
-                R.id.navigation_contests -> { onContestsTabSelected(); true }
-                R.id.navigation_users -> { onUsersTabSelected(); true }
-                R.id.navigation_news -> { onNewsTabSelected(); true }
-                R.id.navigation_problems -> { onProblemsTabSelected(); true }
-                else -> false
-            }
-        }
+        supportFragmentManager
+            .beginTransaction()
+            .replace(
+                R.id.bottom_navigation,
+                NavigationMenuFragment(menuItems, selectedTab, ::onMenuItemTap)
+            )
+            .commit()
 
         onContestsTabSelected()
+    }
 
-        val menuView = bottom_navigation.getChildAt(0) as? BottomNavigationMenuView ?: return
-        for (i in 0 until menuView.childCount) {
-            val activeLabel = menuView.getChildAt(i).findViewById<View>(R.id.largeLabel)
-            if (activeLabel is TextView) {
-                activeLabel.setPadding(0, 0, 0, 0)
-            }
+    private fun onMenuItemTap(tab: MenuItem.Tab) {
+        selectedTab.value = tab
+        when(tab) {
+            MenuItem.Tab.CONTESTS -> onContestsTabSelected()
+            MenuItem.Tab.USERS -> onUsersTabSelected()
+            MenuItem.Tab.NEWS -> onNewsTabSelected()
+            MenuItem.Tab.PROBLEMS -> onProblemsTabSelected()
         }
     }
 
@@ -144,4 +152,12 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private const val CONTESTS_LINK = "https://clist.by/"
     }
+}
+
+data class MenuItem(
+    val tab: Tab,
+    val iconId: Int,
+    val selectedIconId: Int
+) {
+    enum class Tab { CONTESTS, USERS, NEWS, PROBLEMS }
 }
