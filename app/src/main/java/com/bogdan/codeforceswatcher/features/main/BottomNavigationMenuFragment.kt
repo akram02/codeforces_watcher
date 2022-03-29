@@ -1,31 +1,23 @@
 package com.bogdan.codeforceswatcher.features.main
 
-import android.graphics.*
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.scale
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.Shader
-import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
-import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
@@ -59,7 +51,7 @@ private fun NavigationMenuView(
 ) = Row(
     modifier = Modifier
         .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
-        .background(AlgoismeTheme.colors.accentGrayish)
+        .background(AlgoismeTheme.colors.primaryVariant)
         .padding(horizontal = 14.dp),
     horizontalArrangement = Arrangement.SpaceBetween,
     verticalAlignment = Alignment.CenterVertically
@@ -88,7 +80,8 @@ private fun NavigationMenuItemView(
 ) {
     Image(
         painter = painterResource(if (item.tab == selectedTab) item.selectedIconId else item.iconId),
-        contentDescription = null
+        contentDescription = null,
+        colorFilter = if (item.tab == selectedTab) null else ColorFilter.tint(AlgoismeTheme.colors.secondaryVariant)
     )
 
     Text(
