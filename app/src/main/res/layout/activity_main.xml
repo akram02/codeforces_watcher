@@ -25,7 +25,6 @@
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation"
             android:background="@drawable/rounded_corners"
-            android:backgroundTint="@color/white"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             app:elevation="0dp"

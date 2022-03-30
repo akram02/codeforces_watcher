@@ -14,6 +14,7 @@ import com.bogdan.codeforceswatcher.components.WebViewActivity
 import com.bogdan.codeforceswatcher.features.contests.ContestsFragment
 import com.bogdan.codeforceswatcher.features.news.NewsFragment
 import com.bogdan.codeforceswatcher.features.problems.ProblemsFragment
+import com.bogdan.codeforceswatcher.features.users.AddUserBottomSheetFragment
 import com.bogdan.codeforceswatcher.features.users.UsersFragment
 import com.bogdan.codeforceswatcher.util.FeedbackController
 import io.xorum.codeforceswatcher.features.problems.redux.ProblemsActions
@@ -73,7 +74,7 @@ class MainActivity : AppCompatActivity() {
         updateFragment(UsersFragment())
 
         fab.setOnClickListener {
-            AddUserBottomSheet().show(supportFragmentManager, null)
+            AddUserBottomSheetFragment().show(supportFragmentManager, null)
         }
         fab.setImageDrawable(getDrawable(R.drawable.ic_plus))
     }
