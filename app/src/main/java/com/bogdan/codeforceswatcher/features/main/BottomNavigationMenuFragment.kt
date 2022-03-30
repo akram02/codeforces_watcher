@@ -10,7 +10,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -24,11 +26,16 @@ import androidx.fragment.app.Fragment
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 
-class NavigationMenuFragment(
-    private val items: List<MenuItem>,
-    private val selectedTab: State<MenuItem.Tab>,
-    private val onMenuItemTap: (MenuItem.Tab) -> Unit
-): Fragment() {
+class NavigationMenuFragment: Fragment() {
+
+    private val items = listOf(
+        MenuItem(MenuItem.Tab.CONTESTS, R.drawable.ic_contests, R.drawable.ic_contests_gradient),
+        MenuItem(MenuItem.Tab.USERS, R.drawable.ic_users, R.drawable.ic_users_gradient),
+        MenuItem(MenuItem.Tab.NEWS, R.drawable.ic_news, R.drawable.ic_news_gradient),
+        MenuItem(MenuItem.Tab.PROBLEMS, R.drawable.ic_problems, R.drawable.ic_problems_gradient),
+    )
+    private var selectedTab: MutableState<MenuItem.Tab> = mutableStateOf(MenuItem.Tab.CONTESTS)
+    lateinit var onMenuItemTap: (MenuItem.Tab) -> Unit
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,7 +44,10 @@ class NavigationMenuFragment(
     ) = ComposeView(requireContext()).apply {
         setContent {
             AlgoismeTheme {
-                NavigationMenuView(items, selectedTab, onMenuItemTap)
+                NavigationMenuView(items, selectedTab) {
+                    selectedTab.value = it
+                    onMenuItemTap(it)
+                }
             }
         }
     }
@@ -96,4 +106,12 @@ private fun tabTitle(tab: MenuItem.Tab) = when(tab) {
     MenuItem.Tab.USERS -> R.string.users
     MenuItem.Tab.NEWS -> R.string.news
     MenuItem.Tab.PROBLEMS -> R.string.problems
+}
+
+data class MenuItem(
+    val tab: Tab,
+    val iconId: Int,
+    val selectedIconId: Int
+) {
+    enum class Tab { CONTESTS, USERS, NEWS, PROBLEMS }
 }

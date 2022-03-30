@@ -24,15 +24,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private val menuItems = listOf(
-        MenuItem(MenuItem.Tab.CONTESTS, R.drawable.ic_contests, R.drawable.ic_contests_gradient),
-        MenuItem(MenuItem.Tab.USERS, R.drawable.ic_users, R.drawable.ic_users_gradient),
-        MenuItem(MenuItem.Tab.NEWS, R.drawable.ic_news, R.drawable.ic_news_gradient),
-        MenuItem(MenuItem.Tab.PROBLEMS, R.drawable.ic_problems, R.drawable.ic_problems_gradient),
-    )
-
-    private var selectedTab: MutableState<MenuItem.Tab> = mutableStateOf(MenuItem.Tab.CONTESTS)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -46,23 +37,19 @@ class MainActivity : AppCompatActivity() {
     private fun initViews() {
         supportFragmentManager
             .beginTransaction()
-            .replace(
-                R.id.bottom_navigation,
-                NavigationMenuFragment(menuItems, selectedTab, ::onMenuItemTap)
-            )
+            .replace(R.id.bottom_navigation, NavigationMenuFragment().apply {
+                this.onMenuItemTap = ::onMenuItemTap
+            })
             .commit()
 
         onContestsTabSelected()
     }
 
-    private fun onMenuItemTap(tab: MenuItem.Tab) {
-        selectedTab.value = tab
-        when(tab) {
-            MenuItem.Tab.CONTESTS -> onContestsTabSelected()
-            MenuItem.Tab.USERS -> onUsersTabSelected()
-            MenuItem.Tab.NEWS -> onNewsTabSelected()
-            MenuItem.Tab.PROBLEMS -> onProblemsTabSelected()
-        }
+    private fun onMenuItemTap(tab: MenuItem.Tab) = when(tab) {
+        MenuItem.Tab.CONTESTS -> onContestsTabSelected()
+        MenuItem.Tab.USERS -> onUsersTabSelected()
+        MenuItem.Tab.NEWS -> onNewsTabSelected()
+        MenuItem.Tab.PROBLEMS -> onProblemsTabSelected()
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -152,12 +139,4 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private const val CONTESTS_LINK = "https://clist.by/"
     }
-}
-
-data class MenuItem(
-    val tab: Tab,
-    val iconId: Int,
-    val selectedIconId: Int
-) {
-    enum class Tab { CONTESTS, USERS, NEWS, PROBLEMS }
 }
