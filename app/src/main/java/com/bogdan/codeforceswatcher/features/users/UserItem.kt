@@ -1,6 +1,7 @@
 package com.bogdan.codeforceswatcher.features.users
 
 import android.graphics.Color.*
+import android.text.Spannable
 import android.text.SpannableString
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -14,6 +15,7 @@ import androidx.core.graphics.blue
 import androidx.core.graphics.green
 import androidx.core.graphics.red
 import androidx.core.text.HtmlCompat
+import androidx.core.text.toSpannable
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
@@ -35,8 +37,8 @@ data class UserItem(private val user: User) {
     val id: Long = user.id
     val avatar = user.avatar
     var update: Update = Update.NULL
-    val handle: SpannableString = colorTextByUserRank(user.handle, user.rank)
-    val rating: SpannableString = colorTextByUserRank(user.rating?.toString().orEmpty(), user.rank)
+    val handle: String = user.handle
+    val rating: String = user.rating?.toString().orEmpty()
     var lastRatingUpdate: String = ""
     var dateOfLastRatingUpdate: String = CwApp.app.getString(R.string.no_activity)
     val rankColor: Int = getColorByUserRank(user.rank)
@@ -124,7 +126,7 @@ fun colorTextByUserRank(text: String, rank: String?) =
 @Composable
 fun colorTextByUserRankNew(text: String, rank: String?) = buildAnnotatedString {
     if (listOf("legendary grandmaster", "легендарный гроссмейстер").contains(rank)) {
-        withStyle(SpanStyle(color = AlgoismeTheme.colors.black)) { append(text[0]) }
+        withStyle(SpanStyle(color = AlgoismeTheme.colors.secondary)) { append(text[0]) }
         withStyle(SpanStyle(color = colorResource(getColorByUserRank(rank)))) {
             append(text.substring(1, text.length))
         }
