@@ -110,9 +110,9 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun updateProblemsFAB(problemsIsFavourite: Boolean) =
         if (problemsIsFavourite) {
-            fab.setImageDrawable(getDrawable(R.drawable.ic_all))
-        } else {
             fab.setImageDrawable(getDrawable(R.drawable.ic_star))
+        } else {
+            fab.setImageDrawable(getDrawable(R.drawable.ic_all))
         }
 
     private fun showShareDialog() =

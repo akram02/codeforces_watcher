@@ -4,6 +4,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,22 +20,26 @@ import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 fun NoItemsView(
     @DrawableRes iconId: Int,
     @StringRes titleId: Int
-) = Column(
+) = LazyColumn(
     modifier = Modifier.fillMaxSize(),
     verticalArrangement = Arrangement.Center,
     horizontalAlignment = Alignment.CenterHorizontally
 ) {
-    Image(
-        painter = painterResource(iconId),
-        contentDescription = null
-    )
+    item {
+        Image(
+            painter = painterResource(iconId),
+            contentDescription = null
+        )
+    }
 
-    Spacer(Modifier.height(32.dp))
+    item { Spacer(Modifier.height(32.dp)) }
 
-    Text(
-        text = stringResource(titleId),
-        style = AlgoismeTheme.typography.headerSmallMedium.copy(fontWeight = FontWeight.W400),
-        color = AlgoismeTheme.colors.secondaryVariant,
-        textAlign = TextAlign.Center
-    )
+    item {
+        Text(
+            text = stringResource(titleId),
+            style = AlgoismeTheme.typography.headerSmallMedium.copy(fontWeight = FontWeight.W400),
+            color = AlgoismeTheme.colors.secondaryVariant,
+            textAlign = TextAlign.Center
+        )
+    }
 }
