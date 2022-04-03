@@ -1,13 +1,9 @@
 package com.bogdan.codeforceswatcher.features.users
 
-import android.annotation.SuppressLint
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
@@ -35,20 +31,23 @@ class AddUserBottomSheetFragment: BottomSheetDialogFragment(), StoreSubscriber<U
 
     private val addUserStatus: MutableState<UsersState.Status?> = mutableStateOf(null)
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): ComposeView {
-        dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-
-        return ComposeView(requireContext()).apply {
-            setContent {
-                AlgoismeTheme {
-                    ContentView(addUserStatus) {
-                        store.dispatch(UsersRequests.AddUser(it))
-                    }
-                }
+    ) = ComposeView(requireContext()).apply {
+        setContent {
+            AlgoismeTheme {
+                AddUserView(
+                    addUserStatus = addUserStatus,
+                    onAddUser = { store.dispatch(UsersRequests.AddUser(it)) }
+                )
             }
         }
     }
@@ -80,7 +79,7 @@ class AddUserBottomSheetFragment: BottomSheetDialogFragment(), StoreSubscriber<U
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-private fun ContentView(
+private fun AddUserView(
     addUserStatus: State<UsersState.Status?>,
     onAddUser: (String) -> Unit
 ) {
@@ -96,7 +95,7 @@ private fun ContentView(
         verticalArrangement = Arrangement.spacedBy(12.dp),
         horizontalAlignment = Alignment.End
     ) {
-        AnimatedVisibility(isVisibleProgressBar(addUserState)) {
+        AnimatedVisibility(addUserState.status) {
             LinearProgressIndicator(
                 backgroundColor = AlgoismeTheme.colors.secondaryVariant,
                 color = AlgoismeTheme.colors.blue,
@@ -118,9 +117,7 @@ private fun ContentView(
     }
 }
 
-private fun isVisibleProgressBar(
-    addUserStatus: UsersState.Status
-) = when (addUserStatus) {
+private val UsersState.Status.status get() = when(this) {
     UsersState.Status.IDLE -> false
     UsersState.Status.PENDING -> true
     UsersState.Status.DONE -> false

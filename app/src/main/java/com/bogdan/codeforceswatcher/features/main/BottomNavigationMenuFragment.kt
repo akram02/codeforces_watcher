@@ -35,7 +35,6 @@ class NavigationMenuFragment: Fragment() {
         MenuItem(MenuItem.Tab.PROBLEMS, R.drawable.ic_problems, R.drawable.ic_problems_gradient),
     )
     private var selectedTab: MutableState<MenuItem.Tab> = mutableStateOf(MenuItem.Tab.CONTESTS)
-    lateinit var onMenuItemTap: (MenuItem.Tab) -> Unit
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,10 +43,14 @@ class NavigationMenuFragment: Fragment() {
     ) = ComposeView(requireContext()).apply {
         setContent {
             AlgoismeTheme {
-                NavigationMenuView(items, selectedTab) {
-                    selectedTab.value = it
-                    onMenuItemTap(it)
-                }
+                NavigationMenuView(
+                    items = items,
+                    selectedTab = selectedTab,
+                    onMenuItemTap = {
+                        selectedTab.value = it
+                        (activity as OnMenuItemTapListener).onMenuItemTap(it)
+                    }
+                )
             }
         }
     }
@@ -57,9 +60,10 @@ class NavigationMenuFragment: Fragment() {
 private fun NavigationMenuView(
     items: List<MenuItem>,
     selectedTab: State<MenuItem.Tab>,
-    onMenuItemTap: (MenuItem.Tab) -> Unit
+    onMenuItemTap: (MenuItem.Tab) -> Unit,
+    modifier: Modifier = Modifier
 ) = Row(
-    modifier = Modifier
+    modifier = modifier
         .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
         .background(AlgoismeTheme.colors.primaryVariant)
         .padding(horizontal = 14.dp),
@@ -95,23 +99,15 @@ private fun NavigationMenuItemView(
     )
 
     Text(
-        text = stringResource(tabTitle(item.tab)),
+        text = stringResource(item.tab.title),
         style = AlgoismeTheme.typography.hintRegular.copy(fontSize = 11.sp),
         color = AlgoismeTheme.colors.secondaryVariant
     )
 }
 
-private fun tabTitle(tab: MenuItem.Tab) = when(tab) {
+private val MenuItem.Tab.title get() = when(this) {
     MenuItem.Tab.CONTESTS -> R.string.contests
     MenuItem.Tab.USERS -> R.string.users
     MenuItem.Tab.NEWS -> R.string.news
     MenuItem.Tab.PROBLEMS -> R.string.problems
-}
-
-data class MenuItem(
-    val tab: Tab,
-    val iconId: Int,
-    val selectedIconId: Int
-) {
-    enum class Tab { CONTESTS, USERS, NEWS, PROBLEMS }
 }

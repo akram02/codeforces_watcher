@@ -20,7 +20,7 @@ import io.xorum.codeforceswatcher.redux.store
 import io.xorum.codeforceswatcher.util.AnalyticsEvents
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnMenuItemTapListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,15 +35,13 @@ class MainActivity : AppCompatActivity() {
     private fun initViews() {
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.bottom_navigation, NavigationMenuFragment().apply {
-                this.onMenuItemTap = ::onMenuItemTap
-            })
+            .replace(R.id.bottom_navigation, NavigationMenuFragment())
             .commit()
 
         onContestsTabSelected()
     }
 
-    private fun onMenuItemTap(tab: MenuItem.Tab) = when(tab) {
+    override fun onMenuItemTap(tab: MenuItem.Tab) = when(tab) {
         MenuItem.Tab.CONTESTS -> onContestsTabSelected()
         MenuItem.Tab.USERS -> onUsersTabSelected()
         MenuItem.Tab.NEWS -> onNewsTabSelected()
@@ -137,4 +135,17 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private const val CONTESTS_LINK = "https://clist.by/"
     }
+}
+
+data class MenuItem(
+    val tab: Tab,
+    val iconId: Int,
+    val selectedIconId: Int
+) {
+    enum class Tab { CONTESTS, USERS, NEWS, PROBLEMS }
+}
+
+interface OnMenuItemTapListener {
+
+    fun onMenuItemTap(tab: MenuItem.Tab)
 }
