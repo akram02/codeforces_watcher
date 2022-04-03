@@ -40,7 +40,7 @@
         android:name=".components.WebViewActivity"
         android:configChanges="orientation|screenSize" />
     <activity
-        android:name=".features.MainActivity"
+        android:name=".features.main.MainActivity"
         android:configChanges="orientation|screenSize"
         android:theme="@style/AppTheme.NoActionBar"
         android:exported="true">

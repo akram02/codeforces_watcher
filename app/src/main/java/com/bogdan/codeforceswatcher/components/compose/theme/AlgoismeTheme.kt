@@ -102,7 +102,7 @@ private val darkAlgoismeColors = with(commonAlgoismeColors) {
         primaryVariant = mineShaft,
 
         secondary = white,
-        secondaryVariant = Color(0xFFAAAAAA),
+        secondaryVariant = accentGrayish,
 
         background = black,
         surface = mineShaft,

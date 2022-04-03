@@ -8,7 +8,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.features.MainActivity
+import com.bogdan.codeforceswatcher.features.main.MainActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 

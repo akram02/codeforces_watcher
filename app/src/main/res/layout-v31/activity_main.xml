@@ -23,10 +23,9 @@
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation"
             android:background="@drawable/rounded_corners"
-            android:backgroundTint="@color/white"
+            android:clipToOutline="true"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            app:elevation="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -36,10 +35,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:backgroundTint="@color/dark_gray"
-            android:tint="@color/light_gray"
-            app:borderWidth="0dp"
-            app:elevation="0dp"
+            android:tint="@android:color/white"
+            app:elevation="10dp"
             app:layout_constraintBottom_toBottomOf="@id/bottom_navigation"
             app:layout_constraintEnd_toEndOf="@id/bottom_navigation"
             app:layout_constraintStart_toStartOf="@id/bottom_navigation" />
