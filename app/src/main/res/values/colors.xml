@@ -22,6 +22,7 @@
 
     <color name="primary">#FFFFFFFF</color>
     <color name="secondary">#FF000000</color>
+    <color name="accentGrayish">#FFEEEEEE</color>
 
     <color name="xlight">#FFEBF0F5</color>
 </resources>

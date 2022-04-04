@@ -3,6 +3,7 @@ package com.bogdan.codeforceswatcher.components
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
@@ -12,10 +13,13 @@ import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.VideoEnabledWebChromeClient.ToggledFullscreenCallback
 import io.xorum.codeforceswatcher.redux.analyticsController
 import kotlinx.android.synthetic.main.activity_web_page.*
+
 
 class WebViewActivity : AppCompatActivity() {
 
@@ -55,16 +59,19 @@ class WebViewActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_web_page, menu)
+
+        var actionIcon: Drawable = menu.findItem(R.id.action_share).icon
+        actionIcon = DrawableCompat.wrap(actionIcon)
+        DrawableCompat.setTint(actionIcon, ContextCompat.getColor(this, R.color.secondary))
+        menu.findItem(R.id.action_share).icon = actionIcon
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_share -> {
-                share()
-                shareEvent?.let {
-                    analyticsController.logEvent(it)
-                }
+        if (item.itemId == R.id.action_share) {
+            share()
+            shareEvent?.let {
+                analyticsController.logEvent(it)
             }
         }
         return super.onOptionsItemSelected(item)
