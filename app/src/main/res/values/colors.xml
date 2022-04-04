@@ -20,5 +20,8 @@
     <color name="gray6">#FFF2F2F2</color>
     <color name="light_gray">#FFEEEEEE</color>
 
+    <color name="primary">#FFFFFFFF</color>
+    <color name="secondary">#FF000000</color>
+
     <color name="xlight">#FFEBF0F5</color>
 </resources>

@@ -5,15 +5,13 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.fragment.app.Fragment
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.components.AddUserBottomSheet
 import com.bogdan.codeforceswatcher.components.WebViewActivity
 import com.bogdan.codeforceswatcher.features.contests.ContestsFragment
 import com.bogdan.codeforceswatcher.features.news.NewsFragment
 import com.bogdan.codeforceswatcher.features.problems.ProblemsFragment
+import com.bogdan.codeforceswatcher.features.users.AddUserBottomSheetFragment
 import com.bogdan.codeforceswatcher.features.users.UsersFragment
 import com.bogdan.codeforceswatcher.util.FeedbackController
 import io.xorum.codeforceswatcher.features.problems.redux.ProblemsActions
@@ -22,7 +20,7 @@ import io.xorum.codeforceswatcher.redux.store
 import io.xorum.codeforceswatcher.util.AnalyticsEvents
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnMenuItemTapListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,15 +35,13 @@ class MainActivity : AppCompatActivity() {
     private fun initViews() {
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.bottom_navigation, NavigationMenuFragment().apply {
-                this.onMenuItemTap = ::onMenuItemTap
-            })
+            .replace(R.id.bottom_navigation, NavigationMenuFragment())
             .commit()
 
         onContestsTabSelected()
     }
 
-    private fun onMenuItemTap(tab: MenuItem.Tab) = when(tab) {
+    override fun onMenuItemTap(tab: MenuItem.Tab) = when(tab) {
         MenuItem.Tab.CONTESTS -> onContestsTabSelected()
         MenuItem.Tab.USERS -> onUsersTabSelected()
         MenuItem.Tab.NEWS -> onNewsTabSelected()
@@ -73,7 +69,7 @@ class MainActivity : AppCompatActivity() {
         updateFragment(UsersFragment())
 
         fab.setOnClickListener {
-            AddUserBottomSheet().show(supportFragmentManager, null)
+            AddUserBottomSheetFragment().show(supportFragmentManager, null)
         }
         fab.setImageDrawable(getDrawable(R.drawable.ic_plus))
     }
@@ -112,9 +108,9 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun updateProblemsFAB(problemsIsFavourite: Boolean) =
         if (problemsIsFavourite) {
-            fab.setImageDrawable(getDrawable(R.drawable.ic_all))
-        } else {
             fab.setImageDrawable(getDrawable(R.drawable.ic_star))
+        } else {
+            fab.setImageDrawable(getDrawable(R.drawable.ic_all))
         }
 
     private fun showShareDialog() =
@@ -139,4 +135,17 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private const val CONTESTS_LINK = "https://clist.by/"
     }
+}
+
+data class MenuItem(
+    val tab: Tab,
+    val iconId: Int,
+    val selectedIconId: Int
+) {
+    enum class Tab { CONTESTS, USERS, NEWS, PROBLEMS }
+}
+
+interface OnMenuItemTapListener {
+
+    fun onMenuItemTap(tab: MenuItem.Tab)
 }
