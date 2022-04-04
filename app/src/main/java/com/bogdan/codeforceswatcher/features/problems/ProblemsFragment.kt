@@ -183,64 +183,63 @@ private fun NavigationBar(
             .padding(horizontal = 25.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        AnimatedVisibility(
-            visible = !isShownSearchTextFieldState,
-            enter = fadeIn(),
-            modifier = Modifier.weight(1f)
-        ) {
+        if (!isShownSearchTextFieldState) {
             Text(
                 text = stringResource(R.string.problems),
                 style = AlgoismeTheme.typography.headerSmallMedium,
-                color = AlgoismeTheme.colors.secondary
+                color = AlgoismeTheme.colors.secondary,
+                modifier = Modifier.weight(1f)
             )
         }
 
-        Row(horizontalArrangement = Arrangement.spacedBy(20.dp)) {
-            Box(
-                modifier = if (isShownSearchTextFieldState) Modifier.weight(1f) else Modifier.width(30.dp),
-                contentAlignment = Alignment.CenterEnd
+        Box(
+            modifier = Modifier.weight(1f),
+            contentAlignment = Alignment.CenterEnd
+        ) {
+            this@Row.AnimatedVisibility(
+                visible = isShownSearchTextFieldState,
+                enter = expandHorizontally(
+                    animationSpec = tween(
+                        durationMillis = 150,
+                        easing = FastOutSlowInEasing
+                    )
+                ),
+                exit = shrinkHorizontally(
+                    animationSpec = tween(
+                        durationMillis = 150,
+                        easing = FastOutSlowInEasing
+                    )
+                )
             ) {
-                this@Row.AnimatedVisibility(
-                    visible = isShownSearchTextFieldState,
-                    enter = expandIn(
-                        expandFrom = Alignment.TopEnd,
-                        initialSize = { IntSize(30, 30) },
-                        animationSpec = tween(
-                            durationMillis = 150,
-                            easing = LinearEasing
-                        )
-                    )
-                ) {
-                    SearchTextField(
-                        modifier = Modifier.fillMaxWidth(1f),
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Ascii,
-                            imeAction = ImeAction.Done
-                        ),
-                        keyboardActions = KeyboardActions(
-                            onDone = { localFocusManager.clearFocus() }
-                        ),
-                        onValueChange = { query ->
-                            onSearch(query)
-                        }
-                    )
-                }
-
-                Image(
-                    painter = painterResource(R.drawable.ic_search_icon),
-                    contentDescription = null,
-                    modifier = Modifier.clickable { isShownSearchTextFieldState = true }
+                SearchTextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Ascii,
+                        imeAction = ImeAction.Done
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onDone = { localFocusManager.clearFocus() }
+                    ),
+                    onValueChange = onSearch
                 )
             }
 
-            if (isShownSearchTextFieldState) {
-                CrossButton {
-                    isShownSearchTextFieldState = false
-                    onSearch("")
-                }
-            } else {
-                FilterButton { onFilter() }
+            Image(
+                painter = painterResource(R.drawable.ic_search_icon),
+                contentDescription = null,
+                modifier = Modifier.clickable { isShownSearchTextFieldState = true }
+            )
+        }
+
+        Spacer(Modifier.width(20.dp))
+
+        if (isShownSearchTextFieldState) {
+            CrossButton {
+                isShownSearchTextFieldState = false
+                onSearch("")
             }
+        } else {
+            FilterButton { onFilter() }
         }
     }
 }
