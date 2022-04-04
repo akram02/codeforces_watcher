@@ -13,6 +13,7 @@ data class AlgoismeColors(
 
     val background: Color,
     val surface: Color,
+    val menuItem: Color,
     val error: Color,
 
     val onBackground: Color,

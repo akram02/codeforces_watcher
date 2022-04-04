@@ -95,13 +95,13 @@ private fun NavigationMenuItemView(
     Image(
         painter = painterResource(if (item.tab == selectedTab) item.selectedIconId else item.iconId),
         contentDescription = null,
-        colorFilter = if (item.tab == selectedTab) null else ColorFilter.tint(AlgoismeTheme.colors.secondaryVariant)
+        colorFilter = if (item.tab == selectedTab) null else ColorFilter.tint(AlgoismeTheme.colors.menuItem)
     )
 
     Text(
         text = stringResource(item.tab.title),
         style = AlgoismeTheme.typography.hintRegular.copy(fontSize = 11.sp),
-        color = AlgoismeTheme.colors.secondaryVariant
+        color = AlgoismeTheme.colors.menuItem
     )
 }
 

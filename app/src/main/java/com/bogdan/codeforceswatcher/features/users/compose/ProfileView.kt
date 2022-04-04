@@ -28,37 +28,35 @@ fun ProfileView(
     user: User,
     modifier: Modifier = Modifier,
     onButtonClick: () -> Unit
+) = Card(
+    modifier,
+    shape = AlgoismeTheme.shapes.medium,
+    backgroundColor = AlgoismeTheme.colors.surface
 ) {
-    Card(modifier) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(12.dp)
+    Column(Modifier.padding(12.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            UserAvatar(
+                avatar = user.avatar,
+                modifier = Modifier
+                    .size(80.dp)
+                    .border(1.dp, colorResource(getColorByUserRank(user.rank)), CircleShape)
+            )
+
+            Spacer(Modifier.width(20.dp))
+
+            RatingData(user)
+        }
+
+        Username(user.handle, user.buildFullNameNew())
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.Bottom
         ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                UserAvatar(
-                    avatar = user.avatar,
-                    modifier = Modifier
-                        .size(80.dp)
-                        .border(1.dp, colorResource(getColorByUserRank(user.rank)), CircleShape)
-                )
+            Rank(user.buildRankNew(), user.rank)
 
-                Spacer(Modifier.width(20.dp))
-
-                RatingData(user)
-            }
-
-            Username(user.handle, user.buildFullNameNew())
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.Bottom
-            ) {
-                Rank(user.buildRankNew(), user.rank)
-
-                SmallButton(stringResource(R.string.view_profile)) { onButtonClick() }
-            }
+            SmallButton(stringResource(R.string.view_profile)) { onButtonClick() }
         }
     }
 }

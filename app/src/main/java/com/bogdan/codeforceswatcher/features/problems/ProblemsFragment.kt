@@ -289,7 +289,6 @@ private fun CrossButton(
 ) = Image(
     painter = painterResource(R.drawable.ic_cross_icon),
     contentDescription = null,
-    colorFilter = ColorFilter.tint(AlgoismeTheme.colors.secondary),
     modifier = Modifier.clickable { onCross() }
 )
 

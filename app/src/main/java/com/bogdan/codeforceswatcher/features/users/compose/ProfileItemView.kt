@@ -19,24 +19,22 @@ fun ProfileItemView(
     onLoginButtonClick: () -> Unit = { },
     onVerifyButtonClick: () -> Unit = { },
     onViewProfileButtonClick: (String, Boolean) -> Unit = { _, _ -> },
-) {
-    when (authStage) {
-        AuthState.Stage.NOT_SIGNED_IN -> {
-            IdentifyView(modifier.padding(top = 20.dp)) { onLoginButtonClick() }
-        }
-        AuthState.Stage.SIGNED_IN -> {
-            VerifyView(modifier.padding(top = 20.dp)) { onVerifyButtonClick() }
-        }
-        AuthState.Stage.VERIFIED -> {
-            Column(modifier.padding(top = 20.dp)) {
-                ProfileView(userAccount?.codeforcesUser!!) {
-                    onViewProfileButtonClick(userAccount.codeforcesUser!!.handle, true)
-                }
-
-                Spacer(Modifier.height(6.dp))
-
-                LastUpdateView(buildLastUpdate(userAccount), Modifier.fillMaxWidth())
+) = when (authStage) {
+    AuthState.Stage.NOT_SIGNED_IN -> {
+        IdentifyView(modifier.padding(top = 20.dp)) { onLoginButtonClick() }
+    }
+    AuthState.Stage.SIGNED_IN -> {
+        VerifyView(modifier.padding(top = 20.dp)) { onVerifyButtonClick() }
+    }
+    AuthState.Stage.VERIFIED -> {
+        Column(modifier.padding(top = 20.dp)) {
+            ProfileView(userAccount?.codeforcesUser!!) {
+                onViewProfileButtonClick(userAccount.codeforcesUser!!.handle, true)
             }
+
+            Spacer(Modifier.height(6.dp))
+
+            LastUpdateView(buildLastUpdate(userAccount), Modifier.fillMaxWidth())
         }
     }
 }
