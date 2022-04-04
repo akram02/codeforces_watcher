@@ -13,6 +13,8 @@ struct MainView: View {
     
     @State private var geometryHeight: CGFloat = 0
     
+    private let bottomSafeAreaHeight = UIApplication.shared.windows.first?.safeAreaInsets.bottom
+    
     var body: some View {
         VStack(spacing: 0) {
             container
@@ -47,7 +49,7 @@ struct MainView: View {
             .frame(height: geometryHeight)
             
             Palette.accentGrayish.swiftUIColor
-                .frame(height: 20)
+                .frame(height: UIApplication.shared.windows.first?.safeAreaInsets.bottom)
         }
         .edgesIgnoringSafeArea(.all)
     }
@@ -60,12 +62,14 @@ struct MainView: View {
     ) -> some View {
         VStack(spacing: 2) {
             Image(iconName)
+                .renderingMode(.template)
                 .modifier(ColorScheme(title: title, isSelected: selectedIndex == index))
                 .frame(width: 24, height: 24)
             
             Text(title)
                 .font(.hintRegular)
-                .foregroundColor(Palette.darkGray.swiftUIColor)
+                .foregroundColor(Palette.mediumGray.swiftUIColor)
+                .lineLimit(1)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onTapGesture {
@@ -109,7 +113,7 @@ fileprivate struct ColorScheme: ViewModifier {
             ).mask(content)
         } else {
             content
-                .foregroundColor(Palette.darkGray.swiftUIColor)
+                .foregroundColor(Palette.mediumGray.swiftUIColor)
         }
     }
 }

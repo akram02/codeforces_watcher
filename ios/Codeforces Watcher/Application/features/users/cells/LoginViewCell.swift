@@ -16,9 +16,9 @@ struct LoginViewCell: View {
                 CommonText("login_to_identify".localized)
                     .font(.hintRegular)
                     .foregroundColor(Palette.darkGray.swiftUIColor)
+                    .lineLimit(3)
                 
                 Spacer()
-                    .frame(width: 48)
                 
                 CommonSmallButton(
                     label: "login".localized.uppercased(),

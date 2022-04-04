@@ -6,6 +6,7 @@ struct CommonTextFieldNew: UIViewRepresentable {
     private let placeholder: NSMutableAttributedString
     private let isSecureTextField: Bool
     private let tag: Int
+    @Binding var shouldClear: Bool
     
     @State private var mask = ""
     
@@ -13,12 +14,14 @@ struct CommonTextFieldNew: UIViewRepresentable {
         text: Binding<String>,
         placeholder: String,
         contentType: CommonTextFieldNew.Kind,
-        tag: Int
+        tag: Int,
+        shouldClear: Binding<Bool> = .constant(false)
     ) {
         _text = text
         self.placeholder = placeholder.attributed
         self.isSecureTextField = (contentType == .password)
         self.tag = tag
+        _shouldClear = shouldClear
         
         self.placeholder.addAttributes(
             [
@@ -46,15 +49,20 @@ struct CommonTextFieldNew: UIViewRepresentable {
             $0.defaultTextAttributes.updateValue(-1, forKey: NSAttributedString.Key.kern)
 
             $0.frame.size.height = 20
-            
-            $0.setupKeyboard()
         }
         
         return textField
     }
     
     func updateUIView(_ uiView: UITextField, context: Context) {
+        DispatchQueue.main.async {
+            if shouldClear {
+                (text, mask) = ("", "")
+                shouldClear = false
+            }
+        }
         uiView.text = mask
+        print(text, mask)
     }
 
     func makeCoordinator() -> Coordinator {
