@@ -38,6 +38,7 @@ struct UsersView: View {
             
             if isAddUserCardDisplayed {
                 Palette.black.swiftUIColor.opacity(0.5)
+                    .environment(\.colorScheme, .light)
                     .edgesIgnoringSafeArea(.all)
                     .onTapGesture {
                         addUserCardToggle()

@@ -17,9 +17,9 @@ struct VerifyViewCell: View {
                 CommonText("verify_account_prompt".localized)
                     .font(.hintRegular)
                     .foregroundColor(Palette.darkGray.swiftUIColor)
+                    .lineLimit(3)
                 
                 Spacer()
-                    .frame(width: 48)
                 
                 CommonSmallButton(
                     label: "verify".localized.uppercased(),

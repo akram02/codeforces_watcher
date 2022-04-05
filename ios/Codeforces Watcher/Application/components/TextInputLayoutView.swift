@@ -7,6 +7,23 @@ struct TextInputLayoutView: View {
     let placeholder: String
     let contentType: CommonTextFieldNew.Kind
     let tag: Int
+    @Binding var shouldClear: Bool
+    
+    init(
+        text: Binding<String>,
+        hint: String,
+        placeholder: String,
+        contentType: CommonTextFieldNew.Kind,
+        tag: Int,
+        shouldClear: Binding<Bool> = .constant(false)
+    ) {
+        _text = text
+        self.hint = hint
+        self.placeholder = placeholder
+        self.contentType = contentType
+        self.tag = tag
+        _shouldClear = shouldClear
+    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -18,7 +35,8 @@ struct TextInputLayoutView: View {
                 text: $text,
                 placeholder: placeholder,
                 contentType: contentType,
-                tag: tag
+                tag: tag,
+                shouldClear: $shouldClear
             )
             .fixedSize(horizontal: false, vertical: true)
             

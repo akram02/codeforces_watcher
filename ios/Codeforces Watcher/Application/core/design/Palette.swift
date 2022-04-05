@@ -48,6 +48,10 @@ public class Palette {
     public static let gray6 = UIColor(rgb: 0xF2F2F2)
     public static let darkBlueberry = UIColor(rgb: 0x6868FF)
     public static let brightBlueberry = UIColor(rgb: 0x8686FF)
+    public static let mediumGray = UIColor(
+        lightColor: UIColor(rgb: 0x636363),
+        darkColor: UIColor(rgb: 0xEEEEEE)
+    )
     
     public static let redGradient = UIColor(rgb: 0xC60706)
     public static let yellowGradient = UIColor(rgb: 0xFFCA00)
