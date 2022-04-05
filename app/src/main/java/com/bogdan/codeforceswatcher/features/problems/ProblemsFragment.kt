@@ -60,11 +60,11 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState> {
             AlgoismeTheme {
                 ContentView(
                     problemsState = problemsState,
-                    onProblem = { link, title -> onProblem(link, title) },
-                    onStar = { id -> onStar(id) },
-                    onRefresh = { onRefresh() },
-                    onFilter = { onFilter() },
-                    onSearch = { query -> onSearch(query) }
+                    onProblem = ::onProblem,
+                    onStar = ::onStar,
+                    onRefresh = ::onRefresh,
+                    onFilter = ::onFilter,
+                    onSearch = ::onSearch
                 )
             }
         }
@@ -92,7 +92,7 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState> {
         problemsState.value = state
     }
 
-    private fun onProblem(link: String, title: String) {
+    private fun onProblem(link: String, title: String) =
         startActivity(
             WebViewActivity.newIntent(
                 requireContext(),
@@ -102,24 +102,17 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState> {
                 AnalyticsEvents.PROBLEM_SHARED
             )
         )
-    }
 
-    private fun onStar(id: String) {
-        store.dispatch(ProblemsRequests.ChangeStatusFavourite(id))
-    }
+    private fun onStar(id: String) = store.dispatch(ProblemsRequests.ChangeStatusFavourite(id))
 
     private fun onRefresh() {
         store.dispatch(ProblemsRequests.FetchProblems(true))
         analyticsController.logEvent(AnalyticsEvents.PROBLEMS_REFRESH)
     }
 
-    private fun onFilter() {
-        startActivity(Intent(activity, ProblemsFiltersActivity::class.java))
-    }
+    private fun onFilter() = startActivity(Intent(activity, ProblemsFiltersActivity::class.java))
 
-    private fun onSearch(query: String) {
-        store.dispatch(ProblemsRequests.SetQuery(query))
-    }
+    private fun onSearch(query: String) = store.dispatch(ProblemsRequests.SetQuery(query))
 }
 
 @Composable

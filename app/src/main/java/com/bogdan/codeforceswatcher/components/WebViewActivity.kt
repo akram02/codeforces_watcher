@@ -59,11 +59,7 @@ class WebViewActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_web_page, menu)
-
-        var actionIcon: Drawable = menu.findItem(R.id.action_share).icon
-        actionIcon = DrawableCompat.wrap(actionIcon)
-        DrawableCompat.setTint(actionIcon, ContextCompat.getColor(this, R.color.secondary))
-        menu.findItem(R.id.action_share).icon = actionIcon
+        setIconTint(menu, R.id.action_share)
         return true
     }
 
@@ -75,6 +71,13 @@ class WebViewActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun setIconTint(menu: Menu, iconId: Int) {
+        var icon: Drawable = menu.findItem(iconId).icon
+        icon = DrawableCompat.wrap(icon)
+        DrawableCompat.setTint(icon, ContextCompat.getColor(this, R.color.secondary))
+        menu.findItem(iconId).icon = icon
     }
 
     private fun share() {

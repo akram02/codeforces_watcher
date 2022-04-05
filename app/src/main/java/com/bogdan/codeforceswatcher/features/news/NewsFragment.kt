@@ -53,7 +53,7 @@ class NewsFragment : Fragment(), StoreSubscriber<NewsState> {
             AlgoismeTheme {
                 ContentView(
                     newsState = newsState,
-                    onRefresh = { onRefresh() },
+                    onRefresh = ::onRefresh,
                     onPostFeedbackItem = { newsState.value.newsState?.let { onNewState(it) } },
                     onPostPinnedItem = { link, title ->
                         openWebView(link, title, AnalyticsEvents.PINNED_POST_OPENED, AnalyticsEvents.NEWS_SHARED)
@@ -91,7 +91,7 @@ class NewsFragment : Fragment(), StoreSubscriber<NewsState> {
         analyticsController.logEvent(AnalyticsEvents.NEWS_REFRESH)
     }
 
-    private fun openWebView(link: String, title: String, openEvent: String, shareEvent: String) {
+    private fun openWebView(link: String, title: String, openEvent: String, shareEvent: String) =
         startActivity(
             WebViewActivity.newIntent(
                 requireContext(),
@@ -101,7 +101,6 @@ class NewsFragment : Fragment(), StoreSubscriber<NewsState> {
                 shareEvent
             )
         )
-    }
 
     override fun onNewState(state: NewsState) {
         val feedbackController = FeedbackController.get()
