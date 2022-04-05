@@ -57,12 +57,12 @@ struct CommonTextFieldNew: UIViewRepresentable {
     func updateUIView(_ uiView: UITextField, context: Context) {
         DispatchQueue.main.async {
             if shouldClear {
-                (text, mask) = ("", "")
+                text = ""
+                mask = ""
                 shouldClear = false
             }
         }
         uiView.text = mask
-        print(text, mask)
     }
 
     func makeCoordinator() -> Coordinator {
