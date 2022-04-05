@@ -39,7 +39,7 @@ class SignInComposeActivity : ComponentActivity(), StoreSubscriber<AuthState> {
             AlgoismeTheme {
                 SignInScreen(
                     authState = authState,
-                    onBack = { finish() },
+                    onBack = ::finish,
                     startSignUpActivity = ::startSignUpActivity,
                     onSignIn = ::signInWithEmailAndPassword,
                     startRestorePasswordActivity = ::startRestorePasswordActivity
@@ -142,8 +142,8 @@ private fun Content(
     onSignIn: (String, String) -> Unit,
     startRestorePasswordActivity: () -> Unit
 ) {
-    var email = ""
-    var password = ""
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
 
     if (authState.status == AuthState.Status.PENDING) LoadingView()
 

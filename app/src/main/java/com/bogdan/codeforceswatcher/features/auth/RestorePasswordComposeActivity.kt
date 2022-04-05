@@ -40,7 +40,7 @@ class RestorePasswordComposeActivity : ComponentActivity(), StoreSubscriber<Auth
             AlgoismeTheme {
                 RestorePasswordScreen(
                     authState = authState,
-                    onBack = { finish() },
+                    onBack = ::finish,
                     onForgotPassword = ::onForgotPassword,
                     modifier = Modifier.fillMaxSize()
                 )
@@ -132,7 +132,7 @@ private fun Content(
     authState: AuthState,
     onForgotPassword: (String) -> Unit
 ) {
-    var email = ""
+    var email by remember { mutableStateOf("") }
 
     if (authState.status == AuthState.Status.PENDING) LoadingView()
 

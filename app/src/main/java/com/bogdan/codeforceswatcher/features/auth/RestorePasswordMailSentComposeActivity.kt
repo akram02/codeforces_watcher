@@ -33,7 +33,7 @@ class RestorePasswordMailSentComposeActivity : ComponentActivity() {
         setContent {
             AlgoismeTheme {
                 RestorePasswordMailSentScreen(
-                    onBack = { finish() },
+                    onBack = ::finish,
                     onOpenMail = ::startMailApp,
                     onOpenSignIn = ::startSignInActivity,
                     modifier = Modifier.fillMaxSize()
