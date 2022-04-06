@@ -71,6 +71,24 @@ Download it now on Google Play - https://play.google.com/store/apps/details?id=c
   <string name="user_date_format">MMM d, yyyy</string>
 
   <string name="delete_account">Delete account</string>
+  <string name="do_not_delete">Do not delete</string>
+  <string name="delete_account_warning">Warning! This action is irreversible.</string>
+  <string name="delete_account_explanation">"If you delete your account, you will no longer be able to use the full functionality of the application, in particular:
+- personal profile
+- rating tracking
+- notifications about rating updates
+- mentorship program
+- algois.me special events
+- participating in Challenges
+- badges, medals, stats and more
+
+You will still be able to use basic functionality of the application, which is available without registration, in particular, follow other users, watch contests (including Challenges, but without the ability to participate), view and save problems, read news.
+
+Please note that without account, your content will not be able to sync, so if you uninstall the app, your data will not be saved and may be lost.</string>
+  <string name="delete_account_hint">Account cannot be restored.\nThink wisely before doing it.</string>
+  <string name="delete_account_sure">Are you sure?\nMark the checkbox to confirm your intentions.</string>
+  <string name="want_to_delete_account">I want to delete my account</string>
+
   <string name="delete_user">Delete user</string>
   <string name="delete_user_explanation">"Are you sure you want to delete %1$s?"</string>
   <string name="ok">OK</string>

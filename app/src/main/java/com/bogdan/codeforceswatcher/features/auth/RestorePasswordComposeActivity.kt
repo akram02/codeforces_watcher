@@ -105,6 +105,7 @@ private fun RestorePasswordScreen(
 
     Content(state, onForgotPassword)
 }
+
 @Composable
 private fun BottomBar() = LinkText(
     linkTextData = listOf(

@@ -62,7 +62,7 @@ class UserActivity : AppCompatActivity(), StoreSubscriber<UsersState> {
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
         action_delete_account.setOnClickListener {
-            startActivity(Intent(baseContext, DeleteUserAccountActivity::class.java))
+            startActivity(Intent(this, DeleteUserAccountActivity::class.java))
         }
 
         setupChart()
