@@ -21,6 +21,7 @@ import androidx.core.graphics.drawable.DrawableCompat
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
+import com.bogdan.codeforceswatcher.features.auth.SignInComposeActivity
 import com.bogdan.codeforceswatcher.util.CustomMarkerView
 import com.bogdan.codeforceswatcher.util.colorSubstring
 import com.github.mikephil.charting.components.XAxis
@@ -60,6 +61,10 @@ class UserActivity : AppCompatActivity(), StoreSubscriber<UsersState> {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
+        action_delete_account.setOnClickListener {
+            startActivity(Intent(baseContext, DeleteUserAccountActivity::class.java))
+        }
+
         setupChart()
 
         menuItemId = if (isUserAccount) {
@@ -95,6 +100,7 @@ class UserActivity : AppCompatActivity(), StoreSubscriber<UsersState> {
             maxRating?.toString() ?: getString(R.string.none)
         )
     ).apply {
+        this.colorSubstring(0, this.length, R.color.bright_black)
         rating?.let {
             val startIndex = indexOf(it.toString())
             val color = getColorByUserRank(rank)
@@ -250,6 +256,7 @@ fun User.buildContribution(): SpannableString {
     return SpannableString(
         CwApp.app.getString(R.string.contribution, contributionString)
     ).apply {
+        this.colorSubstring(0, this.length, R.color.bright_black)
         val startIndex = indexOf(contributionString)
         val color = if (contribution >= 0) R.color.bright_green else R.color.red
         colorSubstring(startIndex, startIndex + contributionString.length, color)

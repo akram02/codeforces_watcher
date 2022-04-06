@@ -21,104 +21,122 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
 
-  <LinearLayout
+  <ScrollView
+      android:id="@+id/scrollView"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:background="@color/white"
-      android:orientation="vertical">
+      android:fillViewport="true">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:orientation="horizontal">
+        android:background="@color/white"
+        android:orientation="vertical">
 
-      <de.hdodenhof.circleimageview.CircleImageView
-          android:id="@+id/ivUserAvatar"
-          android:layout_width="80dp"
-          android:layout_height="80dp"
-          app:civ_border_width="1dp"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="parent" />
+      <androidx.constraintlayout.widget.ConstraintLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="16dp"
+          android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivUserAvatar"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:civ_border_width="1dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvRank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@id/ivUserAvatar"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Master" />
+
+        <TextView
+            android:id="@+id/tvUserHandle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@id/tvRank"
+            app:layout_constraintTop_toBottomOf="@id/tvRank"
+            tools:text="Karavaev1101" />
+
+        <ImageView
+            android:id="@+id/ivRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/ic_rating"
+            app:layout_constraintBottom_toTopOf="@id/ivStar"
+            app:layout_constraintStart_toStartOf="@id/ivStar" />
+
+        <TextView
+            android:id="@+id/tvUserRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@string/rating"
+            app:layout_constraintBottom_toBottomOf="@id/ivRating"
+            app:layout_constraintStart_toEndOf="@id/ivRating"
+            app:layout_constraintTop_toTopOf="@id/ivRating" />
+
+        <ImageView
+            android:id="@+id/ivStar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="6dp"
+            android:src="@drawable/ic_contribution"
+            app:layout_constraintBottom_toBottomOf="@id/ivUserAvatar"
+            app:layout_constraintStart_toEndOf="@id/ivUserAvatar" />
+
+        <TextView
+            android:id="@+id/tvContribution"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@string/contribution"
+            app:layout_constraintBottom_toBottomOf="@id/ivStar"
+            app:layout_constraintStart_toEndOf="@id/ivStar"
+            app:layout_constraintTop_toTopOf="@id/ivStar" />
+
+      </androidx.constraintlayout.widget.ConstraintLayout>
 
       <TextView
-          android:id="@+id/tvRank"
+          android:id="@+id/tvRatingChanges"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginStart="16dp"
-          android:textSize="14sp"
-          app:layout_constraintStart_toEndOf="@id/ivUserAvatar"
-          app:layout_constraintTop_toTopOf="parent"
-          tools:text="Master" />
+          android:layout_marginTop="8dp"
+          android:text="@string/rating_changes"
+          android:textColor="@color/black"
+          android:textSize="14sp" />
 
-      <TextView
-          android:id="@+id/tvUserHandle"
+      <com.github.mikephil.charting.charts.LineChart
+          android:id="@+id/chart"
+          android:layout_width="match_parent"
+          android:layout_height="500dp"
+          android:layout_marginStart="20dp"
+          android:layout_marginTop="8dp"
+          android:layout_marginEnd="16dp" />
+
+      <Button
+          android:id="@+id/action_delete_account"
           android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:textSize="18sp"
-          app:layout_constraintStart_toStartOf="@id/tvRank"
-          app:layout_constraintTop_toBottomOf="@id/tvRank"
-          tools:text="Karavaev1101" />
-
-      <ImageView
-          android:id="@+id/ivRating"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginBottom="8dp"
-          android:src="@drawable/ic_rating"
-          app:layout_constraintBottom_toTopOf="@id/ivStar"
-          app:layout_constraintStart_toStartOf="@id/ivStar" />
-
-      <TextView
-          android:id="@+id/tvUserRating"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="4dp"
-          android:text="@string/rating"
-          app:layout_constraintBottom_toBottomOf="@id/ivRating"
-          app:layout_constraintStart_toEndOf="@id/ivRating"
-          app:layout_constraintTop_toTopOf="@id/ivRating" />
-
-      <ImageView
-          android:id="@+id/ivStar"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="16dp"
-          android:layout_marginTop="6dp"
-          android:src="@drawable/ic_contribution"
-          app:layout_constraintBottom_toBottomOf="@id/ivUserAvatar"
-          app:layout_constraintStart_toEndOf="@id/ivUserAvatar" />
-
-      <TextView
-          android:id="@+id/tvContribution"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="4dp"
-          android:text="@string/contribution"
-          app:layout_constraintBottom_toBottomOf="@id/ivStar"
-          app:layout_constraintStart_toEndOf="@id/ivStar"
-          app:layout_constraintTop_toTopOf="@id/ivStar" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <TextView
-        android:id="@+id/tvRatingChanges"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/rating_changes"
-        android:textColor="@color/black"
-        android:textSize="14sp" />
-
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/chart"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp" />
-  </LinearLayout>
+          android:layout_height="36dp"
+          android:gravity="center"
+          android:layout_gravity="center_horizontal"
+          android:layout_marginVertical="40dp"
+          android:paddingHorizontal="10dp"
+          android:text="@string/delete_account"
+          android:textColor="@color/white"
+          android:background="@color/colorPrimary" />
+    </LinearLayout>
+  </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

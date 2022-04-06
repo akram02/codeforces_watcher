@@ -67,6 +67,7 @@ Codeforces WatchR позволяет:
     <string name="contest_date_format">d MMM в HH:mm, EEEE</string>
     <string name="user_date_format">d MMM yyyy</string>
 
+    <string name="delete_account">Удалить аккаунт</string>
     <string name="delete_user">Удалить пользователя</string>
     <string name="delete_user_explanation">"Вы уверены, что хотите удалить %1$s?"</string>
     <string name="ok">OK</string>

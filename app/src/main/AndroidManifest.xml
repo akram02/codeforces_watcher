@@ -37,6 +37,9 @@
         android:theme="@style/AppTheme.NoActionBar" />
     <activity android:name=".features.users.UserActivity" />
     <activity
+        android:name=".features.users.DeleteUserAccountActivity"
+        android:screenOrientation="portrait"/>
+    <activity
         android:name=".components.WebViewActivity"
         android:configChanges="orientation|screenSize" />
     <activity

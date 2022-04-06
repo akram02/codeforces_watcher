@@ -70,6 +70,7 @@ Download it now on Google Play - https://play.google.com/store/apps/details?id=c
   <string name="contest_month_format">LLLL</string>
   <string name="user_date_format">MMM d, yyyy</string>
 
+  <string name="delete_account">Delete account</string>
   <string name="delete_user">Delete user</string>
   <string name="delete_user_explanation">"Are you sure you want to delete %1$s?"</string>
   <string name="ok">OK</string>
