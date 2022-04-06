@@ -97,7 +97,7 @@ private fun RestorePasswordScreen(
     modifier: Modifier = Modifier
 ) = Scaffold(
     modifier = modifier,
-    topBar = { TopBar(onBack) },
+    topBar = { NavigationBar { onBack() } },
     bottomBar = { BottomBar() },
     backgroundColor = AlgoismeTheme.colors.background
 ) {
@@ -105,10 +105,6 @@ private fun RestorePasswordScreen(
 
     Content(state, onForgotPassword)
 }
-
-@Composable
-private fun TopBar(onBack: () -> Unit) = NavigationBar { onBack() }
-
 @Composable
 private fun BottomBar() = LinkText(
     linkTextData = listOf(

@@ -64,10 +64,12 @@ class WebViewActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.action_share) {
-            share()
-            shareEvent?.let {
-                analyticsController.logEvent(it)
+        when(item.itemId) {
+            R.id.action_share -> {
+                share()
+                shareEvent?.let {
+                    analyticsController.logEvent(it)
+                }
             }
         }
         return super.onOptionsItemSelected(item)

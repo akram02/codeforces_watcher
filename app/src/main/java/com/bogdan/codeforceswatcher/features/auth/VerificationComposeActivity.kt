@@ -106,16 +106,13 @@ private fun VerificationScreen(
     modifier: Modifier = Modifier
 ) = Scaffold(
     modifier = modifier,
-    topBar = { TopBar(onBack) },
+    topBar = { NavigationBar { onBack() } },
     backgroundColor = AlgoismeTheme.colors.background
 ) {
     val state = verificationState.value ?: return@Scaffold
 
     Content(state, copyText, showToast)
 }
-
-@Composable
-private fun TopBar(onBack: () -> Unit) = NavigationBar { onBack() }
 
 @ExperimentalComposeUiApi
 @Composable

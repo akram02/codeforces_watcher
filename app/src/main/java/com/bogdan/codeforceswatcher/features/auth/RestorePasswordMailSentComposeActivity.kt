@@ -72,15 +72,12 @@ private fun RestorePasswordMailSentScreen(
     modifier: Modifier = Modifier
 ) = Scaffold(
     modifier = modifier,
-    topBar = { TopBar(onBack) },
+    topBar = { NavigationBar { onBack() } },
     bottomBar = { BottomBar() },
     backgroundColor = AlgoismeTheme.colors.background
 ) {
     Content(onOpenMail, onOpenSignIn)
 }
-
-@Composable
-private fun TopBar(onBack: () -> Unit) = NavigationBar { onBack() }
 
 @Composable
 private fun BottomBar() {

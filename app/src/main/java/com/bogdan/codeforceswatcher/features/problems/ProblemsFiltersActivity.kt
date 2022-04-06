@@ -87,20 +87,17 @@ private fun ProblemsFilters(
     onBack: () -> Unit
 ) = Scaffold(
     modifier = Modifier.fillMaxSize(),
-    topBar = { TopBar(onBack) },
+    topBar = {
+        NavigationBar(
+            backgroundColor = AlgoismeTheme.colors.primaryVariant,
+            title = stringResource(R.string.filters),
+            onClick = { onBack() }
+        )
+    },
     backgroundColor = AlgoismeTheme.colors.primary
 ) {
     FiltersList(filtersState, onFilter)
 }
-
-@Composable
-private fun TopBar(
-    onBack: () -> Unit
-) = NavigationBar(
-    backgroundColor = AlgoismeTheme.colors.primaryVariant,
-    title = stringResource(R.string.filters),
-    onClick = { onBack() }
-)
 
 @Composable
 private fun FiltersList(

@@ -102,7 +102,7 @@ private fun SignInScreen(
     startRestorePasswordActivity: () -> Unit
 ) = Scaffold(
     modifier = Modifier.fillMaxSize(),
-    topBar = { TopBar(onBack) },
+    topBar = { NavigationBar { onBack() } },
     bottomBar = { BottomBar(startSignUpActivity) },
     backgroundColor = AlgoismeTheme.colors.background
 ) {
@@ -110,9 +110,6 @@ private fun SignInScreen(
 
     Content(state, onSignIn, startRestorePasswordActivity)
 }
-
-@Composable
-private fun TopBar(onBack: () -> Unit) = NavigationBar { onBack() }
 
 @Composable
 private fun BottomBar(startSignUpActivity: () -> Unit) = LinkText(

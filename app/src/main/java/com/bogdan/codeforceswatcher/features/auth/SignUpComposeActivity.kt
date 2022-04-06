@@ -132,7 +132,7 @@ private fun SignUpScreen(
     modifier: Modifier = Modifier
 ) = Scaffold(
     modifier = modifier,
-    topBar = { TopBar(onBack) },
+    topBar = { NavigationBar { onBack() } },
     bottomBar = { BottomBar(startSignInActivity) },
     backgroundColor = AlgoismeTheme.colors.background
 ) {
@@ -140,9 +140,6 @@ private fun SignUpScreen(
 
     Content(state, onSignUp, onTermsAndConditions, onPrivacyPolicy)
 }
-
-@Composable
-private fun TopBar(onBack: () -> Unit) = NavigationBar { onBack() }
 
 @Composable
 private fun BottomBar(startSignInActivity: () -> Unit) = LinkText(
