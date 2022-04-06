@@ -3,6 +3,7 @@ package com.bogdan.codeforceswatcher.components
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
@@ -12,10 +13,13 @@ import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.VideoEnabledWebChromeClient.ToggledFullscreenCallback
 import io.xorum.codeforceswatcher.redux.analyticsController
 import kotlinx.android.synthetic.main.activity_web_page.*
+
 
 class WebViewActivity : AppCompatActivity() {
 
@@ -55,11 +59,12 @@ class WebViewActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_web_page, menu)
+        setIconTint(menu, R.id.action_share)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
+        when(item.itemId) {
             R.id.action_share -> {
                 share()
                 shareEvent?.let {
@@ -68,6 +73,13 @@ class WebViewActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun setIconTint(menu: Menu, iconId: Int) {
+        var icon: Drawable = menu.findItem(iconId).icon
+        icon = DrawableCompat.wrap(icon)
+        DrawableCompat.setTint(icon, ContextCompat.getColor(this, R.color.secondary))
+        menu.findItem(iconId).icon = icon
     }
 
     private fun share() {

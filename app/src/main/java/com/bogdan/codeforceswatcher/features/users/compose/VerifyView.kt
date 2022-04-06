@@ -13,6 +13,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.compose.buttons.SmallButton
@@ -22,42 +23,44 @@ import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 fun VerifyView(
     modifier: Modifier = Modifier,
     onButtonClick: () -> Unit
+) = Card(
+    modifier,
+    shape = AlgoismeTheme.shapes.medium,
+    backgroundColor = AlgoismeTheme.colors.surface
 ) {
-    Card(modifier) {
-        Column(
+    Column(Modifier.padding(12.dp)) {
+        Icon(
+            painter = painterResource(R.drawable.ic_no_avatar),
+            contentDescription = null,
+            tint = AlgoismeTheme.colors.onBackground,
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(12.dp)
+                .clip(CircleShape)
+                .background(AlgoismeTheme.colors.primary)
+        )
+
+        Text(
+            text = stringResource(R.string.verify_account),
+            style = AlgoismeTheme.typography.headerMiddleMedium,
+            color = AlgoismeTheme.colors.secondary,
+            textAlign = TextAlign.Start
+        )
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.Bottom
         ) {
-            Icon(
-                painter = painterResource(R.drawable.ic_no_avatar),
-                contentDescription = null,
-                tint = AlgoismeTheme.colors.onBackground,
-                modifier = Modifier
-                    .clip(CircleShape)
-                    .background(AlgoismeTheme.colors.primary)
-            )
-
             Text(
-                text = stringResource(R.string.verify_account),
-                style = AlgoismeTheme.typography.headerMiddleMedium,
-                textAlign = TextAlign.Start
+                text = stringResource(R.string.pass_quick_verification),
+                style = AlgoismeTheme.typography.hintRegular,
+                color = AlgoismeTheme.colors.secondaryVariant,
+                textAlign = TextAlign.Start,
+                maxLines = 3,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.fillMaxWidth(0.6f)
             )
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.Bottom
-            ) {
-                Text(
-                    text = stringResource(R.string.pass_quick_verification),
-                    style = AlgoismeTheme.typography.hintRegular,
-                    textAlign = TextAlign.Start,
-                    modifier = Modifier.widthIn(max = 220.dp)
-                )
-
-                SmallButton(stringResource(R.string.verify).uppercase()) { onButtonClick() }
-            }
+            SmallButton(stringResource(R.string.verify).uppercase()) { onButtonClick() }
         }
     }
 }

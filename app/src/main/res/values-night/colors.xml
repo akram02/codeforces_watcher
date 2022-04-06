@@ -4,4 +4,5 @@
     <color name="secondary">#FFFFFFFF</color>
     <color name="dark_gray">#FFEEEEEE</color>
     <color name="light_gray">#FF303030</color>
+    <color name="accentGrayish">#FF303030</color>
 </resources>

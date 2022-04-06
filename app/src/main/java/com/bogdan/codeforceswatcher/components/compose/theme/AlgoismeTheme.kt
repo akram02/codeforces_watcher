@@ -59,6 +59,7 @@ private val commonAlgoismeColors = AlgoismeColors(
     secondaryVariant = Color.Unspecified,
     background = Color.Unspecified,
     surface = Color.Unspecified,
+    menuItem = Color.Unspecified,
     error = Color.Unspecified,
     onBackground = Color.Unspecified,
     onError = Color.Unspecified,
@@ -87,6 +88,7 @@ private val lightAlgoismeColors = with(commonAlgoismeColors) {
 
         background = white,
         surface = accentGrayish,
+        menuItem = Color(0xFF636363),
         error = red,
 
         onBackground = black,
@@ -102,10 +104,11 @@ private val darkAlgoismeColors = with(commonAlgoismeColors) {
         primaryVariant = mineShaft,
 
         secondary = white,
-        secondaryVariant = accentGrayish,
+        secondaryVariant = Color(0xFFAAAAAA),
 
         background = black,
         surface = mineShaft,
+        menuItem = accentGrayish,
         error = red,
 
         onBackground = white,

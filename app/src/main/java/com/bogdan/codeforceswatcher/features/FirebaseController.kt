@@ -1,4 +1,4 @@
-package com.bogdan.codeforceswatcher.features.users
+package com.bogdan.codeforceswatcher.features
 
 import com.google.firebase.auth.FirebaseAuth
 import io.xorum.codeforceswatcher.features.auth.IFirebaseController

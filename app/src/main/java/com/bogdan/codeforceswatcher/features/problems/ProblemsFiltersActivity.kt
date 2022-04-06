@@ -38,12 +38,8 @@ class ProblemsFiltersActivity : AppCompatActivity(), StoreSubscriber<ProblemsSta
             AlgoismeTheme {
                 ProblemsFilters(
                     filtersState = filtersState,
-                    onFilter = { title, isChecked ->
-                        onFilter(title, isChecked)
-                    },
-                    closeActivity = {
-                        finish()
-                    }
+                    onFilter = ::onFilter,
+                    onBack = ::finish
                 )
             }
         }
@@ -80,32 +76,28 @@ class ProblemsFiltersActivity : AppCompatActivity(), StoreSubscriber<ProblemsSta
         }
     }
 
-    private fun onFilter(title: String, isChecked: Boolean) {
+    private fun onFilter(title: String, isChecked: Boolean) =
         store.dispatch(ProblemsRequests.ChangeTagCheckStatus(title, isChecked))
-    }
 }
 
 @Composable
 private fun ProblemsFilters(
     filtersState: State<List<FilterItem>>,
     onFilter: (String, Boolean) -> Unit,
-    closeActivity: () -> Unit
+    onBack: () -> Unit
 ) = Scaffold(
     modifier = Modifier.fillMaxSize(),
-    topBar = { TopBar(closeActivity) },
+    topBar = {
+        NavigationBar(
+            backgroundColor = AlgoismeTheme.colors.primaryVariant,
+            title = stringResource(R.string.filters),
+            onClick = { onBack() }
+        )
+    },
     backgroundColor = AlgoismeTheme.colors.primary
 ) {
     FiltersList(filtersState, onFilter)
 }
-
-@Composable
-private fun TopBar(
-    closeActivity: () -> Unit
-) = NavigationBar(
-    backgroundColor = AlgoismeTheme.colors.primaryVariant,
-    title = stringResource(R.string.filters),
-    onClick = { closeActivity() }
-)
 
 @Composable
 private fun FiltersList(

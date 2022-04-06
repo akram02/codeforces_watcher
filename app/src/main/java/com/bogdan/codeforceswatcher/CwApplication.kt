@@ -1,7 +1,7 @@
 package com.bogdan.codeforceswatcher
 
 import android.app.Application
-import com.bogdan.codeforceswatcher.features.users.FirebaseController
+import com.bogdan.codeforceswatcher.features.FirebaseController
 import com.bogdan.codeforceswatcher.handlers.AndroidMessageHandler
 import com.bogdan.codeforceswatcher.util.AnalyticsController
 import com.bogdan.codeforceswatcher.util.Prefs

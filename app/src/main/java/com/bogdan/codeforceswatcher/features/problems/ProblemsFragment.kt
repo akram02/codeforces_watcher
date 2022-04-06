@@ -60,11 +60,11 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState> {
             AlgoismeTheme {
                 ContentView(
                     problemsState = problemsState,
-                    onProblem = { link, title -> onProblem(link, title) },
-                    onStar = { id -> onStar(id) },
-                    onRefresh = { onRefresh() },
-                    onFilter = { onFilter() },
-                    onSearch = { query -> onSearch(query) }
+                    onProblem = ::onProblem,
+                    onStar = ::onStar,
+                    onRefresh = ::onRefresh,
+                    onFilter = ::onFilter,
+                    onSearch = ::onSearch
                 )
             }
         }
@@ -92,7 +92,7 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState> {
         problemsState.value = state
     }
 
-    private fun onProblem(link: String, title: String) {
+    private fun onProblem(link: String, title: String) =
         startActivity(
             WebViewActivity.newIntent(
                 requireContext(),
@@ -102,24 +102,17 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState> {
                 AnalyticsEvents.PROBLEM_SHARED
             )
         )
-    }
 
-    private fun onStar(id: String) {
-        store.dispatch(ProblemsRequests.ChangeStatusFavourite(id))
-    }
+    private fun onStar(id: String) = store.dispatch(ProblemsRequests.ChangeStatusFavourite(id))
 
     private fun onRefresh() {
         store.dispatch(ProblemsRequests.FetchProblems(true))
         analyticsController.logEvent(AnalyticsEvents.PROBLEMS_REFRESH)
     }
 
-    private fun onFilter() {
-        startActivity(Intent(activity, ProblemsFiltersActivity::class.java))
-    }
+    private fun onFilter() = startActivity(Intent(activity, ProblemsFiltersActivity::class.java))
 
-    private fun onSearch(query: String) {
-        store.dispatch(ProblemsRequests.SetQuery(query))
-    }
+    private fun onSearch(query: String) = store.dispatch(ProblemsRequests.SetQuery(query))
 }
 
 @Composable
@@ -183,64 +176,63 @@ private fun NavigationBar(
             .padding(horizontal = 25.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        AnimatedVisibility(
-            visible = !isShownSearchTextFieldState,
-            enter = fadeIn(),
-            modifier = Modifier.weight(1f)
-        ) {
+        if (!isShownSearchTextFieldState) {
             Text(
                 text = stringResource(R.string.problems),
                 style = AlgoismeTheme.typography.headerSmallMedium,
-                color = AlgoismeTheme.colors.secondary
+                color = AlgoismeTheme.colors.secondary,
+                modifier = Modifier.weight(1f)
             )
         }
 
-        Row(horizontalArrangement = Arrangement.spacedBy(20.dp)) {
-            Box(
-                modifier = if (isShownSearchTextFieldState) Modifier.weight(1f) else Modifier.width(30.dp),
-                contentAlignment = Alignment.CenterEnd
+        Box(
+            modifier = Modifier.weight(1f),
+            contentAlignment = Alignment.CenterEnd
+        ) {
+            this@Row.AnimatedVisibility(
+                visible = isShownSearchTextFieldState,
+                enter = expandHorizontally(
+                    animationSpec = tween(
+                        durationMillis = 150,
+                        easing = FastOutSlowInEasing
+                    )
+                ),
+                exit = shrinkHorizontally(
+                    animationSpec = tween(
+                        durationMillis = 150,
+                        easing = FastOutSlowInEasing
+                    )
+                )
             ) {
-                this@Row.AnimatedVisibility(
-                    visible = isShownSearchTextFieldState,
-                    enter = expandIn(
-                        expandFrom = Alignment.TopEnd,
-                        initialSize = { IntSize(30, 30) },
-                        animationSpec = tween(
-                            durationMillis = 150,
-                            easing = LinearEasing
-                        )
-                    )
-                ) {
-                    SearchTextField(
-                        modifier = Modifier.fillMaxWidth(1f),
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Ascii,
-                            imeAction = ImeAction.Done
-                        ),
-                        keyboardActions = KeyboardActions(
-                            onDone = { localFocusManager.clearFocus() }
-                        ),
-                        onValueChange = { query ->
-                            onSearch(query)
-                        }
-                    )
-                }
-
-                Image(
-                    painter = painterResource(R.drawable.ic_search_icon),
-                    contentDescription = null,
-                    modifier = Modifier.clickable { isShownSearchTextFieldState = true }
+                SearchTextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Ascii,
+                        imeAction = ImeAction.Done
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onDone = { localFocusManager.clearFocus() }
+                    ),
+                    onValueChange = onSearch
                 )
             }
 
-            if (isShownSearchTextFieldState) {
-                CrossButton {
-                    isShownSearchTextFieldState = false
-                    onSearch("")
-                }
-            } else {
-                FilterButton { onFilter() }
+            Image(
+                painter = painterResource(R.drawable.ic_search_icon),
+                contentDescription = null,
+                modifier = Modifier.clickable { isShownSearchTextFieldState = true }
+            )
+        }
+
+        Spacer(Modifier.width(20.dp))
+
+        if (isShownSearchTextFieldState) {
+            CrossButton {
+                isShownSearchTextFieldState = false
+                onSearch("")
             }
+        } else {
+            FilterButton { onFilter() }
         }
     }
 }
@@ -289,7 +281,6 @@ private fun CrossButton(
 ) = Image(
     painter = painterResource(R.drawable.ic_cross_icon),
     contentDescription = null,
-    colorFilter = ColorFilter.tint(AlgoismeTheme.colors.secondary),
     modifier = Modifier.clickable { onCross() }
 )
 

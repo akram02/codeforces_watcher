@@ -2,6 +2,7 @@ package com.bogdan.codeforceswatcher.features.users
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.SpannableString
 import android.view.Menu
@@ -16,6 +17,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
@@ -137,6 +139,11 @@ class UserActivity : AppCompatActivity(), StoreSubscriber<UsersState> {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(menuItemId, menu)
+        if (isUserAccount) {
+            setIconTint(menu, R.id.action_log_out)
+        } else {
+            setIconTint(menu, R.id.action_delete)
+        }
         return true
     }
 
@@ -169,6 +176,13 @@ class UserActivity : AppCompatActivity(), StoreSubscriber<UsersState> {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun setIconTint(menu: Menu, iconId: Int) {
+        var icon: Drawable = menu.findItem(iconId).icon
+        icon = DrawableCompat.wrap(icon)
+        DrawableCompat.setTint(icon, ContextCompat.getColor(this, R.color.secondary))
+        menu.findItem(iconId).icon = icon
     }
 
     private fun deleteUser() {

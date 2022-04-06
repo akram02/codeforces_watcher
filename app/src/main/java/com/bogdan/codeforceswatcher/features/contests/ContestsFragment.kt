@@ -58,9 +58,9 @@ class ContestsFragment : Fragment(), StoreSubscriber<ContestsState> {
             AlgoismeTheme {
                 ContentView(
                     contestsState = contestsState,
-                    onRefresh = { onRefresh() },
-                    onContest = { contest -> onContest(contest) },
-                    onCalendar = { contest -> addContestToCalendar(contest) },
+                    onRefresh = ::onRefresh,
+                    onContest = ::onContest,
+                    onCalendar = ::addContestToCalendar,
                     modifier = Modifier.fillMaxSize()
                 )
             }
@@ -88,7 +88,7 @@ class ContestsFragment : Fragment(), StoreSubscriber<ContestsState> {
         analyticsController.logEvent(AnalyticsEvents.CONTESTS_REFRESH)
     }
 
-    private fun onContest(contest: Contest) {
+    private fun onContest(contest: Contest) =
         startActivity(
             WebViewActivity.newIntent(
                 requireContext(),
@@ -98,7 +98,6 @@ class ContestsFragment : Fragment(), StoreSubscriber<ContestsState> {
                 AnalyticsEvents.CONTEST_SHARED
             )
         )
-    }
 
     private fun addContestToCalendar(contest: Contest) {
         val timeStart = getCalendarTime(contest.startDateInMillis)

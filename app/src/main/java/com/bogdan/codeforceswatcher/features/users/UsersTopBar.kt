@@ -5,6 +5,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.DropdownMenu
@@ -26,9 +27,10 @@ import kotlinx.coroutines.delay
 fun UsersTopBar(
     pickerOptions: Int,
     pickerPosition: Int,
-    pickerCallback: (Int) -> Unit
+    pickerCallback: (Int) -> Unit,
+    modifier: Modifier = Modifier
 ) = Row(
-    modifier = Modifier
+    modifier = modifier
         .fillMaxWidth()
         .height(56.dp)
         .padding(horizontal = 25.dp),
@@ -107,7 +109,8 @@ private fun DropDownMenu(
     onDismiss: () -> Unit
 ) = DropdownMenu(
     expanded = isDropDownVisible,
-    onDismissRequest = onDismiss
+    onDismissRequest = onDismiss,
+    modifier = Modifier.background(AlgoismeTheme.colors.primary)
 ) {
     options.forEachIndexed { index, label ->
         DropdownMenuItem(onClick = {

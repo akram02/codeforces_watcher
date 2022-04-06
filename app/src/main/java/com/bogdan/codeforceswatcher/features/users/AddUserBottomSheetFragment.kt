@@ -1,8 +1,10 @@
 package com.bogdan.codeforceswatcher.features.users
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.Window
 import android.view.WindowManager
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -31,23 +33,21 @@ class AddUserBottomSheetFragment: BottomSheetDialogFragment(), StoreSubscriber<U
 
     private val addUserStatus: MutableState<UsersState.Status?> = mutableStateOf(null)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = ComposeView(requireContext()).apply {
-        setContent {
-            AlgoismeTheme {
-                AddUserView(
-                    addUserStatus = addUserStatus,
-                    onAddUser = { store.dispatch(UsersRequests.AddUser(it)) }
-                )
+    ): ComposeView {
+        dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+
+        return ComposeView(requireContext()).apply {
+            setContent {
+                AlgoismeTheme {
+                    AddUserView(
+                        addUserStatus = addUserStatus,
+                        onAddUser = { store.dispatch(UsersRequests.AddUser(it)) }
+                    )
+                }
             }
         }
     }
