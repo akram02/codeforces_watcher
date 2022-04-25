@@ -30,4 +30,8 @@ internal class UsersRepository {
             parameter("handle", handle)
         }
     }
+
+    suspend fun deleteAccount() = request { httpClient ->
+        httpClient.post<Unit>("user/delete-account")
+    }
 }

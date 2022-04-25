@@ -8,7 +8,6 @@ import io.ktor.client.features.logging.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
-import io.ktor.utils.io.*
 import io.ktor.utils.io.charsets.*
 import io.xorum.codeforceswatcher.redux.firebaseController
 import io.xorum.codeforceswatcher.redux.getLang

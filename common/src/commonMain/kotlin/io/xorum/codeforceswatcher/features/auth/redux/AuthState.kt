@@ -7,7 +7,8 @@ data class AuthState(
     val authStage: Stage = Stage.NOT_SIGNED_IN,
     val signUpMessage: String? = null,
     val signInMessage: String? = null,
-    val restorePasswordMessage: String? = null
+    val restorePasswordMessage: String? = null,
+    val deleteAccountMessage: String? = null
 ) : StateType {
 
     enum class Status { IDLE, PENDING, DONE }
