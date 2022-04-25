@@ -27,14 +27,15 @@ class DeleteUserAccountActivity: ComponentActivity() {
             AlgoismeTheme {
                 ContentView(
                     onBack = ::finish,
-                    onDeleteAccount = {
-                        startActivity(Intent(this, DeleteUserAccountConfirmActivity::class.java))
-                    },
+                    onDeleteAccount = ::startDeleteUserAccountConfirmActivity,
                     modifier = Modifier.fillMaxSize()
                 )
             }
         }
     }
+
+    private fun startDeleteUserAccountConfirmActivity() =
+        startActivity(Intent(this, DeleteUserAccountConfirmActivity::class.java))
 }
 
 @Composable
@@ -45,15 +46,12 @@ private fun ContentView(
 ) = Scaffold(
     modifier = modifier,
     topBar = {
-        NavigationBar(
-            title = stringResource(R.string.delete_account),
-            onClick = onBack
-        )
+        NavigationBar(title = stringResource(R.string.delete_account)) { onBack() }
     },
     bottomBar = {
         BottomBar(
-            onDontDeleteAccount =  onBack,
-            onDeleteAccount =  onDeleteAccount
+            onDontDeleteAccount = onBack,
+            onDeleteAccount = onDeleteAccount
         )
     },
     backgroundColor = AlgoismeTheme.colors.background

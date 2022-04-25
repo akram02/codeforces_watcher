@@ -85,6 +85,7 @@ Codeforces WatchR позволяет:
     <string name="delete_account_hint">Учетная запись не может быть восстановлена.\nХорошо подумайте, прежде чем делать это.</string>
     <string name="delete_account_sure">Вы уверены?\nУстановите флажок, чтобы подтвердить.</string>
     <string name="want_to_delete_account">Я хочу удалить свой аккаунт</string>
+    <string name="mark_checkbox">Отметьте флажок</string>
 
     <string name="delete_user">Удалить пользователя</string>
     <string name="delete_user_explanation">"Вы уверены, что хотите удалить %1$s?"</string>

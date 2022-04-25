@@ -88,6 +88,7 @@ Please note that without account, your content will not be able to sync, so if y
   <string name="delete_account_hint">Account cannot be restored.\nThink wisely before doing it.</string>
   <string name="delete_account_sure">Are you sure?\nMark the checkbox to confirm your intentions.</string>
   <string name="want_to_delete_account">I want to delete my account</string>
+  <string name="mark_checkbox">Mark the checkbox</string>
 
   <string name="delete_user">Delete user</string>
   <string name="delete_user_explanation">"Are you sure you want to delete %1$s?"</string>
