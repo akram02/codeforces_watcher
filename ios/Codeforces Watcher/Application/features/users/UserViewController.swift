@@ -41,10 +41,12 @@ class UserViewController: ClosableViewController, ReKampStoreSubscriber {
     private var user: User!
     
     private let isUserAccount: Bool
+    private var dismissCallback: () -> Void = {}
     
-    init(_ handle: String, isUserAccount: Bool) {
+    init(_ handle: String, isUserAccount: Bool, dismissCallback: @escaping () -> Void = {}) {
         self.handle = handle
         self.isUserAccount = isUserAccount
+        self.dismissCallback = dismissCallback
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -121,7 +123,7 @@ class UserViewController: ClosableViewController, ReKampStoreSubscriber {
     }
     
     @objc private func onDeleteAccount() {
-        self.presentModal(DeleteAccountViewController())
+        self.presentModal(DeleteAccountViewController(dismissCallback: dismissCallback))
     }
     
     private func setupChart() {

@@ -2,7 +2,11 @@ import SwiftUI
 
 class DeleteAccountViewController: UIHostingController<DeleteAccountView> {
     
-    init() {
+    private let dismissCallback: () -> Void
+    
+    init(dismissCallback: @escaping () -> Void) {
+        self.dismissCallback = dismissCallback
+        
         super.init(rootView: DeleteAccountView())
         
         setInteractions()
@@ -24,7 +28,7 @@ class DeleteAccountViewController: UIHostingController<DeleteAccountView> {
         }
         
         rootView.onDeleteAccount = { [weak self] in
-            self?.presentModal(DeleteAccountConfirmViewController())
+            self?.presentModal(DeleteAccountConfirmViewController(dismissCallback: self?.dismissCallback ?? {}))
         }
     }
 }

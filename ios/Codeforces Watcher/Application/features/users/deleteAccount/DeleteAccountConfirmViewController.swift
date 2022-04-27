@@ -1,8 +1,14 @@
 import SwiftUI
+import PKHUD
+import common
 
-class DeleteAccountConfirmViewController: UIHostingController<DeleteAccountConfirmView> {
+class DeleteAccountConfirmViewController: UIHostingController<DeleteAccountConfirmView>, ReKampStoreSubscriber {
     
-    init() {
+    private let dismissCallback: () -> Void
+    
+    init(dismissCallback: @escaping () -> Void) {
+        self.dismissCallback = dismissCallback
+        
         super.init(rootView: DeleteAccountConfirmView())
         
         setInteractions()
@@ -16,6 +22,22 @@ class DeleteAccountConfirmViewController: UIHostingController<DeleteAccountConfi
         super.viewWillAppear(animated)
         
         hideNavigationBar()
+        
+        store.subscribe(subscriber: self) { subscription in
+            subscription.skipRepeats { oldState, newState in
+                return KotlinBoolean(bool: oldState.auth == newState.auth)
+            }.select { state in
+                return state.auth
+            }
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        resetMessage()
+        
+        store.unsubscribe(subscriber: self)
     }
     
     private func setInteractions() {
@@ -23,17 +45,44 @@ class DeleteAccountConfirmViewController: UIHostingController<DeleteAccountConfi
             self?.dismiss(animated: true)
         }
         
-        rootView.onDeleteAccount = { [weak self] isAccepted in
-            if (isAccepted) {
-                
-            } else {
-                self?.showToast(message: "mark_checkbox".localized)
-            }
+        rootView.onDeleteAccount = { isAccepted in
+            store.dispatch(action: AuthRequests.DeleteAccount(isAccepted: isAccepted))
         }
     }
     
-    private func showToast(message: String) {
-        let toastHandler = IOSToastHandler()
-        toastHandler.showToast(message: message)
+    private func updateMessage(_ message: String?) {
+        rootView.message = message ?? ""
+    }
+    
+    private func resetMessage() {
+        store.dispatch(action: AuthRequests.ResetDeleteAccountMessage())
+    }
+    
+    private func showLoading() {
+        PKHUD.sharedHUD.userInteractionOnUnderlyingViewsEnabled = false
+        HUD.show(.progress, onView: UIApplication.shared.windows.last)
+    }
+    
+    private func hideLoading() {
+        HUD.hide(afterDelay: 0)
+    }
+    
+    func onNewState(state: Any) {
+        let state = state as! AuthState
+        
+        switch (state.status) {
+        case .pending:
+            showLoading()
+        case .idle:
+            hideLoading()
+        default:
+            return
+        }
+        
+        if state.authStage == .notSignedIn {
+            dismissCallback()
+        }
+        
+        updateMessage(state.deleteAccountMessage)
     }
 }

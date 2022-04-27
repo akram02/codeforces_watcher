@@ -2,6 +2,7 @@ import SwiftUI
 
 struct DeleteAccountConfirmView: View {
     
+    var message: String = ""
     var onDismiss: () -> Void = {}
     var onDeleteAccount: (Bool) -> Void = { _ in }
     
@@ -15,6 +16,9 @@ struct DeleteAccountConfirmView: View {
             )
             
             DeleteAccountExplanation()
+            
+            ErrorMessageView(message: message)
+                .frame(maxWidth: .infinity, alignment: .center)
             
             Spacer()
             
