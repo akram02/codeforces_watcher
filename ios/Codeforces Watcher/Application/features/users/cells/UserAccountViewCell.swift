@@ -31,7 +31,7 @@ struct UserAccountViewCell: View {
                     Spacer()
                     
                     CommonSmallButton(
-                        label: "View profile",
+                        label: "view_profile".localized,
                         action: {
                             self.onViewProfile(user.handleText.string)
                         },

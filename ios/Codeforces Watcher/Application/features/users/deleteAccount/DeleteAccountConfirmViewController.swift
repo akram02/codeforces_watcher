@@ -25,9 +25,9 @@ class DeleteAccountConfirmViewController: UIHostingController<DeleteAccountConfi
         
         store.subscribe(subscriber: self) { subscription in
             subscription.skipRepeats { oldState, newState in
-                return KotlinBoolean(bool: oldState.auth == newState.auth)
+                KotlinBoolean(bool: oldState.auth == newState.auth)
             }.select { state in
-                return state.auth
+                state.auth
             }
         }
     }

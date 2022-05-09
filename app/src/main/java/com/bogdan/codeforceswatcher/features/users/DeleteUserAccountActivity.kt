@@ -103,3 +103,9 @@ private fun Content() = Column(
         color = AlgoismeTheme.colors.error
     )
 }
+
+@Composable
+private fun Preview() = ContentView(
+    onBack = {},
+    onDeleteAccount = {}
+)

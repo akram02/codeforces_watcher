@@ -31,10 +31,17 @@ class UserViewController: ClosableViewController, ReKampStoreSubscriber {
         $0.textColor = Palette.black
     }
     private let lineChartView = LineChartView()
-    private let deleteAccountButton = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 36)).apply {
+    private let deleteAccountButton = UIButton().apply {
         $0.backgroundColor = Palette.colorPrimary
-        $0.setTitle("Delete Account", for: .normal)
+        $0.setTitle("delete_account".localized, for: .normal)
         $0.addTarget(self, action: #selector(onDeleteAccount), for: .touchUpInside)
+        if #available(iOS 15.0, *) {
+            var configuration = UIButton.Configuration.filled()
+            configuration.buttonSize = .medium
+            $0.configuration = configuration
+        } else {
+            $0.contentEdgeInsets = UIEdgeInsets(top: 8, left: 10, bottom: 8, right: 10)
+        }
     }
     
     private var handle: String
@@ -43,7 +50,11 @@ class UserViewController: ClosableViewController, ReKampStoreSubscriber {
     private let isUserAccount: Bool
     private var dismissCallback: () -> Void = {}
     
-    init(_ handle: String, isUserAccount: Bool, dismissCallback: @escaping () -> Void = {}) {
+    init(
+        _ handle: String,
+        isUserAccount: Bool,
+        dismissCallback: @escaping () -> Void = {}
+    ) {
         self.handle = handle
         self.isUserAccount = isUserAccount
         self.dismissCallback = dismissCallback

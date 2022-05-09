@@ -72,6 +72,7 @@ Please note that without account, your content will not be able to sync, so if y
 "Rating" = "Rating: %@ (max: %@)";
 "Contribution" = "Contribution: %@";
 "Sort" = "Sort by %@ ▼";
+"view_profile" = "View profile";
 
 "default" = "default";
 "rating_up" = "↑rating";
