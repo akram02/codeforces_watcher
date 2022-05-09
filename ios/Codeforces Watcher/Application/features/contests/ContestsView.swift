@@ -19,7 +19,7 @@ struct ContestsView: View {
                 if contests.isEmpty {
                     NoItemsView(
                         imageName: "noItemsContests",
-                        text: "Contests are on the way to your device...".localized
+                        text: "contests_explanation".localized
                     )
                 } else {
                     ContestsList

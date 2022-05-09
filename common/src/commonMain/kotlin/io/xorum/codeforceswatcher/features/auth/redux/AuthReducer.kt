@@ -81,6 +81,25 @@ fun authReducer(action: Action, state: AppState): AuthState {
         is AuthRequests.LogOut.Success -> {
             newState = AuthState()
         }
+        is AuthRequests.DeleteAccount -> {
+            newState = newState.copy(
+                status = AuthState.Status.PENDING
+            )
+        }
+        is AuthRequests.DeleteAccount.Success -> {
+            newState = AuthState()
+        }
+        is AuthRequests.DeleteAccount.Failure -> {
+            newState = newState.copy(
+                status = AuthState.Status.IDLE,
+                deleteAccountMessage = action.message
+            )
+        }
+        is AuthRequests.ResetDeleteAccountMessage -> {
+            newState = newState.copy(
+                deleteAccountMessage = null
+            )
+        }
     }
 
     return newState

@@ -1,7 +1,9 @@
 package io.xorum.codeforceswatcher.features.auth.redux
 
 import io.xorum.codeforceswatcher.features.notifications.NotificationsRepository
+import io.xorum.codeforceswatcher.features.users.UsersRepository
 import io.xorum.codeforceswatcher.redux.*
+import io.xorum.codeforceswatcher.util.Response
 import io.xorum.codeforceswatcher.util.Strings
 import tw.geothings.rekotlin.Action
 
@@ -103,4 +105,26 @@ class AuthRequests {
     }
 
     object ResetRestorePasswordMessage : Action
+
+    class DeleteAccount(private val isAccepted: Boolean) : Request() {
+
+        private val usersRepository = UsersRepository()
+
+        override suspend fun execute() {
+            if (!isAccepted) {
+                store.dispatch(Failure(Strings.get("mark_checkbox")))
+                return
+            }
+            val result = when (val response = usersRepository.deleteAccount()) {
+                is Response.Success -> Success
+                is Response.Failure -> Failure(response.error)
+            }
+            store.dispatch(result)
+        }
+
+        object Success : Action
+        data class Failure(val message: String?) : Action
+    }
+
+    object ResetDeleteAccountMessage : Action
 }

@@ -66,7 +66,7 @@ struct MainView: View {
                 .modifier(ColorScheme(title: title, isSelected: selectedIndex == index))
                 .frame(width: 24, height: 24)
             
-            Text(title)
+            Text(title.localized)
                 .font(.hintRegular)
                 .foregroundColor(Palette.mediumGray.swiftUIColor)
                 .lineLimit(1)

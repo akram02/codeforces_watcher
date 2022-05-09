@@ -44,7 +44,9 @@ class UsersViewController: UIHostingController<UsersView>, ReKampStoreSubscriber
     
     private func setInteractions() {
         rootView.onUserAccount = { handle in
-            self.presentModal(UserViewController(handle, isUserAccount: true))
+            self.presentModal(UserViewController(handle, isUserAccount: true, dismissCallback: { [weak self] in
+                self?.dismiss(animated: true)
+            }))
         }
         
         rootView.onUser = { handle in

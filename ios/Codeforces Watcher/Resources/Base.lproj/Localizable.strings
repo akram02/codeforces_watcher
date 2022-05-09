@@ -45,6 +45,26 @@
 "Done" = "Done";
 "Rating changes" = "Rating changes";
 
+"delete_account" = "Delete account";
+"do_not_delete" = "Do not delete";
+"delete_account_warning" = "Warning! This action is irreversible.";
+"delete_account_explanation" = "If you delete your account, you will no longer be able to use the full functionality of the application, in particular:
+- personal profile
+- rating tracking
+- notifications about rating updates
+- mentorship program
+- algois.me special events
+- participating in Challenges
+- badges, medals, stats and more
+
+You will still be able to use basic functionality of the application, which is available without registration, in particular, follow other users, watch contests (including Challenges, but without the ability to participate), view and save problems, read news.
+
+Please note that without account, your content will not be able to sync, so if you uninstall the app, your data will not be saved and may be lost";
+"delete_account_hint" = "Account cannot be restored.\nThink wisely before doing it.";
+"delete_account_sure" = "Are you sure?\nMark the checkbox to confirm your intentions.";
+"want_to_delete_account" = "I want to delete my account";
+"mark_checkbox" = "Mark the checkbox to confirm your intentions";
+
 "Delete user" = "Delete user";
 "delete_user_explanation" = "Are you sure you want to delete %@?";
 
@@ -52,6 +72,7 @@
 "Rating" = "Rating: %@ (max: %@)";
 "Contribution" = "Contribution: %@";
 "Sort" = "Sort by %@ ▼";
+"view_profile" = "View profile";
 
 "default" = "default";
 "rating_up" = "↑rating";

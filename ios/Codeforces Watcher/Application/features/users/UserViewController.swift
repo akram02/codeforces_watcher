@@ -10,6 +10,7 @@ import UIKit
 import common
 import Charts
 import PKHUD
+import SwiftUI
 
 class UserViewController: ClosableViewController, ReKampStoreSubscriber {
     
@@ -30,15 +31,33 @@ class UserViewController: ClosableViewController, ReKampStoreSubscriber {
         $0.textColor = Palette.black
     }
     private let lineChartView = LineChartView()
+    private let deleteAccountButton = UIButton().apply {
+        $0.backgroundColor = Palette.colorPrimary
+        $0.setTitle("delete_account".localized, for: .normal)
+        $0.addTarget(self, action: #selector(onDeleteAccount), for: .touchUpInside)
+        if #available(iOS 15.0, *) {
+            var configuration = UIButton.Configuration.filled()
+            configuration.buttonSize = .medium
+            $0.configuration = configuration
+        } else {
+            $0.contentEdgeInsets = UIEdgeInsets(top: 8, left: 10, bottom: 8, right: 10)
+        }
+    }
     
     private var handle: String
     private var user: User!
     
     private let isUserAccount: Bool
+    private var dismissCallback: () -> Void = {}
     
-    init(_ handle: String, isUserAccount: Bool) {
+    init(
+        _ handle: String,
+        isUserAccount: Bool,
+        dismissCallback: @escaping () -> Void = {}
+    ) {
         self.handle = handle
         self.isUserAccount = isUserAccount
+        self.dismissCallback = dismissCallback
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -114,6 +133,10 @@ class UserViewController: ClosableViewController, ReKampStoreSubscriber {
         store.dispatch(action: UsersRequests.DeleteUser(user: user))
     }
     
+    @objc private func onDeleteAccount() {
+        self.presentModal(DeleteAccountViewController(dismissCallback: dismissCallback))
+    }
+    
     private func setupChart() {
         let markerView = ChartMarker().apply {
             $0.chartView = lineChartView
@@ -133,7 +156,7 @@ class UserViewController: ClosableViewController, ReKampStoreSubscriber {
     }
     
     private func buildViewTree() {
-        [userImage, handleLabel, rankLabel, ratingIcon, ratingLabel, starIcon, contributionLabel, ratingChangesLabel, lineChartView].forEach(view.addSubview)
+        [userImage, handleLabel, rankLabel, ratingIcon, ratingLabel, starIcon, contributionLabel, ratingChangesLabel, lineChartView, deleteAccountButton].forEach(view.addSubview)
     }
     
     private func setConstraints() {
@@ -187,7 +210,12 @@ class UserViewController: ClosableViewController, ReKampStoreSubscriber {
             $0.leadingToSuperview(offset: 16)
             $0.trailingToSuperview(offset: 16)
             $0.topToBottom(of: ratingChangesLabel, offset: 16)
-            $0.bottomToSuperview(offset: -16)
+            $0.bottomToTop(of: deleteAccountButton, offset: -20)
+        }
+        
+        deleteAccountButton.run {
+            $0.centerXToSuperview()
+            $0.bottomToSuperview(offset: -20)
         }
     }
     
