@@ -1,4 +1,4 @@
-rootProject.name = 'codeforces_watcher'
+rootProject.name = 'algoisme'
 def buildAndroid = properties['org.gradle.project.buildAndroid'].toBoolean()
 if (buildAndroid) {
     include 'app'
