@@ -1,4 +1,4 @@
-rootProject.name = 'algoisme'
+rootProject.name = 'algois-me'
 def buildAndroid = properties['org.gradle.project.buildAndroid'].toBoolean()
 if (buildAndroid) {
     include 'app'

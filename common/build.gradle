@@ -86,8 +86,8 @@ android {
 }
 
 xcode {
-    projectPath = "../ios/Codeforces Watcher.xcodeproj"
-    target = "Codeforces Watcher"
+    projectPath = "../ios/algois-me.xcodeproj"
+    target = "algois.me Debug"
 }
 
 sqldelight {
