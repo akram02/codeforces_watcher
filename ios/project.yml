@@ -1,4 +1,4 @@
-name: Codeforces Watcher
+name: algois-me
 options:
   createIntermediateGroups: true
   indentWidth: 4
@@ -13,24 +13,24 @@ configs:
   test: debug
   Release: release
 targets:
-  "Codeforces Watcher Release":
+  "algois.me Release":
     type: application
     platform: iOS
     deploymentTarget: "14.0"
     sources:  
-      - path: "Codeforces Watcher"
+      - path: "algois-me"
         excludes:
           - "Firebase"
-      - path: "Codeforces Watcher/Firebase/Release"
+      - path: "algois-me/Firebase/Release"
     scheme: 
       testTargets:
-        - "Codeforces Watcher Tests"
-        - "Codeforces Watcher UITests"
+        - "algois.me Tests"
+        - "algois.me UITests"
       gatherCoverageData: true
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: "io.xorum.codeforceswatcher"
-        PRODUCT_NAME: "Codeforces WatchR"
+        PRODUCT_NAME: "algois.me"
     postBuildScripts:
       - name: "[Firebase Crashlytics] Run"
         script: '"${PODS_ROOT}/FirebaseCrashlytics/run"'
@@ -38,27 +38,27 @@ targets:
           - "${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}"
           - "$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)"
     entitlements:
-      path: "Codeforces Watcher/MyEntitlements.entitlements"
+      path: "algois-me/MyEntitlements.entitlements"
       properties:
         aps-environment: development
-  "Codeforces Watcher Debug":
+  "algois.me Debug":
     type: application
     platform: iOS
     deploymentTarget: "14.0"
     sources:
-      - path: "Codeforces Watcher"
+      - path: "algois-me"
         excludes:
           - "Firebase"
-      - path: "Codeforces Watcher/Firebase/Debug"
+      - path: "algois-me/Firebase/Debug"
     scheme:
       testTargets:
-        - "Codeforces Watcher Tests"
-        - "Codeforces Watcher UITests"
+        - "algois.me Tests"
+        - "algois.me UITests"
       gatherCoverageData: false
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: "io.xorum.codeforceswatcher.debug"
-        PRODUCT_NAME: "Codeforces WatchR Debug"
+        PRODUCT_NAME: "algois.me Debug"
     postBuildScripts:
       - name: "[Firebase Crashlytics] Run"
         script: '"${PODS_ROOT}/FirebaseCrashlytics/run"'
@@ -66,25 +66,25 @@ targets:
           - "${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}"
           - "$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)"
     entitlements:
-      path: "Codeforces Watcher/MyEntitlements.entitlements"
+      path: "algois-me/MyEntitlements.entitlements"
       properties:
         aps-environment: development
-  "Codeforces Watcher Tests":
+  "algois.me Tests":
     type: bundle.unit-test
     platform: iOS
     deploymentTarget: "14.0"
     sources:
-      - path: "Codeforces Watcher Tests"
+      - path: "algois-me Tests"
     dependencies:
-      - target: "Codeforces Watcher Debug"
+      - target: "algois.me Debug"
     scheme:
       gatherCoverageData: false
-  "Codeforces Watcher UITests":
+  "algois.me UITests":
     type: bundle.ui-testing
     platform: iOS
     sources:
-      - path: "Codeforces Watcher UITests"
+      - path: "algois-me UITests"
     dependencies:
-      - target: "Codeforces Watcher Debug"
+      - target: "algois.me Debug"
     scheme:
       gatherCoverageData: false

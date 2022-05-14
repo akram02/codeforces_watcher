@@ -1,0 +1,130 @@
+"locale" = "fr";
+
+"Contests" = "Concours";
+"News" = "Informations";
+"Problems" = "Problèmes";
+
+"Commented by" = "Commenté par";
+"ago" = " · %@";
+"post_ago" = " · %@ %@";
+
+"news_explanation" = "Informations récentes en cours de téléchargement...";
+
+"problems_explanation" = "Problèmes en cours de téléchargement...";
+"contests_explanation" = "Concours en cours de téléchargement...";
+
+"Has been added to your calendar" = "A été ajouté à votre calendrier";
+"Can't add contest to Calendar without permission" = "Impossible d'ajouter ce concours à votre calendrier";
+
+"OK" = "OK";
+"Cancel" = "Annuler";
+"check_connection" = "Vérifiez votre connexion ou réessayez plus tard";
+
+"Search for problems..." = "Chercher des problèmes...";
+
+"Official Codeforces rules" = "Règles officielles de Codeforces";
+"Apple isn't a sponsor of any contests conducted on Codeforces" = "Apple n'est pas un sponsor des concours conduits par Codeforces";
+
+"filters" = "filtres";
+
+"User already added" = "Utilisateur déjà ajouté";
+
+"Click to see details" = "Cliquez pour voir les détails";
+"Users" = "Utilisateurs";
+"no_favourite_problems_explanation" = "Vous n'avez aucun problème favori.\nAjoutez-en un avec le «∞» présent en bas de l'écran.";
+"share_cw_message" = "J'utilise Codeforces WatchR - open-source, application IOS gratuite,  qui utilise l'API Codeforces pour apporter plus de programmation compétitive sur votre appareil IOS. \n Codeforces WatchR permet de: \n\n 1. Se pré-enregistrer et s'inscrire pour les prochaines concours de Programmation Compétitive: Codeforces, LeetCode, HackerEarth, AtCoder, TopCoder, CS Academy, CodeChef, Kick Start. \n 2. Suivre les informations récentes. \n 3. Parcourir et chercher des problèmes, les ajouter en favoris. \n 4. Suivre l'activité de n'importe quel utilisateur Codeforces. \n 5. Trier les utilisateurs par classement et dernière date de participation. \n\n Téléchargez-la sur App Store - https://apps.apple.com/us/app/codeforces-watchr-contests/id1495591299";
+"no_users_explanation" = "Vous n'avez aucun utilisateur dans votre liste.\nAjoutez-en un avec le «+»  présent en bas de l'écran.";
+
+"Add user" = "Ajouter utilisateur";
+"Enter user handle" = "Entrez un pseudo";
+"no_activity" = "Aucune activité";
+"Done" = "Fait";
+"Rating changes" = "Changements de classement";
+
+"Delete user" = "Supprimer l'utilisateur";
+"delete_user_explanation" = "Êtes-vous sûr de supprimer %@?";
+
+"None" = "Aucun";
+"Rating" = "Classement: %@ (max: %@)";
+"Contribution" = "Contribution: %@";
+"Sort" = "Trier par %@ ▼";
+
+"default" = "défaut";
+"rating_up" = "↑classement";
+"rating_down" = "↓classement";
+"update_up" = "↑mise à jour";
+"update_down" = "↓mise à jour";
+
+"last_activity" = "Dernière activité: %@";
+
+"share_text" = "%@ - %@\n\nPartagé avec Codeforces WatchR. Téléchargeable sur App Store.";
+"upcoming_contests" = "concours à venir";
+
+"yes" = "Oui!";
+"rate_us_first_title" = "Vous appréciez Codeforces WatchR?";
+"rate_us_second_title" = "Voudriez-vous nous donner un avis?";
+"rate_us_third_title" = "Pourquoi ne pas la noter sur l'App Store?";
+"not_really" = "Pas vraiment";
+"no_thanks" = "Non merci";
+
+"chart_info" = " = %@ (%@) \n Rang: %@ \n %@ \n %@ ";
+
+"contest_date_format" = "HH:mm MMM d, EEEE";
+"contest_date_month_format" = "LLLL";
+"user_date_format" = "d MMM, yyyy";
+
+"be_the_first_to_comment" = "Soyez le premier à commenter";
+"see_all_comments" = "Voir tous les commentaires";
+
+"modified" = "modifié";
+"created" = "créé";
+"watch_video" = "regarder la vidéo";
+
+"galactic_master" = "Maître galactique";
+"unknown" = "Inconnu";
+"never_updated" = "Jamais mis à jour";
+
+"login_to_identify" = "Connectez-vous pour vous identifier et recevez des notifications push instantanées sur les mises à jour des notes";
+"login" = "Connectez-vous";
+
+"verify_account" = "Vérifier le compte";
+"verify_account_prompt" = "Passez la vérification rapide et simple pour voir votre profil ici";
+"verify" = "Vérifiez";
+
+"email" = "E-mail";
+"password" = "Mot de passe";
+"confirm_password" = "Confirmez le mot de passe";
+"forgot_password" = "Mot de passe oublié?";
+
+"sign_in" = "S'identifier";
+"sign_in_hint" = "Vous avez déjà un compte?";
+
+"sign_up" = "S'inscrire";
+"sign_up_hint" = "Vous n'avez pas encore de compte?";
+
+"restore_password" = "Restaurer\nle mot de passe";
+"restore_password_button" = "Restaurer le mot de passe";
+"restore_password_hint" = "Vous recevrez un e-mail avec des instructions pour la récupération de compte";
+"lost_access" = "Vous avez perdu l'accès à la messagerie?";
+"user_does_not_exist" = "L'utilisateur n'existe pas ¯\_(ツ)_/¯";
+
+"agreement_terms_and_privacy" = "J'accepte les <terms>Termes et conditions</terms> et la <privacy>Politique de confidentialité</privacy>.";
+
+"verify_codeforces_account" = "Vérifier Codeforces Compte";
+"codeforces_handle" = "Codeforces handle";
+
+"verify_instruction" = "Pour vérifier que ce compte vous appartient, veuillez modifier votre \"Nom de famille\" en anglais dans votre <semibold> Profil - Paramètres - Réseaux sociaux </semibold> en lui attribuant cette valeur:";
+"verify_change_it_back" = "Juste après une connexion réussie, vous pouvez le modifier.";
+
+"rating_updated_on" = "Mis à jour le %@";
+"rating" = "Classement: %@";
+"max_rating" = "Max Class.: %@";
+
+"log_out" = "Se déconnecter";
+"log_out_ask" = "Voulez-vous vous déconnecter?";
+
+"wrong_credentials" = "Informations d'identification erronées!";
+"passwords_do_not_match" = "Les mots de passe ne correspondent pas";
+"ratings_have_been_updated" = "Les classements ont été mis à jour";
+
+"forgot_password_success" = "Un e-mail contenant des instructions additionnels vous a été envoyé ! Vérifiez s\'il vous plaît!";
