@@ -53,7 +53,7 @@ class NotificationsService : FirebaseMessagingService() {
                 NotificationCompat.Builder(this, channelId)
                     .setContentTitle(getString(R.string.ratings_have_been_updated))
                     .setStyle(NotificationCompat.BigTextStyle().bigText(text))
-                    .setSmallIcon(R.mipmap.ic_launcher_antivirus)
+                    .setSmallIcon(R.mipmap.ic_launcher)
                     .setAutoCancel(true)
                     .setContentIntent(contentIntent)
                     .build()
