@@ -53,7 +53,7 @@ Download it now on Google Play - https://play.google.com/store/apps/details?id=c
   <string name="no_browser_has_been_found">No browser has been found, try to install one.</string>
   <string name="filters">Filters</string>
   <string name="no_contests_found">No contests found</string>
-  <string name="contests_explanation">Contests are on the way to your device...</string>
+  <string name="contests_explanation">Contests are on the way to your device…</string>
   <string name="click_to_see_details">Click to see details</string>
   <string name="see_details">See details</string>
   <string name="update_explanation">Huge redesign, mentors &amp; more!</string>
@@ -146,9 +146,9 @@ Please note that without account, your content will not be able to sync, so if y
   <string name="lost_access_to_mail">Lost access to mail?</string>
   <string name="restore_password">Restore password</string>
   <string name="you_will_get_an_email_with_instructions_for_account_recovery">You will get an email with instructions for account recovery</string>
-  <string name="user_does_not_exist">User doesn’t exist ¯\\_(ツ)_/¯</string>
+  <string name="user_does_not_exist">User doesn\'t exist ¯\\_(ツ)_/¯</string>
 
-  <string name="check_your_box">Check your box.</string>
+  <string name="check_your_box">Check your inbox.</string>
   <string name="open_mail_hint">Tap to open your mail app</string>
   <string name="open_mail">Open mail</string>
   <string name="back_to_sign_in">Back to sign in</string>
