@@ -35,7 +35,7 @@
 "Users" = "Пользователи";
 "followed_users" = "Подписки";
 "no_favourite_problems_explanation" = "У Вас еще нет любимых задач.\nДобавьте первую воспользовавшись кнопкой «∞» внизу экрана.";
-"share_cw_message" = "Я использую Codeforces WatchR - бесплатное IOS приложение с открытым исходным кодом,  которое использует Codeforces API чтобы принести больше олимпиадного программирования на ваше IOS устройство. \n Codeforces WatchR позволяет: \n\n 1. Короткий список и регистрация на предстоящие соревнования по спортивному программированию: Codeforces, LeetCode, HackerEarth, AtCoder, TopCoder, CS Academy, CodeChef, Kick Start. \n 2. Следите за недавними событиями на Codeforces. \n 3. Просматривайте и ищите проблемы, добавляйте их в избранное. \n 4. Следите за активностью любого пользователя Codeforces. \n 5. Сортировка пользователей по рейтингу и дате последнего участия. \n\n Загружайте прямо сейчас в App Store - https://apps.apple.com/us/app/codeforces-watchr-contests/id1495591299";
+"share_cw_message" = "Я использую algois.me - бесплатное IOS приложение с открытым исходным кодом,  которое использует Codeforces API чтобы принести больше олимпиадного программирования на ваше IOS устройство. \n algois.me позволяет: \n\n 1. Короткий список и регистрация на предстоящие соревнования по спортивному программированию: Codeforces, LeetCode, HackerEarth, AtCoder, TopCoder, CS Academy, CodeChef, Kick Start. \n 2. Следите за недавними событиями на Codeforces. \n 3. Просматривайте и ищите проблемы, добавляйте их в избранное. \n 4. Следите за активностью любого пользователя Codeforces. \n 5. Сортировка пользователей по рейтингу и дате последнего участия. \n\n Загружайте прямо сейчас в App Store - https://apps.apple.com/us/app/codeforces-watchr-contests/id1495591299";
 "no_users_explanation" = "У Вас еще нет пользователей для отслеживания.\nДобавьте первого воспользовавшись кнопкой «+» внизу экрана.";
 
 "Add user" = "Добавить пользователя";
@@ -81,11 +81,11 @@
 
 "last_activity" = "Последняя активность: %@";
 
-"share_text" = "%@ - %@\n\nОтправлено через Codeforces WatchR. Найдите его в App Store.";
+"share_text" = "%@ - %@\n\nОтправлено через algois.me. Найдите его в App Store.";
 "upcoming_contests" = "Предстоящие контесты";
 
 "yes" = "Да!";
-"rate_us_first_title" = "Вам нравится Codeforces WatchR?";
+"rate_us_first_title" = "Вам нравится algois.me?";
 "rate_us_second_title" = "Не могли бы вы дать нам обратную связь?";
 "rate_us_third_title" = "Тогда что насчет оценки в App Store?";
 "not_really" = "Не совсем";

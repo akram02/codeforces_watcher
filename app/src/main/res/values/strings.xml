@@ -29,16 +29,16 @@
   <string name="commented_by">"Commented by %1$s"</string>
   <string name="feature_isn_t_available_yet">This feature isn’t available yet.</string>
   <string name="share_with_friends">Share with friends</string>
-  <string name="shared_through_cw">Shared through Codeforces WatchR. Find it on Google Play.</string>
+  <string name="shared_through_cw">Shared through algois.me. Find it on Google Play.</string>
   <string name="no_users">You don’t have any users to watch yet.\nAdd the first one using «+» at the bottom of the screen.</string>
   <string name="no_favourite_problems">You don’t have any favourite problems yet.\nAdd the first one using «∞» at the bottom of the screen.</string>
 
-  <string name="share_cw">Share Codeforces WatchR</string>
-  <string name="help_cw_make_more_social">Help us make Codeforces and Codeforces WatchR more social by sharing it with your friends.</string>
+  <string name="share_cw">Share algois.me</string>
+  <string name="help_cw_make_more_social">Help us make Codeforces and algois.me more social by sharing it with your friends.</string>
   <string name="share">Share</string>
   <string name="cancel">Cancel</string>
-  <string name="share_cw_message">"I'm using Codeforces WatchR - open-source, free Android application, which leverages Codeforces API to bring more competitive programming to your Android device.
-Codeforces WatchR allows:
+  <string name="share_cw_message">"I'm using algois.me - open-source, free Android application, which leverages Codeforces API to bring more competitive programming to your Android device.
+algois.me allows:
 
 1. Shortlist and register for upcoming Competitive Programming contests: Codeforces, LeetCode, HackerEarth, AtCoder, TopCoder, CS Academy, CodeChef, Kick Start.
 2. Follow Recent News.
@@ -53,13 +53,13 @@ Download it now on Google Play - https://play.google.com/store/apps/details?id=c
   <string name="no_browser_has_been_found">No browser has been found, try to install one.</string>
   <string name="filters">Filters</string>
   <string name="no_contests_found">No contests found</string>
-  <string name="contests_explanation">Contests are on the way to your device...</string>
+  <string name="contests_explanation">Contests are on the way to your device…</string>
   <string name="click_to_see_details">Click to see details</string>
   <string name="see_details">See details</string>
   <string name="update_explanation">Huge redesign, mentors &amp; more!</string>
 
   <string name="yes">YES!</string>
-  <string name="rate_us_first_title">Enjoying our Codeforces WatchR App?</string>
+  <string name="rate_us_first_title">Enjoying our algois.me app?</string>
   <string name="rate_us_second_title">Would you mind giving us some feedback?</string>
   <string name="rate_us_third_title">How about a rating on Google Play, then?</string>
   <string name="not_really">Not really</string>
@@ -146,9 +146,9 @@ Please note that without account, your content will not be able to sync, so if y
   <string name="lost_access_to_mail">Lost access to mail?</string>
   <string name="restore_password">Restore password</string>
   <string name="you_will_get_an_email_with_instructions_for_account_recovery">You will get an email with instructions for account recovery</string>
-  <string name="user_does_not_exist">User doesn’t exist ¯\\_(ツ)_/¯</string>
+  <string name="user_does_not_exist">User doesn\'t exist ¯\\_(ツ)_/¯</string>
 
-  <string name="check_your_box">Check your box.</string>
+  <string name="check_your_box">Check your inbox.</string>
   <string name="open_mail_hint">Tap to open your mail app</string>
   <string name="open_mail">Open mail</string>
   <string name="back_to_sign_in">Back to sign in</string>

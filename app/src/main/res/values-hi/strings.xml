@@ -26,14 +26,14 @@
     <string name="commented_by">"कमेंटेड बाय %1$s"</string>
     <string name="feature_isn_t_available_yet">यह सुविधा अभी तक उपलब्ध नहीं है|</string>
     <string name="share_with_friends">दोस्तों के साथ शेयर करें</string>
-    <string name="shared_through_cw">Shared through Codeforces WatchR. Find it on Google Play.</string>
+    <string name="shared_through_cw">Shared through algois.me. Find it on Google Play.</string>
     <string name="no_users">आपके पास अभी तक देखने के लिए कोई यूजर नहीं है।\nपहले एक को जोड़ें स्क्रीन के नीचे दिए «+» बटन दबाकर.</string>
-    <string name="share_cw">शेयर Codeforces WatchR</string>
-    <string name="help_cw_make_more_social">हमें अपने मित्रों के साथ शेयर करके Codeforces और Codeforces WatchR को अधिक सामाजिक बनाने में मदद करें।</string>
+    <string name="share_cw">शेयर algois.me</string>
+    <string name="help_cw_make_more_social">हमें अपने मित्रों के साथ शेयर करके Codeforces और algois.me को अधिक सामाजिक बनाने में मदद करें।</string>
     <string name="share">शेयर</string>
     <string name="cancel">कैंसल</string>
     <string name="share_cw_message">"मैं कोडफोर्स वॉचर - ओपन-सोर्स, फ्री एंड्रॉइड एप्लिकेशन का उपयोग कर रहा हूं, जो आपके एंड्रॉइड डिवाइस पर अधिक competitive programming लाने के लिए Codeforces API का लाभ उठाता है।
-Codeforces WatchR के साथ आप:
+algois.me के साथ आप:
 
 1. किसी भी Codeforces यूजर की गतिविधि देखें।
 2. रेटिंग और अंतिम भागीदारी के आधार पर यूजर को क्रमबद्ध करें।

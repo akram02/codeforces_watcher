@@ -27,16 +27,16 @@
     <string name="commented_by">"Прокомментировал %1$s"</string>
     <string name="feature_isn_t_available_yet">Эта функция еще не доступна.</string>
     <string name="share_with_friends">Поделиться с друзьями</string>
-    <string name="shared_through_cw">Отправлено через Codeforces WatchR. Найдите его в Google Play.</string>
+    <string name="shared_through_cw">Отправлено через algois.me. Найдите его в Google Play.</string>
     <string name="no_users">У Вас еще нет пользователей для отслеживания.\nДобавьте первого воспользовавшись кнопкой «+» внизу экрана.</string>
     <string name="no_favourite_problems">У Вас еще нет любимых задач.\nДобавьте первую воспользовавшись кнопкой «∞» внизу экрана.</string>
 
-    <string name="share_cw">Поделится Codeforces WatchR</string>
-    <string name="help_cw_make_more_social">Помогите сделать Codeforces и Codeforces WatchR более социальными, поделившись ними с вашими друзьями.</string>
+    <string name="share_cw">Поделиться algois.me</string>
+    <string name="help_cw_make_more_social">Помогите сделать Codeforces и algois.me более социальными, поделившись ними с вашими друзьями.</string>
     <string name="share">Поделиться</string>
     <string name="cancel">Отмена</string>
-    <string name="share_cw_message">"Я использую Codeforces WatchR - бесплатное Android приложение с открытым исходным кодом, которое использует Codeforces API чтобы принести больше олимпиадного программирования на ваше Android устройство.
-Codeforces WatchR позволяет:
+    <string name="share_cw_message">"Я использую algois.me - бесплатное Android приложение с открытым исходным кодом, которое использует Codeforces API чтобы принести больше олимпиадного программирования на ваше Android устройство.
+algois.me позволяет:
 
 1. Короткий список и регистрация на предстоящие соревнования по спортивному программированию: Codeforces, LeetCode, HackerEarth, AtCoder, TopCoder, CS Academy, CodeChef, Kick Start.
 2. Следите за недавними событиями на Codeforces.
@@ -57,7 +57,7 @@ Codeforces WatchR позволяет:
     <string name="update_explanation">Большое обновление дизайна, наставники и многое другое!</string>
 
     <string name="yes">Да!</string>
-    <string name="rate_us_first_title">Вам нравится Codeforces WatchR?</string>
+    <string name="rate_us_first_title">Вам нравится algois.me?</string>
     <string name="rate_us_second_title">Не могли бы вы дать нам обратную связь?</string>
     <string name="rate_us_third_title">Тогда что насчет оценки в Google Play?</string>
     <string name="not_really">Не совсем</string>
