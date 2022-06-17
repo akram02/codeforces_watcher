@@ -75,7 +75,7 @@ class FeedbackController: BaseFeedbackController {
     }
 
     override func showEmailApp() {
-        if let url = URL(string: "mailto:support@xorum.io?subject=Feedback about Codeforces WatchR App".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!) {
+        if let url = URL(string: "mailto:support@xorum.io?subject=Feedback about algois.me app".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!) {
             UIApplication.shared.open(url)
         }
     }

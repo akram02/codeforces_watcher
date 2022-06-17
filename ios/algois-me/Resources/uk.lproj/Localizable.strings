@@ -35,7 +35,7 @@
 "Users" = "Користувачi";
 "followed_users" = "Підписки";
 "no_favourite_problems_explanation" = "Ви ще не маєте улюблених задач.\nДодайте першу скориставшись кнопкою «∞» знизу екрану.";
-"share_cw_message" = "Я користуюсь Codeforces WatchR - безкоштовним IOS застосунком з відкритим кодом, що використовує Codeforces API для того щоб принести більше олімпіадного програмування на ваш IOS пристрій. \n Codeforces WatchR дає можливiсть: \n\n 1. Невеликий перерелік та реєстрація на змаганнях зі спортивного програмування: Codeforces, LeetCode, HackerEarth, AtCoder, TopCoder, CS Academy, CodeChef, Kick Start. \n 2. Слідкуйте за новими подіями на Codeforces. \n 3. Переглядайте і шукайте задачi, додавайте їх в улюбленi. \n 4. Слідкуйте за активністю будь-якого користувача Codeforces. \n 5. Сортуйте користувачів за рейтингом і датою останньої участі. \n\n Завантажуйте прямо зараз в App Store - https://apps.apple.com/us/app/codeforces-watchr-contests/id1495591299";
+"share_cw_message" = "Я користуюсь algois.me - безкоштовним IOS застосунком з відкритим кодом, що використовує Codeforces API для того щоб принести більше олімпіадного програмування на ваш IOS пристрій. \n Codeforces WatchR дає можливiсть: \n\n 1. Невеликий перерелік та реєстрація на змаганнях зі спортивного програмування: Codeforces, LeetCode, HackerEarth, AtCoder, TopCoder, CS Academy, CodeChef, Kick Start. \n 2. Слідкуйте за новими подіями на Codeforces. \n 3. Переглядайте і шукайте задачi, додавайте їх в улюбленi. \n 4. Слідкуйте за активністю будь-якого користувача Codeforces. \n 5. Сортуйте користувачів за рейтингом і датою останньої участі. \n\n Завантажуйте прямо зараз в App Store - https://apps.apple.com/us/app/codeforces-watchr-contests/id1495591299";
 "no_users_explanation" = "Ви ще не маєте користувачів для відслідковування.\nДодайте першого скориставшись кнопкою «+» знизу екрану.";
 
 "Add user" = "Додати користувача";
@@ -81,11 +81,11 @@
 
 "last_activity" = "Остання активність: %@";
 
-"share_text" = "%@ - %@\n\nВідправлено через Codeforces WatchR. Знайдiть його в App Store.";
+"share_text" = "%@ - %@\n\nВідправлено через algois.me. Знайдiть його в App Store.";
 "upcoming_contests" = "Майбутні контести";
 
 "yes" = "Так!";
-"rate_us_first_title" = "Вам подобається Codeforces WatchR?";
+"rate_us_first_title" = "Вам подобається algois.me?";
 "rate_us_second_title" = "Ви б не хотіли дати нам відгук?";
 "rate_us_third_title" = "То як щодо оцiнки в App Store?";
 "not_really" = "Не зовсім";

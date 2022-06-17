@@ -32,7 +32,7 @@
 "Click to see details" = "Cliquez pour voir les détails";
 "Users" = "Utilisateurs";
 "no_favourite_problems_explanation" = "Vous n'avez aucun problème favori.\nAjoutez-en un avec le «∞» présent en bas de l'écran.";
-"share_cw_message" = "J'utilise Codeforces WatchR - open-source, application IOS gratuite,  qui utilise l'API Codeforces pour apporter plus de programmation compétitive sur votre appareil IOS. \n Codeforces WatchR permet de: \n\n 1. Se pré-enregistrer et s'inscrire pour les prochaines concours de Programmation Compétitive: Codeforces, LeetCode, HackerEarth, AtCoder, TopCoder, CS Academy, CodeChef, Kick Start. \n 2. Suivre les informations récentes. \n 3. Parcourir et chercher des problèmes, les ajouter en favoris. \n 4. Suivre l'activité de n'importe quel utilisateur Codeforces. \n 5. Trier les utilisateurs par classement et dernière date de participation. \n\n Téléchargez-la sur App Store - https://apps.apple.com/us/app/codeforces-watchr-contests/id1495591299";
+"share_cw_message" = "J'utilise algois.me - open-source, application IOS gratuite,  qui utilise l'API Codeforces pour apporter plus de programmation compétitive sur votre appareil IOS. \n algois.me permet de: \n\n 1. Se pré-enregistrer et s'inscrire pour les prochaines concours de Programmation Compétitive: Codeforces, LeetCode, HackerEarth, AtCoder, TopCoder, CS Academy, CodeChef, Kick Start. \n 2. Suivre les informations récentes. \n 3. Parcourir et chercher des problèmes, les ajouter en favoris. \n 4. Suivre l'activité de n'importe quel utilisateur Codeforces. \n 5. Trier les utilisateurs par classement et dernière date de participation. \n\n Téléchargez-la sur App Store - https://apps.apple.com/us/app/codeforces-watchr-contests/id1495591299";
 "no_users_explanation" = "Vous n'avez aucun utilisateur dans votre liste.\nAjoutez-en un avec le «+»  présent en bas de l'écran.";
 
 "Add user" = "Ajouter utilisateur";
@@ -57,11 +57,11 @@
 
 "last_activity" = "Dernière activité: %@";
 
-"share_text" = "%@ - %@\n\nPartagé avec Codeforces WatchR. Téléchargeable sur App Store.";
+"share_text" = "%@ - %@\n\nPartagé avec algois.me. Téléchargeable sur App Store.";
 "upcoming_contests" = "concours à venir";
 
 "yes" = "Oui!";
-"rate_us_first_title" = "Vous appréciez Codeforces WatchR?";
+"rate_us_first_title" = "Vous appréciez algois.me?";
 "rate_us_second_title" = "Voudriez-vous nous donner un avis?";
 "rate_us_third_title" = "Pourquoi ne pas la noter sur l'App Store?";
 "not_really" = "Pas vraiment";

@@ -26,16 +26,16 @@
     <string name="commented_by">"Commenté par %1$s"</string>
     <string name="feature_isn_t_available_yet">Cette fonctionnalité n\'est pas encore disponible.</string>
     <string name="share_with_friends">Partagez avec vos amis</string>
-    <string name="shared_through_cw">Partagé avec Codeforces WatchR. Téléchargeable sur Google Play.</string>
+    <string name="shared_through_cw">Partagé avec algois.me. Téléchargeable sur Google Play.</string>
     <string name="no_users">Vous n\'avez aucun utilisateur dans votre liste.\nAjoutez-en un avec le «+» présent en bas de l\'écran.</string>
     <string name="no_favourite_problems">Vous n\'avez aucun problème favori.\nAjoutez-en un avec le «∞» présent en bas de l\'écran.</string>
 
-    <string name="share_cw">Partagez Codeforces WatchR</string>
-    <string name="help_cw_make_more_social">Aidez nous à rendre Codeforces et Codeforces WatchR plus sociable en partageant l\'application avec vos amis.</string>
+    <string name="share_cw">Partagez algois.me</string>
+    <string name="help_cw_make_more_social">Aidez nous à rendre Codeforces et algois.me plus sociable en partageant l\'application avec vos amis.</string>
     <string name="share">Partager</string>
     <string name="cancel">Annuler</string>
-    <string name="share_cw_message">"J'utilise Codeforces WatchR - open-source, application Android gratuite, qui utilise l'API Codeforces pour apporter plus de programmation compétitive sur votre appareil Android.
-Codeforces WatchR permet de:
+    <string name="share_cw_message">"J'utilise algois.me - open-source, application Android gratuite, qui utilise l'API Codeforces pour apporter plus de programmation compétitive sur votre appareil Android.
+algois.me permet de:
 
 1. Se pré-enregistrer et s'inscrire pour les prochaines concours de Programmation Compétitive: Codeforces, LeetCode, HackerEarth, AtCoder, TopCoder, CS Academy, CodeChef, Kick Start.
 2. Suivre les informations récentes.
@@ -53,7 +53,7 @@ Téléchargez-la sur Google Play - https://play.google.com/store/apps/details?id
     <string name="click_to_see_details">Cliquez pour voir les détails</string>
 
     <string name="yes">OUI!</string>
-    <string name="rate_us_first_title">Vous appréciez Codeforces WatchR?</string>
+    <string name="rate_us_first_title">Vous appréciez algois.me?</string>
     <string name="rate_us_second_title">Voudriez-vous nous donner un avis?</string>
     <string name="rate_us_third_title">Pourquoi ne pas la noter sur Google Play?</string>
     <string name="not_really">Pas vraiment</string>

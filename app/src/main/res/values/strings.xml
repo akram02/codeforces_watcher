@@ -29,16 +29,16 @@
   <string name="commented_by">"Commented by %1$s"</string>
   <string name="feature_isn_t_available_yet">This feature isn’t available yet.</string>
   <string name="share_with_friends">Share with friends</string>
-  <string name="shared_through_cw">Shared through Codeforces WatchR. Find it on Google Play.</string>
+  <string name="shared_through_cw">Shared through algois.me. Find it on Google Play.</string>
   <string name="no_users">You don’t have any users to watch yet.\nAdd the first one using «+» at the bottom of the screen.</string>
   <string name="no_favourite_problems">You don’t have any favourite problems yet.\nAdd the first one using «∞» at the bottom of the screen.</string>
 
-  <string name="share_cw">Share Codeforces WatchR</string>
-  <string name="help_cw_make_more_social">Help us make Codeforces and Codeforces WatchR more social by sharing it with your friends.</string>
+  <string name="share_cw">Share algois.me</string>
+  <string name="help_cw_make_more_social">Help us make Codeforces and algois.me more social by sharing it with your friends.</string>
   <string name="share">Share</string>
   <string name="cancel">Cancel</string>
-  <string name="share_cw_message">"I'm using Codeforces WatchR - open-source, free Android application, which leverages Codeforces API to bring more competitive programming to your Android device.
-Codeforces WatchR allows:
+  <string name="share_cw_message">"I'm using algois.me - open-source, free Android application, which leverages Codeforces API to bring more competitive programming to your Android device.
+algois.me allows:
 
 1. Shortlist and register for upcoming Competitive Programming contests: Codeforces, LeetCode, HackerEarth, AtCoder, TopCoder, CS Academy, CodeChef, Kick Start.
 2. Follow Recent News.
@@ -59,7 +59,7 @@ Download it now on Google Play - https://play.google.com/store/apps/details?id=c
   <string name="update_explanation">Huge redesign, mentors &amp; more!</string>
 
   <string name="yes">YES!</string>
-  <string name="rate_us_first_title">Enjoying our Codeforces WatchR App?</string>
+  <string name="rate_us_first_title">Enjoying our algois.me app?</string>
   <string name="rate_us_second_title">Would you mind giving us some feedback?</string>
   <string name="rate_us_third_title">How about a rating on Google Play, then?</string>
   <string name="not_really">Not really</string>

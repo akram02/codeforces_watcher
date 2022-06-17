@@ -75,8 +75,7 @@ class FeedbackController(private val context: Context) : BaseFeedbackController(
 
     override fun showEmailApp() {
         val emailIntent = Intent(Intent.ACTION_SENDTO)
-        emailIntent.data =
-            Uri.parse("mailto:support@xorum.io?subject=Feedback about Codeforces WatchR App")
+        emailIntent.data = Uri.parse("mailto:support@xorum.io?subject=Feedback about algois.me app")
 
         try {
             context.startActivity(emailIntent)

@@ -68,7 +68,7 @@ kotlin {
     }
 
     cocoapods {
-        summary = "Codeforces WatchR common module"
+        summary = "algois.me common module"
         homepage = "https://github.com/xorum-io/codeforces_watcher"
     }
 }

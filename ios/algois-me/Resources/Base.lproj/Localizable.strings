@@ -35,7 +35,7 @@
 "Users" = "Users";
 "followed_users" = "Followed users";
 "no_favourite_problems_explanation" = "You don’t have any favourite problems yet.\nAdd the first one using «∞» at the bottom of the screen.";
-"share_cw_message" = "I'm using Codeforces WatchR - open-source, free IOS application, which leverages Codeforces API to bring more competitive programming to your IOS device. \n Codeforces WatchR allows: \n\n 1. Shortlist and register for upcoming Competitive Programming contests: Codeforces, LeetCode, HackerEarth, AtCoder, TopCoder, CS Academy, CodeChef, Kick Start. \n 2. Follow Recent News. \n 3. Browse and search for Problems, add them to favourites. \n 4. Watch for activity of any Codeforces user \n 5. Sort users by rating and last participation date. \n\n Download it now on App Store - https://apps.apple.com/us/app/codeforces-watchr-contests/id1495591299";
+"share_cw_message" = "I'm using algois.me - open-source, free IOS application, which leverages Codeforces API to bring more competitive programming to your IOS device. \n algois.me allows: \n\n 1. Shortlist and register for upcoming Competitive Programming contests: Codeforces, LeetCode, HackerEarth, AtCoder, TopCoder, CS Academy, CodeChef, Kick Start. \n 2. Follow Recent News. \n 3. Browse and search for Problems, add them to favourites. \n 4. Watch for activity of any Codeforces user \n 5. Sort users by rating and last participation date. \n\n Download it now on App Store - https://apps.apple.com/us/app/codeforces-watchr-contests/id1495591299";
 "no_users_explanation" = "You don’t have any users to watch yet.\nAdd the first one using «+» at the bottom of the screen.";
 
 "Add user" = "Add user";
@@ -85,7 +85,7 @@ Please note that without account, your content will not be able to sync, so if y
 "upcoming_contests" = "Upcoming contests";
 
 "yes" = "Yes!";
-"rate_us_first_title" = "Enjoying our Codeforces WatchR App?";
+"rate_us_first_title" = "Enjoying our algois.me app?";
 "rate_us_second_title" = "Would you mind giving us some feedback?";
 "rate_us_third_title" = "How about a rating on the App Store, then?";
 "not_really" = "Not really";
