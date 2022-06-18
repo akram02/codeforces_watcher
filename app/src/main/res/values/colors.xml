@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#FF1289CE</color>
-    <color name="colorPrimaryDark">#FF1266CE</color>
     <color name="colorAccent">#FFFFCA00</color>
     <color name="gray">#FF808080</color>
     <color name="green">#FF008000</color>
     <color name="blue_green">#FF0D98BA</color>
     <color name="dark_gray">#FF636363</color>
     <color name="blue">#FF0000FF</color>
-    <color name="bright_blue">#FF3333ff</color>
     <color name="purple">#FF9B1EA4</color>
     <color name="orange">#FFFFA500</color>
     <color name="red">#FFFF0000</color>
@@ -16,13 +14,10 @@
     <color name="white">#FFFFFFFF</color>
     <color name="bright_black">#FF212121</color>
     <color name="black">#FF000000</color>
-    <color name="divider_gray">#FFC2C2C2</color>
-    <color name="gray6">#FFF2F2F2</color>
     <color name="light_gray">#FFEEEEEE</color>
 
     <color name="primary">#FFFFFFFF</color>
     <color name="secondary">#FF000000</color>
     <color name="accentGrayish">#FFEEEEEE</color>
 
-    <color name="xlight">#FFEBF0F5</color>
 </resources>

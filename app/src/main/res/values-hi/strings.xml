@@ -6,16 +6,13 @@
     <string name="check_connection_or_try_again_later">अपना कनेक्शन जांचें या बाद में पुन: प्रयास करें</string>
     <string name="rating_changes">रेटिंग में बदलाव</string>
     <string name="ratings_have_been_updated">रेटिंग अपडेट हो चुकी है</string>
-    <string name="ratings_update">रेटिंग अपडेट</string>
     <string name="user_already_added">यूजर पहले से मौजूद है</string>
-    <string name="sort_by">सॉर्ट करें</string>
     <string name="by_default">डिफ़ॉल्ट</string>
     <string name="by_descending_rating">↓ रेटिंग</string>
     <string name="by_ascending_rating">↑ रेटिंग</string>
     <string name="by_descending_update">↓ अपडेट</string>
     <string name="by_ascending_update">↑ अपडेट</string>
     <string name="add_user">यूज़र जोड़ें</string>
-    <string name="enter_handle">यूज़र हैंडल डाले</string>
 
     <string name="users">यूजर्स</string>
     <string name="contests">प्रतियोगिताएं</string>
@@ -23,11 +20,8 @@
     <string name="problems">प्रॉब्लेमस</string>
 
     <string name="google_calendar_not_found">क्षमा करें, लेकिन इस उपकरण पर Google Calendar नहीं मिला</string>
-    <string name="commented_by">"कमेंटेड बाय %1$s"</string>
-    <string name="feature_isn_t_available_yet">यह सुविधा अभी तक उपलब्ध नहीं है|</string>
     <string name="share_with_friends">दोस्तों के साथ शेयर करें</string>
     <string name="shared_through_cw">Shared through algois.me. Find it on Google Play.</string>
-    <string name="no_users">आपके पास अभी तक देखने के लिए कोई यूजर नहीं है।\nपहले एक को जोड़ें स्क्रीन के नीचे दिए «+» बटन दबाकर.</string>
     <string name="share_cw">शेयर algois.me</string>
     <string name="help_cw_make_more_social">हमें अपने मित्रों के साथ शेयर करके Codeforces और algois.me को अधिक सामाजिक बनाने में मदद करें।</string>
     <string name="share">शेयर</string>
@@ -43,12 +37,9 @@ algois.me के साथ आप:
 
 इसे अब Google Play पर डाउनलोड करें - https://play.google.com/store/apps/details?id=com.bogdan.codeforceswatcher"</string>
     <string name="news_on_the_way">आपके डिवाइस पर आने वाली हाल की क्रियाएं…</string>
-    <string name="no_favourite_problems">आपके पास अभी कोई पसंदीदा सवाल नहीं है ।\n अपना पहला पसंदीदा सवाल स्क्रीन में नीचे दिए गए «∞» बटन पर क्लिक करके जोड़ें ।</string>
     <string name="problems_on_the_way">सवाल आपके डिवाइस पे लोड हो रहा है…</string>
     <string name="search_for_problems">सवाल खोजे…</string>
-    <string name="no_browser_has_been_found">कोई ब्राउज़र नहीं पाया गया , कृपया कोई इंस्टॉल करें।</string>
     <string name="filters">छाँटे </string>
-    <string name="no_contests_found">कोई प्रतियोगिता नहीं पाया गया</string>
     <string name="click_to_see_details">विवरण देखने के लिए क्लिक करें</string>
 
     <string name="yes">हाँ!</string>
@@ -67,29 +58,17 @@ algois.me के साथ आप:
     <string name="ok">ओके</string>
 
     <string name="rating">रेटिंग: %1$s (अधिकतम रेटिंग %2$s)</string>
-    <string name="rating_only">रेटिंग: %1$s</string>
-    <string name="max_rating_only">अधिकतम रेटिंग: %1$s</string>
 
     <string name="contribution">योगदान: %1$s</string>
-
-    <string name="see_all_comments">सभी टिप्पणियाँ देखें</string>
-    <string name="be_first_to_comment">टिप्पणी करने वाला पहला व्यक्ति बनें</string>
 
     <string name="modified">संशोधित</string>
     <string name="created">बनाया था</string>
 
-    <string name="watch_video">वीडियो देखेंा</string>
     <string name="upcoming_contests">आगामी प्रतियोगिताएं</string>
 
-    <string name="login_in_42_seconds">42 सेकंड में लॉगिन करें</string>
-    <string name="galactic_master">गांगेय गुरु</string>
-    <string name="unknown">अनजान</string>
     <string name="never_updated">कभी अद्यतन नहीं किया गया</string>
-    <string name="login_to_identify">पहचान करने के लिए लॉगिन करें</string>
     <string name="verify_account">खाता सत्यापित करें</string>
     <string name="pass_quick_verification">अपनी प्रोफ़ाइल देखने के लिए त्वरित और सरल सत्यापन पास करें</string>
-    <string name="verify_in_42_seconds">42 सेकंड में सत्यापित करें</string>
-    <string name="get_instant_notifications">और रेटिंग अपडेट के बारे में तुरंत पुश सूचनाएं प्राप्त करें</string>
     <string name="forgot_password">पासवर्ड भूल गए?</string>
     <string name="email">ईमेल</string>
     <string name="password">कुंजिका</string>
@@ -98,8 +77,6 @@ algois.me के साथ आप:
     <string name="already_have_an_account">क्या आपके पास पहले से एक खाता मौजूद है?</string>
     <string name="sign_up">साइन अप करें</string>
     <string name="confirm_password">पासवर्ड की पुष्टि कीजिये</string>
-    <string name="passwords_do_not_match">पासवर्ड डॉन \'टी मैच</string>
-    <string name="agree_to_the_privacy_policy">गोपनीयता नीति से सहमत हों</string>
     <string name="terms_and_conditions">नियम और शर्तें</string>
     <string name="privacy_policy">गोपनीयता नीति</string>
     <string name="verify_codeforces_account">सत्यापित करें Codeforces लेखा</string>
@@ -110,7 +87,4 @@ algois.me के साथ आप:
     <string name="log_out">लॉग आउट</string>
     <string name="do_you_want_to_log_out">क्या आप लॉग आउट करना चाहते हैं?</string>
     <string name="stay_logged_in">लॉगइन रखें</string>
-    <string name="forgot_password_empty_email">एक मान्य ईमेल दर्ज करें और \ "पासवर्ड भूल गए" पर क्लिक करें!</string>
-    <string name="fields_cannot_be_empty">फ़ील्ड खाली नहीं हो सकते</string>
-    <string name="forgot_password_success">आगे के निर्देशों के साथ ईमेल आपको भेज दिया गया है! कृपया जांचें!</string>
 </resources>
