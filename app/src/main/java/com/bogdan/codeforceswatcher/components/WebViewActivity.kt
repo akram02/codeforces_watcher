@@ -20,7 +20,6 @@ import com.bogdan.codeforceswatcher.components.VideoEnabledWebChromeClient.Toggl
 import io.xorum.codeforceswatcher.redux.analyticsController
 import kotlinx.android.synthetic.main.activity_web_page.*
 
-
 class WebViewActivity : AppCompatActivity() {
 
     private val pageTitle: String
