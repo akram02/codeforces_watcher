@@ -1,7 +1,7 @@
 "locale" = "fr";
 
 "Contests" = "Concours";
-"News" = "Informations";
+"News" = "News";
 "Problems" = "Problèmes";
 "Users" = "Utilisateurs";
 "filters" = "Filtres";
@@ -10,7 +10,6 @@
 "post_ago" = " · %@ %@";
 
 "news_explanation" = "Informations récentes en cours de téléchargement...";
-
 "problems_explanation" = "Problèmes en cours de téléchargement...";
 "contests_explanation" = "Concours en cours de téléchargement...";
 
@@ -25,7 +24,9 @@
 
 "User already added" = "Utilisateur déjà ajouté";
 "Click to see details" = "Cliquez pour voir les détails";
+"see_details" = "Voir les détails";
 
+"followed_users" = "Utilisateurs suivis";
 "no_favourite_problems_explanation" = "Vous n'avez aucun problème favori.\nAjoutez-en un avec le «∞» présent en bas de l'écran.";
 "share_cw_message" = "J'utilise algois.me - open-source, application IOS gratuite,  qui utilise l'API Codeforces pour apporter plus de programmation compétitive sur votre appareil IOS. \n algois.me permet de: \n\n 1. Se pré-enregistrer et s'inscrire pour les prochaines concours de Programmation Compétitive: Codeforces, LeetCode, HackerEarth, AtCoder, TopCoder, CS Academy, CodeChef, Kick Start. \n 2. Suivre les informations récentes. \n 3. Parcourir et chercher des problèmes, les ajouter en favoris. \n 4. Suivre l'activité de n'importe quel utilisateur Codeforces. \n 5. Trier les utilisateurs par classement et dernière date de participation. \n\n Téléchargez-la sur App Store - https://apps.apple.com/us/app/codeforces-watchr-contests/id1495591299";
 
@@ -34,12 +35,32 @@
 "Done" = "Fait";
 "Rating changes" = "Changements de classement";
 
+"delete_account" = "Supprimer le compte";
+"do_not_delete" = "Ne pas supprimer";
+"delete_account_warning" = "Avertissement! Cette action est irréversible.";
+"delete_account_explanation" = "Si vous supprimez votre compte, vous ne pourrez plus utiliser toutes les fonctionnalités de l'application, notamment :
+- profil personnel
+- suivi du classement
+- notifications sur les mises à jour des notes
+- programme de mentorat
+- événements spéciaux algois.me
+- participation aux Défis
+- badges, médailles, statistiques et plus
+
+Vous pourrez toujours utiliser les fonctionnalités de base de l'application, qui est disponible sans inscription, notamment suivre d'autres utilisateurs, regarder des concours (y compris des défis, mais sans possibilité de participer), afficher et enregistrer des problèmes, lire des actualités.
+
+Veuillez noter que sans compte, votre contenu ne pourra pas être synchronisé, donc si vous désinstallez l'application, vos données ne seront pas enregistrées et pourraient être perdues.";
+"delete_account_hint" = "Le compte ne peut pas être restauré.\nRéfléchissez bien avant de le faire.";
+"delete_account_sure" = "Êtes-vous sûr?\nCochez la case pour confirmer vos intentions.";
+"want_to_delete_account" = "Je veux supprimer mon compte";
+
 "Delete user" = "Supprimer l'utilisateur";
 "delete_user_explanation" = "Êtes-vous sûr de supprimer %@?";
 
 "None" = "Aucun";
 "Rating" = "Classement: %@ (max: %@)";
 "Contribution" = "Contribution: %@";
+"view_profile" = "Voir le profil";
 
 "default" = "défaut";
 "rating_up" = "↑classement";
@@ -70,6 +91,7 @@
 
 "never_updated" = "Jamais mis à jour";
 
+"who_are_you" = "Qui êtes-vous?";
 "login_to_identify" = "Connectez-vous pour vous identifier et recevez des notifications push instantanées sur les mises à jour des notes";
 "login" = "Connectez-vous";
 
@@ -91,6 +113,13 @@
 "restore_password" = "Restaurer\nle mot de passe";
 "restore_password_button" = "Restaurer le mot de passe";
 "restore_password_hint" = "Vous recevrez un e-mail avec des instructions pour la récupération de compte";
+
+"check_your_box" = "Vérifiez votre boîte de réception.";
+"open_mail_hint" = "Appuyez pour ouvrir votre application e-mail";
+"open_mail" = "Ouvrir l'e-mail";
+"mail_app_not_found" = "Application e-mail introuvable";
+"back_to_sign_in" = "Retour à la connexion";
+"check_your_spam_folder" = "Si vous n'avez pas reçu de message dans les 5 minutes, vérifiez votre dossier Spam.";
 
 "agreement_terms_and_privacy" = "J'accepte les <terms>Termes et conditions</terms> et la <privacy>Politique de confidentialité</privacy>.";
 

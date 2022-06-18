@@ -11,7 +11,6 @@
 
 "update_explanation" = "Huge redesign, mentors & more!";
 "news_explanation" = "Recent news are on the way to your device...";
-
 "problems_explanation" = "Problems are on the way to your device...";
 "contests_explanation" = "Contests are on the way to your device...";
 
@@ -25,7 +24,6 @@
 "Search for problems..." = "Search for problems...";
 
 "User already added" = "User already added";
-
 "Click to see details" = "Click to see more";
 "see_details" = "See details";
 
@@ -56,7 +54,6 @@ Please note that without account, your content will not be able to sync, so if y
 "delete_account_hint" = "Account cannot be restored.\nThink wisely before doing it.";
 "delete_account_sure" = "Are you sure?\nMark the checkbox to confirm your intentions.";
 "want_to_delete_account" = "I want to delete my account";
-"mark_checkbox" = "Mark the checkbox to confirm your intentions";
 
 "Delete user" = "Delete user";
 "delete_user_explanation" = "Are you sure you want to delete %@?";
