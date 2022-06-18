@@ -5,8 +5,8 @@ options:
   tabWidth: 4
 settings:
   base:
-    MARKETING_VERSION: 2.0.0
-    CURRENT_PROJECT_VERSION: 19
+    MARKETING_VERSION: 2.1.0
+    CURRENT_PROJECT_VERSION: 43
 configs:
   Debug: debug
   integ: debug
