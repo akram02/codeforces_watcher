@@ -3,14 +3,14 @@
 "Contests" = "Contests";
 "News" = "News";
 "Problems" = "Problems";
+"Users" = "Users";
+"filters" = "Filters";
 
-"Commented by" = "Commented by";
 "ago" = " · %@ ago";
 "post_ago" = " · %@ %@ ago";
 
 "update_explanation" = "Huge redesign, mentors & more!";
 "news_explanation" = "Recent news are on the way to your device...";
-
 "problems_explanation" = "Problems are on the way to your device...";
 "contests_explanation" = "Contests are on the way to your device...";
 
@@ -23,23 +23,15 @@
 
 "Search for problems..." = "Search for problems...";
 
-"Official Codeforces rules" = "Official Codeforces rules";
-"Apple isn't a sponsor of any contests conducted on Codeforces" = "Apple isn't a sponsor of any contests conducted on Codeforces";
-
-"filters" = "Filters";
-
 "User already added" = "User already added";
-
 "Click to see details" = "Click to see more";
 "see_details" = "See details";
-"Users" = "Users";
+
 "followed_users" = "Followed users";
 "no_favourite_problems_explanation" = "You don’t have any favourite problems yet.\nAdd the first one using «∞» at the bottom of the screen.";
 "share_cw_message" = "I'm using algois.me - open-source, free IOS application, which leverages Codeforces API to bring more competitive programming to your IOS device. \n algois.me allows: \n\n 1. Shortlist and register for upcoming Competitive Programming contests: Codeforces, LeetCode, HackerEarth, AtCoder, TopCoder, CS Academy, CodeChef, Kick Start. \n 2. Follow Recent News. \n 3. Browse and search for Problems, add them to favourites. \n 4. Watch for activity of any Codeforces user \n 5. Sort users by rating and last participation date. \n\n Download it now on App Store - https://apps.apple.com/us/app/codeforces-watchr-contests/id1495591299";
-"no_users_explanation" = "You don’t have any users to watch yet.\nAdd the first one using «+» at the bottom of the screen.";
 
 "Add user" = "Add user";
-"Enter user handle" = "Enter user handle";
 "no_activity" = "No activity";
 "Done" = "Done";
 "Rating changes" = "Rating changes";
@@ -62,7 +54,6 @@ Please note that without account, your content will not be able to sync, so if y
 "delete_account_hint" = "Account cannot be restored.\nThink wisely before doing it.";
 "delete_account_sure" = "Are you sure?\nMark the checkbox to confirm your intentions.";
 "want_to_delete_account" = "I want to delete my account";
-"mark_checkbox" = "Mark the checkbox to confirm your intentions";
 
 "Delete user" = "Delete user";
 "delete_user_explanation" = "Are you sure you want to delete %@?";
@@ -70,7 +61,6 @@ Please note that without account, your content will not be able to sync, so if y
 "None" = "None";
 "Rating" = "Rating: %@ (max: %@)";
 "Contribution" = "Contribution: %@";
-"Sort" = "Sort by %@ ▼";
 "view_profile" = "View profile";
 
 "default" = "default";
@@ -97,16 +87,9 @@ Please note that without account, your content will not be able to sync, so if y
 "contest_date_month_format" = "LLLL";
 "user_date_format" = "MMM d, yyyy";
 
-"be_the_first_to_comment" = "Be the first to comment";
-"see_all_comments" = "See all comments";
-
 "modified" = "modified";
 "created" = "created";
-"watch_video" = "Watch video";
 
-"galactic_master" = "Galactic master";
-"form_of_life" = "form_of_life"; // not translatable
-"unknown" = "Unknown";
 "never_updated" = "Never updated";
 
 "who_are_you" = "Who are you?";
@@ -127,13 +110,10 @@ Please note that without account, your content will not be able to sync, so if y
 
 "sign_up" = "Sign Up";
 "sign_up_hint" = "Don't have an account yet?";
-"agree_to_the_privacy_policy" = "Agree to the privacy policy";
 
 "restore_password" = "Restore\npassword";
 "restore_password_button" = "Restore password";
 "restore_password_hint" = "You will get an email with instructions for account recovery";
-"lost_access" = "Lost access to mail?";
-"user_does_not_exist" = "User doesn't exist ¯\_(ツ)_/¯";
 
 "check_your_box" = "Check your box.";
 "open_mail_hint" = "Tap to open your mail app";
@@ -157,10 +137,3 @@ Please note that without account, your content will not be able to sync, so if y
 
 "log_out" = "Log out";
 "log_out_ask" = "Do you want to log out?";
-
-"wrong_credentials" = "Wrong credentials!";
-"fields_cannot_be_empty" = "Fields cannot be empty!";
-"passwords_do_not_match" = "Passwords don't match!";
-"ratings_have_been_updated" = "Ratings have been updated";
-
-"forgot_password_success" = "Email with further instructions has been sent to you! Please check!";

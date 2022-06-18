@@ -3,14 +3,13 @@
 "Contests" = "Контести";
 "News" = "Новини";
 "Problems" = "Задачі";
+"filters" = "Фiльтри";
 
-"Commented by" = "Прокоментував";
 "ago" = " · %@ тому";
 "post_ago" = " · %@ %@ тому";
 
 "update_explanation" = "Великий оновлення дизайну, наставники та багато іншого!";
 "news_explanation" = "Свіжі новини на шляху до вашого пристрою…";
-
 "problems_explanation" = "Задачі на шляху до вашого пристрою…";
 "contests_explanation" = "Контести на шляху до вашого пристрою…";
 
@@ -23,11 +22,6 @@
 
 "Search for problems..." = "Пошук задач…";
 
-"Official Codeforces rules" = "Офiцiйнi правила Codeforces";
-"Apple isn't a sponsor of any contests conducted on Codeforces" = "Apple не спонсор контестiв якi проводяться на Codeforces";
-
-"filters" = "Фiльтри";
-
 "User already added" = "Користувача вже додано";
 
 "Click to see details" = "Натисніть, щоб побачити більше";
@@ -36,10 +30,8 @@
 "followed_users" = "Підписки";
 "no_favourite_problems_explanation" = "Ви ще не маєте улюблених задач.\nДодайте першу скориставшись кнопкою «∞» знизу екрану.";
 "share_cw_message" = "Я користуюсь algois.me - безкоштовним IOS застосунком з відкритим кодом, що використовує Codeforces API для того щоб принести більше олімпіадного програмування на ваш IOS пристрій. \n Codeforces WatchR дає можливiсть: \n\n 1. Невеликий перерелік та реєстрація на змаганнях зі спортивного програмування: Codeforces, LeetCode, HackerEarth, AtCoder, TopCoder, CS Academy, CodeChef, Kick Start. \n 2. Слідкуйте за новими подіями на Codeforces. \n 3. Переглядайте і шукайте задачi, додавайте їх в улюбленi. \n 4. Слідкуйте за активністю будь-якого користувача Codeforces. \n 5. Сортуйте користувачів за рейтингом і датою останньої участі. \n\n Завантажуйте прямо зараз в App Store - https://apps.apple.com/us/app/codeforces-watchr-contests/id1495591299";
-"no_users_explanation" = "Ви ще не маєте користувачів для відслідковування.\nДодайте першого скориставшись кнопкою «+» знизу екрану.";
 
 "Add user" = "Додати користувача";
-"Enter user handle" = "Введiть хендл користувача";
 "no_activity" = "Немає активності";
 "Done" = "Готово";
 "Rating changes" = "Змiни рейтингу";
@@ -62,7 +54,6 @@
 "delete_account_hint" = "Акаунт не можливо відновити.\nГарно подумайте, перш ніж це робити.";
 "delete_account_sure" = "Ви впевнені?\nПоставте прапорець, щоб підтвердити.";
 "want_to_delete_account" = "Я хочу видалити свій акаунт";
-"mark_checkbox" = "Поставте прапорець, щоб підтвердити";
 
 "Delete user" = "Видалити користувача";
 "delete_user_explanation" = "Ви впевнені, що хочете видалити %@?";
@@ -70,7 +61,6 @@
 "None" = "Немає";
 "Rating" = "Рейтинг: %@ (макс. %@)";
 "Contribution" = "Внесок: %@";
-"Sort" = "Сорт. за %@ ▼";
 "view_profile" = "Переглянути профіль";
 
 "default" = "замовчуванням";
@@ -97,15 +87,9 @@
 "contest_date_month_format" = "LLLL";
 "user_date_format" = "d MMM yyyy";
 
-"be_the_first_to_comment" = "Коментуйте першим";
-"see_all_comments" = "Переглянути всі коментарі";
-
 "modified" = "змiнено";
 "created" = "створено";
-"watch_video" = "Переглянути відео";
 
-"galactic_master" = "Галактичний майстер";
-"unknown" = "Невідомо";
 "never_updated" = "Ніколи не оновлювався";
 
 "who_are_you" = "Хто ви?";
@@ -126,13 +110,10 @@
 
 "sign_up" = "Зареєструватися";
 "sign_up_hint" = "У вас ще немає облікового запису?";
-"agree_to_the_privacy_policy" = "Погодьтеся з політикою конфіденційності";
 
 "restore_password" = "Відновлення\nпароля";
 "restore_password_button" = "Відновлення пароля";
 "restore_password_hint" = "Ви отримаєте електронний лист з інструкціями щодо відновлення облікового запису";
-"lost_access" = "Втрачено доступ до пошти?";
-"user_does_not_exist" = "Користувач не існує ¯\_(ツ)_/¯";
 
 "check_your_box" = "Перевірте свою пошту.";
 "open_mail_hint" = "Натисніть, щоб відкрити поштовий додаток";
@@ -156,10 +137,3 @@
 
 "log_out" = "Вийти";
 "log_out_ask" = "Ви хочете вийти?";
-
-"wrong_credentials" = "Неправильні дані!";
-"fields_cannot_be_empty" = "Поля не можуть бути порожніми!";
-"passwords_do_not_match" = "Паролі не збігаються!";
-"ratings_have_been_updated" = "Рейтинги оновлені";
-
-"forgot_password_success" = "Вам надіслано електронний лист з подальшими інструкціями! Будь ласка, перевірте!";

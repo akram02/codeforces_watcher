@@ -7,16 +7,13 @@
     <string name="check_connection_or_try_again_later">Перевірте підключення або спробуйте пізніше</string>
     <string name="rating_changes">Змiни рейтингу</string>
     <string name="ratings_have_been_updated">Рейтинги оновлені</string>
-    <string name="ratings_update">Оновлення рейтингу</string>
     <string name="user_already_added">Користувача вже додано</string>
-    <string name="sort_by">Сорт. за</string>
     <string name="by_default">замовчуванням</string>
     <string name="by_descending_rating">↓ рейтингу</string>
     <string name="by_ascending_rating">↑ рейтингу</string>
     <string name="by_descending_update">↓ оновлення</string>
     <string name="by_ascending_update">↑ оновлення</string>
     <string name="add_user">Додати користувача</string>
-    <string name="enter_handle">Введiть хендл користувача</string>
 
     <string name="users">Люди</string>
     <string name="contests">Контести</string>
@@ -24,12 +21,8 @@
     <string name="problems">Задачі</string>
 
     <string name="google_calendar_not_found">На жаль, на цьому пристрої не знайдено Google Calendar</string>
-    <string name="commented_by">"Прокоментував %1$s"</string>
-    <string name="feature_isn_t_available_yet">Ця функція ще не доступна.</string>
     <string name="share_with_friends">Поділитися з друзями</string>
     <string name="shared_through_cw">Відправлено через algois.me. Знайдіть його в Google Play.</string>
-    <string name="no_users">Ви ще не маєте користувачів для відслідковування.\nДодайте першого скориставшись кнопкою «+» знизу екрану.</string>
-    <string name="no_favourite_problems">Ви ще не маєте улюблених задач.\nДодайте першу скориставшись кнопкою «∞» знизу екрану.</string>
 
     <string name="share_cw">Поділитися algois.me</string>
     <string name="help_cw_make_more_social">Допоможіть зробити Codeforces та algois.me більш соціальними, поділившися ними з вашими друзями.</string>
@@ -48,10 +41,8 @@ algois.me дає можливiсть:
     <string name="news_on_the_way">Свіжі новини на шляху до вашого пристрою…</string>
     <string name="problems_on_the_way">Задачі на шляху до вашого пристрою…</string>
     <string name="search_for_problems">Пошук задач…</string>
-    <string name="no_browser_has_been_found">Не знайдено браузера, спробуйте встановити його.</string>
     <string name="filters">Фiльтри</string>
     <string name="contests_explanation">Контести на шляху до вашого пристрою...</string>
-    <string name="no_contests_found">Контестів не знайдено</string>
 
     <string name="click_to_see_details">Натисніть, щоб переглянути деталі</string>
     <string name="see_details">Детальніше</string>
@@ -87,40 +78,27 @@ algois.me дає можливiсть:
     <string name="delete_account_hint">Акаунт не можливо відновити.\nГарно подумайте, перш ніж це робити.</string>
     <string name="delete_account_sure">Ви впевнені?\nПоставте прапорець, щоб підтвердити.</string>
     <string name="want_to_delete_account">Я хочу видалити свій акаунт</string>
-    <string name="mark_checkbox">Позначте прапорець</string>
 
     <string name="delete_user">Видалити користувача</string>
     <string name="delete_user_explanation">"Ви впевнені, що хочете видалити %1$s?"</string>
     <string name="ok">OK</string>
 
     <string name="rating">Рейтинг: %1$s (макс. %2$s)</string>
-    <string name="rating_only">Рейтинг: %1$s</string>
-    <string name="max_rating_only">Макс. рейтинг: %1$s</string>
 
     <string name="contribution">Внесок: %1$s</string>
-
-    <string name="see_all_comments">Переглянути всі коментарі</string>
-    <string name="be_first_to_comment">Коментуйте першим</string>
 
     <string name="modified">змiнено</string>
     <string name="created">створено</string>
 
-    <string name="watch_video">Переглянути відео</string>
     <string name="upcoming_contests">Майбутні контести</string>
 
-    <string name="login_in_42_seconds">Увійти за 42 секунди</string>
-    <string name="galactic_master">Галактичний майстер</string>
-    <string name="unknown">Невідомо</string>
     <string name="never_updated">Ніколи не оновлювався</string>
-    <string name="login_to_identify">Увійдіть для ідентифікації</string>
     <string name="login">Увійти</string>
     <string name="login_to_identify_explanation">Увійдіть для ідентифікації і отримуйте миттєві push-сповіщення про оновлення рейтингу</string>
     <string name="who_are_you">Хто Ви?</string>
 
     <string name="verify_account">Підтвердити акаунт</string>
     <string name="pass_quick_verification">Пройдіть швидку та просту перевірку, щоб побачити тут свій профіль</string>
-    <string name="verify_in_42_seconds">Підтвердити за 42 секунди</string>
-    <string name="get_instant_notifications">І отримуйте миттєві push-сповіщення про оновлення рейтингу</string>
 
     <string name="rating_new">Рейтинг</string>
     <string name="max_rating_new">Макс. рейтинг</string>
@@ -130,21 +108,16 @@ algois.me дає можливiсть:
     <string name="log_out">Вийти</string>
     <string name="do_you_want_to_log_out">Ви хочете вийти?</string>
     <string name="stay_logged_in">Залишитися в системі</string>
-    <string name="forgot_password_empty_email">Введіть дійсну електронну пошту і натисніть \ "Забули пароль \"!</string>
-    <string name="fields_cannot_be_empty">Поля не можуть бути порожніми</string>
-    <string name="forgot_password_success">Вам надіслано електронний лист з подальшими інструкціями! Будь ласка, перевірте!</string>
 
     <string name="forgot_password">Забули пароль?</string>
     <string name="email">Електронна пошта</string>
     <string name="password">Пароль</string>
     <string name="sign_in">Увійти</string>
     <string name="dont_have_an_account_yet">У вас ще немає облікового запису?</string>
-    <string name="wrong_credentials">Неправильні облікові дані!</string>
 
     <string name="lost_access_to_mail">Втратили доступ до пошти?</string>
     <string name="restore_password">Відновити пароль</string>
     <string name="you_will_get_an_email_with_instructions_for_account_recovery">Ви отримаєте електронний лист із інструкціями для відновлення облікового запису</string>
-    <string name="user_does_not_exist">Користувач не знайдений ¯\\_(ツ)_/¯</string>
 
     <string name="check_your_box">Перевірте свою пошту.</string>
     <string name="open_mail_hint">Натисніть, щоб відкрити поштовий додаток</string>
@@ -165,8 +138,6 @@ algois.me дає можливiсть:
     <string name="already_have_an_account">Вже є обліковий запис?</string>
     <string name="sign_up">Зареєструватися</string>
     <string name="confirm_password">Підтвердьте пароль</string>
-    <string name="passwords_do_not_match">Паролі не збігаються</string>
-    <string name="agree_to_the_privacy_policy">Погодьтеся з політикою конфіденційності</string>
     <string name="agree_with_the_conditions_and_privacy_policy_start">Я погоджуюсь з</string>
     <string name="agree_with_the_conditions_and_privacy_policy_end">та</string>
     <string name="terms_and_conditions">Загальними положеннями та умовами</string>

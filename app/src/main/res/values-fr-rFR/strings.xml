@@ -6,16 +6,13 @@
     <string name="check_connection_or_try_again_later">Vérifiez votre connexion ou réessayez plus tard</string>
     <string name="rating_changes">Changements de classement</string>
     <string name="ratings_have_been_updated">Les classements ont été mis à jour</string>
-    <string name="ratings_update">Mise à jour de classements</string>
     <string name="user_already_added">Utilisateur déjà ajouté</string>
-    <string name="sort_by">Trier par</string>
     <string name="by_default">défaut</string>
     <string name="by_descending_rating">↓ classement</string>
     <string name="by_ascending_rating">↑ classement</string>
     <string name="by_descending_update">↓ mise à jour</string>
     <string name="by_ascending_update">↑ mise à jour</string>
     <string name="add_user">Ajouter utilisateur</string>
-    <string name="enter_handle">Entrez un pseudo</string>
 
     <string name="users">Utilisateurs</string>
     <string name="contests">Concours</string>
@@ -23,12 +20,8 @@
     <string name="problems">Problèmes</string>
 
     <string name="google_calendar_not_found">Désolé, Google Calendrier n\'a pas pu être trouvé sur votre appareil</string>
-    <string name="commented_by">"Commenté par %1$s"</string>
-    <string name="feature_isn_t_available_yet">Cette fonctionnalité n\'est pas encore disponible.</string>
     <string name="share_with_friends">Partagez avec vos amis</string>
     <string name="shared_through_cw">Partagé avec algois.me. Téléchargeable sur Google Play.</string>
-    <string name="no_users">Vous n\'avez aucun utilisateur dans votre liste.\nAjoutez-en un avec le «+» présent en bas de l\'écran.</string>
-    <string name="no_favourite_problems">Vous n\'avez aucun problème favori.\nAjoutez-en un avec le «∞» présent en bas de l\'écran.</string>
 
     <string name="share_cw">Partagez algois.me</string>
     <string name="help_cw_make_more_social">Aidez nous à rendre Codeforces et algois.me plus sociable en partageant l\'application avec vos amis.</string>
@@ -47,9 +40,7 @@ Téléchargez-la sur Google Play - https://play.google.com/store/apps/details?id
     <string name="news_on_the_way">Informations récentes en cours de téléchargement…</string>
     <string name="problems_on_the_way">Problèmes en cours de téléchargement…</string>
     <string name="search_for_problems">Chercher des problèmes…</string>
-    <string name="no_browser_has_been_found">Aucun navigateur internet trouvé, essayez d\'en installer un.</string>
     <string name="filters">Filtres</string>
-    <string name="no_contests_found">Pas de concours trouvé</string>
     <string name="contests_explanation">Les concours sont en route vers votre appareil…</string>
     <string name="click_to_see_details">Cliquez pour voir les détails</string>
     <string name="see_details">Voir les détails</string>
@@ -85,40 +76,27 @@ Veuillez noter que sans compte, votre contenu ne pourra pas être synchronisé, 
     <string name="delete_account_hint">Le compte ne peut pas être restauré.\nRéfléchissez bien avant de le faire.</string>
     <string name="delete_account_sure">Êtes-vous sûr?\nCochez la case pour confirmer vos intentions.</string>
     <string name="want_to_delete_account">Je veux supprimer mon compte</string>
-    <string name="mark_checkbox">Cochez la case</string>
 
     <string name="delete_user">Supprimer utilisateur</string>
     <string name="delete_user_explanation">"Êtes-vous sûr de supprimer %1$s?"</string>
     <string name="ok">OK</string>
 
     <string name="rating">Classement: %1$s (max. %2$s)</string>
-    <string name="rating_only">Classement: %1$s</string>
-    <string name="max_rating_only">Max Class.: %1$s</string>
 
     <string name="contribution">Contribution: %1$s</string>
-
-    <string name="see_all_comments">Voir tous les commentaires</string>
-    <string name="be_first_to_comment">Soyez le premier à commenter</string>
 
     <string name="modified">modifié</string>
     <string name="created">créé</string>
 
-    <string name="watch_video">regarder la vidéo</string>
     <string name="upcoming_contests">concours à venir</string>
 
-    <string name="login_in_42_seconds">Connectez-vous</string>
-    <string name="galactic_master">Maître galactique</string>
-    <string name="unknown">Inconnu</string>
     <string name="never_updated">Jamais mis à jour</string>
-    <string name="login_to_identify">Connectez-vous</string>
     <string name="login">Connexion</string>
     <string name="login_to_identify_explanation">Connectez-vous pour identifier et recevoir des notifications push instantanées sur les mises à jour du classement</string>
     <string name="who_are_you">Qui êtes-vous?</string>
 
     <string name="verify_account">Vérifier le compte</string>
     <string name="pass_quick_verification">Passez la vérification rapide et simple pour voir votre profil ici</string>
-    <string name="verify_in_42_seconds">Vérifiez en 42 secondes</string>
-    <string name="get_instant_notifications">Et recevez des notifications push instantanées sur les mises à jour des notes</string>
 
     <string name="rating_new">Classement</string>
     <string name="max_rating_new">Max Classement</string>
@@ -128,21 +106,16 @@ Veuillez noter que sans compte, votre contenu ne pourra pas être synchronisé, 
     <string name="log_out">Se déconnecter</string>
     <string name="do_you_want_to_log_out">Voulez-vous vous déconnecter?</string>
     <string name="stay_logged_in">Rester connecté</string>
-    <string name="forgot_password_empty_email">Entrez un e-mail valide et cliquez sur \"Mot de passe oublié?\"!</string>
-    <string name="fields_cannot_be_empty">Les champs ne peuvent pas être vides</string>
-    <string name="forgot_password_success">Un e-mail contenant des instructions additionnels vous a été envoyé ! Vérifiez s\'il vous plaît!</string>
 
     <string name="forgot_password">Mot de passe oublié?</string>
     <string name="email">E-mail</string>
     <string name="password">Mot de passe</string>
     <string name="sign_in">S\'identifier</string>
     <string name="dont_have_an_account_yet">Vous n\'avez pas encore de compte?</string>
-    <string name="wrong_credentials">Informations d\'identification erronées</string>
 
     <string name="lost_access_to_mail">Vous avez perdu l\'accès au courrier électronique ?</string>
     <string name="restore_password">Restaurer le mot de passe</string>
     <string name="you_will_get_an_email_with_instructions_for_account_recovery">Vous recevrez un e-mail avec des instructions pour la récupération de compte</string>
-    <string name="user_does_not_exist">L\'utilisateur n\'existe pas ¯\\_(ツ)_/¯</string>
 
     <string name="check_your_box">Vérifiez votre boîte de réception.</string>
     <string name="open_mail_hint">Appuyez pour ouvrir votre application e-mail</string>
@@ -163,8 +136,6 @@ Veuillez noter que sans compte, votre contenu ne pourra pas être synchronisé, 
     <string name="already_have_an_account">Vous avez déjà un compte?</string>
     <string name="sign_up">S\'inscrire</string>
     <string name="confirm_password">Confirmez le mot de passe</string>
-    <string name="passwords_do_not_match">Les mots de passe ne correspondent pas</string>
-    <string name="agree_to_the_privacy_policy">Acceptez la politique de confidentialité</string>
     <string name="agree_with_the_conditions_and_privacy_policy_start">je suis d\'accord avec les</string>
     <string name="agree_with_the_conditions_and_privacy_policy_end">et la</string>
     <string name="terms_and_conditions">Termes et conditions</string>

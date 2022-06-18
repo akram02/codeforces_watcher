@@ -12,7 +12,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.bogdan.codeforceswatcher.components.compose.theme.AlgoismeTheme
 
-
 @Composable
 fun CommonButton(
     label: String,

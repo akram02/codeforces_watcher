@@ -11,8 +11,10 @@ import io.xorum.codeforceswatcher.features.users.models.ChartItem
 import io.xorum.codeforceswatcher.util.splitStringInHalf
 import kotlinx.android.synthetic.main.chart.view.*
 
-class CustomMarkerView(context: Context, layoutResource: Int) :
-    MarkerView(context, layoutResource) {
+class CustomMarkerView(
+    context: Context,
+    layoutResource: Int
+) : MarkerView(context, layoutResource) {
 
     override fun getOffset(): MPPointF {
         return MPPointF((-width).toFloat(), (-height).toFloat())
