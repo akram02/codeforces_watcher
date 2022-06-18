@@ -10,6 +10,7 @@ import io.xorum.codeforceswatcher.util.BaseFeedbackController
 import io.xorum.codeforceswatcher.util.FeedUIModel
 
 class FeedbackController(private val context: Context) : BaseFeedbackController() {
+
     private val sharedPreferences =
         context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
     private val editor = sharedPreferences.edit()
