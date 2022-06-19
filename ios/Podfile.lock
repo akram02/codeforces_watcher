@@ -110,56 +110,6 @@ PODS:
   - GoogleUtilities/UserDefaults (7.5.2):
     - GoogleUtilities/Logger
   - GTMSessionFetcher/Core (1.7.0)
-  - MaterialComponents/AnimationTiming (124.2.0)
-  - MaterialComponents/Availability (124.2.0)
-  - MaterialComponents/Buttons (124.2.0):
-    - MaterialComponents/Elevation
-    - MaterialComponents/Ink
-    - MaterialComponents/private/Math
-    - MaterialComponents/Ripple
-    - MaterialComponents/Shadow
-    - MaterialComponents/ShadowElevations
-    - MaterialComponents/ShadowLayer
-    - MaterialComponents/ShapeLibrary
-    - MaterialComponents/Shapes
-    - MaterialComponents/Typography
-    - MDFInternationalization
-    - MDFTextAccessibility
-  - MaterialComponents/Elevation (124.2.0):
-    - MaterialComponents/Availability
-    - MaterialComponents/private/Color
-    - MaterialComponents/private/Math
-  - MaterialComponents/Ink (124.2.0):
-    - MaterialComponents/Availability
-    - MaterialComponents/private/Color
-    - MaterialComponents/private/Math
-  - MaterialComponents/private/Application (124.2.0)
-  - MaterialComponents/private/Color (124.2.0):
-    - MaterialComponents/Availability
-  - MaterialComponents/private/Math (124.2.0)
-  - MaterialComponents/Ripple (124.2.0):
-    - MaterialComponents/AnimationTiming
-    - MaterialComponents/Availability
-    - MaterialComponents/private/Color
-    - MaterialComponents/private/Math
-  - MaterialComponents/Shadow (124.2.0):
-    - MaterialComponents/Availability
-  - MaterialComponents/ShadowElevations (124.2.0)
-  - MaterialComponents/ShadowLayer (124.2.0):
-    - MaterialComponents/ShadowElevations
-  - MaterialComponents/ShapeLibrary (124.2.0):
-    - MaterialComponents/private/Math
-    - MaterialComponents/Shapes
-  - MaterialComponents/Shapes (124.2.0):
-    - MaterialComponents/private/Color
-    - MaterialComponents/private/Math
-    - MaterialComponents/ShadowLayer
-  - MaterialComponents/Typography (124.2.0):
-    - MaterialComponents/private/Application
-    - MaterialComponents/private/Math
-    - MDFTextAccessibility
-  - MDFInternationalization (3.0.0)
-  - MDFTextAccessibility (2.0.1)
   - nanopb (2.30908.0):
     - nanopb/decode (= 2.30908.0)
     - nanopb/encode (= 2.30908.0)
@@ -183,7 +133,6 @@ DEPENDENCIES:
   - Firebase/Auth
   - Firebase/Crashlytics
   - Firebase/Messaging
-  - MaterialComponents/Buttons
   - PKHUD (~> 5.0)
   - SDWebImage (~> 5.0)
   - SDWebImageSwiftUI (~> 2.0)
@@ -206,9 +155,6 @@ SPEC REPOS:
     - GoogleDataTransport
     - GoogleUtilities
     - GTMSessionFetcher
-    - MaterialComponents
-    - MDFInternationalization
-    - MDFTextAccessibility
     - nanopb
     - PKHUD
     - PromisesObjC
@@ -224,7 +170,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   Charts: b1e3a1f5a1c9ba5394438ca3b91bd8c9076310af
-  common: 1ee84b697b777d315a44af7bd95d241a64c42809
+  common: e90ebe747918d57670691611f9b628db5fb0114b
   Firebase: bc9325d5ee2041524bac78a5213d0e530c651309
   FirebaseAnalytics: 52768800c2add1d84b751420cb4caaf8195f2c41
   FirebaseAuth: 2e7d029977648c67a5d51a263d4cbab76d34cf12
@@ -237,9 +183,6 @@ SPEC CHECKSUMS:
   GoogleDataTransport: 85fd18ff3019bb85d3f2c551d04c481dedf71fc9
   GoogleUtilities: 8de2a97a17e15b6b98e38e8770e2d129a57c0040
   GTMSessionFetcher: 43748f93435c2aa068b1cbe39655aaf600652e91
-  MaterialComponents: 1a9b2d9d45b1601ae544de85089adc4c464306d4
-  MDFInternationalization: d697c55307816222a55685c4ccb1044ffb030c12
-  MDFTextAccessibility: f4bb4cc2194286651b59a215fdeaa0e05dc90ba5
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PKHUD: 98f3e4bc904b9c916f1c5bb6d765365b5357291b
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
@@ -248,6 +191,6 @@ SPEC CHECKSUMS:
   TinyConstraints: 7b7ccc0c485bb3bb47082138ff28bc33cd49897f
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
 
-PODFILE CHECKSUM: 7c2a599a59f1bb888670a2b85449cf5ea516d25b
+PODFILE CHECKSUM: 2aa33e29014854b507ef4c17cbe052a4232f5411
 
 COCOAPODS: 1.11.2

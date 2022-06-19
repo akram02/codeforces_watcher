@@ -15,7 +15,6 @@ def shared_pods
     pod 'Firebase/Crashlytics'
     pod 'Firebase/Analytics'
     pod 'PKHUD', '~> 5.0'
-    pod 'MaterialComponents/Buttons'
     pod 'Toast-Swift', '~> 5.0.1'
     pod 'Charts'
     pod 'Firebase/Auth'
